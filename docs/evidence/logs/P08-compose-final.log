@@ -1,0 +1,167 @@
+ Image vmarket-ai:p03-local Building 
+ Image vmarket-ai:p03-local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 929B done
+#1 DONE 0.0s
+
+#2 [ai-api internal] load build definition from Dockerfile
+#2 transferring dockerfile: 665B done
+#2 DONE 0.0s
+
+#3 [ai-api internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.9s
+
+#4 [ai-api internal] load .dockerignore
+#4 transferring context: 159B done
+#4 DONE 0.0s
+
+#5 [ai-api internal] load build context
+#5 DONE 0.0s
+
+#6 [ai-api builder 1/6] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#6 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 0.0s done
+#6 DONE 0.0s
+
+#5 [ai-api internal] load build context
+#5 transferring context: 55.39kB 0.0s done
+#5 DONE 0.0s
+
+#7 [ai-api builder 2/6] WORKDIR /app
+#7 CACHED
+
+#8 [ai-migrate builder 3/6] RUN python -m pip install --no-cache-dir uv==0.13.6
+#8 CACHED
+
+#9 [ai-migrate builder 4/6] COPY pyproject.toml uv.lock README.md ./
+#9 DONE 0.0s
+
+#10 [ai-api builder 5/6] COPY src ./src
+#10 DONE 0.0s
+
+#10 [ai-migrate builder 5/6] COPY src ./src
+#10 DONE 0.0s
+
+#11 [ai-migrate builder 6/6] RUN uv sync --frozen --no-dev --no-editable
+#11 0.331 Using CPython 3.12.15 interpreter at: /usr/local/bin/python3
+#11 0.331 Creating virtual environment at: .venv
+#11 0.354    Building vmarket-ai @ file:///app
+#11 2.643 Downloading lxml (5.0MiB)
+#11 2.644 Downloading numpy (15.8MiB)
+#11 2.644 Downloading pydantic-core (2.1MiB)
+#11 2.644 Downloading sqlalchemy (3.3MiB)
+#11 2.645 Downloading psycopg-binary (5.0MiB)
+#11 4.304       Built vmarket-ai @ file:///app
+#11 8.400  Downloaded pydantic-core
+#11 8.750  Downloaded sqlalchemy
+#11 12.70  Downloaded psycopg-binary
+#11 13.59  Downloaded lxml
+#11 14.45  Downloaded numpy
+#11 14.45 Prepared 33 packages in 11.91s
+#11 14.50 Installed 33 packages in 48ms
+#11 14.50  + alembic==1.20.1
+#11 14.50  + annotated-doc==0.0.5
+#11 14.50  + annotated-types==0.8.0
+#11 14.50  + anyio==4.15.1
+#11 14.50  + certifi==2026.10.23
+#11 14.50  + click==8.5.0
+#11 14.50  + defusedxml==0.7.1
+#11 14.50  + fastapi==0.162.0
+#11 14.50  + greenlet==3.5.6
+#11 14.50  + h11==0.16.0
+#11 14.50  + httpcore==1.0.9
+#11 14.50  + httpx==0.28.1
+#11 14.50  + idna==3.20
+#11 14.50  + lxml==6.1.3
+#11 14.50  + mako==1.4.3
+#11 14.50  + markupsafe==3.0.4
+#11 14.50  + numpy==2.2.6
+#11 14.50  + opentelemetry-api==1.45.2
+#11 14.50  + pgvector==0.4.2
+#11 14.50  + psycopg==3.3.6
+#11 14.50  + psycopg-binary==3.3.6
+#11 14.50  + pydantic==2.14.2
+#11 14.50  + pydantic-core==2.50.2
+#11 14.50  + pydantic-settings==2.16.2
+#11 14.50  + pypdf==6.21.4
+#11 14.50  + python-docx==1.2.0
+#11 14.50  + python-dotenv==1.2.4
+#11 14.50  + sqlalchemy==2.0.55
+#11 14.50  + starlette==1.10.0
+#11 14.50  + typing-extensions==4.16.0
+#11 14.50  + typing-inspection==0.4.4
+#11 14.50  + uvicorn==0.54.0
+#11 14.50  + vmarket-ai==0.1.0 (from file:///app)
+#11 DONE 14.6s
+
+#11 [ai-migrate builder 6/6] RUN uv sync --frozen --no-dev --no-editable
+#11 DONE 14.6s
+
+#12 [ai-api stage-1 2/7] RUN groupadd --gid 10001 ai && useradd --uid 10001 --gid ai --create-home ai
+#12 CACHED
+
+#13 [ai-api stage-1 3/7] WORKDIR /app
+#13 CACHED
+
+#12 [ai-migrate stage-1 2/7] RUN groupadd --gid 10001 ai && useradd --uid 10001 --gid ai --create-home ai
+#12 CACHED
+
+#14 [ai-api stage-1 4/7] COPY --from=builder --chown=ai:ai /app/.venv /app/.venv
+#14 DONE 0.6s
+
+#14 [ai-migrate stage-1 4/7] COPY --from=builder --chown=ai:ai /app/.venv /app/.venv
+#14 DONE 0.6s
+
+#15 [ai-migrate stage-1 5/7] COPY --chown=ai:ai alembic.ini ./
+#15 DONE 0.0s
+
+#16 [ai-api stage-1 6/7] COPY --chown=ai:ai migrations ./migrations
+#16 DONE 0.0s
+
+#17 [ai-api stage-1 7/7] RUN mkdir -p /app/.local && chown -R ai:ai /app
+#17 DONE 3.7s
+
+#17 [ai-migrate stage-1 7/7] RUN mkdir -p /app/.local && chown -R ai:ai /app
+#17 DONE 3.7s
+
+#18 [ai-api] exporting to image
+#18 exporting layers
+#18 exporting layers 2.9s done
+#18 exporting manifest sha256:75a697bbc2d77e907f66600b94427744e5d7429f4a3a39f46279f3472c8b70eb 0.0s done
+#18 exporting config sha256:05ac18659965f24600fce82223ad1acb94ad8f2b4422086545b2565070227c7c 0.0s done
+#18 exporting attestation manifest sha256:e47987a74e864c7ffb58bcfe461e26ed61ccefa638c65dd32ca84b21b272378e 0.0s done
+#18 exporting manifest list sha256:f6e125f883077548775927daedd6e1ce8c50a57edb4410b4a1fd9047bd57c6b9 0.0s done
+#18 naming to docker.io/library/vmarket-ai:p03-local done
+#18 unpacking to docker.io/library/vmarket-ai:p03-local
+#18 unpacking to docker.io/library/vmarket-ai:p03-local 1.2s done
+#18 DONE 4.2s
+
+#19 [ai-migrate] exporting to image
+#19 exporting layers 2.9s done
+#19 exporting manifest sha256:3bbef42a823397639ce186e04c649f4dd87cd5dfa2a898db4329a97f4961f23f 0.0s done
+#19 exporting config sha256:f4eb1239a981bf0eb398e1b98c6a95c79b8f035c2a2dfdf518ea1db99f8a107b 0.0s done
+#19 exporting attestation manifest sha256:af02886ef559a7bef2a12877af39faafaa20eaad1c8cb2f36bdcd01dca51c0b2 0.0s done
+#19 exporting manifest list sha256:43d905fde9fc6f99e4d4e901b9ba2761ef6bbc5663ba7054815a26429d2ff7bf 0.0s done
+#19 naming to docker.io/library/vmarket-ai:p03-local done
+#19 unpacking to docker.io/library/vmarket-ai:p03-local 1.2s done
+#19 DONE 4.1s
+
+#20 [ai-migrate] resolving provenance for metadata file
+#20 DONE 0.0s
+
+#21 [ai-api] resolving provenance for metadata file
+#21 DONE 0.0s
+ Image vmarket-ai:p03-local Built 
+ Image vmarket-ai:p03-local Built 
+ Container vmarket-ai-p03-ai-postgres-1 Running 
+ Container vmarket-ai-p03-ai-migrate-1 Recreate 
+ Container vmarket-ai-p03-ai-migrate-1 Recreated 
+ Container vmarket-ai-p03-ai-api-1 Recreate 
+ Container vmarket-ai-p03-ai-api-1 Recreated 
+ Container vmarket-ai-p03-ai-postgres-1 Waiting 
+ Container vmarket-ai-p03-ai-postgres-1 Healthy 
+ Container vmarket-ai-p03-ai-migrate-1 Starting 
+ Container vmarket-ai-p03-ai-migrate-1 Started 
+ Container vmarket-ai-p03-ai-migrate-1 Waiting 
+ Container vmarket-ai-p03-ai-migrate-1 Exited 
+ Container vmarket-ai-p03-ai-api-1 Starting 
+ Container vmarket-ai-p03-ai-api-1 Started 

@@ -1,0 +1,164 @@
+{
+  "ready": {
+    "status": "ready",
+    "provider_mode": "local"
+  },
+  "cases": [
+    {
+      "status": 200,
+      "response": {
+        "request_id": "44bfb45c-316d-40b1-b616-bacbbdca8c92",
+        "raw_sha256": "d727041231fa48baadf0335593ba45768891e0869c57e6b844f14497945dac2a",
+        "declared_encoding": "CP932",
+        "selected_vendor_code": "NAMI",
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "status": "suggested",
+        "assignments": [
+          {
+            "source_header": "商品コード",
+            "target_field": "sku",
+            "uncertainty": "medium",
+            "basis": "rule",
+            "reason": "Exact match in frozen seed/train-only header rules.",
+            "citations": []
+          },
+          {
+            "source_header": "商品名",
+            "target_field": "name",
+            "uncertainty": "medium",
+            "basis": "rule",
+            "reason": "Exact match in frozen seed/train-only header rules.",
+            "citations": []
+          },
+          {
+            "source_header": "在庫数",
+            "target_field": "on_hand",
+            "uncertainty": "medium",
+            "basis": "rule",
+            "reason": "Exact match in frozen seed/train-only header rules.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE"
+        ],
+        "reason": "RULE_BASELINE",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-a",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {}
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "local"
+      },
+      "citation_get_statuses": []
+    },
+    {
+      "status": 200,
+      "response": {
+        "request_id": "ef216e7d-89b4-4b12-8a38-4d5647fe3852",
+        "raw_sha256": "3e9f0364a741b28c30d37e5a7444b7ad4bce52e29f3b283653c107d77ed8dd12",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "source_header": "SKU",
+            "target_field": "sku",
+            "uncertainty": "high",
+            "basis": "model",
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "citations": [
+              {
+                "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+                "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+                "chunk_id": "decb543a-d690-5cac-ab9e-88a3ad431c25",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/decb543a-d690-5cac-ab9e-88a3ad431c25"
+              }
+            ]
+          },
+          {
+            "source_header": "ProductName",
+            "target_field": "name",
+            "uncertainty": "high",
+            "basis": "model",
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "citations": [
+              {
+                "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+                "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+                "chunk_id": "decb543a-d690-5cac-ab9e-88a3ad431c25",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/decb543a-d690-5cac-ab9e-88a3ad431c25"
+              }
+            ]
+          },
+          {
+            "source_header": "AvailableQuantity",
+            "target_field": "on_hand",
+            "uncertainty": "high",
+            "basis": "model",
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "citations": [
+              {
+                "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+                "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+                "chunk_id": "decb543a-d690-5cac-ab9e-88a3ad431c25",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/decb543a-d690-5cac-ab9e-88a3ad431c25"
+              }
+            ]
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {}
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "local"
+      },
+      "citation_get_statuses": [
+        200,
+        200,
+        200
+      ]
+    }
+  ]
+}

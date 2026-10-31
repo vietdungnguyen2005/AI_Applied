@@ -35,7 +35,7 @@ class MappingRequest(StrictModel):
     declared_encoding: Encoding
     selected_vendor_code: Annotated[str, Field(min_length=1, max_length=32)]
     profile_ids: Annotated[tuple[str, ...], Field(max_length=5)] = ()
-    method: Literal["rule", "ai"] = "ai"
+    method: Literal["rule", "ai"] = "rule"
     synthetic: Literal[True]
 
     def original(self) -> bytes:

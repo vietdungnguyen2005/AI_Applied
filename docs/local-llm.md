@@ -1,6 +1,6 @@
 # Local inference on the verified workstation
 
-Selected default: **Qwen3.5 4B Q4_K_M through Ollama**. The 9B Q4_K_M tag is an explicit alternative. This implements local chat for existing P07 extractive QA; CSV mapping remains P08 work. No external provider inference was made for this extension.
+Selected default: **Qwen3.5 4B Q4_K_M through Ollama**. The 9B Q4_K_M tag is an explicit alternative. This implements local chat for P07 extractive QA. P08 now adds [mapping drafts](mapping.md), whose default uses exact rules after the larger comparison; the earlier eight-case local smoke below remains historical. No external provider inference was made for this extension.
 
 ## Hardware and measured development comparison
 
@@ -37,7 +37,7 @@ powershell -NoProfile -File scripts/start-local-qa.ps1
 powershell -NoProfile -File scripts/start-local-qa.ps1 -Model qwen3.5:9b-q4_K_M
 ```
 
-Launcher runs in the foreground on port 8091; Ctrl+C stops it. It temporarily sets process environment and restores it on exit, preserving `.env`. If `AI_DATABASE_URL` is already set, that AI-only PostgreSQL URL is used. The default fake/QA-off service on 8090 is separate.
+The launcher now enables both QA and draft mapping. Launcher runs in the foreground on port 8091; Ctrl+C stops it. It temporarily sets process environment and restores it on exit, preserving `.env`. If `AI_DATABASE_URL` is already set, that AI-only PostgreSQL URL is used. The default fake/QA-off service on 8090 is separate.
 
 ```powershell
 $body = @{

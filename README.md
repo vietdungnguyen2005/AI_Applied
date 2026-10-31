@@ -1,6 +1,6 @@
 # V-Market AI Operations Copilot
 
-Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Foundation through P07 extractive Q&A is implemented; CSV mapping, agent tools and V-Market integration remain pending.** Live comparative QA evaluation is partial. No production deployment or real customer outcome is claimed.
+Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Foundation through P08 extractive Q&A and mapping drafts is implemented; agent tools and V-Market integration remain pending.** Live comparative QA evaluation is partial. No production deployment or real customer outcome is claimed.
 
 Default service exposes only `/health`, `/ready` and `/openapi.json`. P07 adds [opt-in host-loopback ask/citation routes](docs/qa.md). Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
 
@@ -28,7 +28,7 @@ Default storage is `.local/ai.db`, an AI-only SQLite database. `serve` uses loop
 powershell -NoProfile -File scripts/start-local-qa.ps1
 ```
 
-This enables host-only QA on port **8091**, using `qwen3.5:4b-q4_K_M` with 4096 context, thinking disabled and one adapter request at a time. Defaults outside this launcher remain fake/QA-off. Local chat never calls a provider API or changes its budget ledger. The opt-in 9B alternative is selected with `-Model qwen3.5:9b-q4_K_M`.
+This enables host-only QA and draft mapping on port **8091**, using `qwen3.5:4b-q4_K_M` with 4096 context, thinking disabled and one adapter request at a time. Defaults outside this launcher remain fake/QA-off. Local chat never calls a provider API or changes its budget ledger. The opt-in 9B alternative is selected with `-Model qwen3.5:9b-q4_K_M`.
 
 ## Checks
 
@@ -40,7 +40,7 @@ python -m uv run --frozen pytest -q
 python -m uv run --frozen python tools/validate_contracts.py
 ```
 
-On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips four explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
+On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips five explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
 
 ## Standalone Docker: own PostgreSQL + pgvector
 
@@ -71,6 +71,7 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 
 ## Status and evidence
 
+- [P08 mapping drafts](docs/mapping.md): original-byte hash/storage, server-owned three-field policy, bounded local AI or exact header rules, provenance and profile differences. Human acceptance remains required; no profile/import write. [Evidence](docs/evidence/P08.md).
 - [P07 extractive QA](docs/qa.md): English/Japanese live quote/citation smoke passed; full live baseline comparison remains partial. One real request is unsettled, so the provider ledger remains blocked. Fake mode and offline checks remain usable. [Evidence](docs/evidence/P07.md).
 
 - [P06 retrieval](docs/retrieval.md): PostgreSQL lexical, exact pgvector dense and RRF hybrid; shared authorized corpus and [84 actual query-method evaluations](evals/retrieval/README.md). Dense was selected using dev only. Results use provisional labels; human review is pending. `make retrieval-eval-check` verifies saved metrics/hashes offline without rerunning model inference.

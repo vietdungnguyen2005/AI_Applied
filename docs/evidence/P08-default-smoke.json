@@ -1,0 +1,87 @@
+{
+  "8090": {
+    "/health": {
+      "status": "ok"
+    },
+    "/ready": {
+      "status": "ready",
+      "provider_mode": "fake"
+    },
+    "routes": [
+      "/health",
+      "/ready"
+    ]
+  },
+  "8091": {
+    "/health": {
+      "status": "ok"
+    },
+    "/ready": {
+      "status": "ready",
+      "provider_mode": "local"
+    },
+    "routes": [
+      "/health",
+      "/ready",
+      "/ai/ask",
+      "/ai/mapping/suggest",
+      "/ai/citations/{chunk_id}"
+    ]
+  },
+  "default_mapping_response": {
+    "request_id": "a329220d-4636-471d-985e-9f07f260cb4a",
+    "raw_sha256": "8c943e7493292f15ca23ecbf4d086a4d461b9834ae3e11062a3bf5ed856dcb34",
+    "declared_encoding": "UTF-8",
+    "selected_vendor_code": "RIVERBYTE",
+    "vendor_code": "RIVERBYTE",
+    "vendor_verification": "standalone_fixture",
+    "status": "suggested",
+    "assignments": [
+      {
+        "source_header": "SKU",
+        "target_field": "sku",
+        "uncertainty": "medium",
+        "basis": "rule",
+        "reason": "Exact match in frozen seed/train-only header rules.",
+        "citations": []
+      },
+      {
+        "source_header": "ProductName",
+        "target_field": "name",
+        "uncertainty": "medium",
+        "basis": "rule",
+        "reason": "Exact match in frozen seed/train-only header rules.",
+        "citations": []
+      },
+      {
+        "source_header": "AvailableQuantity",
+        "target_field": "on_hand",
+        "uncertainty": "medium",
+        "basis": "rule",
+        "reason": "Exact match in frozen seed/train-only header rules.",
+        "citations": []
+      }
+    ],
+    "unmapped_headers": [],
+    "missing_required_fields": [],
+    "warnings": [
+      "FRESHNESS_UNVERIFIED",
+      "ENCODING_DECLARED",
+      "BUSINESS_VALIDATION_REQUIRED",
+      "SOURCE_UNTRUSTED",
+      "RULE_BASELINE"
+    ],
+    "reason": "RULE_BASELINE",
+    "profile_differences": [
+      {
+        "profile_id": "supplier-b",
+        "version": 1,
+        "active": true,
+        "encoding_matches": true,
+        "changes": {}
+      }
+    ],
+    "requires_human_acceptance": true,
+    "provider_mode": "local"
+  }
+}

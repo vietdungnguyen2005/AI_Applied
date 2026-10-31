@@ -1,0 +1,16 @@
+{
+  "base_commit": "e317b2163905b3f3329bc0e566aae345d847afd3",
+  "date": "2026-11-01 Asia/Bangkok",
+  "migration_revision": "0004_mapping_drafts",
+  "ai_drafts_observed": 170,
+  "project2_commit": "32d82862526754b46efb774327ccc4774a4decf7",
+  "project2_clean": true,
+  "java_git_blob_sha256": {
+    "backend/src/main/java/dev/vmarket/migration/IntegrationProfileService.java": "d71a35eee75a5910d5964cca05411275faec0de8afceb7d02a2f5d2784136b4b",
+    "backend/src/main/java/dev/vmarket/migration/SupplierOnboardingService.java": "96b609186ed94172a56d64e3406af28432a78d481084040c0fa3a8f47048c37c",
+    "backend/src/main/resources/db/migration/V14__supplier_integration_profiles.sql": "e4cdabf631ace314ac6aa0e9ca098e29f57c937b4c4d5b4930e2d2d925dc8ddc"
+  },
+  "hardware_reference": "LOCAL-environment.json",
+  "fake_business_policy": "seed-only standalone fixture, no live Java/DB call",
+  "provider_ledger_unchanged": true
+}

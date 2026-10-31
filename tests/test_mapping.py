@@ -1,6 +1,7 @@
 import base64
 import hashlib
 import json
+import logging
 import os
 from pathlib import Path
 from uuid import uuid4
@@ -32,6 +33,7 @@ def request(raw=RAW, **kwargs):
         raw_base64=base64.b64encode(raw).decode(),
         declared_encoding=kwargs.pop("declared_encoding", "UTF-8"),
         selected_vendor_code=kwargs.pop("selected_vendor_code", "RIVERBYTE"),
+        method=kwargs.pop("method", "ai"),
         synthetic=True,
         **kwargs,
     )
@@ -212,6 +214,22 @@ async def test_provider_failure_is_explicit_rule_draft_and_not_retried():
     assert all(a.basis == "rule" for a in result.assignments)
 
 
+async def test_default_is_rule_and_provider_failure_cannot_change_fake_inventory():
+    class Business(StandalonePolicy):
+        inventory = {"VM-002": 23}
+
+    business = Business()
+    before = dict(business.inventory)
+    model = Model(error=ProviderError())
+    service = MappingService(business, Store(), model, mode="local")
+    payload = request().model_dump()
+    del payload["method"]
+    result = await service.suggest(DEMO_ACTOR, MappingRequest.model_validate(payload), uuid4())
+    assert result.reason == "RULE_BASELINE" and not model.requests
+    await service.suggest(DEMO_ACTOR, request(method="ai"), uuid4())
+    assert business.inventory == before and len(model.requests) == 1
+
+
 async def test_foreign_or_unknown_profile_reference_rejected_before_inference():
     model = Model()
     with pytest.raises(MappingError, match="PROFILE_NOT_AVAILABLE"):
@@ -303,6 +321,7 @@ async def test_authorized_sop_scope_and_post_inference_revocation():
 
 
 def test_api_flag_off_local_boundary_errors_and_no_body_logging(migrated, caplog):
+    caplog.set_level(logging.INFO, logger="vmarket_ai")
     service = MappingService(StandalonePolicy(), Store())
     settings = Settings(
         _env_file=None,
@@ -332,6 +351,30 @@ def test_api_flag_off_local_boundary_errors_and_no_body_logging(migrated, caplog
         assert r.status_code == 400 and "sentinel-private" not in r.text + caplog.text
         assert client.post("/ai/mapping/suggest", json={**bad, "actor": "admin"}).status_code == 400
         assert client.post("/ai/ask", json={}).status_code == 404
+
+
+def test_mapping_large_original_envelope_and_upper_transport_bound(migrated):
+    raw = b"SKU,ProductName,AvailableQuantity\n" + b"x," + b"a" * 400 + b",23\n"
+    raw = raw.split(b"\n", 1)[0] + b"\n" + raw.split(b"\n", 1)[1] * 200
+    assert len(raw) > 65_536
+    store = Store()
+    settings = Settings(
+        _env_file=None,
+        mapping_enabled=True,
+        database_url=SecretStr("postgresql+psycopg://x:x@127.0.0.1:5434/vmarket_ai"),
+    )
+    with TestClient(
+        create_app(
+            settings,
+            create_db_engine(migrated),
+            mapping_service=MappingService(StandalonePolicy(), store),
+        ),
+        base_url="http://127.0.0.1:8090",
+    ) as client:
+        response = client.post("/ai/mapping/suggest", json=request(raw, method="rule").model_dump())
+        assert response.status_code == 200 and store.records[0][0] == raw
+        response = client.post("/ai/mapping/suggest", content=b"x" * 6_700_001)
+        assert response.status_code == 413 and len(store.records) == 1
 
 
 PG = os.environ.get("AI_TEST_DATABASE_URL")
