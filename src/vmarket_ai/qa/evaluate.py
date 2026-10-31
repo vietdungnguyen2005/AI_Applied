@@ -23,7 +23,8 @@ from vmarket_ai.settings import load_settings
 BASELINE_SYSTEM = """Answer a fictional supplier operations question without retrieval.
 Do not invent supplier-specific facts. Return only JSON:
 {"decision":"answer|insufficient","answer":"text or null"}.
-If you lack necessary facts, set decision insufficient and answer null. No citations are available."""
+If facts are missing, set decision insufficient and answer null. No citations are available.
+"""
 
 
 class RecordedModel:
