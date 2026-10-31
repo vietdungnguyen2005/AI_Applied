@@ -1,0 +1,87 @@
+E501 Line too long (105 > 100)
+  --> src\vmarket_ai\datasets\release.py:91:101
+   |
+89 |     if (frozen.manifest_sha256 != digest(raw_manifest)
+90 |             or frozen.mapping_labels_sha256 != digest((root / "labels/mapping.jsonl").read_bytes())
+91 |             or frozen.relevance_labels_sha256 != digest((root / "labels/relevance.jsonl").read_bytes())):
+   |                                                                                                     ^^^^^
+92 |         raise DatasetError("Freeze metadata does not match the released artifact hashes")
+93 |     paths = [a.path for a in manifest.artifacts]
+   |
+
+E501 Line too long (108 > 100)
+  --> tests\test_datasets.py:49:101
+   |
+47 |     first, second = render(SPEC), render(SPEC)
+48 |     assert first == second
+49 |     assert write_snapshot(first, tmp_path / "one", False) == write_snapshot(second, tmp_path / "two", False)
+   |                                                                                                     ^^^^^^^^
+50 |     assert first == {p.relative_to(DATA).as_posix(): p.read_bytes() for p in DATA.rglob("*") if p.is_file()}
+51 |     assert write_snapshot(first, DATA, True)["files"] == 80
+   |
+
+E501 Line too long (108 > 100)
+  --> tests\test_datasets.py:50:101
+   |
+48 |     assert first == second
+49 |     assert write_snapshot(first, tmp_path / "one", False) == write_snapshot(second, tmp_path / "two", False)
+50 |     assert first == {p.relative_to(DATA).as_posix(): p.read_bytes() for p in DATA.rglob("*") if p.is_file()}
+   |                                                                                                     ^^^^^^^^
+51 |     assert write_snapshot(first, DATA, True)["files"] == 80
+   |
+
+E501 Line too long (102 > 100)
+   --> tests\test_datasets.py:118:101
+    |
+116 |         mapping = LABELS[record.id].target_to_source
+117 |         if mapping:
+118 |             projected = {target: rows[1][rows[0].index(source)] for target, source in mapping.items()}
+    |                                                                                                     ^^
+119 |             assert projected["sku"] in {"VM-001", "VM-002"}
+120 |             assert 20 <= int(projected["on_hand"]) <= 80
+    |
+
+E501 Line too long (103 > 100)
+   --> tests\test_datasets.py:125:101
+    |
+123 | def test_mapping_input_projection_excludes_gold_and_rejects_legacy_contract():
+124 |     item = load_mapping_input(DATA, LOCK, "map-b-test-reference-01")
+125 |     assert {f.name for f in fields(item)} == {"raw_bytes", "declared_encoding", "selected_vendor_code"}
+    |                                                                                                     ^^^
+126 |     assert item.selected_vendor_code == "RIVERBYTE"
+127 |     for case_id in ["../../.env", "reg-legacy-stale-version"]:
+    |
+
+E501 Line too long (108 > 100)
+   --> tests\test_datasets.py:144:101
+    |
+143 | def test_rejected_documents_and_no_fabricated_ocr_confidence():
+144 |     corpus = [json.loads(line) for line in (DATA / "corpus.jsonl").read_text(encoding="utf-8").splitlines()]
+    |                                                                                                     ^^^^^^^^
+145 |     for doc in corpus:
+146 |         actual = inspect_text((DATA / doc["path"]).read_bytes(), doc["media_type"])
+    |
+
+E501 Line too long (119 > 100)
+   --> tests\test_datasets.py:149:101
+    |
+147 |         assert actual.extraction_confidence is None
+148 |         assert not actual.ocr_performed
+149 |         if actual.status != "verified_text" or doc["trust_level"] == "untrusted_fixture" or doc["status"] == "retired":
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+150 |             assert not doc["eligible_for_default_index"]
+151 |     assert sum(doc["eligible_for_default_index"] for doc in corpus) == 8
+    |
+
+E501 Line too long (118 > 100)
+   --> tests\test_datasets.py:193:101
+    |
+191 |     docs = [json.loads(line) for line in tree["corpus.jsonl"].decode().splitlines()]
+192 |     next(d for d in docs if d["id"] == "empty.txt")["eligible_for_default_index"] = True
+193 |     tree["corpus.jsonl"] = b"".join((json.dumps(d, ensure_ascii=False, sort_keys=True) + "\n").encode() for d in docs)
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^
+194 |     root, lock = candidate(tmp_path, repack(tree))
+195 |     with pytest.raises(DatasetError, match="Unparseable"):
+    |
+
+Found 8 errors.

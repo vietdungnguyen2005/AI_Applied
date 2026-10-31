@@ -1,0 +1,84 @@
+{
+  "FX-CSV-A-CP932": [
+    "reg-a-original"
+  ],
+  "FX-CSV-AMBIGUOUS": [
+    "map-a-test-ambiguous-01",
+    "map-b-test-ambiguous-01"
+  ],
+  "FX-CSV-B-UTF8": [
+    "reg-b-original"
+  ],
+  "FX-CSV-BADWIDTH": [
+    "reg-b-bad-width"
+  ],
+  "FX-CSV-DUPHEAD": [
+    "reg-b-duplicate-header"
+  ],
+  "FX-CSV-DUPSKU": [
+    "reg-b-duplicate-sku"
+  ],
+  "FX-CSV-EXTRA": [
+    "reg-b-extra-column"
+  ],
+  "FX-CSV-INJECT": [
+    "reg-b-prompt-injection"
+  ],
+  "FX-CSV-MALFORMED": [
+    "reg-b-malformed"
+  ],
+  "FX-CSV-MISSING": [
+    "reg-b-missing-header"
+  ],
+  "FX-CSV-OVERSIZE": [
+    "reg-b-oversize"
+  ],
+  "FX-CSV-TOOMANY": [
+    "reg-b-too-many-rows"
+  ],
+  "FX-CSV-UNKNOWNSKU": [
+    "reg-b-unknown-sku"
+  ],
+  "FX-CSV-VENDOR": [
+    "reg-b-vendor-mismatch",
+    "reg-b-unknown-vendor"
+  ],
+  "FX-CSV-WRONGENC": [
+    "reg-a-wrong-encoding",
+    "reg-a-truncated-cp932"
+  ],
+  "FX-DOC-DENIED": [
+    "a-restricted",
+    "b-restricted"
+  ],
+  "FX-DUPLICATE-RAW": [
+    "reg-a-original",
+    "reg-a-identical-copy"
+  ],
+  "FX-PROFILE-INACTIVE": [
+    "reg-b-inactive-profile"
+  ],
+  "FX-SOP-A-JA": [
+    "a-current"
+  ],
+  "FX-SOP-B-EN": [
+    "b-current"
+  ],
+  "FX-SOP-CONFLICT": [
+    "a-conflict-early",
+    "a-conflict-late",
+    "b-conflict-early",
+    "b-conflict-late"
+  ],
+  "FX-SOP-INJECT": [
+    "a-injection",
+    "b-injection"
+  ],
+  "FX-SOP-OLD": [
+    "a-old",
+    "b-old"
+  ],
+  "FX-STOCK-STALE": [
+    "reg-legacy-stale-version"
+  ]
+}

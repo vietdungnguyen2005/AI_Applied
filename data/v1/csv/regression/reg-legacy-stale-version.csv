@@ -1,0 +1,2 @@
+schema_version,sku,vendor_code,name,on_hand,price_minor,expected_stock_version
+2,VM-001,NAMI,Synthetic stale snapshot,35,11000,0

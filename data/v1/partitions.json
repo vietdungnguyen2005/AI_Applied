@@ -1,0 +1,100 @@
+{
+  "mapping": {
+    "dev": [
+      "map-a-dev-catalog-01",
+      "map-a-dev-catalog-02",
+      "map-a-dev-goods-01",
+      "map-b-dev-catalog-01",
+      "map-b-dev-catalog-02",
+      "map-b-dev-goods-01"
+    ],
+    "regression": [
+      "reg-a-original",
+      "reg-b-original",
+      "reg-a-identical-copy",
+      "reg-a-lf",
+      "reg-a-utf8-transcode",
+      "reg-b-missing-header",
+      "reg-b-duplicate-header",
+      "reg-b-duplicate-sku",
+      "reg-b-vendor-mismatch",
+      "reg-b-unknown-sku",
+      "reg-b-extra-column",
+      "reg-b-bad-width",
+      "reg-b-malformed",
+      "reg-b-empty",
+      "reg-b-header-only",
+      "reg-b-quantity-range",
+      "reg-b-prompt-injection",
+      "reg-b-too-many-rows",
+      "reg-b-oversize",
+      "reg-b-utf8-bom",
+      "reg-a-wrong-encoding",
+      "reg-a-truncated-cp932",
+      "reg-b-unknown-vendor",
+      "reg-b-inactive-profile",
+      "reg-legacy-stale-version"
+    ],
+    "test": [
+      "map-a-test-reference-01",
+      "map-a-test-reference-02",
+      "map-a-test-warehouse-01",
+      "map-a-test-warehouse-02",
+      "map-a-test-identity-01",
+      "map-a-test-ambiguous-01",
+      "map-b-test-reference-01",
+      "map-b-test-reference-02",
+      "map-b-test-warehouse-01",
+      "map-b-test-warehouse-02",
+      "map-b-test-identity-01",
+      "map-b-test-ambiguous-01"
+    ],
+    "train": [
+      "map-a-seeded-01",
+      "map-a-seeded-02",
+      "map-a-basic-alias-01",
+      "map-a-basic-alias-02",
+      "map-b-seeded-01",
+      "map-b-seeded-02",
+      "map-b-basic-alias-01",
+      "map-b-basic-alias-02"
+    ]
+  },
+  "policy": "Families stay within benchmark splits. Regression is excluded from metrics.",
+  "relevance": {
+    "dev": [
+      "qa-a-approval-en",
+      "qa-a-approval-ja",
+      "qa-a-pending-en",
+      "qa-a-pending-ja",
+      "qa-b-approval-en",
+      "qa-b-approval-ja",
+      "qa-b-pending-en",
+      "qa-b-pending-ja"
+    ],
+    "test": [
+      "qa-a-conflict-ja",
+      "qa-a-escalation-ja",
+      "qa-a-unknown-ja",
+      "qa-a-denied-ja",
+      "qa-a-freshness-ja",
+      "qa-a-injection-ja",
+      "qa-b-conflict-en",
+      "qa-b-escalation-en",
+      "qa-b-unknown-en",
+      "qa-b-denied-en",
+      "qa-b-freshness-en",
+      "qa-b-injection-en"
+    ],
+    "train": [
+      "qa-a-encoding-en",
+      "qa-a-encoding-ja",
+      "qa-a-mapping-en",
+      "qa-a-mapping-ja",
+      "qa-b-encoding-en",
+      "qa-b-encoding-ja",
+      "qa-b-mapping-en",
+      "qa-b-mapping-ja"
+    ]
+  }
+}

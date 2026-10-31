@@ -1,0 +1,2 @@
+CC0-1.0: original synthetic fixture text, data and provisional labels only.
+No real supplier/customer material. Repository code license is unchanged.

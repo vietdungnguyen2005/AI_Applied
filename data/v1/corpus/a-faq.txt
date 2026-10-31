@@ -1,0 +1,8 @@
+SYNTHETIC a-faq source version 1
+
+[section:receipt]
+プレビュー後に原本や profile version が変わった場合、再プレビューして人が確認します。Do not change original bytes to repair approval.
+
+[section:duplicates]
+同じ原本のバイト列を別の profile version で再利用しても、新しい import identity にはなりません。
+

@@ -1,0 +1,10 @@
+{
+  "record_type": "unfilled_proposed_review_template",
+  "dataset": "vmarket-synthetic-v1",
+  "manifest_sha256": null,
+  "reviewer": null,
+  "reviewed_at": null,
+  "independent_human_review_performed": false,
+  "label_results": [],
+  "instructions": "Fill only after genuine independent human review. Record label ID, accepted/changed/disputed decision and rationale. Corrections require a new release; never edit frozen v1."
+}

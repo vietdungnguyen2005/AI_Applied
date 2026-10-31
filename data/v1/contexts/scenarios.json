@@ -1,0 +1,24 @@
+{
+  "inactive_profile_precondition": {
+    "active": false,
+    "profileId": "supplier-b",
+    "version": 1
+  },
+  "legacy_stale_precondition": {
+    "file_expected_stock_version": 0,
+    "simulated_current_stock_version": 1
+  },
+  "note": "Three-column supplier files never carry expected_stock_version. These are hypothetical test preconditions, not live inventory/session/receipt evidence.",
+  "runtime_database_observed": false,
+  "seed_reference": {
+    "NAMI": {
+      "on_hand": 32,
+      "sku": "VM-001"
+    },
+    "RIVERBYTE": {
+      "on_hand": 58,
+      "sku": "VM-002"
+    }
+  },
+  "synthetic": true
+}

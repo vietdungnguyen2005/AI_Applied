@@ -1,0 +1,8 @@
+SYNTHETIC b-faq source version 1
+
+[section:receipt]
+If original bytes or profile version change after preview, obtain a new preview and human review. 原本を変えて承認を修復しません。
+
+[section:duplicates]
+Identical original bytes keep global import identity. A different profile version does not create a new deduplication namespace.
+

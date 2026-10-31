@@ -1,6 +1,6 @@
 # V-Market AI Operations Copilot
 
-Local, offline-first Python foundation for a fictional Japanese retailer using synthetic suppliers. **P03 is implemented; RAG, CSV mapping, agent tools and V-Market integration are not implemented yet.** No production deployment or real customer outcome is claimed.
+Local, offline-first Python foundation for a fictional Japanese retailer using synthetic suppliers. **P03 foundation and P04 dataset tooling are implemented; RAG, CSV mapping, agent tools and V-Market integration are not implemented yet.** No production deployment or real customer outcome is claimed.
 
 Current service exposes only `/health`, `/ready` and `/openapi.json`. Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
 
@@ -60,6 +60,7 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 
 ## Status and evidence
 
+- [P04 synthetic dataset](data/README.md): 51 CSV /17 document fixtures, frozen splits, provisional mapping/relevance labels and strict byte/metadata QA. Independent human review is pending; no model quality is claimed. Run `python -m uv run --frozen python -m vmarket_ai.datasets.generate --check` or `make dataset-check`.
 - [P03 evidence](docs/evidence/P03.md): executed commands, results, failures, limits and reproducibility.
 - [Roadmap](docs/roadmap.md): P00-P16 dependencies/status; [fictional discovery](docs/fde/README.md).
 - [Source-of-truth boundaries](docs/source-of-truth.md), [threat model](docs/threat-model.md), [design review](docs/design-review-checklist.md).

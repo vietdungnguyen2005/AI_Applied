@@ -1,0 +1,4 @@
+Unpublished candidate corrected before release commit: product display text now uses neutral synthetic hashes, not case IDs.
+Previous unpublished manifest SHA256=bc921ea110bcb65dd873f17d2e8e9a99ba50f18d4a7f86ea51093e0cec6feec9
+Final candidate manifest SHA256=989f6247ca38b7e43a2ccf7c5ffe431352f626dacf060b8694d830dc66f434ca
+No committed dataset or user original was overwritten.

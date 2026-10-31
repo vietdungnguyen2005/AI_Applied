@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "secret_values_checked": 3,
+  "files_scanned": 225,
+  "env_untracked": true,
+  "frozen_and_spec_git_bytes_identical": true,
+  "staged_whitespace_check": "PASS; raw frozen fixtures exempt from whitespace transformation/checks",
+  "project2_status": ""
+}
