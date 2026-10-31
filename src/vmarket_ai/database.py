@@ -23,7 +23,7 @@ from sqlalchemy.pool import ConnectionPoolEntry, StaticPool
 
 from vmarket_ai.settings import Settings
 
-REVISION = "0001_ai_foundation"
+REVISION = "0002_document_ingestion"
 
 
 class Base(DeclarativeBase):

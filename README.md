@@ -1,6 +1,6 @@
 # V-Market AI Operations Copilot
 
-Local, offline-first Python foundation for a fictional Japanese retailer using synthetic suppliers. **P03 foundation and P04 dataset tooling are implemented; RAG, CSV mapping, agent tools and V-Market integration are not implemented yet.** No production deployment or real customer outcome is claimed.
+Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **P03 foundation, P04 datasets and P05 document ingestion are implemented; ranked RAG, CSV mapping, agent tools and V-Market integration remain pending.** No production deployment or real customer outcome is claimed.
 
 Current service exposes only `/health`, `/ready` and `/openapi.json`. Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
 
@@ -30,7 +30,7 @@ python -m uv run --frozen pytest -q
 python -m uv run --frozen python tools/validate_contracts.py
 ```
 
-On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips the explicit PostgreSQL test; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden.
+On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips two explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
 
 ## Standalone Docker: own PostgreSQL + pgvector
 
@@ -47,6 +47,7 @@ To run the optional PostgreSQL test against this disposable stack:
 
 ```powershell
 $env:AI_TEST_DATABASE_URL='postgresql+psycopg://ai_app:local-ai-app-only@127.0.0.1:5434/vmarket_ai'
+$env:AI_TEST_OWNER_DATABASE_URL='postgresql+psycopg://ai_owner:local-ai-owner-only@127.0.0.1:5434/vmarket_ai'
 python -m uv run --frozen pytest -q -m postgres
 ```
 
@@ -56,14 +57,15 @@ Stop your own demo using `docker compose down`; data volume is retained. Do not 
 
 Fake chat/embedding implementations and typed interfaces are in `src/vmarket_ai/`. The optional OpenRouter adapter supports only `openrouter/free`: explicit live opt-in, API key, positive finite request/day budgets, current zero-price catalog preflight, bounded response/time and an atomic persisted usage ledger are required. No live provider call was made for P03. There is no live chat HTTP endpoint yet.
 
-See [provider safety and configuration](docs/providers.md). Unknown outcomes retain reservation and stop further live use for manual review; requests are never automatically retried or switched to a paid model. Application budgets cannot undo a provider charge; any unexpected reported cost is recorded and blocks further calls. VyceAI and live embeddings are not runtime adapters in P03; the earlier connectivity script is retained separately.
+See [provider safety and configuration](docs/providers.md). Unknown outcomes retain reservation and stop further live use for manual review; requests are never automatically retried or switched to a paid model. Application budgets cannot undo a provider charge; any unexpected reported cost is recorded and blocks further calls. P05 adds an optional pinned [local multilingual E5 embedding provider](docs/ingestion.md#local-real-embedding); it uses CPU inference without provider API keys. VyceAI is not a runtime adapter; the earlier connectivity script is retained separately.
 
 ## Status and evidence
 
+- [P05 ingestion](docs/ingestion.md): bounded TXT/Markdown/text-PDF/DOCX parsers, source citations, versioned chunks, real local E5/pgvector, collection grants and transactional update/delete tests. [Evidence](docs/evidence/P05.md) separates real inference from fake CI checks. Run `make ingestion-demo` or the documented Python CLI.
 - [P04 synthetic dataset](data/README.md): 51 CSV /17 document fixtures, frozen splits, provisional mapping/relevance labels and strict byte/metadata QA. Independent human review is pending; no model quality is claimed. Run `python -m uv run --frozen python -m vmarket_ai.datasets.generate --check` or `make dataset-check`.
 - [P03 evidence](docs/evidence/P03.md): executed commands, results, failures, limits and reproducibility.
 - [Roadmap](docs/roadmap.md): P00-P16 dependencies/status; [fictional discovery](docs/fde/README.md).
 - [Source-of-truth boundaries](docs/source-of-truth.md), [threat model](docs/threat-model.md), [design review](docs/design-review-checklist.md).
 - [Historical provider connectivity](docs/provider-connectivity-2026-10-31.md): a dated API snapshot, not RAG/product evaluation.
 
-Project2 is unchanged in this phase. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, document parser, retrieval index, actual customer UAT or public production rollout is claimed.
+Project2 is unchanged in this phase. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, ranked retrieval system, actual customer UAT or public production rollout is claimed.

@@ -1,4 +1,4 @@
-.PHONY: install lint typecheck test contracts dataset-check migrate run
+.PHONY: install lint typecheck test contracts dataset-check ingestion-demo migrate run
 install:
 	python -m uv sync --locked
 lint:
@@ -12,6 +12,8 @@ contracts:
 	python -m uv run --frozen python tools/validate_contracts.py
 dataset-check:
 	python -m uv run --frozen python -m vmarket_ai.datasets.generate --check
+ingestion-demo:
+	python -m uv run --frozen python -m vmarket_ai.ingestion.demo --report .local/ingestion-demo.json
 migrate:
 	python -m uv run --frozen vmarket-ai migrate
 run:

@@ -1,0 +1,122 @@
+ Image vmarket-ai:p03-local Building 
+ Image vmarket-ai:p03-local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 907B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 665B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.9s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 159B done
+#4 DONE 0.0s
+
+#5 [builder 1/6] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#5 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 541.55kB 0.1s done
+#6 DONE 0.1s
+
+#7 [builder 2/6] WORKDIR /app
+#7 CACHED
+
+#8 [builder 3/6] RUN python -m pip install --no-cache-dir uv==0.13.6
+#8 CACHED
+
+#9 [builder 4/6] COPY pyproject.toml uv.lock README.md ./
+#9 DONE 0.3s
+
+#10 [builder 5/6] COPY src ./src
+#10 DONE 0.0s
+
+#11 [builder 6/6] RUN uv sync --frozen --no-dev --no-editable
+#11 -3.274 Using CPython 3.12.15 interpreter at: /usr/local/bin/python3
+#11 -3.274 Creating virtual environment at: .venv
+#11 -3.249    Building vmarket-ai @ file:///app
+#11 -0.205 Downloading numpy (15.8MiB)
+#11 -0.204 Downloading pydantic-core (2.1MiB)
+#11 -0.203 Downloading lxml (5.0MiB)
+#11 -0.200 Downloading sqlalchemy (3.3MiB)
+#11 -0.200 Downloading psycopg-binary (5.0MiB)
+#11 0.637       Built vmarket-ai @ file:///app
+#11 1.828  Downloaded pydantic-core
+#11 2.568  Downloaded sqlalchemy
+#11 3.212  Downloaded lxml
+#11 3.212  Downloaded psycopg-binary
+#11 4.869  Downloaded numpy
+#11 4.869 Prepared 33 packages in 8.13s
+#11 4.943 Installed 33 packages in 74ms
+#11 4.943  + alembic==1.20.1
+#11 4.943  + annotated-doc==0.0.5
+#11 4.943  + annotated-types==0.8.0
+#11 4.943  + anyio==4.15.1
+#11 4.943  + certifi==2026.10.23
+#11 4.943  + click==8.5.0
+#11 4.943  + defusedxml==0.7.1
+#11 4.943  + fastapi==0.162.0
+#11 4.943  + greenlet==3.5.6
+#11 4.943  + h11==0.16.0
+#11 4.943  + httpcore==1.0.9
+#11 4.944  + httpx==0.28.1
+#11 4.944  + idna==3.20
+#11 4.944  + lxml==6.1.3
+#11 4.944  + mako==1.4.3
+#11 4.944  + markupsafe==3.0.4
+#11 4.944  + numpy==2.2.6
+#11 4.944  + opentelemetry-api==1.45.2
+#11 4.944  + pgvector==0.4.2
+#11 4.944  + psycopg==3.3.6
+#11 4.944  + psycopg-binary==3.3.6
+#11 4.944  + pydantic==2.14.2
+#11 4.944  + pydantic-core==2.50.2
+#11 4.944  + pydantic-settings==2.16.2
+#11 4.944  + pypdf==6.21.4
+#11 4.944  + python-docx==1.2.0
+#11 4.944  + python-dotenv==1.2.4
+#11 4.944  + sqlalchemy==2.0.55
+#11 4.944  + starlette==1.10.0
+#11 4.944  + typing-extensions==4.16.0
+#11 4.944  + typing-inspection==0.4.4
+#11 4.944  + uvicorn==0.54.0
+#11 4.944  + vmarket-ai==0.1.0 (from file:///app)
+#11 DONE 5.1s
+
+#12 [stage-1 2/7] RUN groupadd --gid 10001 ai && useradd --uid 10001 --gid ai --create-home ai
+#12 CACHED
+
+#13 [stage-1 3/7] WORKDIR /app
+#13 CACHED
+
+#14 [stage-1 4/7] COPY --from=builder --chown=ai:ai /app/.venv /app/.venv
+#14 DONE 0.9s
+
+#15 [stage-1 5/7] COPY --chown=ai:ai alembic.ini ./
+#15 DONE 0.2s
+
+#16 [stage-1 6/7] COPY --chown=ai:ai migrations ./migrations
+#16 DONE 0.0s
+
+#17 [stage-1 7/7] RUN mkdir -p /app/.local && chown -R ai:ai /app
+#17 DONE 4.3s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 3.1s done
+#18 exporting manifest sha256:3069a45b35f3f03881182f609dbb51ed8281de8091f1b51f70350daff0352f50 done
+#18 exporting config sha256:58e853595b1a75b66571999e87a9db9e04dedf989c816a708a82ed685d279a06 done
+#18 exporting attestation manifest sha256:177ab67bfd957808ac41b979182e6070d9ee8abc1dfe56a3c608b6712a65df1a 0.0s done
+#18 exporting manifest list sha256:3cc3f0fdb1c912784e42352220e0bdfabee857250a5952f17a9376c1662e8452 done
+#18 naming to docker.io/library/vmarket-ai:p03-local done
+#18 unpacking to docker.io/library/vmarket-ai:p03-local
+#18 unpacking to docker.io/library/vmarket-ai:p03-local 1.1s done
+#18 DONE 4.3s
+
+#19 resolving provenance for metadata file
+#19 DONE 0.0s
+ Image vmarket-ai:p03-local Built 

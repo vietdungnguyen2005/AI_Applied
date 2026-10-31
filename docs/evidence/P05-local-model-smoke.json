@@ -1,0 +1,66 @@
+{
+  "status": "actual_local_cpu_inference_and_pg_storage_verified",
+  "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1",
+  "bundle": {
+    "repo": "intfloat/multilingual-e5-small",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "files": {
+      "onnx/model.onnx": "ca456c06b3a9505ddfd9131408916dd79290368331e7d76bb621f1cba6bc8665",
+      "onnx/tokenizer.json": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+    },
+    "license": "MIT",
+    "dimensions": 384,
+    "pooling": "attention-mask-mean-l2",
+    "prefixes": {
+      "document": "passage: ",
+      "query": "query: "
+    }
+  },
+  "document_vectors": [
+    {
+      "dimensions": 384,
+      "l2_norm": 0.9999999999999999
+    },
+    {
+      "dimensions": 384,
+      "l2_norm": 1.0
+    }
+  ],
+  "query_vectors": [
+    {
+      "dimensions": 384,
+      "l2_norm": 1.0
+    },
+    {
+      "dimensions": 384,
+      "l2_norm": 1.0
+    }
+  ],
+  "postgres_vector_rows": [
+    {
+      "dimensions": 384,
+      "count": 46
+    }
+  ],
+  "external_inference_requests": 0,
+  "quality_metrics": "NOT_RUN",
+  "pipeline": {
+    "embedding": {
+      "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1",
+      "dimensions": 384,
+      "mode": "local"
+    },
+    "chunking": {
+      "size": 320,
+      "overlap": 48
+    },
+    "parser": "bounded-docs-v1",
+    "normalization": "NFC-lines-v1",
+    "unicode_version": "15.0.0",
+    "parser_packages": {
+      "pypdf": "6.21.4",
+      "python-docx": "1.2.0",
+      "defusedxml": "0.7.1"
+    }
+  }
+}

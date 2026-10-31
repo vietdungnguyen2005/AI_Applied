@@ -40,7 +40,7 @@ class EmbeddingResult(StrictModel):
     vectors: tuple[tuple[float, ...], ...]
     model: str = "fake-sha256-32"
     dimensions: int = 32
-    provider_mode: Literal["fake"] = "fake"
+    provider_mode: Literal["fake", "local"] = "fake"
 
 
 class ChatModel(Protocol):

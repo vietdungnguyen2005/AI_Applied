@@ -1,5 +1,7 @@
 # AI-owned data model and migration plan
 
+Implementation update: P05's actual schema, transaction boundary, ACL and source-retention behavior are documented in [ingestion](ingestion.md) and [ADR 0005](adr/0005-transactional-document-ingestion.md). In particular bounded raw sources now use transactional BYTEA/BLOB storage, replacing the filesystem proposal below. The remaining P02 text is retained as the original design, not a claim that every proposed table exists.
+
 P02 design only. No SQL/migration executed in this phase. Separate PostgreSQL database `vmarket_ai`, schema `ai`, host port 5434 and own volume/credentials. No FK/query/driver credential into V-Market's business DB. Java UUIDs/profile references are observed opaque external references, not authority or foreign keys across databases.
 
 ## Proposed records

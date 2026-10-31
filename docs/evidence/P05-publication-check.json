@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "files_scanned": 266,
+  "secret_values_checked": 3,
+  "env_ignored": true,
+  "frozen_p04_unchanged": true,
+  "project2_unchanged": true,
+  "final_demo_counts_and_source_crosswalk": "PASS",
+  "model_weights_tracked": false,
+  "validation_environment": ".local/p05-env"
+}

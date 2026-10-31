@@ -1,0 +1,34 @@
+{
+  "http": {
+    "/health": {
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    "/ready": {
+      "status": 200,
+      "body": {
+        "status": "ready",
+        "provider_mode": "fake"
+      }
+    }
+  },
+  "container": {
+    "uid": 10001,
+    "provider_or_migration_secrets_present": false,
+    "onnxruntime_installed": false,
+    "extraction": {
+      "sections": [
+        {
+          "locator": "section:policy",
+          "text": "Synthetic container policy"
+        }
+      ],
+      "parser": "bounded-docs-v1/strict-utf8-headings",
+      "quality": "extracted_text_only",
+      "confidence": null,
+      "ocr_performed": false
+    }
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "phase": "P05",
+  "date": "2026-10-31",
+  "baseline_ai": "124168b47819b46781631af2e826dd2f43c1c2cc",
+  "baseline_project2": "32d82862526754b46efb774327ccc4774a4decf7",
+  "hash_scope": "Git blob bytes; manifest excludes itself",
+  "artifacts": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "801de715425abc712c99be89f73c06362fab5112f5ff0b3b44aaeacdd5bfd1bd",
+      "bytes": 1307
+    },
+    {
+      "path": "Makefile",
+      "sha256": "388d4ebb563958c899dfb749dc23c22b0598e8dd14159d92f40c51e742e31d85",
+      "bytes": 780
+    },
+    {
+      "path": "README.md",
+      "sha256": "7960df8aa18608d7a085ece096c7970a5cfac1db0c6c426ec162198159a4b6c3",
+      "bytes": 6336
+    },
+    {
+      "path": "docs/adr/0005-transactional-document-ingestion.md",
+      "sha256": "75886b8d8808f0c20e501194855e53ca85eadf90742047cc13a1e2b5c36ab757",
+      "bytes": 2240
+    },
+    {
+      "path": "docs/data-model.md",
+      "sha256": "bbd1ccf3040b7eed6b6aaddef4c5cecbc760c02eaaeb0f8f2eff87c3b8b1270a",
+      "bytes": 8897
+    },
+    {
+      "path": "docs/evidence/P05-container-smoke.json",
+      "sha256": "a535c075fc473250a8e2e52a07d065a77c949bff20983204ea66fd2fad0e502c",
+      "bytes": 678
+    },
+    {
+      "path": "docs/evidence/P05-contract-validation.json",
+      "sha256": "a662aa418f42c75303b5d758f00ba2163a4979eb6dd78989a91e21886c3cd7f5",
+      "bytes": 17282
+    },
+    {
+      "path": "docs/evidence/P05-environment.json",
+      "sha256": "e3b3b473bbf0a366b78d53db953624bbda2934129f6f4246109d5f9122bb35a5",
+      "bytes": 1052
+    },
+    {
+      "path": "docs/evidence/P05-fake-ingestion.json",
+      "sha256": "cc1793245ba5b0c7d5a9536c8677a49f0e89786b7d054b33f703d8981380d478",
+      "bytes": 9137
+    },
+    {
+      "path": "docs/evidence/P05-local-model-smoke.json",
+      "sha256": "32f9ec3e3945945c2e956b5f281c81cff913ad3b96c6036d08292602b724d03c",
+      "bytes": 1624
+    },
+    {
+      "path": "docs/evidence/P05-publication-check.json",
+      "sha256": "19265c4b1a4c1b264dd94131e94bccc513165a0c00e5707d0963672fb1d0ae3d",
+      "bytes": 294
+    },
+    {
+      "path": "docs/evidence/P05-real-ingestion.json",
+      "sha256": "ac29b5a1f196eb554e83fa6de0e197c4c2f55e02a4ad9f1f808ddc313d278547",
+      "bytes": 9221
+    },
+    {
+      "path": "docs/evidence/P05.md",
+      "sha256": "5e63eb13a224a97ed503701a00f7a0f6daaf965b310557581e73941a8150da3b",
+      "bytes": 11488
+    },
+    {
+      "path": "docs/evidence/logs/P05-compose-up.log",
+      "sha256": "f39fbde961eaa57e0e4b482436d589a9477693c3808810cac022dafce4d00865",
+      "bytes": 918
+    },
+    {
+      "path": "docs/evidence/logs/P05-contracts.log",
+      "sha256": "b749a78a0e37e7a722efa6eaa60352430a47764538a32484cf6a5b595460d1e0",
+      "bytes": 11972
+    },
+    {
+      "path": "docs/evidence/logs/P05-dataset-check.log",
+      "sha256": "475a4ff245f3a32835e100bd496b9656e8f269ec8c00417f2e74a2cbffe703d2",
+      "bytes": 787
+    },
+    {
+      "path": "docs/evidence/logs/P05-docker-build.log",
+      "sha256": "b5d0e273c2e36fc336c3a681b27bd7ddb47ff46c424f2fa713d7312a472450c3",
+      "bytes": 4182
+    },
+    {
+      "path": "docs/evidence/logs/P05-fake-demo.log",
+      "sha256": "65bee0e6790ac48b2c22816c32f116f89580c1f94f355dfd533d9cf2b844a459",
+      "bytes": 259
+    },
+    {
+      "path": "docs/evidence/logs/P05-format.log",
+      "sha256": "c4b07acae0e7545fb27f9d45b1326e780be8bfc2195bba4137e887fa44ec961d",
+      "bytes": 43
+    },
+    {
+      "path": "docs/evidence/logs/P05-ingestion-tests-interim.log",
+      "sha256": "976a2a4a1d103b985277457b8990eb178b9c82faf3e8d77a692266ae4a7603b1",
+      "bytes": 677
+    },
+    {
+      "path": "docs/evidence/logs/P05-ingestion-tests.log",
+      "sha256": "f3b5f9a4a3d66ff820c9b8e4b0af52462ecdc62c0da3ee90c5688b4343d96046",
+      "bytes": 113
+    },
+    {
+      "path": "docs/evidence/logs/P05-initial-lint.log",
+      "sha256": "4d650b65f547bdac6cf83e7cad32e17c3f8a521b782213ba5e56395adde25a72",
+      "bytes": 5889
+    },
+    {
+      "path": "docs/evidence/logs/P05-lint.log",
+      "sha256": "5af3201b9a1ffc1c3e62379105a5a384210e6bd8c10706ec2c6e11533cf0ac53",
+      "bytes": 35
+    },
+    {
+      "path": "docs/evidence/logs/P05-local-model-smoke.log",
+      "sha256": "12b9e87bdd2d850a1da31205b325cfbba1961857d9046ac40c232ca343173c6c",
+      "bytes": 1321
+    },
+    {
+      "path": "docs/evidence/logs/P05-model-download.log",
+      "sha256": "349a7b7d698bcbf82b381008c873cce554add3f6a7bd82f364f01b7ae96f2a2b",
+      "bytes": 2297
+    },
+    {
+      "path": "docs/evidence/logs/P05-postgres-migrate.log",
+      "sha256": "7421b1ec0d530dc20eb1deffe5472bb638a0d96e44faf1ec9b84e136c752305b",
+      "bytes": 60
+    },
+    {
+      "path": "docs/evidence/logs/P05-postgres-tests.log",
+      "sha256": "77b34eada169f767e253ef0f6dc4360a82aa257648951558d761287949c1d1d8",
+      "bytes": 602
+    },
+    {
+      "path": "docs/evidence/logs/P05-real-demo.log",
+      "sha256": "28f2ccb0629468951d1e76bd1915033cd5c56f78012ba8a9e61f108b495a3c07",
+      "bytes": 343
+    },
+    {
+      "path": "docs/evidence/logs/P05-tests.log",
+      "sha256": "10e1a624065bd9f2538ea93041f61d9323b19b3a37663419102cbb9995d6c8a6",
+      "bytes": 777
+    },
+    {
+      "path": "docs/evidence/logs/P05-typecheck.log",
+      "sha256": "544a8ddf06e572bd2dd7b1a7687fa0af477dde3650af034d8313a84fc63be7d0",
+      "bytes": 60
+    },
+    {
+      "path": "docs/ingestion.md",
+      "sha256": "4af3bec432fa3857aa4832f6f9788347aaa42cf1c28e35c672772e4d94623d80",
+      "bytes": 11722
+    },
+    {
+      "path": "docs/roadmap.md",
+      "sha256": "5ad1f87bbb7471380093beec5ebefebd1de1fc32c9cfb9d595a12be156ea0229",
+      "bytes": 4198
+    },
+    {
+      "path": "migrations/env.py",
+      "sha256": "dc753171a9b962c06f2861c0ef52cea820baa31140c98e5c9e65a9d8cb9ee3ab",
+      "bytes": 883
+    },
+    {
+      "path": "migrations/versions/0002_document_ingestion.py",
+      "sha256": "31353c0e9223ca76619754a5e7dc50078e8daefc51ddfb344871afcc2ef6b1ca",
+      "bytes": 5979
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "b37e03bdd6b742adafb4d7ca83752074ba29ec5800f46e847877fd8626f28935",
+      "bytes": 1434
+    },
+    {
+      "path": "src/vmarket_ai/contracts.py",
+      "sha256": "045480ea5455355245b8a494f903ec43c1f920a1de047d059332f3cefa58ebb1",
+      "bytes": 2855
+    },
+    {
+      "path": "src/vmarket_ai/database.py",
+      "sha256": "a76fbc1fe0c5ced992bad464796cb699e50a6763de761d4e1404cef8c8fdddd6",
+      "bytes": 4409
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/__init__.py",
+      "sha256": "a0dbb52f66ad2e256c40afb521e44a104472c4fb80d842948b560028057ab240",
+      "bytes": 89
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/demo.py",
+      "sha256": "1961497ed0f8b1f485ffa26f599752e50b39942ff22f28f083bcdcf7ecf8b780",
+      "bytes": 7478
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/limits.py",
+      "sha256": "0ec5e7621745b2b2e3006901cdeaaf28b576f4031c5ea389abceaa3ecfbe09b1",
+      "bytes": 2639
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/model_bundle.py",
+      "sha256": "80a628818a0ec0bba32e96b2d69b0749a319878280d22ec0dcdd1906dcf58140",
+      "bytes": 1763
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/models.py",
+      "sha256": "760bd2428e611776bacef51f6cf10f89a29b98863eda6b531111af1507e7d0dc",
+      "bytes": 4523
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/parsing.py",
+      "sha256": "1c5a05b10e26eac10e837dcf51500b5d5bb7bbcf127418c76d0444e329adeeba",
+      "bytes": 10102
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/service.py",
+      "sha256": "b502bf72b5684195b2dae95d834c165343b5bb99fda09b7d22d55bd1d9756b6e",
+      "bytes": 16592
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/spec.py",
+      "sha256": "f1d1cefe4857a089cecf2628a1ffa037bef16bea1787f7f744e39a73da792e32",
+      "bytes": 3876
+    },
+    {
+      "path": "src/vmarket_ai/ingestion/worker.py",
+      "sha256": "11f3c350ed22f90a7e8edd338230beba01bf42c52f0c70787c3dc23fd495a5d9",
+      "bytes": 1205
+    },
+    {
+      "path": "src/vmarket_ai/providers/local_e5.py",
+      "sha256": "c097c315ec5919c8985b7cbed87cebe95b7079863fdeb0b5b500649d361d3172",
+      "bytes": 3875
+    },
+    {
+      "path": "tests/test_ingestion.py",
+      "sha256": "5736d80051ab7f155c1fe9197a0c9bae02310ca5551c854c077aa3db113d2d16",
+      "bytes": 24103
+    },
+    {
+      "path": "tests/test_local_embeddings.py",
+      "sha256": "212fd2f0681613bd8e49aa27887ee7223e8202011d066b7d8593a148d5b951bd",
+      "bytes": 2887
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "63ffe50db8b5955c86e5e7266f92b4fa7c6a4b68158e84a994805c2274368c9b",
+      "bytes": 251267
+    }
+  ]
+}

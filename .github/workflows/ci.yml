@@ -12,7 +12,7 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install uv==0.13.6
       - run: python -m uv sync --locked
-      - run: make lint typecheck test contracts dataset-check
+      - run: make lint typecheck test contracts dataset-check ingestion-demo
       - run: docker compose config --quiet
       - run: docker compose -p ai-ci up -d --wait ai-postgres
       - name: Migrate isolated AI storage
@@ -23,6 +23,7 @@ jobs:
       - name: Real PostgreSQL permissions and extension test
         env:
           AI_TEST_DATABASE_URL: postgresql+psycopg://ai_app:local-ai-app-only@127.0.0.1:5434/vmarket_ai
+          AI_TEST_OWNER_DATABASE_URL: postgresql+psycopg://ai_owner:local-ai-owner-only@127.0.0.1:5434/vmarket_ai
         run: python -m uv run --frozen pytest -q -m postgres
       - run: docker compose -p ai-ci build ai-api
       - if: always()

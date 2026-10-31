@@ -1,0 +1,1 @@
+{"status": "ingestion_demo_only", "storage": "postgresql", "profile": {"model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1", "dimensions": 384, "mode": "local"}, "counts": {"versions": 14, "chunks": 46, "embeddings": 46}, "authorized_current_chunks": 18, "model_quality_metrics": "NOT_RUN"}

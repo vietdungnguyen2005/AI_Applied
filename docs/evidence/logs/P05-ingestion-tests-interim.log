@@ -1,0 +1,8 @@
+warning: Failed to uninstall package at `.venv\Lib\site-packages\numpy-2.5.4.dist-info` due to missing `RECORD` file. Installation may result in an incomplete environment.
+Uninstalled 2 packages in 56ms
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 1 package in 665ms
+.............................s                                           [100%]
+29 passed, 1 skipped in 22.32s

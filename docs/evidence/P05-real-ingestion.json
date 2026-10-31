@@ -1,0 +1,286 @@
+{
+  "status": "ingestion_demo_only",
+  "storage": "postgresql",
+  "profile": {
+    "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1",
+    "dimensions": 384,
+    "mode": "local"
+  },
+  "inventory": [
+    {
+      "fixture": "a-old",
+      "status": "retained_archive"
+    },
+    {
+      "fixture": "b-old",
+      "status": "retained_archive"
+    },
+    {
+      "fixture": "a-current",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+        "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391",
+        "snapshot_id": "57c55079-2b4a-5767-b19b-e64dc59b451c",
+        "revision": 3,
+        "chunks": 6,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "b-current",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+        "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+        "snapshot_id": "398769e5-5351-52be-b1b7-f602c540e86d",
+        "revision": 3,
+        "chunks": 6,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "a-faq",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "4610a6af-32ce-5acf-8171-81f442b8cd77",
+        "version_id": "ba39274f-d671-59e0-ac31-69b0cf8cf4fe",
+        "snapshot_id": "49e64894-4c46-5b93-a6f4-f601c5ded1ef",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "b-faq",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "aee825e1-9d5c-5188-a1fc-ab78e2a59737",
+        "version_id": "3e44522e-ee9c-59d0-80b1-16a4f91b369a",
+        "snapshot_id": "01fba182-dec2-5dd7-ab81-8efc26bd4558",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "a-conflict-early",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "716676ba-1506-598c-b0bd-ceadfadbcd6f",
+        "version_id": "d189457d-c5fa-5d11-862b-95cc66ed8916",
+        "snapshot_id": "a7ce1f64-d7c9-589c-9dad-bf9e1ca59f5e",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "a-conflict-late",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "49519294-0865-5438-8cbf-ec39e821d213",
+        "version_id": "5298aed6-f01a-59df-8238-41328663ed62",
+        "snapshot_id": "c294b7fc-173f-5a78-9590-f37320eed90c",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "b-conflict-early",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "72425e2c-b591-5bc8-8d73-678d5756e125",
+        "version_id": "da208f94-add5-516d-b9b9-98115692d609",
+        "snapshot_id": "0dcdb31d-e725-502b-b61c-a0738645a8a9",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "b-conflict-late",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "4665032f-58bb-5170-9bea-879d02a6ff1f",
+        "version_id": "90dfe25e-813f-5b00-b739-b550ad8e7b54",
+        "snapshot_id": "261cdecd-2a67-5ead-b1a1-231dfb7311fd",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "a-injection",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "9d266265-eb18-5e8d-9baa-5f2175fd044d",
+        "version_id": "84cf32ed-3a1d-5b4a-8952-e709c3b4914e",
+        "snapshot_id": "ddf9a0bd-5839-5231-adfd-34de9aab6c73",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "b-injection",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "fa03bd93-0b2d-5acf-8d76-8863a6d029fd",
+        "version_id": "68100419-8d17-557e-b681-ed75929e9115",
+        "snapshot_id": "dedcae0a-2f29-5d96-ac58-a35db8350e6b",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "a-restricted",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "378ffb35-010e-55a7-921d-5b754c55abea",
+        "version_id": "e49dc989-badf-5025-82d9-dba8f23ead24",
+        "snapshot_id": "8662f09f-fa1c-5a30-8186-8dcfe173be62",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "b-restricted",
+      "status": "ingested",
+      "receipt": {
+        "document_id": "1cace93a-d1c8-5d03-86d4-82061d6a9113",
+        "version_id": "0acf82e8-563f-5591-99a0-62c790796d83",
+        "snapshot_id": "618dbe94-aa75-564d-950f-0d11989d40a5",
+        "revision": 2,
+        "chunks": 1,
+        "unchanged": true
+      }
+    },
+    {
+      "fixture": "empty.txt",
+      "status": "rejected",
+      "code": "size_or_media"
+    },
+    {
+      "fixture": "invalid-utf8.txt",
+      "status": "rejected",
+      "code": "invalid_encoding"
+    },
+    {
+      "fixture": "unsupported.bin",
+      "status": "rejected",
+      "code": "size_or_media"
+    }
+  ],
+  "counts": {
+    "versions": 14,
+    "chunks": 46,
+    "embeddings": 46
+  },
+  "authorized_current_chunks": 18,
+  "sample_citation": {
+    "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+    "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391",
+    "snapshot_id": "57c55079-2b4a-5767-b19b-e64dc59b451c",
+    "chunk_id": "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+    "source_version": "2",
+    "raw_sha256": "c1d61a2f56275cd8afe3eb5616a305d341b3f3cfda88e1c898f906fb62757d4f",
+    "locator": "section:encoding",
+    "start": 0,
+    "end": 54,
+    "text": "Supplier A の原本は CP932 です。改行やバイト列を変えず、指定された文字コードを使用します。"
+  },
+  "source_version_crosswalk": [
+    {
+      "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+      "source_version": "2",
+      "fixture_version_id": "9e703e92-63c1-5c8d-ade4-fd98d135e0fb",
+      "stored_version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+    },
+    {
+      "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+      "source_version": "2",
+      "fixture_version_id": "9d3918c2-078d-5f79-90d6-89282bb4430c",
+      "stored_version_id": "018755f6-33fc-57db-8042-ec45d3f8befa"
+    },
+    {
+      "document_id": "4610a6af-32ce-5acf-8171-81f442b8cd77",
+      "source_version": "1",
+      "fixture_version_id": "713e6e36-b6be-55bf-9537-9c1662982382",
+      "stored_version_id": "ba39274f-d671-59e0-ac31-69b0cf8cf4fe"
+    },
+    {
+      "document_id": "aee825e1-9d5c-5188-a1fc-ab78e2a59737",
+      "source_version": "1",
+      "fixture_version_id": "906d582e-6a82-5ae2-b42e-7d718371b6b9",
+      "stored_version_id": "3e44522e-ee9c-59d0-80b1-16a4f91b369a"
+    },
+    {
+      "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+      "source_version": "1",
+      "fixture_version_id": "6d74c319-fff5-5baa-93e3-b707758ab679",
+      "stored_version_id": "18830746-d235-5914-a502-aa9cacd677b7"
+    },
+    {
+      "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+      "source_version": "1",
+      "fixture_version_id": "e3870c28-2805-5e6a-a902-cebd21a65645",
+      "stored_version_id": "76d1aae5-1829-5311-afec-324c628adc59"
+    },
+    {
+      "document_id": "716676ba-1506-598c-b0bd-ceadfadbcd6f",
+      "source_version": "1",
+      "fixture_version_id": "da9ca50e-85da-55db-b708-13c43b9996b4",
+      "stored_version_id": "d189457d-c5fa-5d11-862b-95cc66ed8916"
+    },
+    {
+      "document_id": "49519294-0865-5438-8cbf-ec39e821d213",
+      "source_version": "1",
+      "fixture_version_id": "1b3c0f27-9858-53e2-91d9-beebdd50e2a7",
+      "stored_version_id": "5298aed6-f01a-59df-8238-41328663ed62"
+    },
+    {
+      "document_id": "72425e2c-b591-5bc8-8d73-678d5756e125",
+      "source_version": "1",
+      "fixture_version_id": "be2d6239-8360-5f6a-a5cf-6f2a00b42e45",
+      "stored_version_id": "da208f94-add5-516d-b9b9-98115692d609"
+    },
+    {
+      "document_id": "4665032f-58bb-5170-9bea-879d02a6ff1f",
+      "source_version": "1",
+      "fixture_version_id": "c224da84-ef5a-5cd7-ba8e-a4e40067cb79",
+      "stored_version_id": "90dfe25e-813f-5b00-b739-b550ad8e7b54"
+    },
+    {
+      "document_id": "9d266265-eb18-5e8d-9baa-5f2175fd044d",
+      "source_version": "1",
+      "fixture_version_id": "30aa56b6-033f-590e-86ec-c683ac1a9107",
+      "stored_version_id": "84cf32ed-3a1d-5b4a-8952-e709c3b4914e"
+    },
+    {
+      "document_id": "fa03bd93-0b2d-5acf-8d76-8863a6d029fd",
+      "source_version": "1",
+      "fixture_version_id": "d59048c1-4b9d-541f-a09a-fe8fdce432be",
+      "stored_version_id": "68100419-8d17-557e-b681-ed75929e9115"
+    },
+    {
+      "document_id": "378ffb35-010e-55a7-921d-5b754c55abea",
+      "source_version": "1",
+      "fixture_version_id": "0648b1e3-ea3f-5927-af4d-3d90eec09ee6",
+      "stored_version_id": "e49dc989-badf-5025-82d9-dba8f23ead24"
+    },
+    {
+      "document_id": "1cace93a-d1c8-5d03-86d4-82061d6a9113",
+      "source_version": "1",
+      "fixture_version_id": "bde1b632-9b3b-5f6a-8a93-6b020f6466ea",
+      "stored_version_id": "0acf82e8-563f-5591-99a0-62c790796d83"
+    }
+  ],
+  "unauthorized_actor_results": 0,
+  "external_inference_requests": 0,
+  "model_quality_metrics": "NOT_RUN",
+  "independent_gold_review": "pending"
+}

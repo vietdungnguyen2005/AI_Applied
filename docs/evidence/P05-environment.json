@@ -1,0 +1,37 @@
+{
+  "python": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "environment": ".local/p05-env; fresh locked install",
+  "baseline_ai": "124168b47819b46781631af2e826dd2f43c1c2cc",
+  "project2_sha": "32d82862526754b46efb774327ccc4774a4decf7",
+  "project2_status": "",
+  "versions": {
+    "numpy": "2.2.6",
+    "pgvector": "0.4.2",
+    "pypdf": "6.21.4",
+    "python-docx": "1.2.0",
+    "defusedxml": "0.7.1",
+    "onnxruntime": "1.31.1",
+    "tokenizers": "0.23.3",
+    "huggingface-hub": "1.33.0"
+  },
+  "pipeline": {
+    "embedding": {
+      "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1",
+      "dimensions": 384,
+      "mode": "local"
+    },
+    "chunking": {
+      "size": 320,
+      "overlap": 48
+    },
+    "parser": "bounded-docs-v1",
+    "normalization": "NFC-lines-v1",
+    "unicode_version": "15.0.0",
+    "parser_packages": {
+      "pypdf": "6.21.4",
+      "python-docx": "1.2.0",
+      "defusedxml": "0.7.1"
+    }
+  },
+  "provider_api_calls": 0
+}
