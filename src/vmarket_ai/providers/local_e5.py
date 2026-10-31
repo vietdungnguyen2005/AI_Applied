@@ -4,6 +4,7 @@ import asyncio
 import hashlib
 import importlib
 import json
+from decimal import Decimal
 from pathlib import Path
 
 import numpy as np
@@ -70,7 +71,12 @@ class LocalE5EmbeddingProvider:
         if any(len(row) != 384 or not all(np.isfinite(v) for v in row) for row in vectors):
             raise IngestionError("invalid_embedding")
         return EmbeddingResult(
-            vectors=vectors, model=E5_MODEL, dimensions=384, provider_mode="local"
+            vectors=vectors,
+            model=E5_MODEL,
+            dimensions=384,
+            provider_mode="local",
+            input_tokens=int(mask.sum()),
+            billed_usd=Decimal("0"),
         )
 
     async def embed(self, request: EmbeddingRequest) -> EmbeddingResult:

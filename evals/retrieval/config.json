@@ -1,0 +1,17 @@
+{
+  "embedding": {
+    "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1",
+    "dimensions": 384,
+    "mode": "local"
+  },
+  "chunking": {"size": 320, "overlap": 48},
+  "top_k": 5,
+  "candidate_pool": 20,
+  "lexical_config": "english",
+  "lexical_match": "any",
+  "query_normalization": "nfc",
+  "rrf_constant": 60,
+  "lexical_weight": 1.0,
+  "dense_weight": 1.0,
+  "reranker": "none"
+}

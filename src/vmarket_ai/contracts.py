@@ -41,6 +41,8 @@ class EmbeddingResult(StrictModel):
     model: str = "fake-sha256-32"
     dimensions: int = 32
     provider_mode: Literal["fake", "local"] = "fake"
+    input_tokens: int | None = Field(default=None, ge=0)
+    billed_usd: Decimal | None = Field(default=None, ge=0)
 
 
 class ChatModel(Protocol):
@@ -49,6 +51,10 @@ class ChatModel(Protocol):
 
 class EmbeddingProvider(Protocol):
     async def embed(self, request: EmbeddingRequest) -> EmbeddingResult: ...
+
+
+class QueryEmbeddingProvider(Protocol):
+    async def embed_queries(self, request: EmbeddingRequest) -> EmbeddingResult: ...
 
 
 class EmptyArguments(StrictModel):

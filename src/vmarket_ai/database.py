@@ -23,7 +23,7 @@ from sqlalchemy.pool import ConnectionPoolEntry, StaticPool
 
 from vmarket_ai.settings import Settings
 
-REVISION = "0002_document_ingestion"
+REVISION = "0003_lexical_indexes"
 
 
 class Base(DeclarativeBase):

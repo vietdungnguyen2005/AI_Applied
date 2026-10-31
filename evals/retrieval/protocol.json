@@ -1,0 +1,18 @@
+{
+  "version": "p06-v1",
+  "dataset_release": "v1",
+  "as_of": "2026-10-31",
+  "methods": ["lexical", "dense", "hybrid"],
+  "cutoffs": [1, 3, 5],
+  "runs_per_query_per_method": 1,
+  "warm_model_load_excluded_from_latency": true,
+  "reranking": "NOT_IMPLEMENTED; no second model or reranker claim",
+  "selection": "dev MRR@3 descending, Recall@5 descending, median latency ascending, method name ascending",
+  "selection_scope": "local baseline recommendation; not a production release",
+  "heldout_policy": "Freeze config, compiled gold and selection in Git before test inference; no tuning on test",
+  "label_status": "provisional_agent_authored",
+  "independent_human_review": "pending",
+  "zero_relevance_queries": "Ranking metrics null; report result counts/forbidden hits, not answer abstention accuracy",
+  "latency_percentile": "linear interpolation at (n-1)*0.95; single run, small synthetic sample",
+  "embedding_cost": "Measured input tokens and provider-billed USD; local CPU energy/hosting cost NOT_MEASURED"
+}

@@ -19,6 +19,9 @@ class FakeChatModel:
 
 
 class FakeEmbeddingProvider:
+    async def embed_queries(self, request: EmbeddingRequest) -> EmbeddingResult:
+        return await self.embed(request)
+
     async def embed(self, request: EmbeddingRequest) -> EmbeddingResult:
         vectors = []
         for content in request.texts:

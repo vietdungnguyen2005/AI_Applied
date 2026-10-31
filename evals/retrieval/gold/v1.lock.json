@@ -1,0 +1,35 @@
+{
+  "code_hash_scope": "src/vmarket_ai Python source, canonical LF bytes",
+  "gold_sha256": "455573eff101387ff38e414fdda4ff21188d97376fee98fedc5a0410286def31",
+  "implementation_sha256": "eaa8f4a70a75d90523312fcf073e360e779ee63bfcfe7d4488c0d9b15221757e",
+  "independent_human_review": "pending",
+  "input_hashes": {
+    "data/releases/v1.lock.json": "957114fb0a0137f556833296eae3759489367702c8f23b7811c0aa0683511eed",
+    "data/v1/corpus.jsonl": "954601bd97927326ae0165dc0fd07ec49d9e9e7b4e18ff5fe0302972342d3946",
+    "data/v1/labels/relevance.jsonl": "816b2cdc24c9764c0da90387f08c07e29ea57339e792385007252933f0b39a3b",
+    "data/v1/queries.jsonl": "1e4a21b7951a14d990ec377aabab19396492c6c72fccc6813de6761e8b185abb",
+    "evals/retrieval/config.json": "54a0f5a2871f559e7f21a5c1b5b5ffab37e36b7ef2c4bf569628b6cb23197851",
+    "evals/retrieval/protocol.json": "859938a9d675b7663d979bda295fbec39038d750cdc6aea8bbbd5926e35a07d1"
+  },
+  "pipeline": {
+    "chunking": {
+      "overlap": 48,
+      "size": 320
+    },
+    "embedding": {
+      "dimensions": 384,
+      "mode": "local",
+      "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1"
+    },
+    "normalization": "NFC-lines-v1",
+    "parser": "bounded-docs-v1",
+    "parser_packages": {
+      "defusedxml": "0.7.1",
+      "pypdf": "6.21.4",
+      "python-docx": "1.2.0"
+    },
+    "unicode_version": "15.0.0"
+  },
+  "queries": 28,
+  "status": "provisional_agent_authored"
+}

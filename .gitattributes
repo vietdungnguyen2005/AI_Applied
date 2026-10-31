@@ -6,3 +6,4 @@ data/releases/** text eol=lf
 # Frozen fixture bytes must survive Windows/Linux checkouts unchanged.
 data/v1/** -text -whitespace
 data/v1/csv/** -diff
+evals/** text eol=lf
