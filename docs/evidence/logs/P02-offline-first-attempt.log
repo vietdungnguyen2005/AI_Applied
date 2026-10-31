@@ -1,0 +1,5 @@
+  File "<string>", line 1
+    import socket,runpy,sys; attempts=[]; exec('def deny(*args, **kwargs):\n attempts.append(1)\n raise RuntimeError(\
+                                               ^
+SyntaxError: unterminated string literal (detected at line 1)
+EXIT_CODE=1

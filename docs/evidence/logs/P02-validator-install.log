@@ -1,0 +1,93 @@
+Collecting openapi-spec-validator==0.7.2
+  Obtaining dependency information for openapi-spec-validator==0.7.2 from https://files.pythonhosted.org/packages/27/dd/b3fd642260cb17532f66cc1e8250f3507d1e580483e209dc1e9d13bd980d/openapi_spec_validator-0.7.2-py3-none-any.whl.metadata
+  Downloading openapi_spec_validator-0.7.2-py3-none-any.whl.metadata (5.7 kB)
+Collecting jsonschema==4.26.0
+  Obtaining dependency information for jsonschema==4.26.0 from https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl.metadata
+  Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting PyYAML==6.0.3
+  Obtaining dependency information for PyYAML==6.0.3 from https://files.pythonhosted.org/packages/86/bf/899e81e4cce32febab4fb42bb97dcdf66bc135272882d1987881a4b519e9/pyyaml-6.0.3-cp312-cp312-win_amd64.whl.metadata
+  Using cached pyyaml-6.0.3-cp312-cp312-win_amd64.whl.metadata (2.4 kB)
+Collecting jsonschema-path<0.4.0,>=0.3.1 (from openapi-spec-validator==0.7.2)
+  Obtaining dependency information for jsonschema-path<0.4.0,>=0.3.1 from https://files.pythonhosted.org/packages/cb/58/3485da8cb93d2f393bce453adeef16896751f14ba3e2024bc21dc9597646/jsonschema_path-0.3.4-py3-none-any.whl.metadata
+  Downloading jsonschema_path-0.3.4-py3-none-any.whl.metadata (4.3 kB)
+Collecting lazy-object-proxy<2.0.0,>=1.7.1 (from openapi-spec-validator==0.7.2)
+  Obtaining dependency information for lazy-object-proxy<2.0.0,>=1.7.1 from https://files.pythonhosted.org/packages/e9/23/67edce3954b280049b87dfe914fa16400c3ce2f3fa236388cf64a1bba600/lazy_object_proxy-1.13.0-cp312-cp312-win_amd64.whl.metadata
+  Downloading lazy_object_proxy-1.13.0-cp312-cp312-win_amd64.whl.metadata (5.2 kB)
+Collecting openapi-schema-validator<0.7.0,>=0.6.0 (from openapi-spec-validator==0.7.2)
+  Obtaining dependency information for openapi-schema-validator<0.7.0,>=0.6.0 from https://files.pythonhosted.org/packages/21/c6/ad0fba32775ae749016829dace42ed80f4407b171da41313d1a3a5f102e4/openapi_schema_validator-0.6.3-py3-none-any.whl.metadata
+  Downloading openapi_schema_validator-0.6.3-py3-none-any.whl.metadata (5.4 kB)
+Collecting attrs>=22.2.0 (from jsonschema==4.26.0)
+  Obtaining dependency information for attrs>=22.2.0 from https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl.metadata
+  Using cached attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.26.0)
+  Obtaining dependency information for jsonschema-specifications>=2023.03.6 from https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting referencing>=0.28.4 (from jsonschema==4.26.0)
+  Obtaining dependency information for referencing>=0.28.4 from https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl.metadata
+  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py>=0.25.0 (from jsonschema==4.26.0)
+  Obtaining dependency information for rpds-py>=0.25.0 from https://files.pythonhosted.org/packages/1c/84/1700cc748d0eaa747486e4e82882d2575224e6e9a3148df583058850c629/rpds_py-2026.9.1-cp312-cp312-win_amd64.whl.metadata
+  Downloading rpds_py-2026.9.1-cp312-cp312-win_amd64.whl.metadata (4.2 kB)
+Collecting pathable<0.5.0,>=0.4.1 (from jsonschema-path<0.4.0,>=0.3.1->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for pathable<0.5.0,>=0.4.1 from https://files.pythonhosted.org/packages/7d/eb/b6260b31b1a96386c0a880edebe26f89669098acea8e0318bff6adb378fd/pathable-0.4.4-py3-none-any.whl.metadata
+  Downloading pathable-0.4.4-py3-none-any.whl.metadata (1.8 kB)
+Collecting referencing>=0.28.4 (from jsonschema==4.26.0)
+  Obtaining dependency information for referencing>=0.28.4 from https://files.pythonhosted.org/packages/c1/b1/3baf80dc6d2b7bc27a95a67752d0208e410351e3feb4eb78de5f77454d8d/referencing-0.36.2-py3-none-any.whl.metadata
+  Downloading referencing-0.36.2-py3-none-any.whl.metadata (2.8 kB)
+Collecting requests<3.0.0,>=2.31.0 (from jsonschema-path<0.4.0,>=0.3.1->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for requests<3.0.0,>=2.31.0 from https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl.metadata
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting rfc3339-validator (from openapi-schema-validator<0.7.0,>=0.6.0->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for rfc3339-validator from https://files.pythonhosted.org/packages/7b/44/4e421b96b67b2daff264473f7465db72fbdf36a07e05494f50300cc7b0c6/rfc3339_validator-0.1.4-py2.py3-none-any.whl.metadata
+  Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting typing-extensions>=4.4.0 (from referencing>=0.28.4->jsonschema==4.26.0)
+  Obtaining dependency information for typing-extensions>=4.4.0 from https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl.metadata
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting charset_normalizer<4,>=2 (from requests<3.0.0,>=2.31.0->jsonschema-path<0.4.0,>=0.3.1->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for charset_normalizer<4,>=2 from https://files.pythonhosted.org/packages/eb/e6/e6e083884cbcfd49c64865af05027fe7011be7b2d9179524f099a1b611f3/charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl.metadata
+  Downloading charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl.metadata (47 kB)
+     ---------------------------------------- 47.3/47.3 kB 2.3 MB/s eta 0:00:00
+Collecting idna<4,>=2.5 (from requests<3.0.0,>=2.31.0->jsonschema-path<0.4.0,>=0.3.1->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for idna<4,>=2.5 from https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl.metadata
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting urllib3<3,>=1.26 (from requests<3.0.0,>=2.31.0->jsonschema-path<0.4.0,>=0.3.1->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for urllib3<3,>=1.26 from https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl.metadata
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting certifi>=2023.5.7 (from requests<3.0.0,>=2.31.0->jsonschema-path<0.4.0,>=0.3.1->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for certifi>=2023.5.7 from https://files.pythonhosted.org/packages/32/d1/a3652fe2c19134d0d15922177821d863cbd7e842d53a21bbe7e8e3a1b5ac/certifi-2026.10.23-py3-none-any.whl.metadata
+  Downloading certifi-2026.10.23-py3-none-any.whl.metadata (2.5 kB)
+Collecting six (from rfc3339-validator->openapi-schema-validator<0.7.0,>=0.6.0->openapi-spec-validator==0.7.2)
+  Obtaining dependency information for six from https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl.metadata
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Downloading openapi_spec_validator-0.7.2-py3-none-any.whl (39 kB)
+Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+   ---------------------------------------- 90.6/90.6 kB 1.7 MB/s eta 0:00:00
+Using cached pyyaml-6.0.3-cp312-cp312-win_amd64.whl (154 kB)
+Using cached attrs-26.1.0-py3-none-any.whl (67 kB)
+Downloading jsonschema_path-0.3.4-py3-none-any.whl (14 kB)
+Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Downloading lazy_object_proxy-1.13.0-cp312-cp312-win_amd64.whl (25 kB)
+Downloading openapi_schema_validator-0.6.3-py3-none-any.whl (8.8 kB)
+Downloading referencing-0.36.2-py3-none-any.whl (26 kB)
+Downloading rpds_py-2026.9.1-cp312-cp312-win_amd64.whl (222 kB)
+   ---------------------------------------- 222.9/222.9 kB 6.9 MB/s eta 0:00:00
+Downloading pathable-0.4.4-py3-none-any.whl (9.6 kB)
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+   ---------------------------------------- 73.1/73.1 kB ? eta 0:00:00
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+   ---------------------------------------- 45.6/45.6 kB ? eta 0:00:00
+Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl (3.5 kB)
+Downloading certifi-2026.10.23-py3-none-any.whl (135 kB)
+   ---------------------------------------- 135.1/135.1 kB 8.3 MB/s eta 0:00:00
+Downloading charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl (207 kB)
+   ---------------------------------------- 207.5/207.5 kB 6.4 MB/s eta 0:00:00
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+   ---------------------------------------- 69.6/69.6 kB 1.9 MB/s eta 0:00:00
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+   ---------------------------------------- 135.7/135.7 kB 7.8 MB/s eta 0:00:00
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: urllib3, typing-extensions, six, rpds-py, PyYAML, pathable, lazy-object-proxy, idna, charset_normalizer, certifi, attrs, rfc3339-validator, requests, referencing, jsonschema-specifications, jsonschema-path, jsonschema, openapi-schema-validator, openapi-spec-validator
+Successfully installed PyYAML-6.0.3 attrs-26.1.0 certifi-2026.10.23 charset_normalizer-3.5.2 idna-3.20 jsonschema-4.26.0 jsonschema-path-0.3.4 jsonschema-specifications-2025.9.1 lazy-object-proxy-1.13.0 openapi-schema-validator-0.6.3 openapi-spec-validator-0.7.2 pathable-0.4.4 referencing-0.36.2 requests-2.34.2 rfc3339-validator-0.1.4 rpds-py-2026.9.1 six-1.17.0 typing-extensions-4.16.0 urllib3-2.8.0
+
+[notice] A new release of pip is available: 23.2.1 -> 26.2.2
+[notice] To update, run: C:\Users\steve\AppData\Local\Temp\vmarket-p02-contracts\Scripts\python.exe -m pip install --upgrade pip

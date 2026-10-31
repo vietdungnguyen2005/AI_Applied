@@ -1,0 +1,8 @@
+{"check": "local_markdown_links", "result": "PASS", "detail": {"links": 52, "broken": []}}
+{"check": "project2_unchanged", "result": "PASS", "detail": "32d82862526754b46efb774327ccc4774a4decf7"}
+{"check": "env_ignored", "result": "PASS", "detail": "Actual .env remains excluded"}
+{"check": "contract_report", "result": "PASS", "detail": {"checks": 76, "passed": 76, "failed": 0, "example_cases": 69, "expected_valid": 26, "expected_invalid": 43}}
+{"check": "offline_contract_qa", "result": "PASS", "detail": "Contract validator only, not runtime egress testing"}
+{"check": "four_ADRs", "result": "PASS", "detail": "Four design decisions"}
+{"check": "actual_secret_scan", "result": "PASS", "detail": {"files": 27, "values_printed": false}}
+{"check": "staged_whitespace", "result": "PASS", "detail": "git diff --cached --check exit 0"}

@@ -1,0 +1,79 @@
+{"check": "openapi_structure", "result": "PASS", "detail": "OpenAPI 3.1.1 and local references validated"}
+{"check": "json_schema_structure", "result": "PASS", "detail": "25 definitions in Draft 2020-12"}
+{"check": "unique_case_ids", "result": "PASS", "detail": "69 synthetic schema cases"}
+{"check": "ask_valid", "result": "PASS", "detail": {"schema": "AskRequest", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "answer_cited", "result": "PASS", "detail": {"schema": "AskResponse", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "mapping_valid", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "profile_valid", "result": "PASS", "detail": {"schema": "Profile", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "context_valid_shape", "result": "PASS", "detail": {"schema": "SignedContext", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "inspection_result", "result": "PASS", "detail": {"schema": "ToolResult", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "initial_agent_step", "result": "PASS", "detail": {"schema": "AgentStepRequest", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "human_handoff", "result": "PASS", "detail": {"schema": "AgentStepResponse", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "document_ready", "result": "PASS", "detail": {"schema": "DocumentIngestResponse", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "health_minimal", "result": "PASS", "detail": {"schema": "Health", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "report_completed", "result": "PASS", "detail": {"schema": "Report", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "knowledge_query", "result": "PASS", "detail": {"schema": "KnowledgeSearchRequest", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "ask_extra_role", "result": "PASS", "detail": {"schema": "AskRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "ask_empty_question", "result": "PASS", "detail": {"schema": "AskRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "ask_external_provider", "result": "PASS", "detail": {"schema": "AskRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "ask_empty_scope", "result": "PASS", "detail": {"schema": "AskRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "ask_duplicate_scope", "result": "PASS", "detail": {"schema": "AskRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "ask_oversize_question", "result": "PASS", "detail": {"schema": "AskRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "answer_missing_citation", "result": "PASS", "detail": {"schema": "AskResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "citation_no_external_url", "result": "PASS", "detail": {"schema": "Citation", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "answer_abstains", "result": "PASS", "detail": {"schema": "AskResponse", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "abstention_not_factual", "result": "PASS", "detail": {"schema": "AskResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "mapping_missing_target", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "mapping_duplicate_target", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "mapping_forbidden_target", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "mapping_not_approved", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "mapping_abstains", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "mapping_abstain_not_assigned", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "mapping_no_receipt", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "mapping_control_character", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "duplicate_source_runtime_only", "result": "PASS", "detail": {"schema": "MappingResponse", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "profile_forbidden_target", "result": "PASS", "detail": {"schema": "Profile", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "profile_zero_version", "result": "PASS", "detail": {"schema": "Profile", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "profile_bad_encoding", "result": "PASS", "detail": {"schema": "Profile", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "context_reject_cookie", "result": "PASS", "detail": {"schema": "SignedContext", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "context_reject_roles", "result": "PASS", "detail": {"schema": "SignedContext", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "context_reject_bad_uuid", "result": "PASS", "detail": {"schema": "SignedContext", "expected_valid": false, "actual_valid": false, "error_count": 2}}
+{"check": "context_reject_wrong_operation", "result": "PASS", "detail": {"schema": "SignedContext", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "context_reject_unbounded_step", "result": "PASS", "detail": {"schema": "SignedContext", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "expired_context_runtime_only", "result": "PASS", "detail": {"schema": "SignedContext", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "allowed_get_integration_profiles", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "allowed_get_imports", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "allowed_inspect_import_job", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "allowed_get_reconciliation_report", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "allowed_search_supplier_knowledge", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "forbidden_write_tool", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "forbidden_path_argument", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "forbidden_header_field", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "wrong_arguments", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "last_step_tool_runtime_only", "result": "PASS", "detail": {"schema": "ToolIntentEnvelope", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "result_no_claim", "result": "PASS", "detail": {"schema": "ToolResult", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "result_mismatched_projection", "result": "PASS", "detail": {"schema": "ToolResult", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "result_no_raw_error", "result": "PASS", "detail": {"schema": "ToolResult", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "tool_timeout", "result": "PASS", "detail": {"schema": "ToolResult", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "timeout_no_success_data", "result": "PASS", "detail": {"schema": "ToolResult", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "initial_step_no_result", "result": "PASS", "detail": {"schema": "AgentStepRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "continuation_step", "result": "PASS", "detail": {"schema": "AgentStepRequest", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "continuation_needs_result", "result": "PASS", "detail": {"schema": "AgentStepRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "handoff_needs_human_state", "result": "PASS", "detail": {"schema": "AgentStepResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "document_not_approved", "result": "PASS", "detail": {"schema": "DocumentIngestResponse", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "knowledge_bounded_topk", "result": "PASS", "detail": {"schema": "KnowledgeSearchRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "knowledge_no_url", "result": "PASS", "detail": {"schema": "KnowledgeSearchRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "page_locator", "result": "PASS", "detail": {"schema": "Citation", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "page_over_budget", "result": "PASS", "detail": {"schema": "Citation", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "job_profile_pair", "result": "PASS", "detail": {"schema": "ImportSummary", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "restart_runtime_only", "result": "PASS", "detail": {"schema": "Inspection", "expected_valid": true, "actual_valid": true, "error_count": 0}}
+{"check": "health_no_secrets", "result": "PASS", "detail": {"schema": "Health", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "initial_step_no_prior_history", "result": "PASS", "detail": {"schema": "AgentStepRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "step_two_needs_one_prior_result", "result": "PASS", "detail": {"schema": "AgentStepRequest", "expected_valid": false, "actual_valid": false, "error_count": 1}}
+{"check": "closed_tool_registry", "result": "PASS", "detail": ["get_imports", "get_integration_profiles", "get_reconciliation_report", "inspect_import_job", "search_supplier_knowledge"]}
+{"check": "no_http_eval_or_business_mutation", "result": "PASS", "detail": "AI-owned POST endpoints do not represent Java business writes"}
+{"check": "integrated_context_security", "result": "PASS", "detail": "All proposed protected routes declare context/signature; handler enforcement pending"}
+{"check": "transport_byte_budgets", "result": "PASS", "detail": "Declared extensions only; runtime streaming enforcement not tested"}
+SUMMARY {"checks": 76, "passed": 76, "failed": 0, "example_cases": 69, "expected_valid": 26, "expected_invalid": 43}
+NETWORK_ATTEMPTS=0
+EXIT_CODE=0

@@ -23,3 +23,7 @@ Owners: implementation agent = code/doc work; repository owner = acceptance, pro
 | R17 | Medium | Durable AI state outlives authorization | TTL, bounded steps/deadline, reauthorization on every resumed tool | Agent / planned P11 |
 
 No critical broken business invariant was observed in executed baseline tests. Passing tests do not prove universal security. P00 identifies R08 without fixing it; a later security/release gate remains blocked until reviewed remediation and regression evidence exist.
+
+## P02 design follow-up (2026-10-31)
+
+R01–R07 and R09–R17 now have detailed proposed controls in [architecture](architecture.md), [gateway protocol](contracts/gateway-protocol.md), [data model](data-model.md) and [threat model](threat-model.md). This is a design update, not a closed runtime risk. R08 remains OPEN at the P00 observed advisory count; no dependency remediation or fresh audit is claimed in P02. Signature/replay, between-step revocation, byte/ACL enforcement and schema-to-handler conformance remain unchecked runtime gates in the [review checklist](design-review-checklist.md).

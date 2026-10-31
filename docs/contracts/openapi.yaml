@@ -1,0 +1,415 @@
+openapi: 3.1.1
+info:
+  title: V-Market AI Operations Copilot — proposed internal API
+  version: 0.1.0-design
+  description: P02 design only; no product routes are implemented. No business mutation
+    or HTTP eval endpoint exists.
+servers:
+- url: http://127.0.0.1:8090
+  description: Loopback-only local design target
+security:
+- AIContext: []
+  AISignature: []
+paths:
+  /health:
+    get:
+      operationId: health
+      summary: Liveness without dependency/key details
+      security: []
+      responses:
+        '200':
+          description: Process live
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Health
+  /ready:
+    get:
+      operationId: readiness
+      summary: Minimal readiness, no infrastructure secrets
+      security: []
+      responses:
+        '200':
+          description: Ready
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Readiness
+        '503':
+          description: Dependency not ready
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Readiness
+  /ai/ask:
+    post:
+      operationId: ask
+      summary: Answer authorized synthetic SOP questions
+      parameters: []
+      responses:
+        '200':
+          description: Validated response; design contract, not implemented
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/AskResponse
+        '400': &id001
+          description: Invalid bounded input
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '401': &id002
+          description: Invalid/missing signed context
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '403': &id003
+          description: Denied operation or scope
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '409': &id004
+          description: Replay or step/version conflict
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '413': &id005
+          description: Input exceeds runtime byte/parser limits
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '429': &id006
+          description: Budget/rate limit
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '502': &id007
+          description: Invalid provider/tool output
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '503': &id008
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '504': &id009
+          description: Deadline exceeded
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./bff-tool-gateway.schema.json#/$defs/AskRequest
+      x-implementation-status: planned
+      x-runtime-max-body-bytes: 65536
+      x-required-operation: ask
+      description: Signed BFF context required in integrated mode; loopback fixture-only
+        standalone exception is described in gateway-protocol.md. Enforce byte, time,
+        scope and semantic checks independently of JSON Schema.
+  /ai/mapping/suggest:
+    post:
+      operationId: suggestMapping
+      summary: Suggest a draft from original CSV bytes
+      parameters:
+      - name: X-Source-Encoding
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - UTF-8
+          - CP932
+      - name: X-Vendor-Code
+        in: header
+        required: true
+        schema:
+          type: string
+          maxLength: 32
+          minLength: 1
+      responses:
+        '200':
+          description: Validated response; design contract, not implemented
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/MappingResponse
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '413': *id005
+        '429': *id006
+        '502': *id007
+        '503': *id008
+        '504': *id009
+      requestBody:
+        required: true
+        content:
+          text/csv:
+            schema:
+              type: string
+              format: binary
+      x-implementation-status: planned
+      x-runtime-max-body-bytes: 5000000
+      x-required-operation: mapping_suggest
+      description: Signed BFF context required in integrated mode; loopback fixture-only
+        standalone exception is described in gateway-protocol.md. Enforce byte, time,
+        scope and semantic checks independently of JSON Schema.
+  /ai/agent/step:
+    post:
+      operationId: agentStep
+      summary: Return one read-only intent or final/handoff draft
+      parameters: []
+      responses:
+        '200':
+          description: Validated response; design contract, not implemented
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/AgentStepResponse
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '413': *id005
+        '429': *id006
+        '502': *id007
+        '503': *id008
+        '504': *id009
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./bff-tool-gateway.schema.json#/$defs/AgentStepRequest
+      x-implementation-status: planned
+      x-runtime-max-body-bytes: 65536
+      x-required-operation: agent_step
+      description: Signed BFF context required in integrated mode; loopback fixture-only
+        standalone exception is described in gateway-protocol.md. Enforce byte, time,
+        scope and semantic checks independently of JSON Schema.
+  /ai/knowledge/search:
+    post:
+      operationId: searchKnowledge
+      summary: Internal scoped retrieval tool
+      parameters: []
+      responses:
+        '200':
+          description: Validated response; design contract, not implemented
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/KnowledgeSearchResponse
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '413': *id005
+        '429': *id006
+        '502': *id007
+        '503': *id008
+        '504': *id009
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./bff-tool-gateway.schema.json#/$defs/KnowledgeSearchRequest
+      x-implementation-status: planned
+      x-runtime-max-body-bytes: 65536
+      x-required-operation: knowledge_search
+      description: Signed BFF context required in integrated mode; loopback fixture-only
+        standalone exception is described in gateway-protocol.md. Enforce byte, time,
+        scope and semantic checks independently of JSON Schema.
+  /ai/documents:
+    post:
+      operationId: ingestDocument
+      summary: Curator-authorized synthetic AI document ingestion
+      parameters:
+      - name: X-Doc-Collection
+        in: header
+        required: true
+        schema: &id010
+          type: string
+          maxLength: 36
+          format: uuid
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+      - name: X-Doc-Id
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+          maxLength: 36
+        description: Stable curator-assigned document UUID, bound to collection and
+          signed digest
+      - name: X-Doc-Version
+        in: header
+        required: true
+        schema:
+          type: string
+          maxLength: 64
+          minLength: 1
+      - name: X-Doc-Language
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - en
+          - ja
+      - name: X-Doc-Effective-From
+        in: header
+        required: true
+        schema:
+          type: string
+          format: date
+      responses:
+        '201':
+          description: Validated response; design contract, not implemented
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/DocumentIngestResponse
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '413': *id005
+        '429': *id006
+        '502': *id007
+        '503': *id008
+        '504': *id009
+        '200':
+          description: Identical version/hash replay
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/DocumentIngestResponse
+        '415':
+          description: Unsupported, encrypted or scanned document
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+          application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+            schema:
+              type: string
+              format: binary
+          text/plain:
+            schema:
+              type: string
+              format: binary
+          text/markdown:
+            schema:
+              type: string
+              format: binary
+      x-implementation-status: planned
+      x-runtime-max-body-bytes: 5000000
+      x-required-operation: documents_ingest
+      description: Signed BFF context required in integrated mode; loopback fixture-only
+        standalone exception is described in gateway-protocol.md. Enforce byte, time,
+        scope and semantic checks independently of JSON Schema.
+  /ai/documents/{document_id}/versions/{version_id}/chunks/{chunk_id}:
+    get:
+      operationId: readDocumentChunk
+      summary: Authorized source excerpt for a citation
+      parameters:
+      - name: document_id
+        in: path
+        required: true
+        schema: *id010
+      - name: version_id
+        in: path
+        required: true
+        schema: *id010
+      - name: chunk_id
+        in: path
+        required: true
+        schema: *id010
+      responses:
+        '200':
+          description: Validated response; design contract, not implemented
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/DocumentChunkResponse
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '413': *id005
+        '429': *id006
+        '502': *id007
+        '503': *id008
+        '504': *id009
+        '404':
+          description: Absent or forbidden document, same outward response
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+      x-implementation-status: planned
+      x-runtime-max-body-bytes: 65536
+      x-required-operation: documents_read
+      description: Signed BFF context required in integrated mode; loopback fixture-only
+        standalone exception is described in gateway-protocol.md. Enforce byte, time,
+        scope and semantic checks independently of JSON Schema.
+components:
+  securitySchemes:
+    AIContext:
+      type: apiKey
+      in: header
+      name: X-AI-Context
+      description: Ed25519 signed, request-bound scope, not a browser credential
+    AISignature:
+      type: apiKey
+      in: header
+      name: X-AI-Signature
+      description: Signature over vmarket-ai-context:v1. plus literal context header
+  schemas:
+    AskRequest:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/AskRequest
+    AskResponse:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/AskResponse
+    MappingResponse:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/MappingResponse
+    AgentStepRequest:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/AgentStepRequest
+    AgentStepResponse:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/AgentStepResponse
+    DocumentIngestResponse:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/DocumentIngestResponse
+    DocumentChunkResponse:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/DocumentChunkResponse
+    KnowledgeSearchRequest:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/KnowledgeSearchRequest
+    KnowledgeSearchResponse:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/KnowledgeSearchResponse
+    Error:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+    Health:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/Health
+    Readiness:
+      $ref: ./bff-tool-gateway.schema.json#/$defs/Readiness

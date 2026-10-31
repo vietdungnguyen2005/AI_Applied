@@ -1,0 +1,144 @@
+{
+  "phase": "P02",
+  "date": "2026-10-31",
+  "baseline_ai": "7372005d49899fdc947b8b5de3fe9d5bfdb37ba5",
+  "baseline_project2": "32d82862526754b46efb774327ccc4774a4decf7",
+  "hash_scope": "Git staged blob bytes, manifest excludes itself",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "dc945bc2f73132acea696aacab18a2a5fca1bf8682baa93cfcbee426a17b9006",
+      "bytes": 6118
+    },
+    {
+      "path": "docs/00-risk-register.md",
+      "sha256": "b54f8a072dad8341d257484d56c2ccd82256f7a843fad7136a35d059290c4fb7",
+      "bytes": 3997
+    },
+    {
+      "path": "docs/adr/0001-boundaries.md",
+      "sha256": "d6946addf0f9ecb44535497f8ac1131b900fd475460e96d1b8a563982eee8d98",
+      "bytes": 1384
+    },
+    {
+      "path": "docs/adr/0002-request-context-and-tools.md",
+      "sha256": "e6d77c27b05f0fbe4c81f2167f4964507b592b82196f8787c85726705ec0e0e8",
+      "bytes": 2275
+    },
+    {
+      "path": "docs/adr/0003-offline-providers-and-evaluation.md",
+      "sha256": "41678bb0ecc85d76252f3c6b2fcd7683056ca5ea17a34d183e864b03ff195561",
+      "bytes": 1714
+    },
+    {
+      "path": "docs/adr/0004-contracts-and-document-scope.md",
+      "sha256": "2c842fbc468891b6e42bb0f3f0ca3662e7d5edec088a09a203475b823bb13b07",
+      "bytes": 1842
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "41d41d79c4fdf0ca9cafea48f09b2672ac4f6cee4d574ea0ab01af5abab645de",
+      "bytes": 9800
+    },
+    {
+      "path": "docs/contracts/README.md",
+      "sha256": "b56afb385689337fe6f50baec9638d8a1d78d7d94ee31f8cefc88193c7b78eb1",
+      "bytes": 2297
+    },
+    {
+      "path": "docs/contracts/bff-tool-gateway.schema.json",
+      "sha256": "1daf32297399297f21873bb0840826443fed6d49657e5e3b65ccd9d4297363ea",
+      "bytes": 48929
+    },
+    {
+      "path": "docs/contracts/examples/cases.json",
+      "sha256": "b625b7f382d8502a6c5ebc14101b12e407a2c0bb04e0a97732350492753e4461",
+      "bytes": 54278
+    },
+    {
+      "path": "docs/contracts/gateway-protocol.md",
+      "sha256": "e90604c501b6fbcede1117317b0d70a3b032c2c24e6e9439617895c251373721",
+      "bytes": 14771
+    },
+    {
+      "path": "docs/contracts/openapi.yaml",
+      "sha256": "0ff298e13ac4262ac4186c0b6bc10949cca56a1206532a7b4f1877cb5ab9ccd2",
+      "bytes": 13583
+    },
+    {
+      "path": "docs/data-model.md",
+      "sha256": "1c65d407e6564df1ac77d8b03638675d9d38f9c9b86997e69a4cbbaa3679acba",
+      "bytes": 8468
+    },
+    {
+      "path": "docs/design-review-checklist.md",
+      "sha256": "f57dd9aa7246dbc1b8fa2ab9100e934a7701448d59fb9fe1d8c15bc780d1db78",
+      "bytes": 3288
+    },
+    {
+      "path": "docs/evidence/P02-contract-validation.json",
+      "sha256": "a662aa418f42c75303b5d758f00ba2163a4979eb6dd78989a91e21886c3cd7f5",
+      "bytes": 17282
+    },
+    {
+      "path": "docs/evidence/P02-sources.md",
+      "sha256": "e82a459279592500cb0c0de2cede63caa5d844f70030cf9d00494ebd4a32740a",
+      "bytes": 2761
+    },
+    {
+      "path": "docs/evidence/P02.md",
+      "sha256": "1886d204883432e70a3bba732335263b31ce8433e510897b4c8e80f401c30642",
+      "bytes": 10632
+    },
+    {
+      "path": "docs/evidence/logs/P02-contract-check.log",
+      "sha256": "a74a427294545ca5f6e1011d159419b6e158b422046b414de2d9f71fa16969d8",
+      "bytes": 11970
+    },
+    {
+      "path": "docs/evidence/logs/P02-contract-offline.log",
+      "sha256": "1615efb5042cb53c2dd508453eaee5964897b4498c8e468e872b02d85ca83845",
+      "bytes": 11990
+    },
+    {
+      "path": "docs/evidence/logs/P02-final-check.log",
+      "sha256": "819cf2b7bbc9dee0c67d6731d446e0b6fb9f30e9f5971fc45f30203ba4f381e4",
+      "bytes": 842
+    },
+    {
+      "path": "docs/evidence/logs/P02-offline-first-attempt.log",
+      "sha256": "dab0a3da9ac56c25f2bb315ed476587c93554cfbbf15cc0d100c6d4e9a3b4040",
+      "bytes": 273
+    },
+    {
+      "path": "docs/evidence/logs/P02-validator-install.log",
+      "sha256": "8ddfae3a00ddd3e3e4574b172392b7c01d1eb671ad25d45a8018e75b97bdd588",
+      "bytes": 10299
+    },
+    {
+      "path": "docs/evidence/logs/P02-validator-versions.log",
+      "sha256": "b5ed5b902a10542416b0af52dacb098d795bd18f73a6fc4935f42ab751f13ab2",
+      "bytes": 419
+    },
+    {
+      "path": "docs/roadmap.md",
+      "sha256": "1fa592732fe4e1e0bc62fce3fd29186836a14ca20d264d4418fc6de3d02e7505",
+      "bytes": 3707
+    },
+    {
+      "path": "docs/source-of-truth.md",
+      "sha256": "10fdee39b706e1316ee99cc31533eee531c17c662ce66cfa3a678fcc0b0a36e6",
+      "bytes": 3861
+    },
+    {
+      "path": "docs/threat-model.md",
+      "sha256": "ca0e87742d7a26c39b83535a4b9a662d95283016c8215f61ab60d128839d286f",
+      "bytes": 9155
+    },
+    {
+      "path": "tools/validate_contracts.py",
+      "sha256": "557a6c8cbb60a86fff602615846779bd1965f3671ef1db9b8e5b2367a9dd8e3e",
+      "bytes": 4890
+    }
+  ]
+}
