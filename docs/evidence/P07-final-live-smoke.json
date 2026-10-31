@@ -1,0 +1,138 @@
+{
+  "scope": "final development smoke with explicit vendor metadata and structured output; earlier failures retained",
+  "rows": [
+    {
+      "case_id": "encoding-en",
+      "http_status": 200,
+      "response": {
+        "request_id": "093aadbb-499b-4e73-8374-a5b37914c308",
+        "status": "answered",
+        "answer": "Supplier B supplies UTF-8 original bytes. Preserve the original file, declared encoding and line endings.",
+        "reason": null,
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+            "chunk_id": "ea750761-3e06-5537-8847-33abcb221989",
+            "locator": {
+              "kind": "section",
+              "value": "encoding"
+            },
+            "source_url": "/ai/citations/ea750761-3e06-5537-8847-33abcb221989"
+          }
+        ],
+        "confidence": "low",
+        "provider_mode": "live"
+      },
+      "citation_open_statuses": [
+        200
+      ],
+      "model_outputs": [
+        {
+          "text": "{\"decision\": \"answer\", \"claims\": [{\"chunk_id\": \"ea750761-3e06-5537-8847-33abcb221989\", \"quote\": \"Supplier B supplies UTF-8 original bytes. Preserve the original file, declared encoding and line endings.\"}]}",
+          "model": "nvidia/nemotron-3.5-super-vl:free",
+          "provider_mode": "live",
+          "prompt_tokens": 652,
+          "completion_tokens": 79,
+          "cost_usd": "0"
+        }
+      ],
+      "expected_decision": "answered",
+      "decision_correct": true,
+      "positive_anchor_pass": true
+    },
+    {
+      "case_id": "encoding-ja",
+      "http_status": 200,
+      "response": {
+        "request_id": "4a0f74b5-a0ea-4dce-9a3e-a3e73faca23d",
+        "status": "answered",
+        "answer": "Supplier A の原本は CP932 です。改行やバイト列を変えず、指定された文字コードを使用します。",
+        "reason": null,
+        "citations": [
+          {
+            "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+            "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391",
+            "chunk_id": "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+            "locator": {
+              "kind": "section",
+              "value": "encoding"
+            },
+            "source_url": "/ai/citations/a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8"
+          }
+        ],
+        "confidence": "low",
+        "provider_mode": "live"
+      },
+      "citation_open_statuses": [
+        200
+      ],
+      "model_outputs": [
+        {
+          "text": "{\"claims\":[{\"chunk_id\":\"a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8\",\"quote\":\"Supplier A の原本は CP932 です。改行やバイト列を変えず、指定された文字コードを使用します。\"}],\"decision\":\"answer\"}",
+          "model": "dots-studio/dots-3-note-preview:free",
+          "provider_mode": "live",
+          "prompt_tokens": 671,
+          "completion_tokens": 74,
+          "cost_usd": "0"
+        }
+      ],
+      "expected_decision": "answered",
+      "decision_correct": true,
+      "positive_anchor_pass": true
+    },
+    {
+      "case_id": "unknown-tax",
+      "http_status": 503,
+      "response": {
+        "request_id": "6d18f2f7-6a1c-4c69-9250-2c076dc20e0f",
+        "code": "DEPENDENCY_UNAVAILABLE",
+        "message": "Request unavailable; inspect the correlation ID."
+      },
+      "citation_open_statuses": [],
+      "model_outputs": [],
+      "expected_decision": "abstained",
+      "decision_correct": false,
+      "positive_anchor_pass": false
+    },
+    {
+      "case_id": "conflict-window",
+      "status": "NOT_RUN_AFTER_PROVIDER_FAILURE"
+    }
+  ],
+  "new_ledger_usage": [
+    {
+      "id": "00b83b53-dafe-407e-aa73-cb0c0dd062ac",
+      "provider": "openrouter",
+      "day": "2026-10-31",
+      "state": "completed",
+      "reserved_microusd": "1000",
+      "spent_microusd": "0",
+      "prompt_tokens": "652",
+      "completion_tokens": "79"
+    },
+    {
+      "id": "43cac3c4-0d5f-4522-82b9-b7e3dc962cba",
+      "provider": "openrouter",
+      "day": "2026-10-31",
+      "state": "completed",
+      "reserved_microusd": "1000",
+      "spent_microusd": "0",
+      "prompt_tokens": "671",
+      "completion_tokens": "74"
+    },
+    {
+      "id": "f561a639-8d07-4a72-8e9c-e6434cf05381",
+      "provider": "openrouter",
+      "day": "2026-10-31",
+      "state": "uncertain",
+      "reserved_microusd": "1000",
+      "spent_microusd": "None",
+      "prompt_tokens": "None",
+      "completion_tokens": "None"
+    }
+  ],
+  "provider_attempts": 3,
+  "semantic_human_review": "NOT_RUN",
+  "independent_review": "pending"
+}

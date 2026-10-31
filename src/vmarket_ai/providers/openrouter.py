@@ -150,6 +150,22 @@ class OpenRouterChatModel:
                             "model": "openrouter/free",
                             "max_tokens": request.max_output_tokens,
                             "messages": [message.model_dump() for message in request.messages],
+                            **(
+                                {
+                                    "response_format": {
+                                        "type": "json_schema",
+                                        "json_schema": {
+                                            "name": "evidence_proposal",
+                                            "strict": True,
+                                            "schema": request.structured_output,
+                                        },
+                                    },
+                                    "provider": {"require_parameters": True},
+                                    "reasoning": {"enabled": False},
+                                }
+                                if request.structured_output is not None
+                                else {}
+                            ),
                         },
                     )
                     response.raise_for_status()

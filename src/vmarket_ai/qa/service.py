@@ -15,6 +15,7 @@ from vmarket_ai.contracts import ChatModel, ChatRequest, ChatResult, Message
 from vmarket_ai.ingestion.spec import Actor, Citation
 from vmarket_ai.providers.budget import BudgetExceeded
 from vmarket_ai.providers.openrouter import ProviderError, ProviderTimeout
+from vmarket_ai.qa.backend import DEMO_SUPPLIERS
 from vmarket_ai.qa.spec import (
     AskRequest,
     AskResponse,
@@ -44,6 +45,15 @@ def complete_sentences(text: str) -> tuple[str, ...]:
     # Whole sentence spans preserve negation/qualifiers; no arbitrary substring numeric claims.
     return tuple(
         p.strip() for p in re.split(r"(?<=[。！？!?])|(?<=\.)\s+(?=[A-Z0-9])|\n", text) if p.strip()
+    )
+
+
+def supported_quote(text: str, quote: str) -> bool:
+    spans = complete_sentences(text)
+    return (
+        quote in text
+        and any(quote.startswith(s) for s in spans)
+        and any(quote.endswith(s) for s in spans)
     )
 
 
@@ -131,11 +141,23 @@ class AnswerService:
                 payload = {
                     "question": request.question,
                     "language": request.language,
+                    "selected_supplier": DEMO_SUPPLIERS.get(request.collection_ids[0]),
                     "sources": [{"chunk_id": str(s.chunk_id), "text": s.text} for s in sources],
                 }
                 raw = json.dumps(payload, ensure_ascii=False)
                 if len(raw) > 8000:
                     raise QAError("INPUT_TOO_LARGE", 413)
+                schema = Proposal.model_json_schema()
+                fields = schema["$defs"]["Claim"]["properties"]
+                fields["chunk_id"]["enum"] = [str(s.chunk_id) for s in sources]
+                fields["quote"]["enum"] = sorted(
+                    {
+                        q
+                        for s in sources
+                        for q in (*complete_sentences(s.text), s.text)
+                        if 8 <= len(q) <= 800
+                    }
+                )
                 completion = await self.model.complete(
                     ChatRequest(
                         messages=(
@@ -143,6 +165,7 @@ class AnswerService:
                             Message(role="user", content=raw),
                         ),
                         max_output_tokens=512,
+                        structured_output=schema,
                     )
                 )
                 self.last_usage = completion
@@ -161,7 +184,7 @@ class AnswerService:
                 quotes = []
                 for claim in proposal.claims:
                     source = by_id.get(claim.chunk_id)
-                    if source is None or claim.quote not in complete_sentences(source.text):
+                    if source is None or not supported_quote(source.text, claim.quote):
                         raise QAError("OUTPUT_INVALID", 502)
                     chosen.append(self.refresh(actor, request.collection_ids, source))
                     quotes.append(claim.quote)

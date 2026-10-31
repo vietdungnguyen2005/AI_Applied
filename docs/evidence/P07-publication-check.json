@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "files_scanned": 371,
+  "secret_values_checked": 3,
+  "env_ignored": true,
+  "frozen_p04_p06_results_unchanged": true,
+  "uv_lock_unchanged": true,
+  "project2_unchanged": true,
+  "real_provider_left_blocked": true,
+  "live_inference_attempts": 8,
+  "live_comparative_evaluation": "PARTIAL; not a release quality claim"
+}

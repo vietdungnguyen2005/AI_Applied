@@ -42,6 +42,8 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def boundaries(self) -> Self:
         if self.qa_enabled:
+            if self.private_container or self.bind_host not in {"127.0.0.1", "::1", "localhost"}:
+                raise ValueError("Standalone QA requires a host loopback listener")
             if make_url(self.database_url.get_secret_value()).drivername != "postgresql+psycopg":
                 raise ValueError("QA requires separate AI PostgreSQL")
             if self.qa_embedding_mode == "local" and self.qa_model_bundle is None:

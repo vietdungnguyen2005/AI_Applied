@@ -95,6 +95,30 @@ async def test_live_adapter_success_is_mocked_and_usage_persisted(migrated):
     engine.dispose()
 
 
+async def test_structured_output_is_explicit_free_only_and_disables_reasoning(migrated):
+    captured = []
+
+    def handle(request):
+        if request.method == "POST":
+            captured.append(__import__("json").loads(request.content))
+        return httpx.Response(200, json=catalog() if request.method == "GET" else completion())
+
+    settings = live_settings(migrated)
+    engine = create_db_engine(settings)
+    model = OpenRouterChatModel(
+        settings, BudgetLedger(engine, settings), httpx.MockTransport(handle)
+    )
+    schema = {"type": "object", "additionalProperties": False, "properties": {}, "required": []}
+    await model.complete(prompt().model_copy(update={"structured_output": schema}))
+    assert len(captured) == 1
+    body = captured[0]
+    assert body["model"] == "openrouter/free"
+    assert body["response_format"]["json_schema"]["schema"] == schema
+    assert body["provider"] == {"require_parameters": True}
+    assert body["reasoning"] == {"enabled": False}
+    engine.dispose()
+
+
 async def test_safe_read_retry_but_post_never_retried(migrated):
     counts = {"GET": 0, "POST": 0}
 

@@ -1,0 +1,26 @@
+{
+  "default_feature_off": true,
+  "http": {
+    "/health": {
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    "/ready": {
+      "status": 200,
+      "body": {
+        "status": "ready",
+        "provider_mode": "fake"
+      }
+    },
+    "/ai/ask": {
+      "status": 404,
+      "body": {
+        "request_id": "7d784813-eb6f-407b-a960-8b24e078e534",
+        "code": "ROUTE_NOT_AVAILABLE",
+        "message": "Request unavailable; inspect the correlation ID."
+      }
+    }
+  }
+}

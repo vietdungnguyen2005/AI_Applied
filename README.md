@@ -1,8 +1,8 @@
 # V-Market AI Operations Copilot
 
-Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Foundation, datasets, document ingestion and P06 ranked retrieval are implemented; grounded Q&A, CSV mapping, agent tools and V-Market integration remain pending.** No production deployment or real customer outcome is claimed.
+Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Foundation through P07 extractive Q&A is implemented; CSV mapping, agent tools and V-Market integration remain pending.** Live comparative QA evaluation is partial. No production deployment or real customer outcome is claimed.
 
-Current service exposes only `/health`, `/ready` and `/openapi.json`. Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
+Default service exposes only `/health`, `/ready` and `/openapi.json`. P07 adds [opt-in host-loopback ask/citation routes](docs/qa.md). Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
 
 ## Quickstart: fake mode, no API key
 
@@ -30,7 +30,7 @@ python -m uv run --frozen pytest -q
 python -m uv run --frozen python tools/validate_contracts.py
 ```
 
-On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips three explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
+On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips four explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
 
 ## Standalone Docker: own PostgreSQL + pgvector
 
@@ -55,11 +55,13 @@ Stop your own demo using `docker compose down`; data volume is retained. Do not 
 
 ## Providers and limits
 
-Fake chat/embedding implementations and typed interfaces are in `src/vmarket_ai/`. The optional OpenRouter adapter supports only `openrouter/free`: explicit live opt-in, API key, positive finite request/day budgets, current zero-price catalog preflight, bounded response/time and an atomic persisted usage ledger are required. No live provider call was made for P03. There is no live chat HTTP endpoint yet.
+Fake chat/embedding implementations and typed interfaces are in `src/vmarket_ai/`. The optional OpenRouter adapter supports only `openrouter/free`: explicit live opt-in, API key, positive finite request/day budgets, current zero-price catalog preflight, bounded response/time and an atomic persisted usage ledger are required. No live provider call was made for P03. Live chat is now available only through the opt-in P07 host-loopback QA route; see its documented blocked-ledger state.
 
 See [provider safety and configuration](docs/providers.md). Unknown outcomes retain reservation and stop further live use for manual review; requests are never automatically retried or switched to a paid model. Application budgets cannot undo a provider charge; any unexpected reported cost is recorded and blocks further calls. P05 adds an optional pinned [local multilingual E5 embedding provider](docs/ingestion.md#local-real-embedding); it uses CPU inference without provider API keys. VyceAI is not a runtime adapter; the earlier connectivity script is retained separately.
 
 ## Status and evidence
+
+- [P07 extractive QA](docs/qa.md): English/Japanese live quote/citation smoke passed; full live baseline comparison remains partial. One real request is unsettled, so the provider ledger remains blocked. Fake mode and offline checks remain usable. [Evidence](docs/evidence/P07.md).
 
 - [P06 retrieval](docs/retrieval.md): PostgreSQL lexical, exact pgvector dense and RRF hybrid; shared authorized corpus and [84 actual query-method evaluations](evals/retrieval/README.md). Dense was selected using dev only. Results use provisional labels; human review is pending. `make retrieval-eval-check` verifies saved metrics/hashes offline without rerunning model inference.
 - [P05 ingestion](docs/ingestion.md): bounded TXT/Markdown/text-PDF/DOCX parsers, source citations, versioned chunks, real local E5/pgvector, collection grants and transactional update/delete tests. [Evidence](docs/evidence/P05.md) separates real inference from fake CI checks. Run `make ingestion-demo` or the documented Python CLI.
@@ -69,4 +71,4 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 - [Source-of-truth boundaries](docs/source-of-truth.md), [threat model](docs/threat-model.md), [design review](docs/design-review-checklist.md).
 - [Historical provider connectivity](docs/provider-connectivity-2026-10-31.md): a dated API snapshot, not RAG/product evaluation.
 
-Project2 is unchanged in this phase. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, grounded answer system, actual customer UAT or public production rollout is claimed.
+Project2 is unchanged in this phase. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, independently validated answer quality, actual customer UAT or public production rollout is claimed.

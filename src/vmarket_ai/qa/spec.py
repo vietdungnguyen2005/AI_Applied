@@ -69,9 +69,9 @@ Reason = Literal[
 class AskResponse(StrictModel):
     request_id: UUID
     status: Literal["answered", "abstained"]
-    answer: str | None
+    answer: Annotated[str | None, Field(max_length=8000)]
     reason: Reason | None
-    citations: tuple[WireCitation, ...]
+    citations: Annotated[tuple[WireCitation, ...], Field(max_length=10)]
     # Low means exact quote provenance was checked, not calibrated semantic confidence.
     confidence: Literal["unknown", "low"]
     provider_mode: Literal["fake", "live"]

@@ -20,6 +20,10 @@ DEMO_COLLECTIONS = (
     UUID("ed76d914-7c66-5102-9178-676334063938"),
     UUID("4aa83e9f-0a0a-5558-8f5e-0f87db27c923"),
 )
+DEMO_SUPPLIERS = {
+    DEMO_COLLECTIONS[0]: {"vendor": "NAMI", "alias": "Supplier A"},
+    DEMO_COLLECTIONS[1]: {"vendor": "RIVERBYTE", "alias": "Supplier B"},
+}
 
 
 class PostgresEvidence:

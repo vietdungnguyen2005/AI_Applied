@@ -139,6 +139,20 @@ async def test_supported_answer_is_only_exact_source_quote_and_matches_wire_cont
     assert len(model.requests) == 1
 
 
+async def test_contiguous_complete_sentences_are_valid_but_omitted_qualifiers_are_not():
+    s = source("Original bytes use UTF-8. Never normalize the original bytes. Keep the receipt.")
+    port = Port([s])
+    quote = "Original bytes use UTF-8. Never normalize the original bytes."
+    response = await AnswerService(port, Scripted(proposal(s, quote)), mode="fake").ask(
+        Actor(id=uuid4()), request(), uuid4()
+    )
+    assert response.answer == quote
+    with pytest.raises(QAError, match="OUTPUT_INVALID"):
+        await AnswerService(
+            port, Scripted(proposal(s, "Original bytes use UTF-8. Keep the receipt.")), mode="fake"
+        ).ask(Actor(id=uuid4()), request(), uuid4())
+
+
 @pytest.mark.parametrize(
     "text",
     [

@@ -1,0 +1,38 @@
+{
+  "scope": "one structured-output software validation; original runs retained",
+  "http_status": 200,
+  "response": {
+    "request_id": "d2e80638-dd67-42c3-b978-cbfcf809ed71",
+    "status": "abstained",
+    "answer": null,
+    "reason": "NO_SUPPORTED_EVIDENCE",
+    "citations": [],
+    "confidence": "unknown",
+    "provider_mode": "live"
+  },
+  "citation_open_statuses": [],
+  "model_outputs": [
+    {
+      "text": "{\"decision\": \"insufficient\", \"claims\": []}",
+      "model": "nvidia/nemotron-3.5-super-vl:free",
+      "provider_mode": "live",
+      "prompt_tokens": 631,
+      "completion_tokens": 15,
+      "cost_usd": "0"
+    }
+  ],
+  "new_ledger_usage": [
+    {
+      "id": "bbc270ce-49e6-414c-862b-bfe56cce300c",
+      "provider": "openrouter",
+      "day": "2026-10-31",
+      "state": "completed",
+      "reserved_microusd": "1000",
+      "spent_microusd": "0",
+      "prompt_tokens": "631",
+      "completion_tokens": "15"
+    }
+  ],
+  "additional_ask_requests": 1,
+  "independent_human_review": "pending"
+}

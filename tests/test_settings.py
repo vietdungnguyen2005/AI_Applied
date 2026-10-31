@@ -14,6 +14,18 @@ def test_fake_needs_no_env_or_key():
     "options",
     [
         {"provider_mode": "live"},
+        {"qa_enabled": True},
+        {
+            "qa_enabled": True,
+            "private_container": True,
+            "bind_host": "0.0.0.0",
+            "database_url": "postgresql+psycopg://demo:demo@localhost/vmarket_ai",
+        },
+        {
+            "qa_enabled": True,
+            "database_url": "postgresql+psycopg://demo:demo@localhost/vmarket_ai",
+            "qa_embedding_mode": "local",
+        },
         {"provider_mode": "live", "live_enabled": True},
         {"provider_mode": "live", "live_enabled": True, "openrouter_api": "sentinel-key"},
         {"mode": "integrated"},

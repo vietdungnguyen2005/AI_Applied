@@ -1,0 +1,84 @@
+{
+  "transport": "actual loopback TCP HTTP with real PostgreSQL + local E5, deterministic fake chat",
+  "provider_mode": "fake",
+  "semantic_qa_metrics": "NOT_RUN",
+  "rows": [
+    {
+      "case_id": "encoding-en",
+      "status": 200,
+      "request_id": "920e8950-6838-40ad-8f34-a2c7b30b50d3",
+      "response": {
+        "request_id": "920e8950-6838-40ad-8f34-a2c7b30b50d3",
+        "status": "abstained",
+        "answer": null,
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "citations": [],
+        "confidence": "unknown",
+        "provider_mode": "fake"
+      }
+    },
+    {
+      "case_id": "encoding-ja",
+      "status": 200,
+      "request_id": "50001fa2-d743-4fe4-a743-8cac7a88b3af",
+      "response": {
+        "request_id": "50001fa2-d743-4fe4-a743-8cac7a88b3af",
+        "status": "abstained",
+        "answer": null,
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "citations": [],
+        "confidence": "unknown",
+        "provider_mode": "fake"
+      }
+    },
+    {
+      "case_id": "unknown-tax",
+      "status": 200,
+      "request_id": "2e275f2f-ef28-41e4-a4d5-e6de013761a5",
+      "response": {
+        "request_id": "2e275f2f-ef28-41e4-a4d5-e6de013761a5",
+        "status": "abstained",
+        "answer": null,
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "citations": [],
+        "confidence": "unknown",
+        "provider_mode": "fake"
+      }
+    },
+    {
+      "case_id": "conflict-window",
+      "status": 200,
+      "request_id": "507afe7c-84fc-4aab-8696-7c9cd4563952",
+      "response": {
+        "request_id": "507afe7c-84fc-4aab-8696-7c9cd4563952",
+        "status": "abstained",
+        "answer": null,
+        "reason": "CONFLICTING_EVIDENCE",
+        "citations": [
+          {
+            "document_id": "4665032f-58bb-5170-9bea-879d02a6ff1f",
+            "version_id": "90dfe25e-813f-5b00-b739-b550ad8e7b54",
+            "chunk_id": "4f741e14-4625-5293-8b9f-4ef47ca47236",
+            "locator": {
+              "kind": "section",
+              "value": "correction_window"
+            },
+            "source_url": "/ai/citations/4f741e14-4625-5293-8b9f-4ef47ca47236"
+          },
+          {
+            "document_id": "72425e2c-b591-5bc8-8d73-678d5756e125",
+            "version_id": "da208f94-add5-516d-b9b9-98115692d609",
+            "chunk_id": "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+            "locator": {
+              "kind": "section",
+              "value": "correction_window"
+            },
+            "source_url": "/ai/citations/4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+          }
+        ],
+        "confidence": "unknown",
+        "provider_mode": "fake"
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "status": "posthoc_ledger_reconciliation",
+  "rows": [
+    {
+      "id": "40ac39d7-42ac-4299-9702-da376986c469",
+      "state": "completed",
+      "spent_microusd": 0,
+      "prompt_tokens": 631,
+      "completion_tokens": 252
+    },
+    {
+      "id": "54882579-0429-487f-a56a-1c84a9da44f0",
+      "state": "completed",
+      "spent_microusd": 0,
+      "prompt_tokens": 81,
+      "completion_tokens": 77
+    },
+    {
+      "id": "99c9d137-0005-4d02-bfd9-955294cc7670",
+      "state": "completed",
+      "spent_microusd": 0,
+      "prompt_tokens": 650,
+      "completion_tokens": 512
+    }
+  ],
+  "control": {
+    "blocked": false,
+    "pending_usage_id": null
+  },
+  "ledger_completed_requests": 3,
+  "prompt_tokens": 1362,
+  "completion_tokens": 841,
+  "reported_spent_microusd": 0,
+  "explanation": "Original runner counts returned ChatResults only. One provider completion had usage but unusable empty answer content, so it raised ProviderError after settlement; all three usage rows are completed, none uncertain. Original raw run is retained."
+}

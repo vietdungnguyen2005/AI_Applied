@@ -1,0 +1,15 @@
+{
+  "status": "development_only_partial_comparative_evaluation",
+  "final_retrieval_positive_cases": 2,
+  "positive_anchor_pass": 2,
+  "literal_quote_supported_answers": 2,
+  "citation_open_successes": 2,
+  "unknown_case": "HTTP 503 provider error, not counted as correct abstention",
+  "conflict_case": "Skipped in final live batch after error; real retrieval/fake-chat TCP demo returns CONFLICTING_EVIDENCE before model",
+  "baseline": "Only English positive completed as insufficient; 0/1 positive anchor pass, 0 citations. Remaining three baseline cases NOT_RUN. Not a balanced baseline comparison.",
+  "semantic_factual_accuracy": "NOT_RUN; anchor proxies only",
+  "human_citation_relevance_review": "NOT_RUN",
+  "independent_human_review": "pending",
+  "earlier_live_run_preserved": true,
+  "paid_fallback": false
+}

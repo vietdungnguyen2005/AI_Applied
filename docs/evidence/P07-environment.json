@@ -1,0 +1,19 @@
+{
+  "client_date": "2026-11-01",
+  "python": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "baseline_ai": "cff8f4278d8d0fb4902015dc20b5fd2c98bd9cf2",
+  "project2_sha": "32d82862526754b46efb774327ccc4774a4decf7",
+  "project2_status": "",
+  "environment": ".local/p05-env",
+  "package_versions": {
+    "fastapi": "0.162.0",
+    "pydantic": "2.14.2",
+    "httpx": "0.28.1",
+    "sqlalchemy": "2.0.55",
+    "onnxruntime": "1.31.1"
+  },
+  "model_selection": "openrouter/free, per-response routed models in raw evidence",
+  "maximum_probe_requests": 8,
+  "real_ledger_left_blocked": true,
+  "qa_default_enabled": false
+}

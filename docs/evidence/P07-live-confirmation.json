@@ -1,0 +1,24 @@
+{
+  "scope": "one new English software-fix verification, no retry of failed Japanese case",
+  "http_status": 502,
+  "response": {
+    "request_id": "abe7878f-8be3-43e6-ad5f-69fe76ac3eb1",
+    "code": "OUTPUT_INVALID",
+    "message": "Request unavailable; inspect the correlation ID."
+  },
+  "citation_open_statuses": [],
+  "new_ledger_usage": [
+    {
+      "id": "ffd849a2-9789-4121-b66d-515a42d9b7ae",
+      "provider": "openrouter",
+      "day": "2026-10-31",
+      "state": "completed",
+      "reserved_microusd": "1000",
+      "spent_microusd": "0",
+      "prompt_tokens": "526",
+      "completion_tokens": "510"
+    }
+  ],
+  "additional_ask_requests": 1,
+  "independent_human_review": "pending"
+}

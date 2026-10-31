@@ -18,6 +18,7 @@ class Message(StrictModel):
 class ChatRequest(StrictModel):
     messages: Annotated[tuple[Message, ...], Field(min_length=1, max_length=8)]
     max_output_tokens: Annotated[int, Field(ge=1, le=512)] = 128
+    structured_output: dict[str, object] | None = None
 
 
 class ChatResult(StrictModel):
