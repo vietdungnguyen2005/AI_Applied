@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-31T22:49:31.546204+07:00",
+  "/health": {
+    "status": 200,
+    "request_id": "b1990658-7a37-4ae5-a8e5-494571a66fef",
+    "cache_control": "no-store",
+    "body": {
+      "status": "ok"
+    }
+  },
+  "/ready": {
+    "status": 200,
+    "request_id": "b5ff87f5-c123-4129-8f36-529aa8d423e5",
+    "cache_control": "no-store",
+    "body": {
+      "status": "ready",
+      "provider_mode": "fake"
+    }
+  },
+  "/openapi.json": {
+    "status": 200,
+    "request_id": "9b606c53-33f1-4446-a527-b63ecc2e194d",
+    "cache_control": "no-store",
+    "body": {
+      "paths": [
+        "/health",
+        "/ready"
+      ]
+    }
+  },
+  "unimplemented_ai_route": {
+    "status": 404,
+    "body": {
+      "request_id": "714e7b6c-19dc-4678-8e22-4b6bc16f6813",
+      "code": "ROUTE_NOT_AVAILABLE",
+      "message": "Request unavailable; inspect the correlation ID."
+    }
+  }
+}

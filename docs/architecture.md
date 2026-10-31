@@ -2,6 +2,8 @@
 
 Status: design and validated schemas only, **not an implemented AI service**. Date: 2026-10-31 Asia/Bangkok. Inputs: [P00 source audit](00-repo-audit.md), [P01 requirements](fde/requirements.md), Project2 SHA `32d82862526754b46efb774327ccc4774a4decf7`. P02 baseline AI SHA: `7372005d49899fdc947b8b5de3fe9d5bfdb37ba5`.
 
+P03 implementation note: the health/readiness service, provider interfaces/fakes, guarded internal live adapter and AI storage foundation now exist; see [P03 evidence](evidence/P03.md). This P02 document remains the target design for later features. Signed context, business tools, document/RAG/mapping routes and integration are not enabled by the P03 skeleton.
+
 ## Components and ownership
 
 ```mermaid

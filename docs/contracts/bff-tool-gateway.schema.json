@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "V-Market AI gateway v1 â€” design only",
+  "title": "V-Market AI gateway v1 - design contract",
   "description": "Strict wire projections and intent/context schemas; semantic auth, byte, sequence and time checks remain runtime requirements.",
   "$ref": "#/$defs/ToolIntentEnvelope",
   "$defs": {
@@ -1956,7 +1956,10 @@
             "OUTPUT_INVALID",
             "DEPENDENCY_UNAVAILABLE",
             "DEADLINE_EXCEEDED",
-            "AI_DISABLED"
+            "AI_DISABLED",
+            "ROUTE_NOT_AVAILABLE",
+            "METHOD_NOT_ALLOWED",
+            "INTERNAL_ERROR"
           ]
         },
         "message": {

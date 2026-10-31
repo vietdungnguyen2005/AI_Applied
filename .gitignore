@@ -3,3 +3,12 @@
 !.env.example
 __pycache__/
 *.pyc
+.venv/
+.local/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+*.egg-info/
+.coverage
+htmlcov/

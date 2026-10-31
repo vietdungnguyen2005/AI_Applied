@@ -1,0 +1,19 @@
+{"check": "markdown_links", "result": "PASS", "detail": {"checked": 52, "broken": []}}
+{"check": "Project2_unchanged", "result": "PASS", "detail": "Original checkout remains clean"}
+{"check": "lint", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "format", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "typecheck", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "tests", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "postgres-test", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "contracts", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "compose-config", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "compose-up", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "docker-build", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "postgres-migrate", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "sqlite-migrate", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "container-isolation", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "container-fake", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "lock-check", "result": "PASS", "detail": "Final recorded command exit 0"}
+{"check": "lockfile_present", "result": "PASS", "detail": "Resolved graph retained"}
+{"check": "env_ignored", "result": "PASS", "detail": "Private .env excluded"}
+{"check": "actual_secret_scan", "result": "PASS", "detail": {"files": 117, "secret_values_printed": false}}

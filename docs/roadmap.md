@@ -9,7 +9,7 @@ Implementation owner: coding agent; acceptance owner: repository owner. Real sta
 | P00 | Existing repos | Source audit, actual baseline logs, risks and concrete integration plan | Agent / owner review | Accepted by owner instruction to continue; dependency audit FAIL remains open |
 | P01 | Owner acceptance of P00 | Fictional discovery, FR/NFR, J1–J5, negative acceptance cases | Agent / owner | Documentation delivered and checked; no real discovery/UAT or AI implementation claimed; see evidence/P01.md |
 | P02 | P01 | ADRs, schemas, identity protocol, threat review | Agent / owner | Design delivered; contract examples validated; runtime auth/security gates pending; see evidence/P02.md |
-| P03 | P02 | Fake-default FastAPI, migrations, CI, lint/types/tests/health | Agent | NOT STARTED |
+| P03 | P02 | Fake-default FastAPI, migrations, CI, lint/types/tests/health | Agent | Local foundation verified: lint/types, 45 offline tests +1 PostgreSQL test, contracts, clean environment and Docker smoke; see evidence/P03.md. Remote CI status is separate |
 | P04 | P03 + verified profile contract | Synthetic fixtures, byte hashes, provenance, separated gold splits | Agent / human review | NOT STARTED |
 | P05 | P03–P04 | Actual parsers, chunking, embeddings, versions, ACL | Agent | NOT STARTED |
 | P06 | P05 | Lexical/dense/hybrid implementations and measured retrieval eval | Agent | NOT STARTED |

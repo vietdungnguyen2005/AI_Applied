@@ -1,0 +1,309 @@
+{
+  "phase": "P03",
+  "date": "2026-10-31",
+  "baseline_ai": "6b28984834f011cebbdecb6847547de4dd7ae378",
+  "baseline_project2": "32d82862526754b46efb774327ccc4774a4decf7",
+  "hash_scope": "Git blob bytes; manifest excludes itself",
+  "artifacts": [
+    {
+      "path": ".dockerignore",
+      "sha256": "71254bde564b1f48ac705f3716f6b045309552890bc3bcbf22109a8d7c998128",
+      "bytes": 119
+    },
+    {
+      "path": ".env.example",
+      "sha256": "91347f80858ad1e46911fd1c3f36b976afd16202c2768f47065248bd145b7a45",
+      "bytes": 442
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "fd5e526f7b9b3d7d8811a8c53db9115309110e947ff7549bcdb7d0b97e31b0dc",
+      "bytes": 1164
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "8a1bb181ef4f0bd27779180b19c34a807f5f954dbeb81b33e8a0d45416cebec8",
+      "bytes": 138
+    },
+    {
+      "path": "Dockerfile",
+      "sha256": "7d094ad3456fc4a2066a2d0d0d6a8ceab53f6e61dfc9869ab35856813ad63b5c",
+      "bytes": 626
+    },
+    {
+      "path": "Makefile",
+      "sha256": "37abfa4af53d8ea50ddec12b781a2611da3d29cf6c574d037fd78e4e091ef014",
+      "bytes": 547
+    },
+    {
+      "path": "README.md",
+      "sha256": "a2d6676534dcf7471078958c06c418f074453bdb48dd148c72b8d787218a2fb7",
+      "bytes": 5279
+    },
+    {
+      "path": "alembic.ini",
+      "sha256": "8854d44a276d14f6d15c51bd955e93f5859ec5699e36874f3bc0663ee91fe001",
+      "bytes": 149
+    },
+    {
+      "path": "compose.yaml",
+      "sha256": "ef7056562e88e859ad39e07754c2ac4a42ea4b3ce5a48f0636e056e11f04b2fa",
+      "bytes": 1529
+    },
+    {
+      "path": "docker/init-ai.sql",
+      "sha256": "3ba2bdc55214f1e4160d6721c46569757370e4441bf9f86ab4537e3e6e366fc4",
+      "bytes": 251
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "8397013deff30b0b29262136811e6e35bb427fe73bf5516989b117f8f7a66a6b",
+      "bytes": 10164
+    },
+    {
+      "path": "docs/contracts/README.md",
+      "sha256": "87841fca476e2f1a730ceae94927c3223411a6eecc729e4bebabb17891667b1b",
+      "bytes": 2469
+    },
+    {
+      "path": "docs/contracts/bff-tool-gateway.schema.json",
+      "sha256": "2181332ab54476b1816c4d91351ad7ef1a922ae92b0b0741fce338a784430c57",
+      "bytes": 49025
+    },
+    {
+      "path": "docs/evidence/P03-contract-validation.json",
+      "sha256": "a662aa418f42c75303b5d758f00ba2163a4979eb6dd78989a91e21886c3cd7f5",
+      "bytes": 17282
+    },
+    {
+      "path": "docs/evidence/P03-environment.json",
+      "sha256": "75c4beb05f3d308b178afb77566a1161e04f99a1e8221c31596c71c655514b27",
+      "bytes": 768
+    },
+    {
+      "path": "docs/evidence/P03-http-smoke.json",
+      "sha256": "bbec62b25c352309cdc77df87849baadd0b723dfd82519e01f79ac47bb969522",
+      "bytes": 886
+    },
+    {
+      "path": "docs/evidence/P03.md",
+      "sha256": "67d87b37728a2df1e5c968db26b6c0a42044006dca7dbd815bd2e022dea22bb5",
+      "bytes": 13265
+    },
+    {
+      "path": "docs/evidence/logs/P03-clean-install.log",
+      "sha256": "7d2880868504002e59f6107a2c704ea931e4fe6a462a8f72e89adbf2a734072f",
+      "bytes": 3241
+    },
+    {
+      "path": "docs/evidence/logs/P03-compose-config.log",
+      "sha256": "c1e97067c5f479a44a6f57297a0a8f87a59d181c3c529910f8bf059094bc3abb",
+      "bytes": 13
+    },
+    {
+      "path": "docs/evidence/logs/P03-compose-up.log",
+      "sha256": "431018b2c017609042a0be26add974e9339849f7f0631c74e880fe51efb04ac4",
+      "bytes": 931
+    },
+    {
+      "path": "docs/evidence/logs/P03-container-fake.log",
+      "sha256": "a898a9760f7aa227bed4e9657fc783e706a0d899641d73bc2a33efc81ca396ba",
+      "bytes": 131
+    },
+    {
+      "path": "docs/evidence/logs/P03-container-isolation.log",
+      "sha256": "2d1db9f29f6e4007c10c12a09790d678be510c313ba4a667096c00fe621016e6",
+      "bytes": 92
+    },
+    {
+      "path": "docs/evidence/logs/P03-contracts.log",
+      "sha256": "a74a427294545ca5f6e1011d159419b6e158b422046b414de2d9f71fa16969d8",
+      "bytes": 11970
+    },
+    {
+      "path": "docs/evidence/logs/P03-docker-build.log",
+      "sha256": "36a83d1f4a52a4cf41d16c26de9b744cce84cbde37d0acda645e8af0b8d7878b",
+      "bytes": 3929
+    },
+    {
+      "path": "docs/evidence/logs/P03-final-check.log",
+      "sha256": "59cfe8442b496853199351504f8f4ef015a4495d353020c4ba1f2e22220df6b1",
+      "bytes": 1677
+    },
+    {
+      "path": "docs/evidence/logs/P03-format.log",
+      "sha256": "6f08bd16d9cba2dc311a59ceba13167ac45a7ab75059c4e8cd42ddda162704be",
+      "bytes": 41
+    },
+    {
+      "path": "docs/evidence/logs/P03-lint-first-attempt.log",
+      "sha256": "ac5a7e69f4eea0c1041faaa03cd2a2dc95c29a46d12348743ce3d5d7a1fcc313",
+      "bytes": 1043
+    },
+    {
+      "path": "docs/evidence/logs/P03-lint.log",
+      "sha256": "b7a95b77a9305361ba44b2c76e61746124328622feecf010b7981ac8d869c8a4",
+      "bytes": 33
+    },
+    {
+      "path": "docs/evidence/logs/P03-lock-check.log",
+      "sha256": "8dc1d8d04069a73a463c3014e0ee12f8e40ceb44cbf62abf070f02a0796f3419",
+      "bytes": 42
+    },
+    {
+      "path": "docs/evidence/logs/P03-postgres-migrate.log",
+      "sha256": "4e6cd699ddee57f94a025c53ed5690ef0c581286f756fc7534570f2085257769",
+      "bytes": 73
+    },
+    {
+      "path": "docs/evidence/logs/P03-postgres-test.log",
+      "sha256": "b5828fc0b087cbae21a0e720d2c176587808e60a82023f1764473ef95c5a4fed",
+      "bytes": 596
+    },
+    {
+      "path": "docs/evidence/logs/P03-resolved-versions.log",
+      "sha256": "2379e9fabe1f63bcef2c288164b68db5a39468941a6477ac2e8bc534adbd4c0e",
+      "bytes": 1113
+    },
+    {
+      "path": "docs/evidence/logs/P03-sqlite-migrate.log",
+      "sha256": "4e6cd699ddee57f94a025c53ed5690ef0c581286f756fc7534570f2085257769",
+      "bytes": 73
+    },
+    {
+      "path": "docs/evidence/logs/P03-tests.log",
+      "sha256": "db01eca4a66a1672e3512af6be9ff0ce240c29dfcb7d43dbb2011ac97dda8a75",
+      "bytes": 593
+    },
+    {
+      "path": "docs/evidence/logs/P03-typecheck.log",
+      "sha256": "ed8a7c0025f904a94a566972a24da793fd2bf8b7fe7765e4db2d4f9ec864d67c",
+      "bytes": 58
+    },
+    {
+      "path": "docs/provider-connectivity-2026-10-31.md",
+      "sha256": "f0e245676ab9ad956e61aa3791fc4fedf854bd3304fc8b0c68b36115633f62aa",
+      "bytes": 5799
+    },
+    {
+      "path": "docs/providers.md",
+      "sha256": "e68740789e9be5f6a4f3f72408b12ee4aa3b3fbb9f235f1fd64241f16176d550",
+      "bytes": 3670
+    },
+    {
+      "path": "docs/roadmap.md",
+      "sha256": "c98fc627c22a0485f26e9b0696efcde1196cd17cc34898d1c5a3f6a3e8958aa6",
+      "bytes": 3868
+    },
+    {
+      "path": "migrations/env.py",
+      "sha256": "1e95610e4fe6dcef38452548f7c97b002cbd3bca476ba4e49001389c1ae2645d",
+      "bytes": 809
+    },
+    {
+      "path": "migrations/versions/0001_ai_foundation.py",
+      "sha256": "e0ec45d466b066226e0bedb11098ac8f5d84d192ffb34877a8b56f3f5fb659f1",
+      "bytes": 3350
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "20a1f7c4d85f0fe5de198d79bc953a9662c43589cc1d6e889f44b0c6064a987f",
+      "bytes": 1179
+    },
+    {
+      "path": "src/vmarket_ai/__init__.py",
+      "sha256": "66b43c57e708d0d843ee6f2871994deb8a28caf2a2bea7c0587b10dc89a3f626",
+      "bytes": 77
+    },
+    {
+      "path": "src/vmarket_ai/app.py",
+      "sha256": "45ae4566a74fb11912bd7958cd2d28e96c3b200ecf54fca11c68d75212679731",
+      "bytes": 5834
+    },
+    {
+      "path": "src/vmarket_ai/cli.py",
+      "sha256": "f82d08ddb165c1164ef75cad3edec6ea7713c59f91e12b995d58d843d1584e90",
+      "bytes": 2295
+    },
+    {
+      "path": "src/vmarket_ai/contracts.py",
+      "sha256": "c3642039101f7016beab06abcb5dc154b4d5a851d851650b5fe802ff2cae1333",
+      "bytes": 2846
+    },
+    {
+      "path": "src/vmarket_ai/database.py",
+      "sha256": "60d8dd7ac391c474e89a961ee475768f41fef3f55fe1fbae816f1ccdfa6ad353",
+      "bytes": 4404
+    },
+    {
+      "path": "src/vmarket_ai/observability.py",
+      "sha256": "183fb80b0ffd4e8dd014c1489d4696b47a51d1893dcae7f5db7da15db8747374",
+      "bytes": 1039
+    },
+    {
+      "path": "src/vmarket_ai/providers/__init__.py",
+      "sha256": "5d23e605fd57e80d71f0046b55721cdc8d8c9e95ecbda77645537cd2e7a8e54d",
+      "bytes": 90
+    },
+    {
+      "path": "src/vmarket_ai/providers/budget.py",
+      "sha256": "f9ee977f30a4fc139d29a40b9c8d91eb802f1fb2f470b027f017bf8b29153c2c",
+      "bytes": 5979
+    },
+    {
+      "path": "src/vmarket_ai/providers/fake.py",
+      "sha256": "954b52dda9bd3641d0d0563ddd75da202e0e2be888ffb4a04ceda5bb5c533d07",
+      "bytes": 1060
+    },
+    {
+      "path": "src/vmarket_ai/providers/openrouter.py",
+      "sha256": "c990cfc6b3d6ea293b7dc1b7493cb67c71dad7655c41145103ec4e86c6192238",
+      "bytes": 6882
+    },
+    {
+      "path": "src/vmarket_ai/settings.py",
+      "sha256": "40f331bf3fc66d92fe3307b627b9d8c738ff2aa7febda7edbb1ea2c11ffd365e",
+      "bytes": 3468
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "0bf475355029668cf4945cd8fa5a07d7e91651a8d0b64fde3a4300d00c2a36c4",
+      "bytes": 1213
+    },
+    {
+      "path": "tests/test_app.py",
+      "sha256": "11c445d9f87b185251f66c9dd4d0bcac90c4a6e0caf1dbd7db99aaed6f367421",
+      "bytes": 4473
+    },
+    {
+      "path": "tests/test_database.py",
+      "sha256": "ca887e3193c197333d506cad917c9a357ff7a095853da3e48916adcf3db256a8",
+      "bytes": 4299
+    },
+    {
+      "path": "tests/test_provider_safety.py",
+      "sha256": "ea640f2556173f5b2ddf07aa80578546db013377b30e9108ed8b9c8025748fa5",
+      "bytes": 3426
+    },
+    {
+      "path": "tests/test_providers.py",
+      "sha256": "594fb2359744b898fdb48e928d65966ca46fd0f782b820cd84bcf94da251ec15",
+      "bytes": 7235
+    },
+    {
+      "path": "tests/test_settings.py",
+      "sha256": "7ac52bc70eb84fba1e439849c154db50f123d8cc820ebf6f12358eb67001223f",
+      "bytes": 1634
+    },
+    {
+      "path": "tools/validate_contracts.py",
+      "sha256": "94d6bdd52a160203282ff692e984b248e13731fb189ff65f30d8e3f0d8a65cb3",
+      "bytes": 5381
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "4405d3dcf20e532687e6f601cc498f469f11e7ec1fd8e4379d85edfcaadb586b",
+      "bytes": 195029
+    }
+  ]
+}

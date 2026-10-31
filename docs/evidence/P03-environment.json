@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-31T22:49:31.546204+07:00",
+  "os": "Windows-11-10.0.26200-SP0",
+  "host_python": "3.12.1",
+  "uv": "uv 0.13.6 (329bf9448 2026-10-26 x86_64-pc-windows-msvc)",
+  "ai_baseline": "6b28984834f011cebbdecb6847547de4dd7ae378",
+  "project2_sha": "32d82862526754b46efb774327ccc4774a4decf7",
+  "project2_status": "",
+  "container_python": "Python 3.12.15",
+  "api_image_id": "sha256:c505a78cca8511aeec74b5389dcb2997ffbc48c60cb458b4199654ef059bb7d7",
+  "pgvector_repo_digest": [
+    "pgvector/pgvector@sha256:7d0a41464797aeb9862dfdc0bbf1526b82cfd324cdd8036df19e3545f4a9ccb8"
+  ],
+  "local_containers": "vmarket-ai-p03 only; API 127.0.0.1:8090, PostgreSQL 127.0.0.1:5434",
+  "actual_live_model_calls": 0,
+  "test_mode": "fake/HTTP mock; local PG real"
+}

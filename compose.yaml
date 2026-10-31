@@ -1,0 +1,50 @@
+name: vmarket-ai-local
+x-ai-image: &ai-image
+  image: vmarket-ai:p03-local
+  build: .
+services:
+  ai-postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: vmarket_ai
+      POSTGRES_USER: ai_owner
+      POSTGRES_PASSWORD: local-ai-owner-only
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - ai-pgdata:/var/lib/postgresql/data
+      - ./docker/init-ai.sql:/docker-entrypoint-initdb.d/10-ai.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ai_owner -d vmarket_ai"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  ai-migrate:
+    <<: *ai-image
+    command: ["migrate"]
+    environment:
+      AI_DATABASE_URL: postgresql+psycopg://ai_app:local-ai-app-only@ai-postgres:5432/vmarket_ai
+      AI_MIGRATION_DATABASE_URL: postgresql+psycopg://ai_owner:local-ai-owner-only@ai-postgres:5432/vmarket_ai
+    depends_on:
+      ai-postgres:
+        condition: service_healthy
+  ai-api:
+    <<: *ai-image
+    ports:
+      - "127.0.0.1:8090:8090"
+    environment:
+      AI_MODE: standalone
+      AI_PROVIDER_MODE: fake
+      AI_PRIVATE_CONTAINER: "true"
+      AI_BIND_HOST: 0.0.0.0
+      AI_DATABASE_URL: postgresql+psycopg://ai_app:local-ai-app-only@ai-postgres:5432/vmarket_ai
+    depends_on:
+      ai-migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/ready',timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+volumes:
+  ai-pgdata:

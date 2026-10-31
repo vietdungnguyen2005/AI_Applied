@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vmarket-ai"
+version = "0.1.0"
+description = "Local, offline-first foundation for V-Market AI Operations Copilot"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn>=0.30,<1",
+  "pydantic>=2.9,<3",
+  "pydantic-settings>=2.6,<3",
+  "sqlalchemy>=2.0,<2.1",
+  "alembic>=1.13,<2",
+  "psycopg[binary]>=3.2,<4",
+  "httpx>=0.27,<1",
+]
+
+[project.scripts]
+vmarket-ai = "vmarket_ai.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-asyncio>=0.24,<2",
+  "ruff>=0.9,<1",
+  "mypy>=1.13,<2",
+  "jsonschema==4.26.0",
+  "PyYAML==6.0.3",
+  "openapi-spec-validator==0.7.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vmarket_ai"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src/vmarket_ai"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = ["postgres: opt-in disposable AI PostgreSQL integration"]

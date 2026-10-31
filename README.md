@@ -1,85 +1,68 @@
-# AI Applied
+# V-Market AI Operations Copilot
 
-V-Market AI Operations Copilot is being developed in phases. Current work includes a source-verified repository audit, a fictional discovery/acceptance package, and [architecture and contracts](docs/architecture.md); the AI product is not implemented yet. Follow the [roadmap](docs/roadmap.md), [P00 evidence](docs/evidence/P00.md), [P01 discovery package](docs/fde/README.md) and [P02 evidence](docs/evidence/P02.md). The API connectivity checks below are separate from product evaluation.
+Local, offline-first Python foundation for a fictional Japanese retailer using synthetic suppliers. **P03 is implemented; RAG, CSV mapping, agent tools and V-Market integration are not implemented yet.** No production deployment or real customer outcome is claimed.
 
-Kiểm tra kết nối VyceAI và OpenRouter bằng các khóa lưu trong `.env`.
+Current service exposes only `/health`, `/ready` and `/openapi.json`. Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
 
-## Chạy lại
+## Quickstart: fake mode, no API key
 
-Yêu cầu Python 3.9+ với dữ liệu timezone (nếu thiếu, cài `tzdata`). Sao chép `.env.example` thành `.env`, điền khóa rồi chạy:
+Requirements: Python 3.11-3.13. Verified locally on Python 3.12 / Windows and in Docker. Preserve any existing `.env`; copying `.env.example` is optional because defaults work without it.
 
 ```powershell
-python scripts/check_api.py
+python -m pip install uv==0.13.6
+python -m uv sync --locked
+python -m uv run --frozen vmarket-ai migrate
+python -m uv run --frozen vmarket-ai fake-check
+python -m uv run --frozen vmarket-ai serve
 ```
 
-Script lấy danh sách model và gọi ngắn hai model VyceAI được chủ tài khoản xác nhận miễn phí, cùng `openrouter/free`. Script không sử dụng GitHub PAT, không tự gọi model trả phí và không in khóa. Mỗi lần chạy tiêu thụ quota miễn phí. Kết quả được ghi vào `reports/api-check.json`; chạy lại rồi commit nếu muốn cập nhật snapshot.
+Open [health](http://127.0.0.1:8090/health) and [readiness](http://127.0.0.1:8090/ready). Health reports process liveness. Readiness is 503 before AI migrations and 200 after the expected migration is present; it does not call an external model or claim RAG is ready.
 
-## Kết quả kiểm tra ngày 31/10/2026
+Default storage is `.local/ai.db`, an AI-only SQLite database. `serve` uses loopback; direct overriding of Uvicorn/network settings is outside the supported local launcher. API docs expose no model keys. No business database, operator cookie or Java trust secret is used.
 
-- VyceAI: `/v1/models` HTTP 200; 8 model được liệt kê.
-- VyceAI `glm-5.3-flash`: HTTP 200, trả `OK`.
-- VyceAI `beam-1.0`: HTTP 200, trả `OK`.
-- OpenRouter: `/api/v1/models` và `/api/v1/key` HTTP 200.
-- OpenRouter `openrouter/free`: HTTP 200, trả `OK`, model được chọn là `nvidia/nemotron-3-ultra-550b-a55b:free`, `usage.cost = 0`.
-- Lần thử riêng `gpt-6-luna` trước đó: HTTP 429 `rate_limit_exceeded`; chưa xác nhận được chat thành công cho model này. Không thử chat các model trả phí khác.
+## Checks
 
-HTTP 200 của danh sách model không chứng minh mọi model đều gọi được. Chỉ các model có kết quả chat ở trên đã được thử. HTTP 429 cho biết bị giới hạn tại thời điểm thử, chưa đủ để kết luận khóa sai hoặc hết tiền.
+```powershell
+python -m uv run --frozen ruff check src tests migrations tools/validate_contracts.py
+python -m uv run --frozen ruff format --check src tests migrations tools/validate_contracts.py
+python -m uv run --frozen mypy
+python -m uv run --frozen pytest -q
+python -m uv run --frozen python tools/validate_contracts.py
+```
 
-## Giá và quyền truy cập VyceAI
+On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips the explicit PostgreSQL test; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden.
 
-Giá USD/1 triệu token đầu vào và đầu ra. Nguồn giá văn bản: bảng dashboard do chủ tài khoản cung cấp trong chat ngày 31/10/2026. Chủ tài khoản cho biết số dư $40; script chưa xác minh số dư hoặc mức trừ tiền thực tế của VyceAI. API danh sách model không trả giá token cho model văn bản.
+## Standalone Docker: own PostgreSQL + pgvector
 
-| Model ID | Đầu vào | Đầu ra | Ghi chú |
-| --- | ---: | ---: | --- |
-| `glm-5.3-flash` | $0 | $0 | Chủ tài khoản xác nhận free; chat thành công |
-| `beam-1.0` | $0 | $0 | Chủ tài khoản xác nhận free; chat thành công |
-| `claude-sonnet-4-6` | $3 | $15 | Trừ số dư theo giá dashboard |
-| `gpt-6-luna` | $2 | $2 | Dashboard hiển thị quota ngày còn 50M; lần thử gặp 429 |
-| `deepseek-v4.1` | $0.15 | $0.60 | Dashboard ghi miễn phí cho Lite/Pro; cần xác nhận gói tài khoản để áp dụng |
-| `agnes-3.0-flash` | $0.05 | $0.15 | Dashboard ghi miễn phí cho Lite/Pro; cần xác nhận gói tài khoản để áp dụng |
-| `deepseek-v4-flash-lr` | Chưa rõ | Chưa rõ | API có liệt kê; chưa có giá được xác nhận |
-| `grok-imagine-2` | — | — | API công bố $0.50/ảnh; chưa thử tạo ảnh |
+```powershell
+docker compose config --quiet
+docker compose up --build -d
+```
 
-Tín dụng tặng hoặc số dư $40 không đồng nghĩa các model tính phí có giá $0. Miễn phí theo gói Lite/Pro là quyền lợi có điều kiện.
+The stack creates only AI resources: PostgreSQL on host loopback **5434**, API on loopback **8090**, separate schema `ai`, separate volume, migration owner and restricted application role. It does not join or modify V-Market storage. Public local-demo passwords in Compose are disposable development values, not production credentials. Provider keys are not passed into the containers and `.env` is excluded from build context.
 
-## Model miễn phí trên OpenRouter
+`ai-migrate` runs once before `ai-api`. The image runs as UID/GID 10001. Application role can use AI tables but cannot create tables or edit the migration ledger. SQLite offline mode does not implement pgvector. Docker base tags are mutable; actual verification versions/digests are recorded in phase evidence.
 
-Snapshot API trả 16 model có hậu tố `:free`, đều có `pricing.prompt = 0` và `pricing.completion = 0`:
+To run the optional PostgreSQL test against this disposable stack:
 
-- `recursive/flint-v1.0:free`
-- `xingchen-agi/xing4.0-29b-a4b:free`
-- `nvidia/nemotron-3.5-super-vl:free`
-- `dots-studio/dots-3-note-preview:free`
-- `liquid/lfm-2.5-2.6b:free`
-- `nvidia/nemotron-3.5-lightning:free`
-- `thinkingmachines/inkling-small:free`
-- `poolside/laguna-s-2.1:free`
-- `thinkingmachines/inkling:free`
-- `poolside/laguna-xs-2.1:free`
-- `cohere/north-mini-code:free`
-- `nvidia/nemotron-3.5-content-safety:free`
-- `nvidia/nemotron-3-ultra-550b-a55b:free`
-- `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free`
-- `google/gemma-4-26b-a4b-it:free`
-- `google/gemma-4-31b-it:free`
+```powershell
+$env:AI_TEST_DATABASE_URL='postgresql+psycopg://ai_app:local-ai-app-only@127.0.0.1:5434/vmarket_ai'
+python -m uv run --frozen pytest -q -m postgres
+```
 
-Ngoài ra có `openrouter/free`, tự chọn một model miễn phí phù hợp. Đây là model dùng trong lần kiểm tra thành công. Danh sách công bố không đảm bảo từng model luôn có capacity; chưa thử riêng toàn bộ model.
+Stop your own demo using `docker compose down`; data volume is retained. Do not point migration settings at a business database. Supported PostgreSQL database names are `vmarket_ai` or `vmarket_ai_test`.
 
-`google/lyria-3-pro-preview` và `google/lyria-3-clip-preview` cũng có giá token đầu vào/đầu ra bằng 0 trong API, nhưng là model âm nhạc, không có hậu tố `:free`. Chưa đủ bằng chứng để kết luận tổng chi phí tạo âm nhạc bằng 0; không đưa vào danh sách chat miễn phí.
+## Providers and limits
 
-Khóa hiện báo `is_free_tier = true`. Lúc kiểm tra ban đầu còn 50/50 lượt; snapshot lưu sau lần chat đầu tiên nên quota trước lần chat cuối còn 49/50. Hai lần chat OpenRouter đều trả HTTP 200; lần đầu chỉ sinh reasoning vì giới hạn 64 token, lần sau trả `OK` với giới hạn 512 token. Mỗi lần thử có thể tính quota.
+Fake chat/embedding implementations and typed interfaces are in `src/vmarket_ai/`. The optional OpenRouter adapter supports only `openrouter/free`: explicit live opt-in, API key, positive finite request/day budgets, current zero-price catalog preflight, bounded response/time and an atomic persisted usage ledger are required. No live provider call was made for P03. There is no live chat HTTP endpoint yet.
 
-Theo tài liệu OpenRouter: các biến thể `:free` có giới hạn 20 yêu cầu/phút, 50 yêu cầu/ngày khi tổng tiền mua credits dưới $10; nâng lên 1.000 yêu cầu/ngày khi đủ điều kiện mua credits. Model miễn phí vẫn có thể trả 429 do tải của nhà cung cấp. Không thêm model trả phí vào fallback nếu cần giữ chi phí bằng 0.
+See [provider safety and configuration](docs/providers.md). Unknown outcomes retain reservation and stop further live use for manual review; requests are never automatically retried or switched to a paid model. Application budgets cannot undo a provider charge; any unexpected reported cost is recorded and blocks further calls. VyceAI and live embeddings are not runtime adapters in P03; the earlier connectivity script is retained separately.
 
-Nguồn chính thức:
+## Status and evidence
 
-- https://openrouter.ai/api/v1/models
-- https://openrouter.ai/pricing
-- https://openrouter.ai/docs/api-reference/limits
-- https://openrouter.ai/collections/free-models
-- https://vyceai.com/v1/models
-- https://vyceai.com/
+- [P03 evidence](docs/evidence/P03.md): executed commands, results, failures, limits and reproducibility.
+- [Roadmap](docs/roadmap.md): P00-P16 dependencies/status; [fictional discovery](docs/fde/README.md).
+- [Source-of-truth boundaries](docs/source-of-truth.md), [threat model](docs/threat-model.md), [design review](docs/design-review-checklist.md).
+- [Historical provider connectivity](docs/provider-connectivity-2026-10-31.md): a dated API snapshot, not RAG/product evaluation.
 
-## Bảo mật
-
-`.env` bị loại khỏi Git. `.env.example` chỉ chứa tên biến và giá trị rỗng. Báo cáo chỉ lưu metadata model, trạng thái HTTP, câu trả lời kiểm tra và usage; không lưu khóa hoặc toàn bộ thông tin tài khoản.
+Project2 is unchanged in this phase. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, document parser, retrieval index, actual customer UAT or public production rollout is claimed.
