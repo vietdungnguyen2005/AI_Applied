@@ -1,0 +1,107 @@
+{
+  "dense": {
+    "at_k": {
+      "1": {
+        "hit": 0.875,
+        "mrr": 0.875,
+        "ndcg": 0.875,
+        "recall": 0.875
+      },
+      "3": {
+        "hit": 1.0,
+        "mrr": 0.9375,
+        "ndcg": 0.9538662191964322,
+        "recall": 1.0
+      },
+      "5": {
+        "hit": 1.0,
+        "mrr": 0.9375,
+        "ndcg": 0.9538662191964322,
+        "recall": 1.0
+      }
+    },
+    "billed_embedding_usd": 0.0,
+    "cpu_energy_hosting_cost": "NOT_MEASURED",
+    "embedding_calls": 8,
+    "forbidden_hits": 0,
+    "input_tokens": 148,
+    "latency": {
+      "median_ms": 41.175250022206455,
+      "p95_ms": 49.11174501175992
+    },
+    "positive_queries": 8,
+    "queries": 8,
+    "zero_relevance_empty_results": 0,
+    "zero_relevance_queries": 0
+  },
+  "hybrid": {
+    "at_k": {
+      "1": {
+        "hit": 0.875,
+        "mrr": 0.875,
+        "ndcg": 0.875,
+        "recall": 0.875
+      },
+      "3": {
+        "hit": 1.0,
+        "mrr": 0.9375,
+        "ndcg": 0.9538662191964322,
+        "recall": 1.0
+      },
+      "5": {
+        "hit": 1.0,
+        "mrr": 0.9375,
+        "ndcg": 0.9538662191964322,
+        "recall": 1.0
+      }
+    },
+    "billed_embedding_usd": 0.0,
+    "cpu_energy_hosting_cost": "NOT_MEASURED",
+    "embedding_calls": 8,
+    "forbidden_hits": 0,
+    "input_tokens": 148,
+    "latency": {
+      "median_ms": 45.95225001685321,
+      "p95_ms": 56.50666000437923
+    },
+    "positive_queries": 8,
+    "queries": 8,
+    "zero_relevance_empty_results": 0,
+    "zero_relevance_queries": 0
+  },
+  "lexical": {
+    "at_k": {
+      "1": {
+        "hit": 0.5,
+        "mrr": 0.5,
+        "ndcg": 0.5,
+        "recall": 0.5
+      },
+      "3": {
+        "hit": 0.625,
+        "mrr": 0.5625,
+        "ndcg": 0.5788662191964322,
+        "recall": 0.625
+      },
+      "5": {
+        "hit": 0.625,
+        "mrr": 0.5625,
+        "ndcg": 0.5788662191964322,
+        "recall": 0.625
+      }
+    },
+    "billed_embedding_usd": 0.0,
+    "cpu_energy_hosting_cost": "NOT_MEASURED",
+    "embedding_calls": 0,
+    "forbidden_hits": 0,
+    "input_tokens": 0,
+    "latency": {
+      "median_ms": 15.614049974828959,
+      "p95_ms": 35.37420497741549
+    },
+    "positive_queries": 8,
+    "queries": 8,
+    "zero_relevance_empty_results": 0,
+    "zero_relevance_queries": 0
+  }
+}

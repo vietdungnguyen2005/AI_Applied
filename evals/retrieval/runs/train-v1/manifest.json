@@ -1,0 +1,18 @@
+{
+  "config_sha256": "54a0f5a2871f559e7f21a5c1b5b5ffab37e36b7ef2c4bf569628b6cb23197851",
+  "git_commit": "5e336311a099022db95f5a90d08deacdc4cccd34",
+  "gold_sha256": "455573eff101387ff38e414fdda4ff21188d97376fee98fedc5a0410286def31",
+  "implementation_sha256": "eaa8f4a70a75d90523312fcf073e360e779ee63bfcfe7d4488c0d9b15221757e",
+  "independent_human_review": "pending",
+  "label_status": "provisional_agent_authored",
+  "metrics_sha256": "120c3c8963b09b28ca8f221c902a39384ef8823dc2ea4cdd2e091724e17185d5",
+  "predictions": 24,
+  "predictions_sha256": "739b1f4ef78af33371ef64a73121611dcdf1d57d9c2dc8c71f62ffd24f730f0d",
+  "protocol_sha256": "859938a9d675b7663d979bda295fbec39038d750cdc6aea8bbbd5926e35a07d1",
+  "provider_inference_requests": 0,
+  "provider_load_ms": 1824.3204000173137,
+  "python": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "queries": 8,
+  "split": "train",
+  "status": "completed"
+}

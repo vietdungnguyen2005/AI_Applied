@@ -1,0 +1,152 @@
+[
+  {
+    "method": "lexical",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "5": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      }
+    },
+    "query_id": "qa-a-approval-en",
+    "rationale": "Current approval explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  },
+  {
+    "method": "dense",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 1.0,
+        "mrr": 0.5,
+        "ndcg": 0.6309297535714574,
+        "recall": 1.0
+      },
+      "5": {
+        "hit": 1.0,
+        "mrr": 0.5,
+        "ndcg": 0.6309297535714574,
+        "recall": 1.0
+      }
+    },
+    "query_id": "qa-a-approval-en",
+    "rationale": "Current approval explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  },
+  {
+    "method": "hybrid",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 1.0,
+        "mrr": 0.5,
+        "ndcg": 0.6309297535714574,
+        "recall": 1.0
+      },
+      "5": {
+        "hit": 1.0,
+        "mrr": 0.5,
+        "ndcg": 0.6309297535714574,
+        "recall": 1.0
+      }
+    },
+    "query_id": "qa-a-approval-en",
+    "rationale": "Current approval explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  },
+  {
+    "method": "lexical",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "5": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      }
+    },
+    "query_id": "qa-a-approval-ja",
+    "rationale": "Current approval explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  },
+  {
+    "method": "lexical",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 1.0,
+        "mrr": 0.5,
+        "ndcg": 0.6309297535714574,
+        "recall": 1.0
+      },
+      "5": {
+        "hit": 1.0,
+        "mrr": 0.5,
+        "ndcg": 0.6309297535714574,
+        "recall": 1.0
+      }
+    },
+    "query_id": "qa-b-approval-en",
+    "rationale": "Current approval explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  },
+  {
+    "method": "lexical",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "5": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      }
+    },
+    "query_id": "qa-b-approval-ja",
+    "rationale": "Current approval explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  }
+]
