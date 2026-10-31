@@ -6,8 +6,8 @@ Implementation owner: coding agent; acceptance owner: repository owner. Real sta
 
 | Phase | Dependency | Deliverable / exit gate | Owner | Status |
 | --- | --- | --- | --- | --- |
-| P00 | Existing repos | Source audit, actual baseline logs, risks and concrete integration plan | Agent / owner review | Audit delivered; awaiting owner acceptance; dependency audit FAIL recorded |
-| P01 | Owner acceptance of P00 | Fictional discovery, FR/NFR, J1–J5, negative acceptance cases | Agent / owner | NOT STARTED |
+| P00 | Existing repos | Source audit, actual baseline logs, risks and concrete integration plan | Agent / owner review | Accepted by owner instruction to continue; dependency audit FAIL remains open |
+| P01 | Owner acceptance of P00 | Fictional discovery, FR/NFR, J1–J5, negative acceptance cases | Agent / owner | Documentation delivered and checked; no real discovery/UAT or AI implementation claimed; see evidence/P01.md |
 | P02 | P01 | ADRs, schemas, identity protocol, threat review | Agent / owner | NOT STARTED |
 | P03 | P02 | Fake-default FastAPI, migrations, CI, lint/types/tests/health | Agent | NOT STARTED |
 | P04 | P03 + verified profile contract | Synthetic fixtures, byte hashes, provenance, separated gold splits | Agent / human review | NOT STARTED |

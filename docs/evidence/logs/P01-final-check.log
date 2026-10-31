@@ -1,0 +1,5 @@
+PASS local Markdown links: 41 checked (final-check log created in this run)
+PASS changed-document actual-secret scan: no values printed or detected
+PASS Project2 SHA unchanged and working tree clean
+PASS no product code, dependency or migration changed
+EXIT_CODE=0

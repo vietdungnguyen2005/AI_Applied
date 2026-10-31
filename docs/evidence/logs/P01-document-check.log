@@ -1,0 +1,18 @@
+{"check": "deliverables", "result": "PASS", "detail": "11 required documents"}
+{"check": "FR unique definitions", "result": "PASS", "detail": "15 definitions"}
+{"check": "NFR unique definitions", "result": "PASS", "detail": "12 definitions"}
+{"check": "AC unique definitions", "result": "PASS", "detail": "30 definitions"}
+{"check": "M unique definitions", "result": "PASS", "detail": "12 definitions"}
+{"check": "requirement to acceptance references", "result": "PASS", "detail": "No unknown acceptance ID"}
+{"check": "acceptance to requirement references", "result": "PASS", "detail": "Every requirement referenced; no unknown requirement"}
+{"check": "metric references", "result": "PASS", "detail": "No unknown metric ID"}
+{"check": "journeys", "result": "PASS", "detail": "J1 through J5 present"}
+{"check": "journey evidence and rollback", "result": "PASS", "detail": "Required story fields present"}
+{"check": "journey evidence and rollback", "result": "PASS", "detail": "Required story fields present"}
+{"check": "journey evidence and rollback", "result": "PASS", "detail": "Required story fields present"}
+{"check": "journey evidence and rollback", "result": "PASS", "detail": "Required story fields present"}
+{"check": "journey evidence and rollback", "result": "PASS", "detail": "Required story fields present"}
+{"check": "local links", "result": "PASS", "detail": "All currently written local targets exist; P01 evidence checked in final run"}
+{"check": "Project2 unchanged", "result": "PASS", "detail": "No tracked or untracked changes"}
+{"check": "Project2 baseline pinned", "result": "PASS", "detail": "Source SHA unchanged"}
+{"check": "env ignored", "result": "PASS", "detail": "Private .env ignored"}

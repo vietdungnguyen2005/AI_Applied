@@ -1,5 +1,7 @@
 # AI Applied
 
+V-Market AI Operations Copilot is being developed in phases. Current work includes a source-verified repository audit and a fictional customer discovery/acceptance package; the AI product is not implemented yet. Follow the [roadmap](docs/roadmap.md), [P00 evidence](docs/evidence/P00.md) and [P01 discovery package](docs/fde/README.md). The API connectivity checks below are separate from product evaluation.
+
 Kiểm tra kết nối VyceAI và OpenRouter bằng các khóa lưu trong `.env`.
 
 ## Chạy lại

@@ -1,0 +1,89 @@
+{
+  "phase": "P01",
+  "date": "2026-10-31",
+  "baseline_ai": "be94c27e28e3a8ff8bb5df41ea7f509086b01827",
+  "baseline_project2": "32d82862526754b46efb774327ccc4774a4decf7",
+  "hash_scope": "Git staged blob bytes",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "45e541817e9c53616c077d94e2182d34b5473c7d7711b8febb84a2ffb3c81027",
+      "bytes": 6036
+    },
+    {
+      "path": "docs/evidence/P01.md",
+      "sha256": "87ca11b2794b4c461bd626f8c4d01596580897de2ac3223f2f453eb7727449f4",
+      "bytes": 8178
+    },
+    {
+      "path": "docs/evidence/logs/P01-document-check.log",
+      "sha256": "8dbe93c07b0fbef3bbd1ad3aadba9b9fa7aac18a2e602ff2b2a9e4ae7930d5d9",
+      "bytes": 1734
+    },
+    {
+      "path": "docs/evidence/logs/P01-final-check.log",
+      "sha256": "8a9f43beca7bc5071431347c16cdb321444dcd012a5b3fd1af365fe1afcc9cd9",
+      "bytes": 270
+    },
+    {
+      "path": "docs/fde/README.md",
+      "sha256": "b2d3bcd1ae08ac7945a766ac6e7b57a10fef095589deb200fe269262bfc1b722",
+      "bytes": 1524
+    },
+    {
+      "path": "docs/fde/acceptance-matrix.md",
+      "sha256": "a5c9b360c057f7f468f152f9357d6127277bbd17a4435b67ffa1c7aec2155b49",
+      "bytes": 7986
+    },
+    {
+      "path": "docs/fde/customer-demo-storyboard-en.md",
+      "sha256": "5ea290205f2f941eed414aad7c9e179242ba1178df071006f081f4bfe7b9ca01",
+      "bytes": 3134
+    },
+    {
+      "path": "docs/fde/decision-log.md",
+      "sha256": "58bad2fbb919a7181b4111b57bc0e9acdb2f25cded0e0a882027b3d6ee10c07e",
+      "bytes": 3139
+    },
+    {
+      "path": "docs/fde/discovery-questionnaire-en.md",
+      "sha256": "1fa698c12e65062960f16ca610ea58eeb35c4f6424bf688a90d632be38e19ab9",
+      "bytes": 3212
+    },
+    {
+      "path": "docs/fde/discovery-transcript-simulated.md",
+      "sha256": "e9b0a2a9263a16353125731ddc4817ad275dddc9d7e92e9d21f1b1851e036ef4",
+      "bytes": 2790
+    },
+    {
+      "path": "docs/fde/personas-and-workflows.md",
+      "sha256": "b673f2ce583b4c8768604053e4c675e03c15bb7dde5a28082964210cbbfcc904",
+      "bytes": 6885
+    },
+    {
+      "path": "docs/fde/problem-statement.md",
+      "sha256": "1473b2e52fc2ece8e7a3ddfd9b068057066b1c5208210cb454ca73a9b8cd183f",
+      "bytes": 4910
+    },
+    {
+      "path": "docs/fde/requirements.md",
+      "sha256": "452ca13edeaa1d5139ee4fc1a4d5e0844ee053e49dab3dd3ac3ae0cf88c6b689",
+      "bytes": 5450
+    },
+    {
+      "path": "docs/fde/scope-and-nongoals.md",
+      "sha256": "21d5c5921fb1990f7ecc57dfcf498d1cb378b9f8fc07a2060bc092d7cba87e8a",
+      "bytes": 2843
+    },
+    {
+      "path": "docs/fde/success-metrics.md",
+      "sha256": "0080785359b7fa6fa3bafb0ec16a66dc26f7fb37af332dc1b23b698fb44406c7",
+      "bytes": 5645
+    },
+    {
+      "path": "docs/roadmap.md",
+      "sha256": "b552b5392835702f28c6485a952daf890fca20ecd37bf63bc584a143f5c66d59",
+      "bytes": 3615
+    }
+  ]
+}
