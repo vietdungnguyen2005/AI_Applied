@@ -36,6 +36,7 @@ class Settings(BaseSettings):
     provider_timeout_seconds: float = Field(default=5, gt=0, le=8)
     request_deadline_seconds: float = Field(default=8, gt=0, le=30)
     qa_enabled: bool = False
+    mapping_enabled: bool = False
     qa_embedding_mode: Literal["fake", "local"] = "fake"
     qa_model_bundle: Path | None = None
     ollama_model: Literal["qwen3.5:4b-q4_K_M", "qwen3.5:9b-q4_K_M"] = "qwen3.5:4b-q4_K_M"
@@ -46,7 +47,9 @@ class Settings(BaseSettings):
     def boundaries(self) -> Self:
         if self.provider_mode == "local" and self.private_container:
             raise ValueError("Local Ollama mode requires host loopback runtime")
-        if self.qa_enabled:
+        if self.mapping_enabled and self.provider_mode == "live":
+            raise ValueError("P08 mapping supports fake/local only; external calls disabled")
+        if self.qa_enabled or self.mapping_enabled:
             if self.private_container or self.bind_host not in {"127.0.0.1", "::1", "localhost"}:
                 raise ValueError("Standalone QA requires a host loopback listener")
             if make_url(self.database_url.get_secret_value()).drivername != "postgresql+psycopg":

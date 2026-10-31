@@ -23,7 +23,7 @@ from sqlalchemy.pool import ConnectionPoolEntry, StaticPool
 
 from vmarket_ai.settings import Settings
 
-REVISION = "0003_lexical_indexes"
+REVISION = "0004_mapping_drafts"
 
 
 class Base(DeclarativeBase):

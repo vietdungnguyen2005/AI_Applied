@@ -16,6 +16,10 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 from vmarket_ai.contracts import ChatModel
 from vmarket_ai.database import create_db_engine, database_ready
+from vmarket_ai.mapping.policy import StandalonePolicy
+from vmarket_ai.mapping.service import MappingService
+from vmarket_ai.mapping.spec import MappingError, MappingRequest, MappingResponse
+from vmarket_ai.mapping.store import SQLDraftStore
 from vmarket_ai.observability import request_event
 from vmarket_ai.providers.budget import BudgetLedger
 from vmarket_ai.providers.ollama import OllamaChatModel
@@ -50,8 +54,9 @@ def error(request_id: str, code: str, status: int) -> JSONResponse:
 
 
 class RequestBoundary:
-    def __init__(self, app: ASGIApp) -> None:
+    def __init__(self, app: ASGIApp, mapping_enabled: bool = False) -> None:
         self.app = app
+        self.mapping_enabled = mapping_enabled
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http":
@@ -68,6 +73,8 @@ class RequestBoundary:
             route = "/ai/ask"
         elif scope["path"].startswith("/ai/citations/"):
             route = "/ai/citations/{chunk_id}"
+        elif scope["path"] == "/ai/mapping/suggest":
+            route = "/ai/mapping/suggest"
 
         async def wrapped_send(message: Message) -> None:
             nonlocal status, response_started
@@ -105,7 +112,12 @@ class RequestBoundary:
                         status = 499
                         return
                     body.extend(part.get("body", b""))
-                    if len(body) > 65_536:
+                    limit = (
+                        6_700_000
+                        if (self.mapping_enabled and scope["path"] == "/ai/mapping/suggest")
+                        else 65_536
+                    )
+                    if len(body) > limit:
                         await error(request_id, "INPUT_TOO_LARGE", 413)(
                             scope, receive, wrapped_send
                         )
@@ -136,6 +148,7 @@ def create_app(
     settings: Settings | None = None,
     engine: Engine | None = None,
     qa_service: AnswerService | None = None,
+    mapping_service: MappingService | None = None,
 ) -> FastAPI:
     config = settings or load_settings()
     database = engine or create_db_engine(config)
@@ -152,7 +165,7 @@ def create_app(
         docs_url=None,
         redoc_url=None,
     )
-    app.add_middleware(RequestBoundary)
+    app.add_middleware(RequestBoundary, mapping_enabled=config.mapping_enabled)
 
     @app.exception_handler(RequestValidationError)
     async def input_error(request: Request, exc: RequestValidationError) -> JSONResponse:
@@ -160,6 +173,10 @@ def create_app(
 
     @app.exception_handler(QAError)
     async def qa_error(request: Request, exc: QAError) -> JSONResponse:
+        return error(str(request.state.request_id), exc.code, exc.status)
+
+    @app.exception_handler(MappingError)
+    async def mapping_error(request: Request, exc: MappingError) -> JSONResponse:
         return error(str(request.state.request_id), exc.code, exc.status)
 
     @app.exception_handler(HTTPException)
@@ -182,7 +199,7 @@ def create_app(
         )
         return JSONResponse(response.model_dump(), status_code=200 if available else 503)
 
-    if config.qa_enabled:
+    if config.qa_enabled or config.mapping_enabled:
         if qa_service is None:
             evidence = PostgresEvidence(database, config)
             chat: ChatModel
@@ -211,7 +228,6 @@ def create_app(
             }:
                 raise QAError("ACCESS_DENIED", 403)
 
-        @app.post("/ai/ask", response_model=AskResponse)
         async def ask(payload: AskRequest, request: Request) -> AskResponse:
             local_boundary(request)
             if not set(payload.collection_ids).issubset(DEMO_COLLECTIONS):
@@ -223,6 +239,24 @@ def create_app(
                 deadline_seconds=config.request_deadline_seconds,
             )
             return await service.ask(DEMO_ACTOR, payload, UUID(request.state.request_id))
+
+        if config.qa_enabled:
+            app.post("/ai/ask", response_model=AskResponse)(ask)
+
+        if config.mapping_enabled:
+            mapper = mapping_service or MappingService(
+                StandalonePolicy(),
+                SQLDraftStore(database),
+                prototype.model if config.provider_mode == "local" else None,
+                prototype.retrieval,
+                mode="local" if config.provider_mode == "local" else "fake",
+                deadline_seconds=config.request_deadline_seconds,
+            )
+
+            @app.post("/ai/mapping/suggest", response_model=MappingResponse)
+            async def mapping_suggest(payload: MappingRequest, request: Request) -> MappingResponse:
+                local_boundary(request)
+                return await mapper.suggest(DEMO_ACTOR, payload, UUID(request.state.request_id))
 
         @app.get("/ai/citations/{chunk_id}")
         def citation(chunk_id: UUID, request: Request) -> dict[str, object]:

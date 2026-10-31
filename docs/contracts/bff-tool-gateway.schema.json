@@ -513,9 +513,7 @@
           "uniqueItems": true
         },
         "warnings": {
-          "type": "array",
           "items": {
-            "type": "string",
             "enum": [
               "AMBIGUOUS_HEADER",
               "UNMAPPED_HEADER",
@@ -524,12 +522,19 @@
               "ENCODING_DECLARED",
               "SOURCE_UNTRUSTED",
               "RULE_BASELINE",
-              "MODEL_UNAVAILABLE"
-            ]
+              "MODEL_UNAVAILABLE",
+              "MODEL_OUTPUT_INVALID",
+              "BUSINESS_VALIDATION_REQUIRED",
+              "PROFILE_MISMATCH",
+              "SAMPLE_TRUNCATED",
+              "ROW_REVIEW_REQUIRED",
+              "NO_AUTHORIZED_SOP"
+            ],
+            "type": "string"
           },
-          "maxItems": 8,
-          "minItems": 0,
-          "uniqueItems": true
+          "maxItems": 14,
+          "title": "Warnings",
+          "type": "array"
         },
         "provider_mode": {
           "type": "string",
@@ -538,6 +543,54 @@
             "live",
             "local"
           ]
+        },
+        "vendor_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Vendor Code"
+        },
+        "vendor_verification": {
+          "enum": [
+            "standalone_fixture",
+            "unverified"
+          ],
+          "title": "Vendor Verification",
+          "type": "string"
+        },
+        "missing_required_fields": {
+          "items": {
+            "enum": [
+              "sku",
+              "name",
+              "on_hand"
+            ],
+            "type": "string"
+          },
+          "title": "Missing Required Fields",
+          "type": "array"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "profile_differences": {
+          "items": {
+            "$ref": "#/$defs/Difference"
+          },
+          "title": "Profile Differences",
+          "type": "array"
+        },
+        "requires_human_acceptance": {
+          "const": true,
+          "default": true,
+          "title": "Requires Human Acceptance",
+          "type": "boolean"
         }
       },
       "required": [
@@ -2019,6 +2072,67 @@
         "status",
         "provider_mode"
       ]
+    },
+    "Difference": {
+      "additionalProperties": false,
+      "properties": {
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "integer"
+        },
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "encoding_matches": {
+          "title": "Encoding Matches",
+          "type": "boolean"
+        },
+        "changes": {
+          "additionalProperties": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          },
+          "propertyNames": {
+            "enum": [
+              "sku",
+              "name",
+              "on_hand"
+            ]
+          },
+          "title": "Changes",
+          "type": "object"
+        }
+      },
+      "required": [
+        "profile_id",
+        "version",
+        "active",
+        "encoding_matches",
+        "changes"
+      ],
+      "title": "Difference",
+      "type": "object"
     }
   }
 }
