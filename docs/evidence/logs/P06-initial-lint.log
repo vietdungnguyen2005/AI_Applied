@@ -1,0 +1,174 @@
+E501 Line too long (105 > 100)
+   --> src\vmarket_ai\retrieval\evaluate.py:160:101
+    |
+158 |             "at_k":{}}
+159 |         for k in (1,3,5):
+160 |             summary["at_k"][str(k)]={name:sum(r["metrics"][str(k)][name] for r in positive)/len(positive)
+    |                                                                                                     ^^^^^
+161 |                 if positive else None for name in ("hit","recall","mrr","ndcg")}
+162 |         result[method]=summary
+    |
+
+E501 Line too long (105 > 100)
+   --> src\vmarket_ai\retrieval\evaluate.py:177:101
+    |
+175 |         if output!=BASE/"runs/test-v1":
+176 |             raise ValueError("Held-out evaluation has one designated, non-overwritable run")
+177 |         for name in ("selection.json","config.json","protocol.json","gold/v1.jsonl","gold/v1.lock.json"):
+    |                                                                                                     ^^^^^
+178 |             path=BASE/name
+179 |             committed=subprocess.check_output(["git","show","HEAD:"+path.as_posix()])
+    |
+
+E501 Line too long (114 > 100)
+   --> src\vmarket_ai\retrieval\evaluate.py:183:101
+    |
+181 |                 raise ValueError("Test requires committed selection/config/gold freeze")
+182 |         selection=json.loads((BASE/"selection.json").read_text(encoding="utf-8"))
+183 |         if selection["implementation_sha256"]!=code_hash() or selection["config_sha256"]!=sha(BASE/"config.json"):
+    |                                                                                                     ^^^^^^^^^^^^^^
+184 |             raise ValueError("Test config differs from development selection")
+185 |     cfg=config()
+    |
+
+E501 Line too long (130 > 100)
+   --> src\vmarket_ai\retrieval\evaluate.py:187:101
+    |
+185 |     cfg=config()
+186 |     queries=[q for q in records(DATA/"queries.jsonl",Query) if q.partition==split]
+187 |     gold={r["query_id"]:r for r in [json.loads(line) for line in (BASE/"gold/v1.jsonl").read_text(encoding="utf-8").splitlines()]}
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+188 |     output.mkdir(parents=True)
+189 |     manifest={"status":"running","split":split,"config_sha256":sha(BASE/"config.json"),
+    |
+
+E501 Line too long (121 > 100)
+   --> src\vmarket_ai\retrieval\evaluate.py:233:101
+    |
+231 |         for method,values in summary.items():
+232 |             for k,scores in values["at_k"].items():
+233 |                 writer.writerow([method,k,values["positive_queries"],*[scores[n] for n in ("hit","recall","mrr","ndcg")],
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+234 |                     values["latency"]["median_ms"],values["latency"]["p95_ms"],values["input_tokens"],values["billed_embedding_usd"]])
+235 |         (output/"metrics.csv").write_text(csv_file.getvalue(),encoding="utf-8",newline="\n")
+    |
+
+E501 Line too long (103 > 100)
+  --> src\vmarket_ai\retrieval\service.py:38:101
+   |
+38 | def fuse(lexical: tuple[Hit, ...], dense: tuple[Hit, ...], config: RetrievalConfig) -> tuple[Hit, ...]:
+   |                                                                                                     ^^^
+39 |     by_id: dict[UUID, Hit] = {}
+40 |     for branch, weight, name in ((lexical, config.lexical_weight, "lexical"),
+   |
+
+E501 Line too long (102 > 100)
+  --> src\vmarket_ai\retrieval\service.py:49:101
+   |
+47 |                      "dense_rank": previous.dense_rank if previous else None}
+48 |             ranks[name + "_rank"] = rank
+49 |             by_id[key] = Hit(citation=hit.citation, score=score + (previous.score if previous else 0),
+   |                                                                                                     ^^
+50 |                              **ranks)
+51 |     return tuple(sorted(by_id.values(), key=lambda h: (-h.score, str(h.citation.chunk_id))))
+   |
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+   --> src\vmarket_ai\retrieval\service.py:126:13
+    |
+124 |           try:
+125 |               # A single repeatable-read snapshot fixes the authorized corpus for both branches.
+126 | /             with self.engine.connect().execution_options(isolation_level="REPEATABLE READ") as conn:
+127 | |                 with conn.begin():
+    | |__________________________________^
+128 |                       identities = conn.execute(text(cte + "SELECT chunk_id,snapshot_id,text_sha256 "
+129 |                           "FROM authorized ORDER BY chunk_id LIMIT 10001"), params).all()
+    |
+help: Combine `with` statements
+
+E501 Line too long (107 > 100)
+   --> src\vmarket_ai\retrieval\service.py:140:101
+    |
+138 |                         embedding_started = perf_counter()
+139 |                         try:
+140 |                             result = await self.provider.embed_queries(EmbeddingRequest(texts=(question,)))
+    |                                                                                                     ^^^^^^^
+141 |                         except Exception:
+142 |                             raise RetrievalError("query_embedding_failed") from None
+    |
+
+E501 Line too long (101 > 100)
+   --> src\vmarket_ai\retrieval\service.py:176:101
+    |
+174 |                           SELECT *, 1-(embedding <=> CAST(:vector AS vector({dims}))) AS score
+175 |                           FROM authorized
+176 |                           ORDER BY embedding <=> CAST(:vector AS vector({dims})),chunk_id LIMIT :pool
+    |                                                                                                     ^
+177 |                         """
+178 |                         branches["dense"] = tuple(to_hit(r) for r in conn.execute(
+    |
+
+E501 Line too long (105 > 100)
+   --> tests\test_retrieval.py:110:101
+    |
+109 | @pytest.mark.postgres
+110 | @pytest.mark.skipif(not POSTGRES_URL or not OWNER_URL, reason="Disposable AI app/owner DB opt-in absent")
+    |                                                                                                     ^^^^^
+111 | async def test_all_paths_use_identical_authorized_corpus_and_filter_before_limit():
+112 |     owner = create_db_engine(Settings(_env_file=None, database_url=SecretStr(OWNER_URL)))
+    |
+
+F841 Local variable `retired` is assigned to but never used
+   --> tests\test_retrieval.py:133:9
+    |
+131 |         await ingest.ingest(b,cb,uuid4(),metadata(),b"Forbidden policy needle needle needle",
+132 |                             "text/plain",expected_revision=0)
+133 |         retired=await ingest.ingest(a,ca,uuid4(),metadata(status="retired"),b"needle retired",
+    |         ^^^^^^^
+134 |                                     "text/plain",expected_revision=0)
+135 |         cfg=RetrievalConfig(embedding=FAKE_PROFILE, top_k=1)
+    |
+help: Remove assignment to unused variable `retired`
+    |
+132 |                             "text/plain",expected_revision=0)
+    -         retired=await ingest.ingest(a,ca,uuid4(),metadata(status="retired"),b"needle retired",
+133 +         await ingest.ingest(a,ca,uuid4(),metadata(status="retired"),b"needle retired",
+134 |                                     "text/plain",expected_revision=0)
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+E501 Line too long (112 > 100)
+   --> tests\test_retrieval.py:145:101
+    |
+143 |         assert results[0].embedding_calls==0 and results[1].embedding_calls==1
+144 |         for method in ("lexical","dense","hybrid"):
+145 |             result=await service.search(b,SearchRequest(query="needle",collection_ids=(ca,),as_of=TODAY),method)
+    |                                                                                                     ^^^^^^^^^^^^
+146 |             assert result.hits==() and result.embedding_calls==0
+147 |             language=await service.search(reader,request.model_copy(update={"languages":("en",)}),method)
+    |
+
+E501 Line too long (105 > 100)
+   --> tests\test_retrieval.py:147:101
+    |
+145 |             result=await service.search(b,SearchRequest(query="needle",collection_ids=(ca,),as_of=TODAY),method)
+146 |             assert result.hits==() and result.embedding_calls==0
+147 |             language=await service.search(reader,request.model_copy(update={"languages":("en",)}),method)
+    |                                                                                                     ^^^^^
+148 |             assert language.hits==()
+149 |         # Deleted and superseded snapshots must not be scored as current candidates.
+    |
+
+E501 Line too long (118 > 100)
+   --> tests\test_retrieval.py:155:101
+    |
+153 |         assert {h.citation.version_id for h in updated.hits}=={current.version_id}
+154 |         assert first.version_id!=current.version_id
+155 |         incompatible=Retriever(app, cfg.model_copy(update={"chunking":ChunkConfig(size=64,overlap=8)}),SemanticMock())
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^
+156 |         assert (await incompatible.search(reader,request,"dense")).hits==()
+157 |         with owner.begin() as c:
+    |
+
+Found 20 errors (5 fixed, 15 remaining).
+1 unsafe fix available with `--fix --unsafe-fixes`.

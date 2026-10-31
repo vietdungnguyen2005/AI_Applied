@@ -1,0 +1,107 @@
+{
+  "dense": {
+    "at_k": {
+      "1": {
+        "hit": 1.0,
+        "mrr": 1.0,
+        "ndcg": 1.0,
+        "recall": 0.875
+      },
+      "3": {
+        "hit": 1.0,
+        "mrr": 1.0,
+        "ndcg": 1.0,
+        "recall": 1.0
+      },
+      "5": {
+        "hit": 1.0,
+        "mrr": 1.0,
+        "ndcg": 1.0,
+        "recall": 1.0
+      }
+    },
+    "billed_embedding_usd": 0.0,
+    "cpu_energy_hosting_cost": "NOT_MEASURED",
+    "embedding_calls": 10,
+    "forbidden_hits": 0,
+    "input_tokens": 178,
+    "latency": {
+      "median_ms": 45.01885001081973,
+      "p95_ms": 47.60189498774707
+    },
+    "positive_queries": 8,
+    "queries": 12,
+    "zero_relevance_empty_results": 2,
+    "zero_relevance_queries": 4
+  },
+  "hybrid": {
+    "at_k": {
+      "1": {
+        "hit": 1.0,
+        "mrr": 1.0,
+        "ndcg": 1.0,
+        "recall": 0.875
+      },
+      "3": {
+        "hit": 1.0,
+        "mrr": 1.0,
+        "ndcg": 1.0,
+        "recall": 1.0
+      },
+      "5": {
+        "hit": 1.0,
+        "mrr": 1.0,
+        "ndcg": 1.0,
+        "recall": 1.0
+      }
+    },
+    "billed_embedding_usd": 0.0,
+    "cpu_energy_hosting_cost": "NOT_MEASURED",
+    "embedding_calls": 10,
+    "forbidden_hits": 0,
+    "input_tokens": 178,
+    "latency": {
+      "median_ms": 46.62209999514744,
+      "p95_ms": 56.4752849866636
+    },
+    "positive_queries": 8,
+    "queries": 12,
+    "zero_relevance_empty_results": 2,
+    "zero_relevance_queries": 4
+  },
+  "lexical": {
+    "at_k": {
+      "1": {
+        "hit": 0.625,
+        "mrr": 0.625,
+        "ndcg": 0.625,
+        "recall": 0.5625
+      },
+      "3": {
+        "hit": 0.625,
+        "mrr": 0.625,
+        "ndcg": 0.625,
+        "recall": 0.625
+      },
+      "5": {
+        "hit": 0.625,
+        "mrr": 0.625,
+        "ndcg": 0.625,
+        "recall": 0.625
+      }
+    },
+    "billed_embedding_usd": 0.0,
+    "cpu_energy_hosting_cost": "NOT_MEASURED",
+    "embedding_calls": 0,
+    "forbidden_hits": 0,
+    "input_tokens": 0,
+    "latency": {
+      "median_ms": 15.677450050134212,
+      "p95_ms": 38.562325027305604
+    },
+    "positive_queries": 8,
+    "queries": 12,
+    "zero_relevance_empty_results": 2,
+    "zero_relevance_queries": 4
+  }
+}

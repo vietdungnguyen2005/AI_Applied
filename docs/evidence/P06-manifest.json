@@ -1,0 +1,339 @@
+{
+  "phase": "P06",
+  "date": "2026-11-01",
+  "baseline_ai": "61e53e16d13c904fc7c39bd06c4e8ccbf86d0b76",
+  "baseline_project2": "32d82862526754b46efb774327ccc4774a4decf7",
+  "hash_scope": "Git blob bytes across the phase; manifest excludes itself",
+  "artifacts": [
+    {
+      "path": ".gitattributes",
+      "sha256": "f30eaac428287e20bb12ed33571f21507f1f4e494dc0502c823301e8a39ce067",
+      "bytes": 366
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "cead35282b1e5592694a3f1bb5d591fcea267c3c0f634eec0dacab369cf7c842",
+      "bytes": 1328
+    },
+    {
+      "path": "Makefile",
+      "sha256": "2bb0044dbce0f6456548e144950ed16b5fe0d4d117f8eac46351cceb31839a7b",
+      "bytes": 938
+    },
+    {
+      "path": "README.md",
+      "sha256": "8266b4937aafc19c7b9d85b9a11a9aa2af5477063e00a624cbf04570daa4e24e",
+      "bytes": 6731
+    },
+    {
+      "path": "docs/evidence/P06-contract-validation.json",
+      "sha256": "a662aa418f42c75303b5d758f00ba2163a4979eb6dd78989a91e21886c3cd7f5",
+      "bytes": 17282
+    },
+    {
+      "path": "docs/evidence/P06-environment.json",
+      "sha256": "b326c032100b81ee1a8abefe9b3ab443f82469b57020e7adc135e4db3d15df30",
+      "bytes": 1309
+    },
+    {
+      "path": "docs/evidence/P06-http-smoke.json",
+      "sha256": "323fa20a7a221a7fc4a6c5bcb70783fef98bec23766becd994db48b15e667028",
+      "bytes": 196
+    },
+    {
+      "path": "docs/evidence/P06-publication-check.json",
+      "sha256": "64dbe7e234c75d152b0222c7cc4eb122c81e03c1b3757e1a44e26e4e65aec95b",
+      "bytes": 491
+    },
+    {
+      "path": "docs/evidence/P06-sql-smoke.json",
+      "sha256": "3037ffde1d7a79dc44c09171959952fc3f1b05dfb175191e47dbcf7f0409a5d8",
+      "bytes": 742
+    },
+    {
+      "path": "docs/evidence/P06.md",
+      "sha256": "ab773151fb17dfa191d528874ec21d8aad0a6cf45f328404165b2f87540d6ba5",
+      "bytes": 10686
+    },
+    {
+      "path": "docs/evidence/logs/P06-analysis.log",
+      "sha256": "f54a865fd4261d3a826c8adb87eab6f6e623dad2f9939c5ad0fa22a39e9c0a23",
+      "bytes": 299
+    },
+    {
+      "path": "docs/evidence/logs/P06-compose-up.log",
+      "sha256": "e4b3a5e8969ab186bc0fb2af3ca57069e3cf696af5ac5dc33f7b8ff576cb0680",
+      "bytes": 918
+    },
+    {
+      "path": "docs/evidence/logs/P06-contracts.log",
+      "sha256": "b749a78a0e37e7a722efa6eaa60352430a47764538a32484cf6a5b595460d1e0",
+      "bytes": 11972
+    },
+    {
+      "path": "docs/evidence/logs/P06-dataset-check.log",
+      "sha256": "475a4ff245f3a32835e100bd496b9656e8f269ec8c00417f2e74a2cbffe703d2",
+      "bytes": 787
+    },
+    {
+      "path": "docs/evidence/logs/P06-dev-eval.log",
+      "sha256": "4ab07bfbb5ffa8719af8a654ccfe018c9783809c49165e97f569676376173985",
+      "bytes": 1726
+    },
+    {
+      "path": "docs/evidence/logs/P06-docker-build.log",
+      "sha256": "81f95c6e40a92a8f964965efb0e7428de7ecb2838fa0f25e7606ce271f2847e3",
+      "bytes": 4176
+    },
+    {
+      "path": "docs/evidence/logs/P06-format.log",
+      "sha256": "a4bae913265413ffdf4f04b3a6cdf6a8c8de26aa559904140e53ed5a39b19bb8",
+      "bytes": 43
+    },
+    {
+      "path": "docs/evidence/logs/P06-gold-prepare.log",
+      "sha256": "13714f81f364ea5f385b812bb4ded22f333dfec7dc6d6eebb4e4a927ac839670",
+      "bytes": 109
+    },
+    {
+      "path": "docs/evidence/logs/P06-initial-lint.log",
+      "sha256": "214bc974da7b8aec75545a1d37798c220f45e45dcd24b6ffe6e4c42d9dd48038",
+      "bytes": 9578
+    },
+    {
+      "path": "docs/evidence/logs/P06-lint.log",
+      "sha256": "5af3201b9a1ffc1c3e62379105a5a384210e6bd8c10706ec2c6e11533cf0ac53",
+      "bytes": 35
+    },
+    {
+      "path": "docs/evidence/logs/P06-offline-interim.log",
+      "sha256": "9273637d6aa24dc00f1cf4ca0d89dc28d0b13764bc5eee6191765249138f2071",
+      "bytes": 112
+    },
+    {
+      "path": "docs/evidence/logs/P06-postgres-interim.log",
+      "sha256": "57e67c7e7596755c209c3d661b35239bbef7313f4c5029bafd4d9beb74273aad",
+      "bytes": 602
+    },
+    {
+      "path": "docs/evidence/logs/P06-postgres-migrate.log",
+      "sha256": "7421b1ec0d530dc20eb1deffe5472bb638a0d96e44faf1ec9b84e136c752305b",
+      "bytes": 60
+    },
+    {
+      "path": "docs/evidence/logs/P06-postgres-tests.log",
+      "sha256": "37fc4d3848e4774cb376338646e42d7b0be0d5acc2a30561b4c480bb5058cab2",
+      "bytes": 602
+    },
+    {
+      "path": "docs/evidence/logs/P06-selection.log",
+      "sha256": "503a18b71b701088dc95995489829e42b64c76b6bddfd944a7e648e523fcb2b7",
+      "bytes": 612
+    },
+    {
+      "path": "docs/evidence/logs/P06-test-eval.log",
+      "sha256": "2b98246bbd8a34c4ae7be34ad4ee9e3a58fd49d53e999d45078864e2c0b31af6",
+      "bytes": 1629
+    },
+    {
+      "path": "docs/evidence/logs/P06-tests.log",
+      "sha256": "e0128a741274a700ef2980b25a81a40daae5d1d73eb0bf4dd373212170e4f2fe",
+      "bytes": 777
+    },
+    {
+      "path": "docs/evidence/logs/P06-train-eval.log",
+      "sha256": "09cd0c9ff13f95138da6266f4f9a9e3e9a3732e295aca9d73dcdc98e7018a493",
+      "bytes": 1738
+    },
+    {
+      "path": "docs/evidence/logs/P06-typecheck.log",
+      "sha256": "15fd32bae55ba8baf927952297ccbd5cd55687a15fcdc262c9ca92802807e861",
+      "bytes": 60
+    },
+    {
+      "path": "docs/retrieval.md",
+      "sha256": "50e2e821a65da64789357fe891f5bb0f7f4109aa926700723034c2057d8e9b45",
+      "bytes": 6012
+    },
+    {
+      "path": "docs/roadmap.md",
+      "sha256": "a6582ee71bef22314719a300957be4672f680028f057c066f7dbce2d158dba45",
+      "bytes": 4564
+    },
+    {
+      "path": "evals/retrieval/README.md",
+      "sha256": "3f763c6d3ac967455a6eec27f395956728c1f62efc3b1ca79d35a2482e9fc5b2",
+      "bytes": 9505
+    },
+    {
+      "path": "evals/retrieval/analyze.py",
+      "sha256": "6bac3e23e4ecbb6c4e180afb1194662a40aca17d2bcba9b759fab766c81f3fbe",
+      "bytes": 5144
+    },
+    {
+      "path": "evals/retrieval/comparison.json",
+      "sha256": "444f6fdd854c1f5f7e798416838cedbba4f44d960db5a05bc7bae94ea7ab0010",
+      "bytes": 34674
+    },
+    {
+      "path": "evals/retrieval/config.json",
+      "sha256": "54a0f5a2871f559e7f21a5c1b5b5ffab37e36b7ef2c4bf569628b6cb23197851",
+      "bytes": 440
+    },
+    {
+      "path": "evals/retrieval/gold/v1.jsonl",
+      "sha256": "455573eff101387ff38e414fdda4ff21188d97376fee98fedc5a0410286def31",
+      "bytes": 16032
+    },
+    {
+      "path": "evals/retrieval/gold/v1.lock.json",
+      "sha256": "13494b80d8b81fceb73317ab3ac51812e43ad1154bdb752ab2638413ae86b2dd",
+      "bytes": 1475
+    },
+    {
+      "path": "evals/retrieval/protocol.json",
+      "sha256": "859938a9d675b7663d979bda295fbec39038d750cdc6aea8bbbd5926e35a07d1",
+      "bytes": 1023
+    },
+    {
+      "path": "evals/retrieval/runs/dev-v1/failures.json",
+      "sha256": "775ce560e8058b8ae544cf3fac879e38ae1948a84dfde8b57369b5965f1299c5",
+      "bytes": 3276
+    },
+    {
+      "path": "evals/retrieval/runs/dev-v1/manifest.json",
+      "sha256": "6c7fb78bafbed8ca20e4b8f4378aa0a48249598c052a057ff351a77226ef19c7",
+      "bytes": 942
+    },
+    {
+      "path": "evals/retrieval/runs/dev-v1/metrics.csv",
+      "sha256": "b2eac3fa67b3617ebedf2094e9a2adcfaf73ce57677be48dba0813862a0f002e",
+      "bytes": 868
+    },
+    {
+      "path": "evals/retrieval/runs/dev-v1/metrics.json",
+      "sha256": "6575eeb3542264f68a826cb8edb59720963a3d427b686173fa291f92e0365905",
+      "bytes": 2301
+    },
+    {
+      "path": "evals/retrieval/runs/dev-v1/predictions.jsonl",
+      "sha256": "55936414dcc5ee882ce40c8cc1d7b49f2187fbf81cbaad6cfa50da13d038c249",
+      "bytes": 83617
+    },
+    {
+      "path": "evals/retrieval/runs/test-v1/failures.json",
+      "sha256": "308d56d5b38287df314a7ffeec55ba482ffe9980b210b18eb108176062b75bca",
+      "bytes": 1559
+    },
+    {
+      "path": "evals/retrieval/runs/test-v1/manifest.json",
+      "sha256": "db22fc1c8d4e9031829192336340c92b368eb4f18ac385e0b8621efe5451f3ee",
+      "bytes": 944
+    },
+    {
+      "path": "evals/retrieval/runs/test-v1/metrics.csv",
+      "sha256": "cc9cb1e515cdecd0e4caef2f1d979dec91ae6c8250890300466b4dc7bdc9135a",
+      "bytes": 762
+    },
+    {
+      "path": "evals/retrieval/runs/test-v1/metrics.json",
+      "sha256": "ee9fbfd53c74876f3d50aa7d7cbf20837b8604c4c4c5b0ad262d7e64a4bfb3ad",
+      "bytes": 2202
+    },
+    {
+      "path": "evals/retrieval/runs/test-v1/predictions.jsonl",
+      "sha256": "4a814cf6b5019dac4356387c134fbbf5690b052ba499a47f4d0d1ec2e2f0e51c",
+      "bytes": 107818
+    },
+    {
+      "path": "evals/retrieval/runs/train-v1/failures.json",
+      "sha256": "3cb4a6b86a9a96608d9259e56d38bd13a564df8c8e6081978f50651d0d537d40",
+      "bytes": 7545
+    },
+    {
+      "path": "evals/retrieval/runs/train-v1/manifest.json",
+      "sha256": "01914feabd55184b598ced92c4c293b5a9b79e05ae4be69d15f0207a7b9e9b03",
+      "bytes": 944
+    },
+    {
+      "path": "evals/retrieval/runs/train-v1/metrics.csv",
+      "sha256": "30d6ee4c0540acd129df15867ec71333d2fbf5a061c096488f1ccc352dc40837",
+      "bytes": 874
+    },
+    {
+      "path": "evals/retrieval/runs/train-v1/metrics.json",
+      "sha256": "120c3c8963b09b28ca8f221c902a39384ef8823dc2ea4cdd2e091724e17185d5",
+      "bytes": 2311
+    },
+    {
+      "path": "evals/retrieval/runs/train-v1/predictions.jsonl",
+      "sha256": "739b1f4ef78af33371ef64a73121611dcdf1d57d9c2dc8c71f62ffd24f730f0d",
+      "bytes": 93289
+    },
+    {
+      "path": "evals/retrieval/selection.json",
+      "sha256": "0928b8d49aa32aaf853f1ee49e2e6c3c1b40e84ab8db98f73947e091e6f24ae7",
+      "bytes": 631
+    },
+    {
+      "path": "evals/retrieval/test-consumption.json",
+      "sha256": "dd350718829aaa05c11f24fbb839593919dd39a9ce8000875bad155132724d0e",
+      "bytes": 523
+    },
+    {
+      "path": "migrations/versions/0003_lexical_indexes.py",
+      "sha256": "2bf1b5fb540f1fed4855f5807a5eac52124ba3ee940236040c1248be0b8be20b",
+      "bytes": 750
+    },
+    {
+      "path": "src/vmarket_ai/contracts.py",
+      "sha256": "d7df0d91fd988b3ec5f271f60218fa28101ab487f52d240765f640dd7fbc5077",
+      "bytes": 3098
+    },
+    {
+      "path": "src/vmarket_ai/database.py",
+      "sha256": "1345bbdadd63eab52168ca491e0b13692d34063b7eec3216de7cd8ba6976a328",
+      "bytes": 4406
+    },
+    {
+      "path": "src/vmarket_ai/providers/fake.py",
+      "sha256": "11268550fb8317aca187420b73e555924f0eb7cdf28e57cc4d16ec6f05877250",
+      "bytes": 1183
+    },
+    {
+      "path": "src/vmarket_ai/providers/local_e5.py",
+      "sha256": "78eff9da46212903604be2d2415d08e4344523cf7feb746c5b0009999db47bf4",
+      "bytes": 4019
+    },
+    {
+      "path": "src/vmarket_ai/retrieval/__init__.py",
+      "sha256": "c0d4259c397400d23cd0908af0873f1640385536fa3a0dc24054b1d9dae4db9d",
+      "bytes": 83
+    },
+    {
+      "path": "src/vmarket_ai/retrieval/evaluate.py",
+      "sha256": "19e3aa37552594617b5d11e7ac144ab074a63d8bc6a4d0faf4b49b8b46d98766",
+      "bytes": 18769
+    },
+    {
+      "path": "src/vmarket_ai/retrieval/metrics.py",
+      "sha256": "17f72c5bfbba9851cf57e10c90564e6d98373606cb1e94f33d85b8ac36b0fd3e",
+      "bytes": 1406
+    },
+    {
+      "path": "src/vmarket_ai/retrieval/service.py",
+      "sha256": "47795370ce1beeda42888b65502a798309525f46b4375cbba4c516abda54ae5d",
+      "bytes": 11389
+    },
+    {
+      "path": "src/vmarket_ai/retrieval/spec.py",
+      "sha256": "5abb870f711002f5fd18e93e9e526942346bfe48ff2f870b57801c6534edae4a",
+      "bytes": 2292
+    },
+    {
+      "path": "tests/test_retrieval.py",
+      "sha256": "63dbd907329043fd6a0be2df5ab4af1754df041af94747c6d7272a77807b2a41",
+      "bytes": 12684
+    }
+  ]
+}

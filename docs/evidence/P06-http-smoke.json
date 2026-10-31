@@ -1,0 +1,15 @@
+{
+  "/health": {
+    "status": 200,
+    "body": {
+      "status": "ok"
+    }
+  },
+  "/ready": {
+    "status": 200,
+    "body": {
+      "status": "ready",
+      "provider_mode": "fake"
+    }
+  }
+}

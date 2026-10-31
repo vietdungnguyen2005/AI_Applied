@@ -1,6 +1,6 @@
 # V-Market AI Operations Copilot
 
-Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **P03 foundation, P04 datasets and P05 document ingestion are implemented; ranked RAG, CSV mapping, agent tools and V-Market integration remain pending.** No production deployment or real customer outcome is claimed.
+Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Foundation, datasets, document ingestion and P06 ranked retrieval are implemented; grounded Q&A, CSV mapping, agent tools and V-Market integration remain pending.** No production deployment or real customer outcome is claimed.
 
 Current service exposes only `/health`, `/ready` and `/openapi.json`. Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
 
@@ -30,7 +30,7 @@ python -m uv run --frozen pytest -q
 python -m uv run --frozen python tools/validate_contracts.py
 ```
 
-On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips two explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
+On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips three explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
 
 ## Standalone Docker: own PostgreSQL + pgvector
 
@@ -61,6 +61,7 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 
 ## Status and evidence
 
+- [P06 retrieval](docs/retrieval.md): PostgreSQL lexical, exact pgvector dense and RRF hybrid; shared authorized corpus and [84 actual query-method evaluations](evals/retrieval/README.md). Dense was selected using dev only. Results use provisional labels; human review is pending. `make retrieval-eval-check` verifies saved metrics/hashes offline without rerunning model inference.
 - [P05 ingestion](docs/ingestion.md): bounded TXT/Markdown/text-PDF/DOCX parsers, source citations, versioned chunks, real local E5/pgvector, collection grants and transactional update/delete tests. [Evidence](docs/evidence/P05.md) separates real inference from fake CI checks. Run `make ingestion-demo` or the documented Python CLI.
 - [P04 synthetic dataset](data/README.md): 51 CSV /17 document fixtures, frozen splits, provisional mapping/relevance labels and strict byte/metadata QA. Independent human review is pending; no model quality is claimed. Run `python -m uv run --frozen python -m vmarket_ai.datasets.generate --check` or `make dataset-check`.
 - [P03 evidence](docs/evidence/P03.md): executed commands, results, failures, limits and reproducibility.
@@ -68,4 +69,4 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 - [Source-of-truth boundaries](docs/source-of-truth.md), [threat model](docs/threat-model.md), [design review](docs/design-review-checklist.md).
 - [Historical provider connectivity](docs/provider-connectivity-2026-10-31.md): a dated API snapshot, not RAG/product evaluation.
 
-Project2 is unchanged in this phase. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, ranked retrieval system, actual customer UAT or public production rollout is claimed.
+Project2 is unchanged in this phase. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, grounded answer system, actual customer UAT or public production rollout is claimed.

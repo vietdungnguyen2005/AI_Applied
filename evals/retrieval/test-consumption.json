@@ -1,0 +1,10 @@
+{
+  "dataset": "v1",
+  "date": "2026-11-01",
+  "test_run": "evals/retrieval/runs/test-v1",
+  "selection_frozen_commit": "24098104eba8559c5a972dd76a426e29e9f5c93c",
+  "test_prediction_sha256": "4a814cf6b5019dac4356387c134fbbf5690b052ba499a47f4d0d1ec2e2f0e51c",
+  "status": "P06 test consumed once after config/selection freeze",
+  "later_use": "Regression only; not fresh unseen P13 evidence. New independently reviewed frozen queries are needed for a later unseen-quality claim.",
+  "independent_human_review": "pending"
+}

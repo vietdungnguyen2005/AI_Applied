@@ -1,0 +1,20 @@
+{
+  "database_version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+  "migration": "0003_lexical_indexes",
+  "pgvector_version": "0.8.7",
+  "fts_indexes": [
+    {
+      "indexname": "ix_chunks_fts_english",
+      "indexdef": "CREATE INDEX ix_chunks_fts_english ON ai.document_chunks USING gin (to_tsvector('english'::regconfig, text))"
+    },
+    {
+      "indexname": "ix_chunks_fts_simple",
+      "indexdef": "CREATE INDEX ix_chunks_fts_simple ON ai.document_chunks USING gin (to_tsvector('simple'::regconfig, text))"
+    }
+  ],
+  "japanese_lexical_probe": {
+    "parsed": "'在庫数は整数です':1",
+    "query": "'在庫'",
+    "matches": false
+  }
+}

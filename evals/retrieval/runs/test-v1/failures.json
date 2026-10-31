@@ -1,0 +1,77 @@
+[
+  {
+    "method": "lexical",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "5": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      }
+    },
+    "query_id": "qa-a-conflict-ja",
+    "rationale": "Current fixture policies disagree; precedence is unresolved."
+  },
+  {
+    "method": "lexical",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "5": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      }
+    },
+    "query_id": "qa-a-escalation-ja",
+    "rationale": "Current escalation explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  },
+  {
+    "method": "lexical",
+    "metrics": {
+      "1": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "3": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      },
+      "5": {
+        "hit": 0.0,
+        "mrr": 0.0,
+        "ndcg": 0.0,
+        "recall": 0.0
+      }
+    },
+    "query_id": "qa-a-freshness-ja",
+    "rationale": "Current freshness explicitly supports the synthetic question; retired/untrusted notes cannot replace it."
+  }
+]

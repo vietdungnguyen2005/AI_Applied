@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "files_scanned": 324,
+  "secret_values_checked": 3,
+  "env_ignored": true,
+  "frozen_p04_unchanged": true,
+  "uv_lock_unchanged": true,
+  "project2_unchanged": true,
+  "runtime_code_config_gold_selection_unchanged_after_test_freeze": true,
+  "implementation_sha256": "eaa8f4a70a75d90523312fcf073e360e779ee63bfcfe7d4488c0d9b15221757e",
+  "all_benchmark_artifacts_verified": true,
+  "independent_human_review": "pending",
+  "validation_environment": ".local/p05-env"
+}

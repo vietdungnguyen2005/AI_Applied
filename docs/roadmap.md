@@ -2,6 +2,8 @@
 
 Source of requirements: [saved prompt package](implementation-prompts.md). Date: 2026-10-31. Execution is sequential with evidence and acceptance gates. No phase is complete merely because its documentation exists.
 
+Progress update: 2026-11-01 Asia/Bangkok, through P06. Its test split is now consumed; later phases must distinguish regression reuse from fresh unseen evaluation.
+
 Implementation owner: coding agent; acceptance owner: repository owner. Real stakeholder feedback and human labels must be supplied or explicitly labeled simulation/developer review. Fake provider tests prove deterministic plumbing, never real model quality.
 
 | Phase | Dependency | Deliverable / exit gate | Owner | Status |
@@ -12,7 +14,7 @@ Implementation owner: coding agent; acceptance owner: repository owner. Real sta
 | P03 | P02 | Fake-default FastAPI, migrations, CI, lint/types/tests/health | Agent | Local foundation verified: lint/types, 45 offline tests +1 PostgreSQL test, contracts, clean environment and Docker smoke; see evidence/P03.md. Remote CI status is separate |
 | P04 | P03 + verified profile contract | Synthetic fixtures, byte hashes, provenance, separated gold splits | Agent / human review | Technical dataset/QA delivered; independent human-curated gold PARTIAL/pending; ingestion plumbing may proceed but quality claims remain gated; see evidence/P04.md |
 | P05 | P03–P04 | Actual parsers, chunking, embeddings, versions, ACL | Agent | Internal pipeline/CLI implemented and locally checked; real CPU E5/pgvector, fake CI, transactional version/delete and SQL scope tests; signed HTTP identity remains P09; see evidence/P05.md |
-| P06 | P05 | Lexical/dense/hybrid implementations and measured retrieval eval | Agent | NOT STARTED |
+| P06 | P05 | Lexical/dense/hybrid implementations and measured retrieval eval | Agent | Technical implementation and real local-model benchmark delivered; dev-selected dense config frozen before test, all 84 outputs retained; metrics provisional, independent human review pending; see evidence/P06.md |
 | P07 | P06 | Grounded QA, citations, abstention and provider negatives | Agent | NOT STARTED |
 | P08 | P04–P07 | Strict draft mapping and rule-only comparison | Agent | NOT STARTED |
 | P09 | P02,P03,P07,P08 | Mock tools and feature-OFF real BFF gateway with per-action auth tests | Agent / owner | NOT STARTED |
