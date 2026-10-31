@@ -1,0 +1,26 @@
+{
+  "ram_bytes": 34070192128,
+  "date": "2026-11-01 Asia/Bangkok",
+  "disks": [
+    {
+      "Name": "C",
+      "Used": 399711682560,
+      "Free": 29786091520
+    },
+    {
+      "Name": "D",
+      "Used": 322536820736,
+      "Free": 269785931776
+    }
+  ],
+  "project2_commit": "32d82862526754b46efb774327ccc4774a4decf7",
+  "ollama_models": "D:\\Ollama_Model",
+  "base_commit": "3770a8d53ed701008e64f7ef3285d315f3951583",
+  "cpu": {
+    "Name": "Intel(R) Core(TM) i9-14900HX",
+    "NumberOfCores": 24,
+    "NumberOfLogicalProcessors": 32
+  },
+  "gpu_csv": "NVIDIA GeForce RTX 5060 Laptop GPU, 8151, 591.86",
+  "project2_status": []
+}

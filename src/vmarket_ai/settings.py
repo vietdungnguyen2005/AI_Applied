@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     bind_host: str = "127.0.0.1"
     port: int = Field(default=8090, ge=1024, le=65535)
     private_container: bool = False
-    provider_mode: Literal["fake", "live"] = "fake"
+    provider_mode: Literal["fake", "live", "local"] = "fake"
     database_url: SecretStr = Field(
         default=SecretStr("sqlite+pysqlite:///.local/ai.db"), repr=False
     )
@@ -38,9 +38,14 @@ class Settings(BaseSettings):
     qa_enabled: bool = False
     qa_embedding_mode: Literal["fake", "local"] = "fake"
     qa_model_bundle: Path | None = None
+    ollama_model: Literal["qwen3.5:4b-q4_K_M", "qwen3.5:9b-q4_K_M"] = "qwen3.5:4b-q4_K_M"
+    ollama_timeout_seconds: float = Field(default=25, gt=0, le=30)
+    ollama_context: int = Field(default=4096, ge=2048, le=8192)
 
     @model_validator(mode="after")
     def boundaries(self) -> Self:
+        if self.provider_mode == "local" and self.private_container:
+            raise ValueError("Local Ollama mode requires host loopback runtime")
         if self.qa_enabled:
             if self.private_container or self.bind_host not in {"127.0.0.1", "::1", "localhost"}:
                 raise ValueError("Standalone QA requires a host loopback listener")

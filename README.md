@@ -20,6 +20,16 @@ Open [health](http://127.0.0.1:8090/health) and [readiness](http://127.0.0.1:809
 
 Default storage is `.local/ai.db`, an AI-only SQLite database. `serve` uses loopback; direct overriding of Uvicorn/network settings is outside the supported local launcher. API docs expose no model keys. No business database, operator cookie or Java trust secret is used.
 
+## Local chat on this Windows workstation
+
+[Ollama setup, model comparison and limits](docs/local-llm.md). With the existing AI PostgreSQL corpus, pinned E5 bundle and installed model:
+
+```powershell
+powershell -NoProfile -File scripts/start-local-qa.ps1
+```
+
+This enables host-only QA on port **8091**, using `qwen3.5:4b-q4_K_M` with 4096 context, thinking disabled and one adapter request at a time. Defaults outside this launcher remain fake/QA-off. Local chat never calls a provider API or changes its budget ledger. The opt-in 9B alternative is selected with `-Model qwen3.5:9b-q4_K_M`.
+
 ## Checks
 
 ```powershell

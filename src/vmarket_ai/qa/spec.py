@@ -74,7 +74,7 @@ class AskResponse(StrictModel):
     citations: Annotated[tuple[WireCitation, ...], Field(max_length=10)]
     # Low means exact quote provenance was checked, not calibrated semantic confidence.
     confidence: Literal["unknown", "low"]
-    provider_mode: Literal["fake", "live"]
+    provider_mode: Literal["fake", "live", "local"]
 
     @model_validator(mode="after")
     def supported(self) -> "AskResponse":

@@ -29,3 +29,11 @@ The AI ledger atomically reserves a finite request cap and counts an attempt bef
 The reservation is an application guard, not a hard vendor billing cap. A provider can misreport prices or charge unexpectedly; the application records observed cost and stops further calls but cannot refund/undo the original charge. No paid model or current-price assumption from a historical README is accepted. Failed attempts still count toward the configured request allowance; the provider's own quotas may differ.
 
 Only usage metadata (IDs/state/tokens/cost) is persisted. Raw prompts, outputs, headers and API keys are not persisted in the ledger or request logs. Errors use static messages with suppressed sensitive exception context. Readiness validates migrated local storage, not provider connectivity or quota. No real provider response or budget behavior is claimed from tests using MockTransport.
+
+## Host-local Ollama chat
+
+`AI_PROVIDER_MODE=local` selects `OllamaChatModel` instead of the fake/OpenRouter adapter. See [local setup and measured comparison](local-llm.md). No cloud key, live opt-in or budget reservation is used. `AI_LIVE_ENABLED` must remain false. The existing real OpenRouter block remains in force.
+
+Only `qwen3.5:4b-q4_K_M` and `qwen3.5:9b-q4_K_M` are accepted. Every call checks `/api/show` for Q4_K_M and rejects remote model aliases. Native `/api/chat` uses fixed `http://127.0.0.1:11434`, disabled environment proxies/redirects, a bounded response, JSON Schema, `think=false`, temperature 0.2, seed 42 and at most the requested output tokens. Missing models fail; the service never pulls them or falls back to cloud. Keep Ollama bound to loopback. This mode is host-only; private-container mode fails configuration validation.
+
+The adapter serializes its own requests and includes queue time in its 25-second default timeout. The local launcher raises the total QA deadline to 30 seconds. Cold model loading can exceed these limits: warm the installed model first if needed. Runtime model tags are mutable; experiment reports record full digests, not an assertion that future pulls produce identical weights. Provider billed cost is zero for local inference; electricity/hardware costs are unmeasured. Existing quote/citation/current-access validators still apply. Schema-constrained output does not establish factual relevance.

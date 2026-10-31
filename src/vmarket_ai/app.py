@@ -18,6 +18,7 @@ from vmarket_ai.contracts import ChatModel
 from vmarket_ai.database import create_db_engine, database_ready
 from vmarket_ai.observability import request_event
 from vmarket_ai.providers.budget import BudgetLedger
+from vmarket_ai.providers.ollama import OllamaChatModel
 from vmarket_ai.providers.openrouter import OpenRouterChatModel
 from vmarket_ai.qa.backend import DEMO_ACTOR, DEMO_COLLECTIONS, PostgresEvidence
 from vmarket_ai.qa.fake import FakeEvidenceModel
@@ -34,7 +35,7 @@ class Health(BaseModel):
 class Readiness(BaseModel):
     model_config = ConfigDict(extra="forbid")
     status: Literal["ready", "not_ready"]
-    provider_mode: Literal["fake", "live"]
+    provider_mode: Literal["fake", "live", "local"]
 
 
 def error(request_id: str, code: str, status: int) -> JSONResponse:
@@ -184,11 +185,13 @@ def create_app(
     if config.qa_enabled:
         if qa_service is None:
             evidence = PostgresEvidence(database, config)
-            chat: ChatModel = (
-                OpenRouterChatModel(config, BudgetLedger(database, config))
-                if config.provider_mode == "live"
-                else FakeEvidenceModel()
-            )
+            chat: ChatModel
+            if config.provider_mode == "local":
+                chat = OllamaChatModel(config)
+            elif config.provider_mode == "live":
+                chat = OpenRouterChatModel(config, BudgetLedger(database, config))
+            else:
+                chat = FakeEvidenceModel()
             qa_service = AnswerService(
                 evidence,
                 chat,

@@ -1,0 +1,186 @@
+{
+  "base_commit": "3770a8d53ed701008e64f7ef3285d315f3951583",
+  "method": "SHA256 of staged Git blob content; manifest excludes itself",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256_git_blob_bytes": "5d74f5c5ab0d8ce1d4aa7f08b927339544379d59b1b87799dc8d663bc2e97db8",
+      "bytes": 962
+    },
+    {
+      "path": "README.md",
+      "sha256_git_blob_bytes": "2e1bfca3b83afe06f138aa401058d0e575ba8df2994b3ee5e43460f130e6cff2",
+      "bytes": 7766
+    },
+    {
+      "path": "docs/contracts/bff-tool-gateway.schema.json",
+      "sha256_git_blob_bytes": "de03727aeb4cc39157c0f820ca960795c3180d468147414a8ad7b7c4953f6671",
+      "bytes": 49307
+    },
+    {
+      "path": "docs/evidence/LOCAL-environment.json",
+      "sha256_git_blob_bytes": "2abecafde1dfb0a1f3133b6f4be080ce64fc3544ca48bd416939cf274f5b5ab8",
+      "bytes": 634
+    },
+    {
+      "path": "docs/evidence/LOCAL-provider-ledger.json",
+      "sha256_git_blob_bytes": "a35b910bb6a5a8724990967166a3a2e0ff777519cd2e02fd0353839030f452ce",
+      "bytes": 4501
+    },
+    {
+      "path": "docs/evidence/LOCAL-publication-check.json",
+      "sha256_git_blob_bytes": "e17d8b106c200519c6bf6047ec3fab0b914e81a408dd52fe223e836a31ccfc59",
+      "bytes": 325
+    },
+    {
+      "path": "docs/evidence/LOCAL-tcp-smoke.json",
+      "sha256_git_blob_bytes": "0bb464d5c39dc564929e09b65ec94525eb1c56cadae55d3405940bc5a3c716ae",
+      "bytes": 860
+    },
+    {
+      "path": "docs/evidence/LOCAL.md",
+      "sha256_git_blob_bytes": "9bacaf87529e7c4416aec1e12640a5f44763b60c2ecf689328308423af5aae66",
+      "bytes": 5729
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-after-unload.log",
+      "sha256_git_blob_bytes": "e11c175197f8149ee9589315e73aceda10727736194b20b373a6d130123e7cd9",
+      "bytes": 107
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-contracts.log",
+      "sha256_git_blob_bytes": "1b548fcc7e4fd39336d1bfaf76b2580f5425860358b0e98a480d7a1b56655ee7",
+      "bytes": 11957
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-dataset.log",
+      "sha256_git_blob_bytes": "187930a22c654103276349cb6fee9334131047fb44681814faece0474445bfe0",
+      "bytes": 772
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-final-provider-qa.log",
+      "sha256_git_blob_bytes": "111010c2e992670bde6f87f097f423e51e666895ee79a3b3f4375a13a72abf24",
+      "bytes": 598
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-format.log",
+      "sha256_git_blob_bytes": "f1c7efecb45840d46f7aecdbb729512cd9df52c7e11e4e89d013842ebaa7a9e1",
+      "bytes": 28
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-lint-initial.log",
+      "sha256_git_blob_bytes": "e2af140ba74e9cbb2b1ff8e19879c6ea1d526f6f3ad4b1ecd2e1ebd0c23d9947",
+      "bytes": 2763
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-lint.log",
+      "sha256_git_blob_bytes": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-postgres.log",
+      "sha256_git_blob_bytes": "6ec93525106f0959902ac14d94ce9acce91cd9ba198c1221add928b0658f6ae1",
+      "bytes": 601
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-retrieval.log",
+      "sha256_git_blob_bytes": "eec4719cd1b0c3ca7923dd0377df1651a3685063f59900a55dc1b57900bee98e",
+      "bytes": 284
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-tests.log",
+      "sha256_git_blob_bytes": "9e1bb29259275441917467e61e9cb8ecee392f3f3723be84b005c33d0866e82e",
+      "bytes": 204
+    },
+    {
+      "path": "docs/evidence/logs/LOCAL-types.log",
+      "sha256_git_blob_bytes": "a2767b4f5fbc495fbc163c1c3983210351cf45f12ec5302828989d1065383f9b",
+      "bytes": 45
+    },
+    {
+      "path": "docs/local-llm.md",
+      "sha256_git_blob_bytes": "9eb776fca029ddda6ff930ff9ab70f7da0a87a5f0602e53518c9d3a9f014cf65",
+      "bytes": 6467
+    },
+    {
+      "path": "docs/providers.md",
+      "sha256_git_blob_bytes": "70064f8d43069a30a45ea7c5e4b112280a6618f38162808e9f0b6abbfab5521e",
+      "bytes": 5128
+    },
+    {
+      "path": "docs/roadmap.md",
+      "sha256_git_blob_bytes": "598449a265789e06142188f8bb809365c0778022eb97552d61e7f689ed12dc5a",
+      "bytes": 5169
+    },
+    {
+      "path": "evals/local/runs/4b-v1/predictions.jsonl",
+      "sha256_git_blob_bytes": "3b4a828f381d58bfbdedc020242e27bffe87284357549e7ba48b80b02559f895",
+      "bytes": 4177
+    },
+    {
+      "path": "evals/local/runs/4b-v1/summary.json",
+      "sha256_git_blob_bytes": "0bfcf36aa111d8711d857bc1e7b7ffd522deee8f828fcb28c1a1bcd22c95fee7",
+      "bytes": 2622
+    },
+    {
+      "path": "evals/local/runs/9b-v1/predictions.jsonl",
+      "sha256_git_blob_bytes": "838792fd3eb0f1aac8adf05fda63172c6d93a71b178f296fe8225c1a6cb4ae40",
+      "bytes": 4180
+    },
+    {
+      "path": "evals/local/runs/9b-v1/summary.json",
+      "sha256_git_blob_bytes": "ca1cb44f59c2ca3ca50adf60ab87ebf023b9a825cc6f638655ebd51a61429847",
+      "bytes": 2621
+    },
+    {
+      "path": "scripts/start-local-qa.ps1",
+      "sha256_git_blob_bytes": "eae5a36754b84dd0a7a67c8643a0602c602aa0bfdc05a1fe6aedbe7f98a727a2",
+      "bytes": 1648
+    },
+    {
+      "path": "src/vmarket_ai/app.py",
+      "sha256_git_blob_bytes": "8f78ac0c36ffdda1a00b077c9e81d8edb5ba90ab18996b03c9180210c3fb0158",
+      "bytes": 9206
+    },
+    {
+      "path": "src/vmarket_ai/contracts.py",
+      "sha256_git_blob_bytes": "1453c7039795c1fba4f373fc7911fd6c0f3ecb404a2ac162a212644f0cc15ff6",
+      "bytes": 3162
+    },
+    {
+      "path": "src/vmarket_ai/local_evaluation.py",
+      "sha256_git_blob_bytes": "4c4ee5bbab48ecb7026cefdc61a737bf90a6eae9bb1195a37e18a0385165c01f",
+      "bytes": 12479
+    },
+    {
+      "path": "src/vmarket_ai/providers/ollama.py",
+      "sha256_git_blob_bytes": "945c599e85391048615ed47dbf415fa072ad34b47ffcd0bf510b1a71ed693b39",
+      "bytes": 4412
+    },
+    {
+      "path": "src/vmarket_ai/qa/service.py",
+      "sha256_git_blob_bytes": "3cf49eccdae6684d073f267d66456bd1c556f3df1b2d0f72cb3ec4cef677aa9f",
+      "bytes": 10696
+    },
+    {
+      "path": "src/vmarket_ai/qa/spec.py",
+      "sha256_git_blob_bytes": "d07d54793ca92318fc991acf969b843d10d02f9dce3d54bc2d409dfc80dc9bef",
+      "bytes": 3949
+    },
+    {
+      "path": "src/vmarket_ai/settings.py",
+      "sha256_git_blob_bytes": "0639c76844cd35b1d7996c72d8a2af4b2bd366aebd79a82c5fa9efe9c594e238",
+      "bytes": 4541
+    },
+    {
+      "path": "tests/test_ollama.py",
+      "sha256_git_blob_bytes": "d7dbee5476bd5ef1d17ceb459716c3fc71ef749bba8bd06c8aaa3589977b8eef",
+      "bytes": 5998
+    },
+    {
+      "path": "tests/test_qa.py",
+      "sha256_git_blob_bytes": "991e8b0c9a6062f1b622194cf3c3c3e8362893bd2f068f214a1e989f2ad2e6d6",
+      "bytes": 17986
+    }
+  ]
+}

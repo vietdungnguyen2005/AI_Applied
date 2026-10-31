@@ -1,0 +1,91 @@
+{
+  "status": "development_smoke_not_unseen_quality",
+  "models": {
+    "qwen3.5:9b-q4_K_M": {
+      "tag": {
+        "name": "qwen3.5:9b-q4_K_M",
+        "model": "qwen3.5:9b-q4_K_M",
+        "modified_at": "2026-11-01T01:54:42.6124543+07:00",
+        "size": 6550825550,
+        "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+        "details": {
+          "parent_model": "model.gguf",
+          "format": "gguf",
+          "family": "qwen35",
+          "families": [
+            "qwen35"
+          ],
+          "parameter_size": "9.0B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 262144,
+          "embedding_length": 4096
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "thinking",
+          "vision"
+        ]
+      },
+      "warmup_seconds": 5.382592299953103,
+      "runtime_version": {
+        "version": "0.32.1"
+      },
+      "requested_context": 4096,
+      "quantization": {
+        "parent_model": "model.gguf",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "9.0B",
+        "quantization_level": "Q4_K_M"
+      },
+      "loaded_state": {
+        "models": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "model": "qwen3.5:9b-q4_K_M",
+            "size": 6234423946,
+            "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen35",
+              "families": [
+                "qwen35"
+              ],
+              "parameter_size": "9.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-11-01T01:57:11.7491685+07:00",
+            "size_vram": 5458865683,
+            "context_length": 4096
+          }
+        ]
+      }
+    }
+  },
+  "summary": {
+    "qwen3.5:9b-q4_K_M": {
+      "qa_cases": 4,
+      "qa_decisions_correct": 4,
+      "positive_anchor_pass": 2,
+      "mapping_cases": 4,
+      "mapping_exact_match": 4
+    }
+  },
+  "config": {
+    "context": 4096,
+    "temperature": 0.2,
+    "seed": 42,
+    "thinking": false,
+    "source": "known P07 QA and P04 train/dev mapping only"
+  },
+  "git_commit": "3770a8d53ed701008e64f7ef3285d315f3951583",
+  "cases_sha256": "fd2e4dc90f75cf8e07c2ebf3e51a7437733f790664babbabd45c9db72f7c55c8",
+  "independent_human_review": "pending",
+  "provider_api_calls": 0,
+  "mapping_feature": "NOT_IMPLEMENTED; schema-constrained standalone probes, no profile creation"
+}

@@ -1,0 +1,11 @@
+{
+  "scanned_files": 397,
+  "sensitive_values_checked": 3,
+  "secret_matches": 0,
+  "frozen_inputs_results_changed": false,
+  "historical_external_usage_rows_unchanged": 8,
+  "provider_still_blocked": true,
+  "project2_clean": true,
+  "base_commit": "3770a8d53ed701008e64f7ef3285d315f3951583",
+  "weights_committed": false
+}

@@ -80,7 +80,7 @@ class AnswerService:
         retrieval: RetrievalPort,
         model: ChatModel,
         *,
-        mode: Literal["fake", "live"],
+        mode: Literal["fake", "live", "local"],
         deadline_seconds: float = 8,
     ) -> None:
         self.retrieval, self.model, self.mode = retrieval, model, mode
@@ -158,6 +158,32 @@ class AnswerService:
                         if 8 <= len(q) <= 800
                     }
                 )
+                if self.mode == "local":
+                    # Compile the decision/claims invariant into the local decoding grammar too.
+                    # Keep provider-specific schema requirements out of other chat backends.
+                    claim_array = schema["properties"]["claims"]
+                    answered = {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {
+                            "decision": {"const": "answer", "type": "string"},
+                            "claims": {**claim_array, "minItems": 1},
+                        },
+                        "required": ["decision", "claims"],
+                    }
+                    abstained = {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {
+                            "decision": {
+                                "type": "string",
+                                "enum": ["insufficient", "conflict", "ambiguous"],
+                            },
+                            "claims": {**claim_array, "maxItems": 0},
+                        },
+                        "required": ["decision", "claims"],
+                    }
+                    schema = {"$defs": schema["$defs"], "oneOf": [answered, abstained]}
                 completion = await self.model.complete(
                     ChatRequest(
                         messages=(

@@ -1,0 +1,35 @@
+{
+  "health": {
+    "status": "ok"
+  },
+  "ready": {
+    "status": "ready",
+    "provider_mode": "local"
+  },
+  "ask": {
+    "http_status": 200,
+    "body": {
+      "request_id": "06130f26-195d-405d-ba28-ddee9587e8a1",
+      "status": "answered",
+      "answer": "Supplier B supplies UTF-8 original bytes.",
+      "reason": null,
+      "citations": [
+        {
+          "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+          "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+          "chunk_id": "ea750761-3e06-5537-8847-33abcb221989",
+          "locator": {
+            "kind": "section",
+            "value": "encoding"
+          },
+          "source_url": "/ai/citations/ea750761-3e06-5537-8847-33abcb221989"
+        }
+      ],
+      "confidence": "low",
+      "provider_mode": "local"
+    }
+  },
+  "citation_open_statuses": [
+    200
+  ]
+}

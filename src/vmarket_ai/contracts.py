@@ -24,7 +24,7 @@ class ChatRequest(StrictModel):
 class ChatResult(StrictModel):
     text: str
     model: str
-    provider_mode: Literal["fake", "live"]
+    provider_mode: Literal["fake", "live", "local"]
     prompt_tokens: int
     completion_tokens: int
     cost_usd: Decimal

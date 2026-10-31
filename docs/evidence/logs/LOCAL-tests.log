@@ -1,0 +1,3 @@
+Captured from execution tool session 76397; command: python -m uv run --frozen --offline pytest -q
+222 passed, 4 skipped, 1 warning in 27.48s
+Warning: StarletteDeprecationWarning for httpx TestClient.

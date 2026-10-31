@@ -275,6 +275,67 @@ async def test_japanese_quote_and_fake_provider_limits():
     assert fake.status == "abstained"  # Fake mode is plumbing, not semantic QA quality.
 
 
+async def test_local_grammar_enforces_decision_claim_consistency():
+    s = source()
+
+    class Local(Scripted):
+        async def complete(self, request):
+            self.requests.append(request)
+            return ChatResult(
+                text=self.text,
+                model="local-test",
+                provider_mode="local",
+                prompt_tokens=1,
+                completion_tokens=1,
+                cost_usd=0,
+            )
+
+    model = Local(proposal(s))
+    result = await AnswerService(Port([s]), model, mode="local").ask(
+        Actor(id=uuid4()), request(), uuid4()
+    )
+    assert result.status == "answered" and result.provider_mode == "local"
+    schema = model.requests[0].structured_output
+    Draft202012Validator(schema).validate(json.loads(proposal(s)))
+    assert list(
+        Draft202012Validator(schema).iter_errors(
+            {"decision": "insufficient", "claims": [{"chunk_id": str(s.chunk_id), "quote": s.text}]}
+        )
+    )
+    assert list(Draft202012Validator(schema).iter_errors({"decision": "answer", "claims": []}))
+
+
+def test_local_factory_never_constructs_cloud_adapter_or_ledger(migrated, monkeypatch):
+    s = source()
+    port = Port([s])
+
+    class Local:
+        def __init__(self, settings):
+            pass
+
+        async def complete(self, request):
+            return ChatResult(
+                text=proposal(s),
+                model="local-test",
+                provider_mode="local",
+                prompt_tokens=1,
+                completion_tokens=1,
+                cost_usd=0,
+            )
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Cloud/billing adapter invoked")
+
+    monkeypatch.setattr("vmarket_ai.app.PostgresEvidence", lambda *args: port)
+    monkeypatch.setattr("vmarket_ai.app.OllamaChatModel", Local)
+    monkeypatch.setattr("vmarket_ai.app.OpenRouterChatModel", forbidden)
+    monkeypatch.setattr("vmarket_ai.app.BudgetLedger", forbidden)
+    config = migrated.model_copy(update={"qa_enabled": True, "provider_mode": "local"})
+    with TestClient(create_app(config), base_url="http://127.0.0.1:8090") as client:
+        response = client.post("/ai/ask", json=request().model_dump(mode="json"))
+        assert response.status_code == 200 and response.json()["provider_mode"] == "local"
+
+
 def test_http_scope_links_safe_input_errors_and_trace(migrated, caplog):
     s = source()
     port = Port([s])

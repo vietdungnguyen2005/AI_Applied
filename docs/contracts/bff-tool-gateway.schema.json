@@ -295,7 +295,8 @@
           "type": "string",
           "enum": [
             "fake",
-            "live"
+            "live",
+            "local"
           ]
         }
       },
@@ -534,7 +535,8 @@
           "type": "string",
           "enum": [
             "fake",
-            "live"
+            "live",
+            "local"
           ]
         }
       },
@@ -2008,7 +2010,8 @@
           "type": "string",
           "enum": [
             "fake",
-            "live"
+            "live",
+            "local"
           ]
         }
       },

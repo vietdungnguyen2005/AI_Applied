@@ -26,6 +26,10 @@ Implementation owner: coding agent; acceptance owner: repository owner. Real sta
 | P15 | P14 | Reproducible standalone/integrated local modes, budgets, CI/drills | Agent | NOT STARTED |
 | P16 | P13–P15 | UAT, English delivery/interview evidence and honest final gate | Agent / owner | NOT STARTED |
 
+## Owner-requested local inference extension
+
+After P07, the owner requested community/documentation/hardware research and approved implementing local chat before P08. [Local inference](local-llm.md) adds Ollama with real 4B/9B development probes; [evidence](evidence/LOCAL.md). This does not complete P08 mapping or resolve P07's uncertain cloud charge/human evaluation gates.
+
 ## Persistent execution rules
 
 - Never request that the owner paste the individual prompts again; use this saved package and roadmap.
