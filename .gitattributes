@@ -1,0 +1,3 @@
+# Preserve provider/tool output and the supplied prompt package as evidence.
+docs/evidence/logs/*.log -text -whitespace
+docs/implementation-prompts.md -text -whitespace

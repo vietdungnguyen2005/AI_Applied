@@ -1,0 +1,93 @@
+{
+  "phase": "P00",
+  "baseline_ai": "62bcc472c2e391235984997b52265460a09da278",
+  "baseline_project2": "32d82862526754b46efb774327ccc4774a4decf7",
+  "artifacts": [
+    {
+      "path": "docs/00-baseline-verification.md",
+      "sha256": "1dec299fb2611faa69edaa4a1549e40af1abde4399893b6ccff72c9e2816ee8f",
+      "bytes": 4536
+    },
+    {
+      "path": "docs/00-gap-matrix.md",
+      "sha256": "fd512312b6cb3b88297410ebb8cd94b9bd927b95df4ae055f998b62bbf8b8ed1",
+      "bytes": 2604
+    },
+    {
+      "path": "docs/00-integration-plan.md",
+      "sha256": "21bb842aff9bf8034c16b3467384121807404870d5d4c8296ceb8f7bb150c538",
+      "bytes": 5089
+    },
+    {
+      "path": "docs/00-repo-audit.md",
+      "sha256": "71d20b5916b902023735550afebe5d1c4dd618a1edfac9540a66a1333d6974af",
+      "bytes": 10043
+    },
+    {
+      "path": "docs/00-risk-register.md",
+      "sha256": "d1441b3433d0e195d83033cee44c3252a33793465ed0990bcad52d0dafa0d5e1",
+      "bytes": 3397
+    },
+    {
+      "path": "docs/evidence/logs/P00-compose-config.log",
+      "sha256": "1ca4a13146b2891c0e462123ac0cb848f92e6221f18b870a1b78c232d1956c35",
+      "bytes": 12
+    },
+    {
+      "path": "docs/evidence/logs/P00-docker-info.log",
+      "sha256": "1bc6a899cbad559c705482312a1e1729377c0f0673ca086dbea7aca2f7361795",
+      "bytes": 19
+    },
+    {
+      "path": "docs/evidence/logs/P00-maven-verify.log",
+      "sha256": "52e3014f1a30a880a7dfccf0f80e23ac62fb6a1d4969cafece81b4fa490513f5",
+      "bytes": 233340
+    },
+    {
+      "path": "docs/evidence/logs/P00-npm-audit.log",
+      "sha256": "07e0dd66dfa75b7ee0cdb8aeb3641b3d231ba76991a1bcf5037bd6acc28ddfd2",
+      "bytes": 5522
+    },
+    {
+      "path": "docs/evidence/logs/P00-npm-ci.log",
+      "sha256": "bbb11238d12d391964ed53d28f81a628d547d8f335592d41d466637e5ec661a8",
+      "bytes": 938
+    },
+    {
+      "path": "docs/evidence/logs/P00-npm-verify.log",
+      "sha256": "b1ef5303cc0f4ed3810b1b1dfe711dab4f22ddbe3d771a0c95af7b6e3d409346",
+      "bytes": 2176
+    },
+    {
+      "path": "docs/evidence/logs/P00-worker-build.log",
+      "sha256": "24e0e5840ed37db184d1d7633bd286bac61f2a1efb6b35e7a37c3e6ef533cd44",
+      "bytes": 2885
+    },
+    {
+      "path": "docs/evidence/P00-environment.json",
+      "sha256": "de1d85ad55051955e8c1bbb6a4abee715561e82a463517b5ce3ed844f9385caa",
+      "bytes": 433
+    },
+    {
+      "path": "docs/evidence/P00-source-index.md",
+      "sha256": "f79f464df29687610e0aba8704dba2791bea39412deea5757b18abb5d19aa4d3",
+      "bytes": 39331
+    },
+    {
+      "path": "docs/evidence/P00.md",
+      "sha256": "fdbef1741db133ff6e60e1ec85538980502f72d69481fb2b9a8c44fd9ff524a0",
+      "bytes": 6399
+    },
+    {
+      "path": "docs/implementation-prompts.md",
+      "sha256": "1f555f53334ab898120b7ae3c21b9eae0c75064db9e74891bd787c7dd82fb31d",
+      "bytes": 44316
+    },
+    {
+      "path": "docs/roadmap.md",
+      "sha256": "e8971f189bcdf5d811d9fa307992434a8e08047cda9f119aa8473e32aa5db51a",
+      "bytes": 3515
+    }
+  ],
+  "hash_scope": "Git blob bytes after repository attributes; original supplied prompt hash also in P00-environment.json"
+}
