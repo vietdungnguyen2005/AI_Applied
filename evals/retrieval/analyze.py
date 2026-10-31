@@ -1,10 +1,11 @@
 """Descriptive post-run analysis only; does not alter configs, predictions or selection."""
 
+import hashlib
 import json
+import subprocess
 
 from vmarket_ai.retrieval.evaluate import (
     BASE,
-    code_hash,
     input_hashes,
     json_bytes,
     sha,
@@ -16,7 +17,23 @@ from vmarket_ai.retrieval.metrics import ranked_metrics
 
 def main():
     lock = json.loads((BASE / "gold/v1.lock.json").read_text(encoding="utf-8"))
-    assert lock["implementation_sha256"] == code_hash()
+    # P07+ may add runtime code. Verify P06's historical implementation, not today's tree.
+    ref = "5e336311a099022db95f5a90d08deacdc4cccd34"
+    paths = (
+        subprocess.check_output(
+            ["git", "ls-tree", "-r", "--name-only", ref, "--", "src/vmarket_ai"]
+        )
+        .decode()
+        .splitlines()
+    )
+    entries = {
+        p: hashlib.sha256(
+            subprocess.check_output(["git", "show", ref + ":" + p]).replace(b"\r\n", b"\n")
+        ).hexdigest()
+        for p in sorted(paths)
+        if p.endswith(".py")
+    }
+    assert lock["implementation_sha256"] == hashlib.sha256(json_bytes(entries)).hexdigest()
     assert lock["input_hashes"] == input_hashes()
     assert lock["gold_sha256"] == sha(BASE / "gold/v1.jsonl")
     gold = {

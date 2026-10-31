@@ -66,7 +66,7 @@ def test_unknown_product_routes_are_unavailable_and_do_not_echo_inputs(settings,
         assert response.status_code == 404
         assert response.json()["code"] == "ROUTE_NOT_AVAILABLE"
         events = [json.loads(r.message) for r in caplog.records if r.name == "vmarket_ai"]
-        assert events[-1]["route"] == "unknown"
+        assert events[-1]["route"] == "/ai/ask"
         assert "sentinel-secret" not in caplog.text + response.text
         assert "sentinel-prompt" not in caplog.text + response.text
 

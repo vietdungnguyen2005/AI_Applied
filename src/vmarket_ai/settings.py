@@ -1,4 +1,5 @@
 from decimal import Decimal
+from pathlib import Path
 from typing import Literal, Self
 
 from pydantic import Field, SecretStr, ValidationError, model_validator
@@ -34,9 +35,17 @@ class Settings(BaseSettings):
     live_daily_requests: int = Field(default=10, ge=1, le=100)
     provider_timeout_seconds: float = Field(default=5, gt=0, le=8)
     request_deadline_seconds: float = Field(default=8, gt=0, le=30)
+    qa_enabled: bool = False
+    qa_embedding_mode: Literal["fake", "local"] = "fake"
+    qa_model_bundle: Path | None = None
 
     @model_validator(mode="after")
     def boundaries(self) -> Self:
+        if self.qa_enabled:
+            if make_url(self.database_url.get_secret_value()).drivername != "postgresql+psycopg":
+                raise ValueError("QA requires separate AI PostgreSQL")
+            if self.qa_embedding_mode == "local" and self.qa_model_bundle is None:
+                raise ValueError("Local QA embeddings require a pinned bundle")
         if self.mode != "standalone":
             raise ValueError("Integrated authentication is not implemented in P03")
         if self.bind_host not in {"127.0.0.1", "::1", "localhost"} and not (

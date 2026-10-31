@@ -180,6 +180,11 @@
               ]
             }
           ]
+        },
+        "source_url": {
+          "type": "string",
+          "maxLength": 70,
+          "pattern": "^/ai/citations/[0-9a-f-]{36}$"
         }
       },
       "required": [
@@ -260,7 +265,8 @@
               "enum": [
                 "NO_SUPPORTED_EVIDENCE",
                 "CONFLICTING_EVIDENCE",
-                "OUTDATED_ONLY"
+                "OUTDATED_ONLY",
+                "AMBIGUOUS_REQUEST"
               ]
             },
             {
@@ -339,7 +345,8 @@
                 "enum": [
                   "NO_SUPPORTED_EVIDENCE",
                   "CONFLICTING_EVIDENCE",
-                  "OUTDATED_ONLY"
+                  "OUTDATED_ONLY",
+                  "AMBIGUOUS_REQUEST"
                 ]
               }
             }

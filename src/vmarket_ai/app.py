@@ -6,6 +6,7 @@ from typing import Literal
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import SQLAlchemyError
@@ -13,8 +14,15 @@ from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
+from vmarket_ai.contracts import ChatModel
 from vmarket_ai.database import create_db_engine, database_ready
 from vmarket_ai.observability import request_event
+from vmarket_ai.providers.budget import BudgetLedger
+from vmarket_ai.providers.openrouter import OpenRouterChatModel
+from vmarket_ai.qa.backend import DEMO_ACTOR, DEMO_COLLECTIONS, PostgresEvidence
+from vmarket_ai.qa.fake import FakeEvidenceModel
+from vmarket_ai.qa.service import AnswerService
+from vmarket_ai.qa.spec import AskRequest, AskResponse, QAError
 from vmarket_ai.settings import Settings, load_settings
 
 
@@ -55,6 +63,10 @@ class RequestBoundary:
         route = (
             scope["path"] if scope["path"] in {"/health", "/ready", "/openapi.json"} else "unknown"
         )
+        if scope["path"] == "/ai/ask":
+            route = "/ai/ask"
+        elif scope["path"].startswith("/ai/citations/"):
+            route = "/ai/citations/{chunk_id}"
 
         async def wrapped_send(message: Message) -> None:
             nonlocal status, response_started
@@ -119,7 +131,11 @@ class RequestBoundary:
             request_event(request_id, route, status, (monotonic() - started) * 1000)
 
 
-def create_app(settings: Settings | None = None, engine: Engine | None = None) -> FastAPI:
+def create_app(
+    settings: Settings | None = None,
+    engine: Engine | None = None,
+    qa_service: AnswerService | None = None,
+) -> FastAPI:
     config = settings or load_settings()
     database = engine or create_db_engine(config)
 
@@ -136,6 +152,14 @@ def create_app(settings: Settings | None = None, engine: Engine | None = None) -
         redoc_url=None,
     )
     app.add_middleware(RequestBoundary)
+
+    @app.exception_handler(RequestValidationError)
+    async def input_error(request: Request, exc: RequestValidationError) -> JSONResponse:
+        return error(str(request.state.request_id), "INPUT_INVALID", 400)
+
+    @app.exception_handler(QAError)
+    async def qa_error(request: Request, exc: QAError) -> JSONResponse:
+        return error(str(request.state.request_id), exc.code, exc.status)
 
     @app.exception_handler(HTTPException)
     async def http_error(request: Request, exc: HTTPException) -> JSONResponse:
@@ -156,5 +180,53 @@ def create_app(settings: Settings | None = None, engine: Engine | None = None) -
             status="ready" if available else "not_ready", provider_mode=config.provider_mode
         )
         return JSONResponse(response.model_dump(), status_code=200 if available else 503)
+
+    if config.qa_enabled:
+        if qa_service is None:
+            evidence = PostgresEvidence(database, config)
+            chat: ChatModel = (
+                OpenRouterChatModel(config, BudgetLedger(database, config))
+                if config.provider_mode == "live"
+                else FakeEvidenceModel()
+            )
+            qa_service = AnswerService(
+                evidence,
+                chat,
+                mode=config.provider_mode,
+                deadline_seconds=config.request_deadline_seconds,
+            )
+        prototype = qa_service
+
+        def local_boundary(request: Request) -> None:
+            # Fixed public synthetic scope; no supplied actor/cookie/header becomes identity.
+            if request.url.hostname not in {"127.0.0.1", "localhost", "::1"}:
+                raise QAError("ACCESS_DENIED", 403)
+            origin = request.headers.get("origin")
+            if origin and origin not in {
+                f"http://127.0.0.1:{config.port}",
+                f"http://localhost:{config.port}",
+            }:
+                raise QAError("ACCESS_DENIED", 403)
+
+        @app.post("/ai/ask", response_model=AskResponse)
+        async def ask(payload: AskRequest, request: Request) -> AskResponse:
+            local_boundary(request)
+            if not set(payload.collection_ids).issubset(DEMO_COLLECTIONS):
+                raise QAError("ACCESS_DENIED", 403)
+            service = AnswerService(
+                prototype.retrieval,
+                prototype.model,
+                mode=config.provider_mode,
+                deadline_seconds=config.request_deadline_seconds,
+            )
+            return await service.ask(DEMO_ACTOR, payload, UUID(request.state.request_id))
+
+        @app.get("/ai/citations/{chunk_id}")
+        def citation(chunk_id: UUID, request: Request) -> dict[str, object]:
+            local_boundary(request)
+            source = prototype.retrieval.current(DEMO_ACTOR, DEMO_COLLECTIONS, chunk_id)
+            if source is None:
+                raise QAError("DOCUMENT_NOT_AVAILABLE", 404)
+            return source.model_dump(mode="json")
 
     return app
