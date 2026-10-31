@@ -195,11 +195,10 @@ async def test_prompt_injection_and_bounded_samples_remain_untrusted_user_data()
     payload = json.loads(req.messages[1].content)
     assert payload["sample_rows"][0][1] == attack and len(payload["sample_rows"][1][1]) == 160
     assert "THIRD_ROW_SECRET" not in req.messages[1].content
-    assert req.structured_output["properties"]["sku"]["enum"] == [
+    assert req.structured_output["properties"]["sku"]["anyOf"][0]["enum"] == [
         "SKU",
         "ProductName",
         "AvailableQuantity",
-        None,
     ]
 
 
