@@ -271,6 +271,6 @@ def create_app(
     if config.agent_enabled:
         from vmarket_ai.gateway.routes import install
 
-        install(app, config, database)
+        install(app, config, database, qa_service=qa_service)
 
     return app

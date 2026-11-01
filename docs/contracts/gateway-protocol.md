@@ -104,3 +104,10 @@ Per tool result cap 16,384 encoded JSON bytes; up to 100 row errors/profile item
 Unknown policy/conflict/no relevant authorized evidence is HTTP 200 with typed abstained status, bounded reason and appropriate authorized citations. Proposed AI document ingest returns 201 for created/indexed synchronous version or 200 for identical replay; it does not return indexed until the transaction commits. No document queue/202 claim is needed initially. Existing Java missing-job 400 remains a sanitized `unavailable` tool result with `UPSTREAM_RESOURCE_UNAVAILABLE`, not an invented business 404. Preserve 401/403 denial; translate transport 5xx/unknown without leaking raw upstream text.
 
 Human consent in chat cannot mint a business receipt or CSRF authorization. Operator uses current protected publication/activation/preview/confirm explicitly; same original bytes and valid receipt are mandatory. A Java 202, lost response or BFF 502/503/504 is not completed/rolled back. Inspect state; do not retry a business write in this protocol.
+
+P12 enables signed integrated `/ai/ask` and POST `/ai/citations/read` when QA is
+enabled. The latter uses `documents_read`, step zero and a strict chunk/scope body;
+each access rechecks current grant, active/effective version and deletion state.
+The standalone unsigned citation GET is never installed in integrated mode.
+Project2 chooses scope from a current actual Java profile reference and removes
+internal source URLs from browser responses. See [runtime/UI](../operator-copilot.md).

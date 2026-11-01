@@ -1,0 +1,31 @@
+{
+  "scope": "mocked HTTP browser interaction, not model quality",
+  "passed": true,
+  "timestamp_utc": "2026-11-01T19:19:59.217032+00:00",
+  "browser": "143.0.7499.4",
+  "viewports": [
+    "1440x1100",
+    "390x844"
+  ],
+  "counts": {
+    "start": 3,
+    "resume": 3,
+    "inspect": 2,
+    "cancel": 1
+  },
+  "checks": [
+    "source keyboard and Escape focus restore",
+    "escaped source HTML",
+    "revoked source",
+    "no-answer",
+    "model503/504",
+    "access403",
+    "read results versus historical summaries",
+    "no automatic retry",
+    "stop/inspect/cancel",
+    "human handoff",
+    "mobile overflow",
+    "identity switch clears local results",
+    "expired/unauthorized/Java down"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "scope": "mocked browser only",
+  "state": {
+    "expiry": 1793559992,
+    "previews": 5,
+    "confirms": 3,
+    "imports": 5,
+    "inspection_fails": false,
+    "confirm_ok": true,
+    "byte_checks": [
+      {
+        "profile": "supplier-b",
+        "sha256": "96fbf404bfe2106a240344d292edb43403b0bb86823421267b48799b25981f68"
+      },
+      {
+        "profile": "supplier-b",
+        "sha256": "96fbf404bfe2106a240344d292edb43403b0bb86823421267b48799b25981f68"
+      },
+      {
+        "profile": "supplier-a",
+        "sha256": "ee5c0a6d0f26a088382ee877e7aea6d3c2e4da8ed8f57053dce0fe8d4abd2704"
+      }
+    ]
+  },
+  "passed": true
+}

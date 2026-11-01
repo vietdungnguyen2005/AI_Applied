@@ -1,0 +1,12 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [],
+  "next_build_id": "upP33J5i67IA_ZxMz8Abh",
+  "java_jar_sha256": "ff0e06e80e302ffe82b57384762c05f387566127dea8871e967bbb20ffbac0aa",
+  "status": "FAIL",
+  "failure_type": "CalledProcessError",
+  "scope": "bootstrap failure only; no integration assertions executed",
+  "reason": "Docker Desktop Unix runtime sockets failed with Windows1920 before container startup; original runtime paths restored; no reset/volume deletion",
+  "owned_containers_started": 0
+}

@@ -44,7 +44,7 @@ def wait_http(url, process):
     raise RuntimeError("Owned QA service readiness deadline")
 
 
-def main(project2: Path, output: Path):
+def main(project2: Path, output: Path, *, qa=False, checks=None):
     if output.exists():
         raise ValueError("A fresh evidence filename is required")
     project2 = project2.resolve()
@@ -255,6 +255,8 @@ def main(project2: Path, output: Path):
             "AI_QA_MODEL_BUNDLE": str(ROOT / ".local/models/multilingual-e5-small"),
             "AI_GATEWAY_PUBLIC_KEYS": json.dumps({"p11-ephemeral": public_raw}),
         }
+        if qa:
+            ai_env.update(AI_QA_ENABLED="true", AI_QA_EMBEDDING_MODE="local")
         for secret_name in (
             "BFF_SHARED_SECRET",
             "VMARKET_OPS_SECRET",
@@ -280,6 +282,21 @@ def main(project2: Path, output: Path):
             env=migration_env,
             cwd=ROOT,
         )
+        if qa:
+            command(
+                [
+                    sys.executable,
+                    "-m",
+                    "vmarket_ai.ingestion.demo",
+                    "--postgres",
+                    "--model-bundle",
+                    ai_env["AI_QA_MODEL_BUNDLE"],
+                    "--report",
+                    str(temporary / "ingestion.json"),
+                ],
+                env=migration_env,
+                cwd=ROOT,
+            )
         ai = start(
             "ai",
             [sys.executable, "-c", "from vmarket_ai.cli import main;main()", "serve"],
@@ -300,6 +317,8 @@ def main(project2: Path, output: Path):
             "AI_SIGNING_KEY_PKCS8_BASE64": private_der,
             "AI_ACTOR_HMAC_KEY": actor_key,
         }
+        if qa:
+            bff_env.update(AI_QA_ENABLED="true", AI_COPILOT_PANEL_ENABLED="true")
         bff = start(
             "bff",
             [
@@ -340,9 +359,19 @@ def main(project2: Path, output: Path):
                 old.wait(timeout=10)
             return start(name, args, env, cwd)
 
-        from p11_checks import exercise
+        def provider(mode):
+            nonlocal ai
+            assert mode in {"local", "fake"}
+            ai_env["AI_PROVIDER_MODE"] = mode
+            ai = restart("ai-" + mode, ai, ai_env, ROOT, ai.args)
+            wait_http("http://127.0.0.1:8094/ready", ai)
 
-        exercise(
+        if checks is None:
+            from p11_checks import exercise
+
+            checks = exercise
+        options = {"provider": provider, "project2": project2} if qa else {}
+        checks(
             operator_login=login,
             sql_connect=sql_connect,
             snapshot=snapshot,
@@ -354,6 +383,7 @@ def main(project2: Path, output: Path):
             username=username,
             restart_ai=lambda: restart("ai-restarted", ai, ai_env, ROOT, ai.args),
             restart_bff=lambda: restart("bff-restarted", bff, bff_env, project2, bff.args),
+            **options,
         )
     except Exception as failure:
         report.update(

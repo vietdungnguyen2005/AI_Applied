@@ -20,9 +20,11 @@ No browser-supplied actor, tool result, lease, approval, URL, conversation ID or
 private command is accepted. Stale revisions409 require inspection; absent and
 other-owner runs both404. Expired/revoked/role-denied sessions401/403 do not reach
 checkpoint/tool processing. All commands require current CSRF. Public JSON is
-`{run: RunState}` with correlation header; observations are historical status/count
-summaries. A completed run means the read controller ended, not a business write.
-P12's chat UI is not part of this API increment.
+`{run: RunState, observations: Observation[]}` with correlation header. Run-state
+observations remain historical status/count summaries. P12 adds transient projected
+results only for reads executed by the current resume request; inspect/start/cancel
+return an empty observations array. No cached body is replayed. A completed run
+means the read controller ended, not a business write. See [P12 UI](operator-copilot.md).
 
 ```mermaid
 stateDiagram-v2

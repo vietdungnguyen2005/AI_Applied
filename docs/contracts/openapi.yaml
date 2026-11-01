@@ -2,8 +2,9 @@ openapi: 3.1.1
 info:
   title: V-Market AI Operations Copilot â€” proposed internal API
   version: 0.1.0-design
-  description: P02 signed integrated target. P07 implements an opt-in standalone ask/citation
-    subset; inspect runtime OpenAPI for enabled routes. Signed BFF auth remains P09.
+  description: Signed integrated target with opt-in ask, source read, mapping and durable
+    run routes. Inspect runtime OpenAPI for enabled routes; other planned operations
+    are design contracts only.
     No business mutation or HTTP eval endpoint exists.
 servers:
 - url: http://127.0.0.1:8090
@@ -49,8 +50,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Validated response; P07 standalone subset, integrated target
-            pending
+          description: Validated evidence or explicit abstention; opt-in signed integrated route
           content:
             application/json:
               schema:
@@ -115,12 +115,41 @@ paths:
           application/json:
             schema:
               $ref: ./bff-tool-gateway.schema.json#/$defs/AskRequest
-      x-implementation-status: planned
+      x-implementation-status: implemented-opt-in
       x-runtime-max-body-bytes: 65536
       x-required-operation: ask
       description: Signed BFF context required in integrated mode; loopback fixture-only
         standalone exception is described in gateway-protocol.md. Enforce byte, time,
         scope and semantic checks independently of JSON Schema.
+  /ai/citations/read:
+    post:
+      operationId: readCurrentCitation
+      summary: Read a current authorized source excerpt through signed BFF context
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./bff-tool-gateway.schema.json#/$defs/CitationReadRequest
+      responses:
+        '200':
+          description: Current ACL and active/effective source checked on every read
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/CitationReadResponse
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404':
+          description: Source unavailable or current access revoked; same public error
+        '409': *id004
+        '413': *id005
+        '503': *id008
+        '504': *id009
+      x-implementation-status: implemented-opt-in
+      x-runtime-max-body-bytes: 65536
+      x-required-operation: documents_read
   /ai/mapping/suggest:
     post:
       operationId: suggestMapping

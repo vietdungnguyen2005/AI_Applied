@@ -1,0 +1,8 @@
+{
+  "baseline": "acec14c5e3c477c47cbd9b5adb7ecf84b27836b1",
+  "project2_commit": "998c2ebf304aefd28b861cd34c9021cd4ebfb13e",
+  "result_tree": "606faf314593b3e5ed284e5a82db9e2e8630cdea",
+  "patch_sha256": "8658b0a7f047be9db66a02b0135b203f8a8c367ca45ac7151a9304838a279642",
+  "isolated_index_exact_tree_match": true,
+  "project2_remote_pushed": false
+}

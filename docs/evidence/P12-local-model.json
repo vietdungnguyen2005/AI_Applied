@@ -1,0 +1,27 @@
+{
+  "timestamp_utc": "2026-11-01T19:16:05.163474+00:00",
+  "scope": "actual local Ollama through signed HTTP, explicitly injected single-source retrieval fixture and SQLite nonce storage; NOT Java/PG/E5 integration or held-out quality",
+  "http": 200,
+  "response": {
+    "request_id": "efaf4578-ae8a-405a-82e1-7f8596ee2233",
+    "status": "answered",
+    "answer": "Supplier B supplies UTF-8 original bytes.",
+    "reason": null,
+    "citations": [
+      {
+        "document_id": "0be41af4-2c52-4ccf-a1fd-dd9c4bc5391e",
+        "version_id": "8104e652-7613-47fc-a3c1-0d81ff5f55b5",
+        "chunk_id": "a538eaa3-7a39-4a15-b0aa-710fbb74456f",
+        "locator": {
+          "kind": "section",
+          "value": "encoding"
+        },
+        "source_url": "/ai/citations/a538eaa3-7a39-4a15-b0aa-710fbb74456f"
+      }
+    ],
+    "confidence": "low",
+    "provider_mode": "local"
+  },
+  "model": "qwen3.5:4b-q4_K_M",
+  "external_inference_calls": 0
+}

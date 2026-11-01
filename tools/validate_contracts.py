@@ -98,7 +98,8 @@ def main():
             and op.get("x-implementation-status")
             == (
                 "implemented-opt-in"
-                if path in {"/ai/mapping/suggest", "/ai/runs/control"}
+                if path
+                in {"/ai/mapping/suggest", "/ai/runs/control", "/ai/ask", "/ai/citations/read"}
                 else "planned"
             )
             for path, op in secured

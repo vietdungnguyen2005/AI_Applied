@@ -1,0 +1,1097 @@
+From 998c2ebf304aefd28b861cd34c9021cd4ebfb13e Mon Sep 17 00:00:00 2001
+From: vietdungnguyen2005 <vietdungnguyen2005@gmail.com>
+Date: Mon, 2 Nov 2026 02:21:30 +0700
+Subject: [PATCH] Add default-off operator Copilot with signed policy sources
+ and read-only investigation UI
+
+---
+ .env.example                           |   2 +
+ app/api/ops/ai/ask/route.ts            |   4 +
+ app/api/ops/ai/citations/read/route.ts |   4 +
+ app/ops/page.tsx                       |   5 +-
+ components/operations-console.tsx      |   4 +-
+ components/operator-access.tsx         |  21 ++-
+ components/operator-copilot.tsx        | 164 ++++++++++++++++++++++++
+ docs/ai-copilot.md                     |  73 +++++++----
+ docs/ai-runs.md                        |   5 +-
+ lib/ai-gateway/spec.ts                 |   2 +-
+ lib/ai-gateway/transport.ts            |   4 +-
+ lib/ai-qa.test.ts                      |  80 ++++++++++++
+ lib/ai-qa/handler.ts                   |  77 +++++++++++
+ lib/ai-qa/spec.ts                      |  20 +++
+ lib/ai-runs.test.ts                    |  12 ++
+ lib/ai-runs/handler.ts                 |   4 +-
+ lib/copilot-client.test.ts             |  25 ++++
+ lib/copilot-client.ts                  |  37 ++++++
+ lib/copilot-runs.ts                    |  25 ++++
+ lib/copilot-ui.test.tsx                |  24 ++++
+ package.json                           |   3 +-
+ tools/qa_copilot.py                    | 169 +++++++++++++++++++++++++
+ tools/qa_copilot_real.py               |  44 +++++++
+ 23 files changed, 771 insertions(+), 37 deletions(-)
+ create mode 100644 app/api/ops/ai/ask/route.ts
+ create mode 100644 app/api/ops/ai/citations/read/route.ts
+ create mode 100644 components/operator-copilot.tsx
+ create mode 100644 lib/ai-qa.test.ts
+ create mode 100644 lib/ai-qa/handler.ts
+ create mode 100644 lib/ai-qa/spec.ts
+ create mode 100644 lib/copilot-client.test.ts
+ create mode 100644 lib/copilot-client.ts
+ create mode 100644 lib/copilot-runs.ts
+ create mode 100644 lib/copilot-ui.test.tsx
+ create mode 100644 tools/qa_copilot.py
+ create mode 100644 tools/qa_copilot_real.py
+
+diff --git a/.env.example b/.env.example
+index 17c7b68..fbeec04 100644
+--- a/.env.example
++++ b/.env.example
+@@ -29,6 +29,8 @@ CLOUDFLARE_API_TOKEN=
+ 
+ # Optional request-bound read-only AI gateway: OFF by default, server-only values.
+ AI_COPILOT_ENABLED=false
++AI_COPILOT_PANEL_ENABLED=false
++AI_QA_ENABLED=false
+ AI_RUNS_ENABLED=false
+ AI_MAPPING_DRAFTS_ENABLED=false
+ AI_SERVICE_ORIGIN=http://127.0.0.1:8092
+diff --git a/app/api/ops/ai/ask/route.ts b/app/api/ops/ai/ask/route.ts
+new file mode 100644
+index 0000000..f622980
+--- /dev/null
++++ b/app/api/ops/ai/ask/route.ts
+@@ -0,0 +1,4 @@
++import { handleQA } from "@/lib/ai-qa/handler";
++export const runtime="nodejs";
++export const dynamic="force-dynamic";
++export const POST=(request:Request)=>handleQA(request,"ask");
+diff --git a/app/api/ops/ai/citations/read/route.ts b/app/api/ops/ai/citations/read/route.ts
+new file mode 100644
+index 0000000..740c14b
+--- /dev/null
++++ b/app/api/ops/ai/citations/read/route.ts
+@@ -0,0 +1,4 @@
++import { handleQA } from "@/lib/ai-qa/handler";
++export const runtime="nodejs";
++export const dynamic="force-dynamic";
++export const POST=(request:Request)=>handleQA(request,"source");
+diff --git a/app/ops/page.tsx b/app/ops/page.tsx
+index cbe487f..b56a2ca 100644
+--- a/app/ops/page.tsx
++++ b/app/ops/page.tsx
+@@ -9,5 +9,8 @@ export const metadata: Metadata = {
+ export const dynamic="force-dynamic";
+ 
+ export default function OperationsPage() {
+-  return <OperatorAccess><OperationsConsole mappingEnabled={process.env.AI_COPILOT_ENABLED==="true"&&process.env.AI_MAPPING_DRAFTS_ENABLED==="true"} /></OperatorAccess>;
++  const enabled=process.env.AI_COPILOT_ENABLED==="true";
++  return <OperatorAccess><OperationsConsole mappingEnabled={enabled&&process.env.AI_MAPPING_DRAFTS_ENABLED==="true"}
++    copilotEnabled={enabled&&process.env.AI_COPILOT_PANEL_ENABLED==="true"}
++    qaEnabled={enabled&&process.env.AI_QA_ENABLED==="true"} runsEnabled={enabled&&process.env.AI_RUNS_ENABLED==="true"}/></OperatorAccess>;
+ }
+diff --git a/components/operations-console.tsx b/components/operations-console.tsx
+index f3b1716..5c863e9 100644
+--- a/components/operations-console.tsx
++++ b/components/operations-console.tsx
+@@ -5,6 +5,7 @@ import { AlertTriangle, ArrowLeft, CheckCircle2, DatabaseZap, FileUp, PackageChe
+ import { useMemo, useState } from "react";
+ import { SupplierOnboarding } from "@/components/supplier-onboarding";
+ import { ImportInspection } from "@/components/import-inspection";
++import { OperatorCopilot } from "@/components/operator-copilot";
+ import {
+   advanceFulfillment,
+   loadInventorySnapshot,
+@@ -29,7 +30,7 @@ function statusStyle(status: MigrationSummary["status"]): string {
+   return "border-cyan-400/40 bg-cyan-400/10 text-cyan-100";
+ }
+ 
+-export function OperationsConsole({mappingEnabled=false}:{mappingEnabled?:boolean}) {
++export function OperationsConsole({mappingEnabled=false,copilotEnabled=false,qaEnabled=false,runsEnabled=false}:{mappingEnabled?:boolean;copilotEnabled?:boolean;qaEnabled?:boolean;runsEnabled?:boolean}) {
+   const queryClient = useQueryClient();
+   const [sourceName, setSourceName] = useState("legacy-catalog.csv");
+   const [encoding, setEncoding] = useState<"UTF-8" | "CP932">("UTF-8");
+@@ -129,6 +130,7 @@ export function OperationsConsole({mappingEnabled=false}:{mappingEnabled?:boolea
+           </div>
+         ) : null}
+ 
++        {copilotEnabled&&<OperatorCopilot qaEnabled={qaEnabled} runsEnabled={runsEnabled}/>}
+         <SupplierOnboarding onImported={rememberJob} mappingEnabled={mappingEnabled} />
+ 
+         <section aria-labelledby="orders-heading" className="mt-8 border border-white/15 bg-[#111715] p-5 sm:p-6">
+diff --git a/components/operator-access.tsx b/components/operator-access.tsx
+index 47bef68..760fdde 100644
+--- a/components/operator-access.tsx
++++ b/components/operator-access.tsx
+@@ -1,6 +1,6 @@
+ "use client";
+ 
+-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
++import { Fragment,useEffect, useRef,useState, type FormEvent, type ReactNode } from "react";
+ import { useQueryClient } from "@tanstack/react-query";
+ import { getOperatorSession, type OperatorSession } from "@/lib/operator-session";
+ 
+@@ -9,19 +9,28 @@ export function OperatorAccess({ children }: { children: ReactNode }) {
+   const [error, setError] = useState("");
+   const [busy, setBusy] = useState(false);
+   const queryClient = useQueryClient();
++  const identity=useRef<string|null>(null);
+ 
+   useEffect(() => {
+     const controller = new AbortController();
++    let generation=0;
+     const refresh = () => {
+-      void getOperatorSession(controller.signal).then(setSession).catch((cause: unknown) => {
+-        if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : "Session unavailable.");
++      const currentGeneration=++generation;
++      void getOperatorSession(controller.signal).then(current=>{
++        if(controller.signal.aborted||currentGeneration!==generation)return;
++        if(!current.authenticated||!current.roles.includes("ROLE_OPERATOR")||(identity.current!==null&&identity.current!==current.username))queryClient.clear();
++        identity.current=current.authenticated?current.username:null;
++        setSession(current);
++      }).catch((cause: unknown) => {
++        if (!controller.signal.aborted&&currentGeneration===generation) {queryClient.clear();setSession(null);identity.current=null;setError(cause instanceof Error ? cause.message : "Session unavailable.");}
+       });
+     };
+     refresh();
+     const timer = window.setInterval(refresh, 60_000);
+     window.addEventListener("focus", refresh);
+-    return () => { controller.abort(); window.clearInterval(timer); window.removeEventListener("focus", refresh); };
+-  }, []);
++    window.addEventListener("vmarket-session-check", refresh);
++    return () => { controller.abort(); window.clearInterval(timer); window.removeEventListener("focus", refresh);window.removeEventListener("vmarket-session-check",refresh); };
++  }, [queryClient]);
+ 
+   async function login(event: FormEvent<HTMLFormElement>) {
+     event.preventDefault();
+@@ -59,7 +68,7 @@ export function OperatorAccess({ children }: { children: ReactNode }) {
+         <button type="button" disabled={busy} onClick={() => void logout()} className="rounded border border-white/40 px-4 py-2 disabled:opacity-50">Sign out</button>
+         {error && <p role="alert" className="w-full text-rose-300">{error}</p>}
+       </div>
+-      {children}
++      <Fragment key={session.username}>{children}</Fragment>
+     </>;
+   }
+   return <main className="grid min-h-screen place-items-center bg-slate-950 px-5 py-12 text-slate-100">
+diff --git a/components/operator-copilot.tsx b/components/operator-copilot.tsx
+new file mode 100644
+index 0000000..ce320e0
+--- /dev/null
++++ b/components/operator-copilot.tsx
+@@ -0,0 +1,164 @@
++"use client";
++
++import { useEffect, useRef, useState, type FormEvent } from "react";
++import { useQuery } from "@tanstack/react-query";
++import { loadIntegrationProfiles } from "@/lib/operations-api";
++import { copilotRequest, type ClientReply } from "@/lib/copilot-client";
++import { Answer, Source, type PolicyAnswer, type PolicySource } from "@/lib/ai-qa/spec";
++import { RunReply, observationLines, toolLabels, type Investigation } from "@/lib/copilot-runs";
++import { uuid } from "@/lib/ai-gateway/spec";
++
++const control="min-h-11 border border-white/25 bg-[#0b0f0e] px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2de1c2] disabled:opacity-50";
++const primary=control+" bg-[#2de1c2] font-bold text-[#0b0f0e]";
++type Failure=Extract<ClientReply<never>,{success:false}>;
++const messages:Record<string,string>={AI_DISABLED:"This Copilot capability is disabled.",SESSION_EXPIRED:"Your session has expired. Sign in again.",ACCESS_DENIED:"Current access could not be verified. Results have been cleared.",DOCUMENT_NOT_AVAILABLE:"This source is no longer available with current access.",STEP_CONFLICT:"The profile or run changed. Refresh it before continuing.",DEADLINE_EXCEEDED:"The request stopped before a result was received. It was not retried.",BUDGET_EXCEEDED:"The request limit was reached. Continue manually or try later.",OUTPUT_INVALID:"The response could not be verified. Continue with the manual workflow."};
++function ErrorNotice({error}:{error:Failure|null}){return error&&<div role="alert" className="mt-4 border border-amber-300/40 bg-amber-300/10 p-3 text-sm text-amber-100">
++  <p>{messages[error.code]??"A required service is unavailable. The manual workflow remains available."}</p>
++  {error.request_id&&<p className="mt-2 break-all font-mono text-xs">Trace: {error.request_id}</p>}
++</div>;}
++
++function PolicyQuestions(){
++  const profiles=useQuery({queryKey:["integration-profiles"],queryFn:({signal})=>loadIntegrationProfiles(signal),retry:false});
++  const [selected,setSelected]=useState("");const [question,setQuestion]=useState("");const [language,setLanguage]=useState<"en"|"ja">("en");
++  const [answer,setAnswer]=useState<(PolicyAnswer&{profile_id:string;profile_version:number})|null>(null);
++  const [source,setSource]=useState<PolicySource|null>(null),[sourceOpen,setSourceOpen]=useState(false);
++  const [error,setError]=useState<Failure|null>(null),[busy,setBusy]=useState(false);
++  const request=useRef<AbortController|null>(null),dialog=useRef<HTMLDialogElement|null>(null);
++  const sourceTrigger=useRef<HTMLElement|null>(null);
++  const active=(profiles.data??[]).filter(p=>p.active);
++  const profile=active.find(p=>`${p.profileId}:${p.version}`===selected)??(!selected?active[0]:undefined);
++  const profileKey=profile?`${profile.profileId}:${profile.version}`:"";
++  const visibleAnswer=answer&&`${answer.profile_id}:${answer.profile_version}`===profileKey?answer:null;
++  useEffect(()=>()=>request.current?.abort(),[]);
++  useEffect(()=>{if(sourceOpen&&!dialog.current?.open)dialog.current?.showModal();},[sourceOpen]);
++  function clear(){request.current?.abort();setAnswer(null);setSource(null);setSourceOpen(false);setError(null);setBusy(false);}
++  function stop(){request.current?.abort();setBusy(false);setError({success:false,code:"DEADLINE_EXCEEDED",status:499});}
++  async function ask(event:FormEvent){
++    event.preventDefault();if(!profile||busy)return;
++    const controller=new AbortController();request.current=controller;setBusy(true);setAnswer(null);setError(null);
++    const reply=await copilotRequest("ask",{question,language,profile_id:profile.profileId,profile_version:profile.version},Answer,controller.signal);
++    if(controller.signal.aborted)return;setBusy(false);
++    if(reply.success)setAnswer({...reply.data,profile_id:profile.profileId,profile_version:profile.version});else setError(reply);
++  }
++  async function openSource(chunk_id:string){
++    if(!visibleAnswer||busy)return;
++    sourceTrigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;
++    const controller=new AbortController();request.current=controller;setBusy(true);setSource(null);setError(null);setSourceOpen(true);
++    const reply=await copilotRequest("source",{chunk_id,profile_id:visibleAnswer.profile_id,profile_version:visibleAnswer.profile_version},Source,controller.signal);
++    if(controller.signal.aborted)return;setBusy(false);
++    if(reply.success)setSource(reply.data);else{setError(reply);if(reply.status===401||reply.status===403)setAnswer(null);}
++  }
++  const closeSource=()=>{request.current?.abort();dialog.current?.close();setSourceOpen(false);setSource(null);setBusy(false);requestAnimationFrame(()=>sourceTrigger.current?.focus());};
++  return <div className="min-w-0">
++    <h3 className="text-lg font-bold">Supplier policy Q&amp;A</h3>
++    <p className="mt-2 text-sm leading-6 text-[#9bb3a6]">Ask about a supplier’s documented policy. Answers quote supported source text; a missing answer stays unresolved.</p>
++    <form onSubmit={event=>void ask(event)} className="mt-4 space-y-4">
++      <div className="grid gap-3 sm:grid-cols-[1fr_8rem]">
++        <label className="text-sm">Supplier policy profile<select value={profileKey} onChange={e=>{clear();setSelected(e.target.value);}} disabled={busy} className={control+" mt-2 block w-full"}>
++          {!active.length&&<option value="">{profiles.isPending?"Loading profiles…":"No active profiles"}</option>}
++          {active.map(p=><option key={`${p.profileId}:${p.version}`} value={`${p.profileId}:${p.version}`}>{p.profileId} / v{p.version} / {p.vendorCode}</option>)}
++        </select></label>
++        <label className="text-sm">Language<select value={language} onChange={e=>{clear();setLanguage(e.target.value as "en"|"ja");}} disabled={busy} className={control+" mt-2 block w-full"}><option value="en">English</option><option value="ja">日本語</option></select></label>
++      </div>
++      <div><label htmlFor="copilot-policy-question" className="block text-sm">Policy question</label><textarea id="copilot-policy-question" value={question} onChange={e=>{clear();setQuestion(e.target.value);}} required maxLength={2000} rows={3} disabled={busy} className={control+" mt-2 block w-full resize-y"} placeholder="Which encoding preserves the original supplier bytes?"/></div>
++      <div className="flex flex-wrap gap-3"><button type="submit" disabled={busy||!profile||!question.trim()} className={primary}>Ask with sources</button>{busy&&<button type="button" onClick={stop} className={control}>Stop waiting</button>}</div>
++    </form>
++    {profiles.isError&&<p role="alert" className="mt-3 text-sm text-amber-100">Supplier profiles are unavailable. Retry the manual workflow when Java is reachable.</p>}
++    {busy&&!sourceOpen&&<p role="status" className="mt-4 text-sm text-[#7ef5df]">Checking policy evidence…</p>}
++    {!sourceOpen&&<ErrorNotice error={error}/>}
++    {visibleAnswer&&<article aria-label="Policy result" className="mt-5 border-l-2 border-[#2de1c2] bg-black/20 p-4">
++      <h4 className="font-bold">{visibleAnswer.status==="answered"?"Suggested policy answer":"No supported answer"}</h4>
++      <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-7">{visibleAnswer.answer??({NO_SUPPORTED_EVIDENCE:"No current source directly supports an answer.",CONFLICTING_EVIDENCE:"Current sources conflict. Ask a human to resolve them.",OUTDATED_ONLY:"Only outdated evidence was found.",AMBIGUOUS_REQUEST:"The request needs clarification."}[visibleAnswer.reason??"NO_SUPPORTED_EVIDENCE"])}</p>
++      <div className="mt-3 flex flex-wrap gap-2">{visibleAnswer.citations.map((c,index)=><button key={c.chunk_id} type="button" disabled={busy} onClick={()=>void openSource(c.chunk_id)} className={control+" text-[#7ef5df]"}>Source {index+1} · {c.locator.kind} {c.locator.value}</button>)}</div>
++      <details className="mt-3 text-xs text-[#9bb3a6]"><summary className="cursor-pointer py-2">Response details</summary><p className="break-all">Trace: {visibleAnswer.request_id}</p><p>Provider mode: {visibleAnswer.provider_mode}. Quote provenance checked; semantic confidence is not calibrated.</p></details>
++    </article>}
++    {sourceOpen&&<dialog ref={dialog} aria-labelledby="policy-source-title" onCancel={e=>{e.preventDefault();closeSource();}} className="fixed inset-0 m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto border border-[#2de1c2]/50 bg-[#111715] p-5 text-[#e8eee9] backdrop:bg-black/75">
++      <div className="flex items-center justify-between gap-3"><h3 id="policy-source-title" className="text-xl font-bold">Current policy source</h3><button type="button" onClick={closeSource} className={control} autoFocus>Close source</button></div>
++      {busy&&<p role="status" className="mt-4">Checking current source access…</p>}
++      <ErrorNotice error={error}/>
++      {source&&<><p className="mt-5 font-mono text-xs text-[#7ef5df]">{source.citation.locator.kind} {source.citation.locator.value}</p><blockquote className="mt-3 whitespace-pre-wrap break-words text-sm leading-7">{source.excerpt}</blockquote>{source.truncated&&<p className="mt-3 text-sm text-amber-100">Excerpt limited to 2,000 characters.</p>}<details className="mt-4 break-all text-xs text-[#9bb3a6]"><summary className="py-2">Source references</summary><p>Document: {source.citation.document_id}</p><p>Version: {source.citation.version_id}</p><p>Chunk: {source.citation.chunk_id}</p><p>Trace: {source.request_id}</p></details></>}
++    </dialog>}
++  </div>;
++}
++
++export function OperatorCopilot({qaEnabled,runsEnabled}:{qaEnabled:boolean;runsEnabled:boolean}){
++  return <section aria-labelledby="copilot-heading" className="mt-8 border border-[#2de1c2]/40 bg-[#111715] p-5 sm:p-6">
++    <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-5"><div><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#2de1c2]">AI / Evidence desk</p><h2 id="copilot-heading" className="mt-1 text-2xl font-black">Operator Copilot</h2></div><p className="max-w-lg text-sm leading-6 text-[#9bb3a6]">Grounded policy answers and bounded investigations. Mapping edits, profile activation and import confirmation stay in your review workflow.</p></div>
++    <div className="grid gap-8 xl:grid-cols-2">
++    {!qaEnabled&&<p>Policy Q&amp;A is disabled.</p>}
++    {qaEnabled&&<PolicyQuestions/>}
++    {!runsEnabled&&<p>Import investigation is disabled.</p>}
++    {runsEnabled&&<ImportInvestigation/>}
++    </div>
++    <a href="#supplier-heading" className="inline-flex min-h-11 items-center text-[#7ef5df] underline">Continue with manual supplier workflow</a>
++  </section>;
++}
++
++function ImportInvestigation(){
++  const [question,setQuestion]=useState(""),[reference,setReference]=useState("");
++  const [result,setResult]=useState<Investigation|null>(null),[busy,setBusy]=useState(false),[pending,setPending]=useState("");
++  const [askedQuestion,setAskedQuestion]=useState("");
++  const [history,setHistory]=useState<{question:string;run:Investigation["run"]}[]>([]);
++  const [error,setError]=useState<Failure|null>(null),[trace,setTrace]=useState<string|undefined>();
++  const request=useRef<AbortController|null>(null);
++  useEffect(()=>{try{const id=sessionStorage.getItem("vmarket-copilot-run");if(uuid.safeParse(id).success)setReference(id!);}catch{/* Storage can be disabled. */}return ()=>request.current?.abort();},[]);
++  function remember(id:string){setReference(id);try{sessionStorage.setItem("vmarket-copilot-run",id);}catch{/* Reference remains visible. */}}
++  function forget(){request.current?.abort();setReference("");setAskedQuestion("");setResult(null);setError(null);setTrace(undefined);try{sessionStorage.removeItem("vmarket-copilot-run");}catch{/* Storage can be disabled. */}}
++  function nextQuestion(){if(!result||result.run.can_cancel)return;setHistory(items=>[...items,{question:askedQuestion,run:result.run}].slice(-5));forget();setQuestion("");requestAnimationFrame(()=>document.getElementById("copilot-investigation-question")?.focus());}
++  function stop(){request.current?.abort();setBusy(false);setPending("");setResult(null);setError({success:false,code:"DEADLINE_EXCEEDED",status:499});}
++  async function command(action:"start"|"inspect"|"resume"|"cancel"){
++    if(busy)return;
++    const controller=new AbortController();request.current=controller;setBusy(true);setError(null);setTrace(undefined);
++    const previous=result;setResult(null);
++    if(action==="start")setAskedQuestion(question);
++    setPending(action==="start"?"Saving investigation reference…":action==="resume"?"Reading authorized tools…":"Checking saved run…");
++    const input=action==="start"?{action,question}:action==="inspect"?{action,run_id:reference}:{action,run_id:reference,expected_revision:previous?.run.revision};
++    let reply=await copilotRequest("run",input,RunReply,controller.signal);
++    if(controller.signal.aborted)return;
++    if(reply.success){remember(reply.data.run.run_id);setResult(reply.data);
++      if(action==="start"&&reply.data.run.can_resume){
++        const saved=reply.data.run;setPending("Reading authorized tools…");
++        reply=await copilotRequest("run",{action:"resume",run_id:saved.run_id,expected_revision:saved.revision},RunReply,controller.signal);
++        if(controller.signal.aborted)return;
++      }
++    }
++    setBusy(false);setPending("");setTrace(reply.request_id);
++    if(reply.success)setResult(reply.data);else{setResult(null);if(reply.status===401||reply.status===403)forget();setError(reply);}
++  }
++  return <div className="min-w-0">
++    <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="text-lg font-bold">Import investigation</h3><span className="font-mono text-xs uppercase tracking-wider text-[#7ef5df]">Read-only tools / 3 reads max</span></div>
++    <p className="mt-2 text-sm leading-6 text-[#9bb3a6]">Investigate current import jobs, profiles and reconciliation evidence. Each question starts an independent run. Business changes return to the human workflow below.</p>
++    {history.length>0&&<ol aria-label="Investigation conversation" className="mt-4 space-y-3">{history.map(turn=><li key={turn.run.run_id} className="border border-white/15 p-3 text-sm"><p className="whitespace-pre-wrap break-words font-bold">{turn.question||"Inspected saved investigation"}</p><p className="mt-2 text-[#9bb3a6]">Historical run: {turn.run.status} · {turn.run.step} read attempts. {turn.run.outcome?.kind==="handoff"?"Human action remains pending.":"Full records require a current authorized read."}</p></li>)}</ol>}
++    <form onSubmit={e=>{e.preventDefault();void command("start");}} className="mt-4 space-y-3">
++      <div><label htmlFor="copilot-investigation-question" className="block text-sm">Investigation question</label><textarea id="copilot-investigation-question" value={question} onChange={e=>setQuestion(e.target.value)} required maxLength={2000} rows={3} disabled={busy||Boolean(reference)} className={control+" mt-2 block w-full resize-y"} placeholder="List the current import jobs and their status."/></div>
++      <div className="flex flex-wrap gap-3"><button type="submit" disabled={busy||!question.trim()||Boolean(reference)} className={primary}>Start investigation</button>{busy&&<button type="button" onClick={stop} className={control}>Stop waiting</button>}</div>
++    </form>
++    <details className="mt-4 border border-white/15 p-3" open={Boolean(reference)}><summary className="cursor-pointer text-sm text-[#9bb3a6]">Saved run controls</summary>
++      <label className="mt-3 block text-sm">Saved run reference<input value={reference} onChange={e=>{setReference(e.target.value);setAskedQuestion("");setResult(null);setError(null);}} maxLength={36} disabled={busy} spellCheck={false} className={control+" mt-2 block w-full font-mono text-xs"}/></label>
++      <div className="mt-3 flex flex-wrap gap-2"><button type="button" onClick={()=>void command("inspect")} disabled={busy||!uuid.safeParse(reference).success} className={control}>Inspect saved run</button>
++        {result?.run.can_resume&&<button type="button" onClick={()=>void command("resume")} disabled={busy} className={control}>Resume read-only investigation</button>}
++        {result?.run.can_cancel&&<button type="button" onClick={()=>void command("cancel")} disabled={busy} className={control}>Cancel investigation</button>}
++        {reference&&<button type="button" onClick={forget} disabled={busy} className={control}>Forget reference</button>}
++      </div><p className="mt-3 text-xs leading-5 text-[#9bb3a6]">After a timeout or reload, inspect explicitly. No automatic retry or resume. Forgetting a reference does not cancel its run; inactive runs expire after 10 minutes. Only the reference is kept in this tab’s session storage.</p>
++    </details>
++    {busy&&<p role="status" className="mt-4 text-sm text-[#7ef5df]">{pending}</p>}<ErrorNotice error={error}/>
++    {result&&<article aria-label="Investigation result" className="mt-5 border-l-2 border-[#2de1c2] bg-black/20 p-4">
++      <h4 className="font-bold">{result.run.outcome?.kind==="handoff"?"Human action required":result.run.status==="completed"?"Investigation finished":`Investigation ${result.run.status.replaceAll("_"," ")}`}</h4>
++      {askedQuestion&&<p className="mt-3 whitespace-pre-wrap break-words text-sm">Question: {askedQuestion}</p>}
++      <p className="mt-2 text-sm text-[#9bb3a6]">Run status: {result.run.status} · {result.run.step} read attempts. Import job status is shown only in observed tool results.</p>
++      {result.run.reason&&<p className="mt-2 font-mono text-xs">{result.run.reason}</p>}
++      {result.run.outcome?.status==="abstained"&&<p className="mt-3 text-sm text-amber-100">The investigation could not establish a supported conclusion. Review the manual records.</p>}
++      {result.run.outcome?.kind==="handoff"&&<p className="mt-3 text-sm">{result.run.outcome.handoff_reason?.replaceAll("_"," ")} remains pending. <a href="#supplier-heading" className="text-[#7ef5df] underline">Review the current profile, preview and explicit human confirmation</a>.</p>}
++      <ol aria-label="Tools actually called" className="mt-4 space-y-3">{result.run.observations.map((observation,index)=>{
++        const live=result.observations.find(o=>o.call_id===observation.call_id);
++        return <li key={observation.call_id} className="min-w-0 border border-white/15 p-3"><p className="text-sm font-bold">{index+1}. {toolLabels[observation.tool_name]}</p><p className="mt-1 break-words font-mono text-xs text-[#9bb3a6]">{observation.status} · {observation.observed_at} · {observation.item_count} items</p>
++          {live?<ul className="mt-3 space-y-2 text-sm leading-6">{observationLines(live).map((line,i)=><li key={i} className="whitespace-pre-wrap break-words [overflow-wrap:anywhere]">{line}</li>)}</ul>:<p className="mt-2 text-xs text-[#9bb3a6]">Historical summary only. Read details are not replayed from storage.</p>}
++          {(observation.truncated||observation.tool_name==="get_integration_profiles"||observation.tool_name==="inspect_import_job")&&<p className="mt-2 text-xs text-amber-100">Details may be limited. Review full records in the manual workflow.</p>}
++        </li>;
++      })}</ol>
++      {!result.run.observations.length&&<p className="mt-3 text-sm text-[#9bb3a6]">No tools have been observed for this run.</p>}
++      <details className="mt-4 break-all text-xs text-[#9bb3a6]"><summary className="cursor-pointer py-2">Investigation references</summary><p>Run: {result.run.run_id}</p><p>Conversation: {result.run.conversation_id}</p><p>Initial trace: {result.run.initial_request_id}</p><p>Revision: {result.run.revision}</p>{trace&&<p>Current trace: {trace}</p>}</details>
++      {!result.run.can_cancel&&<button type="button" disabled={busy} onClick={nextQuestion} className={control+" mt-4"}>Ask another investigation question</button>}
++    </article>}
++  </div>;
++}
+diff --git a/docs/ai-copilot.md b/docs/ai-copilot.md
+index 449354f..0b48a16 100644
+--- a/docs/ai-copilot.md
++++ b/docs/ai-copilot.md
+@@ -1,23 +1,50 @@
+-# Optional read-only AI gateway (P09)
+-
+-`POST /api/ops/ai/agent` is additive and **OFF by default** (`AI_COPILOT_ENABLED=false`). Existing operations, checkout, import, profile and Java authorization code are unchanged. There is no AI UI, write tool, deployment or persistent key provisioning in this change.
+-
+-With the flag off, it returns 503 AI_DISABLED and makes no upstream call. When explicitly configured, input is only a bounded question and optional collection IDs. The BFF checks the connection Host/current origin (never forwarded-host), current Java OPERATOR session and timing-safe current CSRF token. Unknown browser identity/tool/result/URL fields are rejected. It generates its own request/run IDs, pseudonymizes the verified username with a BFF-only HMAC key, and signs exact body/route/context using an independent Ed25519 private key. Python receives only its public key; no Java secret, cookie, CSRF token or username is forwarded.
+-
+-Required server-only configuration is listed in `.env.example`: fixed Java/AI origins, existing Java BFF/ops credentials, AI signing key ID and base64 DER PKCS8 private key, and an independent >=32-byte actor HMAC key. `AI_COLLECTION_IDS_JSON` may narrow the fixed two public synthetic collection IDs. This is a shared synthetic store for all OPERATORs, not tenant isolation. Key rotation changes pseudonyms and invalidates old transport contexts. Keys are not generated or installed by the route.
+-
+-The live request owns result history, call IDs, deadline and tool budget. Limits: 25 seconds including authentication, at most four Python step calls/three tool executions, 65,536 request/step bytes, 16,384 projected tool-result bytes. Current process rate limit is eight accepted requests per pseudonymous actor/minute, with at most 1024 rate windows. It caches no sessions/results and is not a distributed rate limiter. Browser cancellation aborts fetch/stream work; no later privileged step continues. Reads already received by Java cannot be retroactively cancelled or revoked.
+-
+-Before every tool and final response, the BFF checks the current Java session again with the same request-local cookie jar. A different account/expired/disabled/revoked operator stops the loop. Legitimate VMARKET_SESSION refresh/deletion is propagated only to the same browser response. Each Java GET independently reauthorizes. No model envelope is accepted as a new callback/execution request.
+-
+-Closed tools:
+-
+-- get_integration_profiles -> GET /api/ops/integration-profiles, verifies exact three-target Java policy and strips audit identities.
+-- get_imports -> GET /api/ops/imports, at most 20, omits filename/account data.
+-- inspect_import_job -> GET /api/ops/imports/{canonical UUID}/inspection; rowNumber/reason is converted to bounded row-number/code pairs, no raw errors/recovery details.
+-- get_reconciliation_report -> GET /api/ops/reconciliations, latest 20 only, filter exact job ID and choose newest stored report. No invented by-ID GET or reconciliation POST.
+-- search_supplier_knowledge -> separately signed Python POST /ai/knowledge/search, only a subset of current signed scopes. Excerpts/IDs are data, not links/executable markup.
+-
+-Tool names/arguments/IDs, response identity/step, per-result bytes and call uniqueness are checked. Final UI summary is rebuilt from validated observation statuses; unsupported Python business-success prose is discarded. The response contains bounded structured observations with timestamps, not proof of freshness or business approval. Failed/truncated tools remain explicit. No retries, arbitrary fetch, SQL, headers, preview, confirm, restart, profile mutation or stock/checkout write can be selected by an intent.
+-
+-Tests follow the incremental red/green workflow and use a typed Spec/Handler Result interface. Run `npm run verify` and `npm run build:worker` (bundle only, no deploy). The paired AI_Applied P09 evidence contains disposable real Java/Next/Python auth/read checks, unchanged business-table snapshots, separate local-model/mock-tool smoke and known limitations. Java source/tests stay unchanged; its 115-test baseline remains verified. Existing dependency audit has 19 advisories (17 moderate/two high), tracked separately for P14.
++# Operator Copilot (P12)
++
++The existing `/ops` page has an optional evidence desk. All flags are server-only
++and default OFF: `AI_COPILOT_ENABLED` plus `AI_COPILOT_PANEL_ENABLED` display the
++desk; `AI_QA_ENABLED`, `AI_RUNS_ENABLED` and `AI_MAPPING_DRAFTS_ENABLED` enable
++their individual capabilities. The public storefront does not load the desk.
++Existing authenticated manual operations remain available without AI.
++
++Policy questions choose an actual active Java profile/version. POST
++`/api/ops/ai/ask` accepts only that reference, question and en/ja language. The BFF
++checks current OPERATOR/CSRF/same origin, derives the synthetic supplier scope,
++signs the exact bounded body, then rechecks the session and immutable active
++profile before releasing evidence. Browser authority, provider URLs and arbitrary
++collection IDs are rejected. A source button POSTs the profile reference and chunk
++ID to `/api/ops/ai/citations/read`. Every click rechecks Java and Python current
++document grants, active snapshot and effective version. Missing and revoked
++sources share the same public 404. No browser link follows a model-generated URL.
++Text is rendered as escaped React text; source dialogs restore keyboard focus.
++
++Investigation questions start a durable run before a bounded read-only resume.
++Live resume replies include projected observations actually read during that
++request, after authorization and successful checkpointing. Inspect returns only
++historical status/count/time summaries. It never replays cached Java or document
++bodies. A terminal turn can be followed by another independent question; at most
++five historical turn summaries stay in component memory, without model memory
++across runs. The page distinguishes investigation completion from Java job status.
++Human business changes link to the existing current-profile/preview/confirm flow.
++No AI control confirms an import, activates a profile or restarts a job.
++
++Only a run UUID is retained in tab session storage. Questions, excerpts and results
++are not written there. The BFF owner check still governs a restored or pasted UUID.
++After reload, a stopped request or unknown outcome, inspect explicitly. No polling,
++retry, automatic resume on reload or hidden background execution was added. A new
++question explicitly resumes only the run just saved by that same user gesture.
++Stopping a browser wait does not assert server cancellation; explicit cancel uses
++the latest inspected revision. Forgetting a reference does not cancel the run.
++
++Current-session refresh, expiry, lost authority and account changes clear privileged
++results. An identity-keyed component boundary clears local conversations when the
++account changes. Source/current-profile changes can still invalidate a historical
++answer; reopening always requires current access. This is a shared synthetic demo
++with the two documented supplier collections, not a production tenant model.
++
++Validation: `npm run verify`, `npm run build:worker`, and
++`BASE_URL=... QA_ARTIFACT_DIR=... npm run test:e2e:copilot` against a local server
++with the panel/QA/runs flags enabled. The browser script explicitly mocks HTTP and
++does not establish model quality or actual Java integration. The AI_Applied repo
++contains separately labelled local-model and optional disposable integration tools.
++Real customer UAT, full assistive-technology coverage and production deployment
++remain pending. See AI_Applied `docs/evidence/P12.md` for current executed evidence.
+diff --git a/docs/ai-runs.md b/docs/ai-runs.md
+index b7cc71a..2892fe0 100644
+--- a/docs/ai-runs.md
++++ b/docs/ai-runs.md
+@@ -16,7 +16,10 @@ Input is a strict union:
+ 
+ Start persists a fresh conversation/run before model/tool dispatch. Preserve the
+ returned reference; resume is a separate current-authorized request. Successful
+-responses contain only `{run: RunState}` and request correlation header. Current
++responses contain `{run: RunState, observations: Observation[]}` and a request
++correlation header. P12 adds transient, projected results only for reads executed
++by the current resume request; start/inspect/cancel return an empty observations
++array. Stored run summaries are unchanged and do not replay cached bodies. Current
+ OPERATOR/CSRF, same origin, owner HMAC and current scopes apply to every command.
+ Each read dispatch and public response rechecks session, and Java independently
+ authorizes its fixed GET. The BFF alone can send signed plan/claim/record/recover
+diff --git a/lib/ai-gateway/spec.ts b/lib/ai-gateway/spec.ts
+index 3cc14f3..40afb38 100644
+--- a/lib/ai-gateway/spec.ts
++++ b/lib/ai-gateway/spec.ts
+@@ -20,7 +20,7 @@ export const ToolIntent = z.discriminatedUnion("tool_name", [
+ export type Intent = z.infer<typeof ToolIntent>;
+ export const FailureCode = z.enum(["AI_DISABLED", "INPUT_INVALID", "ACCESS_DENIED", "SESSION_EXPIRED",
+   "CONFIGURATION_UNAVAILABLE", "OUTPUT_INVALID", "DEPENDENCY_UNAVAILABLE", "DEADLINE_EXCEEDED",
+-  "BUDGET_EXCEEDED", "STEP_CONFLICT", "RUN_NOT_AVAILABLE"]);
++  "BUDGET_EXCEEDED", "STEP_CONFLICT", "RUN_NOT_AVAILABLE", "DOCUMENT_NOT_AVAILABLE"]);
+ export type GatewayFailure = z.infer<typeof FailureCode>;
+ export type Result<T> = { success: true; data: T } | { success: false; code: GatewayFailure; status: number };
+ export interface AgentGatewaySpec { execute(request: Request): Promise<Result<unknown>> }
+diff --git a/lib/ai-gateway/transport.ts b/lib/ai-gateway/transport.ts
+index 10bfd57..613c442 100644
+--- a/lib/ai-gateway/transport.ts
++++ b/lib/ai-gateway/transport.ts
+@@ -3,7 +3,7 @@ import { createHash, createPrivateKey, randomUUID, sign } from "node:crypto";
+ export type TransportContext = { actor_ref: string; request_id: string; run_id: string; step: number;
+   collection_ids: string[]; deadline_at: string };
+ 
+-export function signedRequest(context: TransportContext, path: "/ai/agent/step" | "/ai/knowledge/search" | "/ai/mapping/suggest" | "/ai/runs/control", payload: unknown): { body: string; headers: Headers } {
++export function signedRequest(context: TransportContext, path: "/ai/agent/step" | "/ai/knowledge/search" | "/ai/mapping/suggest" | "/ai/runs/control" | "/ai/ask" | "/ai/citations/read", payload: unknown): { body: string; headers: Headers } {
+   const body = JSON.stringify(payload);
+   if (Buffer.byteLength(body, "utf8") > (path==="/ai/mapping/suggest"?6_700_000:65_536)) throw new Error("INPUT_INVALID");
+   const issued = Math.floor(Date.now()/1000);
+@@ -15,7 +15,7 @@ export function signedRequest(context: TransportContext, path: "/ai/agent/step"
+   if (!/^[A-Za-z0-9_-]{1,32}$/.test(kid)) throw new Error("CONFIGURATION_UNAVAILABLE");
+   const encoded = Buffer.from(JSON.stringify({ version: 1, issuer: "vmarket-bff", audience: "vmarket-ai",
+     mode: "integrated", kid, ...context, nonce: randomUUID(), issued_at: issued, expires_at: expires,
+-    operation: path === "/ai/agent/step" ? "agent_step" : path === "/ai/mapping/suggest" ? "mapping_suggest" : path === "/ai/runs/control" ? "run_control" : "knowledge_search", request_digest: requestDigest,
++    operation: path === "/ai/agent/step" ? "agent_step" : path === "/ai/mapping/suggest" ? "mapping_suggest" : path === "/ai/runs/control" ? "run_control" : path === "/ai/ask" ? "ask" : path === "/ai/citations/read" ? "documents_read" : "knowledge_search", request_digest: requestDigest,
+   })).toString("base64url");
+   const key = createPrivateKey({ key: Buffer.from(process.env.AI_SIGNING_KEY_PKCS8_BASE64 ?? "", "base64"),
+     type: "pkcs8", format: "der" });
+diff --git a/lib/ai-qa.test.ts b/lib/ai-qa.test.ts
+new file mode 100644
+index 0000000..60c376e
+--- /dev/null
++++ b/lib/ai-qa.test.ts
+@@ -0,0 +1,80 @@
++import { afterEach, expect, it, vi } from "vitest";
++import { generateKeyPairSync, verify } from "node:crypto";
++import { handleQA } from "./ai-qa/handler";
++
++const profile={profileId:"supplier-b",version:7,encoding:"UTF-8",vendorCode:"RIVERBYTE",mapping:{sku:"SKU",name:"ProductName",on_hand:"AvailableQuantity"},active:true,
++  skuNormalization:"TRIM",requiredFields:["sku","name","on_hand"],validation:{sku:{type:"string",minLength:1,maxLength:64},name:{type:"string",minLength:1,maxLength:160},on_hand:{type:"integer",min:0,max:1000000}},normalization:{sku:"TRIM",name:"TRIM",on_hand:"TRIM_INTEGER"}};
++const scope="4aa83e9f-0a0a-5558-8f5e-0f87db27c923";
++const chunk=crypto.randomUUID();
++function request(body:unknown={question:"Which encoding?",language:"en",profile_id:"supplier-b",profile_version:7}){
++  return new Request("http://localhost/api/ops/ai/ask",{method:"POST",headers:{Origin:"http://localhost","Content-Type":"application/json","X-CSRF-TOKEN":"current",Cookie:"VMARKET_SESSION=session"},body:JSON.stringify(body)});
++}
++function setup(){
++  const key=generateKeyPairSync("ed25519");
++  for(const [k,v] of Object.entries({AI_COPILOT_ENABLED:"true",AI_QA_ENABLED:"true",BACKEND_ORIGIN:"http://java",AI_SERVICE_ORIGIN:"http://ai",AI_SIGNING_KID:"test",AI_ACTOR_HMAC_KEY:"x".repeat(64),AI_SIGNING_KEY_PKCS8_BASE64:key.privateKey.export({format:"der",type:"pkcs8"}).toString("base64")}))vi.stubEnv(k,v);
++  const state={active:true,revoked:false,wrongId:false};
++  const seen:{url:string;init:RequestInit}[]=[];
++  vi.stubGlobal("fetch",vi.fn(async(url:string,init:RequestInit)=>{
++    seen.push({url,init});
++    if(url.endsWith("/api/auth/session"))return Response.json({authenticated:!state.revoked,username:"qa-"+chunk,roles:["ROLE_OPERATOR"],csrfToken:"current"});
++    if(url.endsWith("/api/ops/integration-profiles"))return Response.json([{...profile,active:state.active}]);
++    const headers=new Headers(init.headers),encoded=headers.get("X-AI-Context")!;
++    expect(verify(null,Buffer.from("vmarket-ai-context:v1."+encoded),key.publicKey,Buffer.from(headers.get("X-AI-Signature")!,"base64url"))).toBe(true);
++    const claims=JSON.parse(Buffer.from(encoded,"base64url").toString());
++    const citation={document_id:chunk,version_id:chunk,chunk_id:chunk,locator:{kind:"section",value:"encoding"},source_url:"/ai/citations/"+chunk};
++    return Response.json(url.endsWith("/ai/ask")?{request_id:state.wrongId?crypto.randomUUID():claims.request_id,status:"answered",answer:"Original bytes use UTF-8.",reason:null,citations:[citation],confidence:"low",provider_mode:"fake"}:{request_id:claims.request_id,citation,excerpt:"Original bytes use UTF-8.",truncated:false});
++  }));
++  return {seen,state};
++}
++afterEach(()=>{vi.unstubAllEnvs();vi.unstubAllGlobals();});
++
++it("derives the QA scope from a current Java profile and rechecks authority before returning signed evidence",async()=>{
++  const {seen}=setup();
++  const response=await handleQA(request(),"ask");
++  expect(response.status).toBe(200);
++  const data=await response.json();expect(data.answer).toBe("Original bytes use UTF-8.");
++  expect(data.citations[0].source_url).toBeUndefined();
++  const ai=seen.filter(s=>s.url==="http://ai/ai/ask");expect(ai).toHaveLength(1);
++  expect(JSON.parse(ai[0].init.body as string)).toEqual({question:"Which encoding?",language:"en",collection_ids:[scope]});
++  const headers=new Headers(ai[0].init.headers);
++  expect(headers.has("Cookie")).toBe(false);expect(headers.has("X-CSRF-TOKEN")).toBe(false);
++  expect(JSON.parse(Buffer.from(headers.get("X-AI-Context")!,"base64url").toString()).operation).toBe("ask");
++  expect(seen.filter(s=>s.url.endsWith("integration-profiles"))).toHaveLength(2);
++});
++
++it("opens sources only through a fresh signed profile read and never exposes service URLs",async()=>{
++  const {seen}=setup();
++  const response=await handleQA(request({chunk_id:chunk,profile_id:"supplier-b",profile_version:7}),"source");
++  expect(response.status).toBe(200);
++  expect((await response.json()).citation.source_url).toBeUndefined();
++  const headers=new Headers(seen.find(s=>s.url.endsWith("/ai/citations/read"))!.init.headers);
++  expect(JSON.parse(Buffer.from(headers.get("X-AI-Context")!,"base64url").toString()).operation).toBe("documents_read");
++});
++
++it("discards an answer when the Java session is revoked during inference",async()=>{
++  const {state}=setup(),original=global.fetch;
++  vi.stubGlobal("fetch",async(url:string,init:RequestInit)=>{const response=await original(url,init);if(url.endsWith("/ai/ask"))state.revoked=true;return response;});
++  const response=await handleQA(request(),"ask");expect(response.status).toBe(401);
++  expect(await response.json()).toEqual({code:"SESSION_EXPIRED"});
++});
++
++it("discards a source when its actual supplier profile is deactivated during the read",async()=>{
++  const {state}=setup(),original=global.fetch;
++  vi.stubGlobal("fetch",async(url:string,init:RequestInit)=>{const response=await original(url,init);if(url.endsWith("/ai/citations/read"))state.active=false;return response;});
++  expect((await handleQA(request({chunk_id:chunk,profile_id:"supplier-b",profile_version:7}),"source")).status).toBe(409);
++});
++
++it("rejects browser authority, cross-origin requests and wrong correlation IDs",async()=>{
++  const {state,seen}=setup();
++  expect((await handleQA(request({question:"x",language:"en",profile_id:"supplier-b",profile_version:7,collection_ids:[scope]}),"ask")).status).toBe(400);
++  const crossed=request();crossed.headers.set("Origin","https://evil.example");
++  expect((await handleQA(crossed,"ask")).status).toBe(403);expect(seen).toHaveLength(0);
++  state.wrongId=true;expect((await handleQA(request(),"ask")).status).toBe(502);
++});
++
++it("keeps both QA routes off without calling Java or a provider",async()=>{
++  vi.stubEnv("AI_QA_ENABLED","false");const fetch=vi.fn();vi.stubGlobal("fetch",fetch);
++  expect((await handleQA(request(),"ask")).status).toBe(503);
++  expect((await handleQA(request({chunk_id:chunk,profile_id:"supplier-b",profile_version:7}),"source")).status).toBe(503);
++  expect(fetch).not.toHaveBeenCalled();
++});
+diff --git a/lib/ai-qa/handler.ts b/lib/ai-qa/handler.ts
+new file mode 100644
+index 0000000..fcccac2
+--- /dev/null
++++ b/lib/ai-qa/handler.ts
+@@ -0,0 +1,77 @@
++import { createHmac, randomUUID } from "node:crypto";
++import { z } from "zod";
++import { JavaSession, readBounded } from "../ai-gateway/io";
++import { Profile } from "../ai-gateway/projection";
++import { signedRequest } from "../ai-gateway/transport";
++import { actorRateLimit } from "../ai-gateway/limits";
++import type { AgentGatewaySpec, GatewayFailure, Result } from "../ai-gateway/spec";
++import { AskInput, SourceInput, WireAnswer, WireSource } from "./spec";
++
++const scopes:Record<string,string>={NAMI:"ed76d914-7c66-5102-9178-676334063938",RIVERBYTE:"4aa83e9f-0a0a-5558-8f5e-0f87db27c923"};
++const fail=(code:GatewayFailure,status:number):Result<never>=>({success:false,code,status});
++export class PolicyGatewayHandler implements AgentGatewaySpec {
++  readonly requestId=randomUUID();readonly cookies:string[]=[];
++  constructor(private action:"ask"|"source"){}
++  async execute(request:Request):Promise<Result<unknown>>{
++    if(process.env.AI_COPILOT_ENABLED!=="true"||process.env.AI_QA_ENABLED!=="true")return fail("AI_DISABLED",503);
++    const controller=new AbortController(),signal=AbortSignal.any([request.signal,controller.signal]);
++    const deadline=Date.now()+25000,timer=setTimeout(()=>controller.abort(),25000);
++    let abort=()=>{};
++    try{return await Promise.race([this.run(request,signal,deadline),new Promise<Result<never>>(resolve=>{
++      abort=()=>resolve(fail("DEADLINE_EXCEEDED",request.signal.aborted?499:504));
++      signal.addEventListener("abort",abort,{once:true});if(signal.aborted)abort();
++    })]);}catch{return fail(signal.aborted?"DEADLINE_EXCEEDED":"DEPENDENCY_UNAVAILABLE",signal.aborted?504:503);}
++    finally{clearTimeout(timer);signal.removeEventListener("abort",abort);controller.abort();}
++  }
++  private async run(request:Request,signal:AbortSignal,deadline:number):Promise<Result<unknown>>{
++    const url=new URL(request.url);if(request.headers.get("host"))url.host=request.headers.get("host")!;
++    if(request.method!=="POST"||request.headers.get("origin")!==url.origin||request.headers.get("sec-fetch-site")==="cross-site")return fail("ACCESS_DENIED",403);
++    let input;
++    try{const raw=JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(request,16384,signal)));
++      input=this.action==="ask"?AskInput.parse(raw):SourceInput.parse(raw);
++    }catch{return fail("INPUT_INVALID",400);}
++    const session=new JavaSession(request,signal,this.requestId);
++    try{
++      const auth=await session.check(undefined,true);if(!auth.success)return auth;
++      const key=process.env.AI_ACTOR_HMAC_KEY??"",origin=process.env.AI_SERVICE_ORIGIN?.replace(/\/$/,"");
++      if(Buffer.byteLength(key)<32||!origin||!/^https?:\/\//.test(origin))return fail("CONFIGURATION_UNAVAILABLE",503);
++      const actor=createHmac("sha256",key).update("vmarket-ai-actor:v1\n"+auth.data).digest("hex");
++      if(!actorRateLimit.consume(actor))return fail("BUDGET_EXCEEDED",429);
++      const readProfile=async()=>{
++        const response=await session.get("/api/ops/integration-profiles");
++        if(!response.ok){void response.body?.cancel();return {success:false as const,status:response.status};}
++        const profiles=z.array(Profile).max(100).parse(JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(response,5000000,signal))));
++        return {success:true as const,profile:profiles.find(p=>p.profile_id===input.profile_id&&p.version===input.profile_version&&p.active)};
++      };
++      const initial=await readProfile();
++      if(!initial.success)return fail(initial.status===401||initial.status===403?"ACCESS_DENIED":"DEPENDENCY_UNAVAILABLE",initial.status===401||initial.status===403?initial.status:503);
++      const profile=initial.profile;if(!profile)return fail("STEP_CONFLICT",409);
++      const scope=scopes[profile.vendor_code];
++      const configured=process.env.AI_COLLECTION_IDS_JSON?JSON.parse(process.env.AI_COLLECTION_IDS_JSON) as unknown:Object.values(scopes);
++      if(!Array.isArray(configured)||new Set(configured).size!==configured.length||configured.some(s=>!Object.values(scopes).includes(s)))return fail("CONFIGURATION_UNAVAILABLE",503);
++      if(!scope||!configured.includes(scope))return fail("ACCESS_DENIED",403);
++      const path=this.action==="ask"?"/ai/ask":"/ai/citations/read";
++      const payload="question" in input?{question:input.question,language:input.language,collection_ids:[scope]}:{chunk_id:input.chunk_id,collection_ids:[scope]};
++      const signed=signedRequest({actor_ref:actor,request_id:this.requestId,run_id:randomUUID(),step:0,collection_ids:[scope],deadline_at:new Date(deadline).toISOString()},path,payload);
++      signal.throwIfAborted();
++      const response=await fetch(origin+path,{method:"POST",...signed,signal,redirect:"error",cache:"no-store"});
++      if(!response.ok){void response.body?.cancel();const codes:Partial<Record<number,GatewayFailure>>={400:"INPUT_INVALID",401:"ACCESS_DENIED",403:"ACCESS_DENIED",404:"DOCUMENT_NOT_AVAILABLE",409:"STEP_CONFLICT",413:"INPUT_INVALID",429:"BUDGET_EXCEEDED",502:"OUTPUT_INVALID",504:"DEADLINE_EXCEEDED"};return fail(codes[response.status]??"DEPENDENCY_UNAVAILABLE",codes[response.status]?response.status:503);}
++      let result;
++      try{const raw=JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(response,65536,signal)));
++        result=this.action==="ask"?WireAnswer.parse(raw):WireSource.parse(raw);
++      }catch{return fail("OUTPUT_INVALID",502);}
++      if(result.request_id!==this.requestId||("chunk_id" in input&&"citation" in result&&result.citation.chunk_id!==input.chunk_id))return fail("OUTPUT_INVALID",502);
++      const checked=await session.check(auth.data,true);if(!checked.success)return checked;
++      const current=await readProfile();
++      if(!current.success)return fail(current.status===401||current.status===403?"ACCESS_DENIED":"DEPENDENCY_UNAVAILABLE",current.status===401||current.status===403?current.status:503);
++      if(!current.profile||JSON.stringify(current.profile)!==JSON.stringify(profile))return fail("STEP_CONFLICT",409);
++      signal.throwIfAborted();return {success:true,data:result};
++    }finally{this.cookies.push(...session.refreshedCookies);}
++  }
++}
++export async function handleQA(request:Request,action:"ask"|"source"):Promise<Response>{
++  const handler=new PolicyGatewayHandler(action),result=await handler.execute(request);
++  const headers=new Headers({"Cache-Control":"no-store","X-Request-ID":handler.requestId});
++  for(const cookie of handler.cookies)headers.append("Set-Cookie",cookie);
++  return Response.json(result.success?result.data:{code:result.code},{status:result.success?200:result.status,headers});
++}
+diff --git a/lib/ai-qa/spec.ts b/lib/ai-qa/spec.ts
+new file mode 100644
+index 0000000..89debde
+--- /dev/null
++++ b/lib/ai-qa/spec.ts
+@@ -0,0 +1,20 @@
++import { z } from "zod";
++import { uuid } from "../ai-gateway/spec";
++
++const profile={profile_id:z.string().regex(/^[a-z][a-z0-9-]{0,47}$/),profile_version:z.number().int().min(1).max(2147483647)};
++export const AskInput=z.strictObject({...profile,question:z.string().trim().min(1).max(2000),language:z.enum(["en","ja"])});
++export const SourceInput=z.strictObject({...profile,chunk_id:uuid});
++export const Citation=z.strictObject({document_id:uuid,version_id:uuid,chunk_id:uuid,
++  locator:z.discriminatedUnion("kind",[z.strictObject({kind:z.literal("section"),value:z.string().min(1).max(160)}),z.strictObject({kind:z.literal("page"),value:z.number().int().min(1).max(200)})])});
++const WireCitation=Citation.extend({source_url:z.string()}).refine(c=>c.source_url==="/ai/citations/"+c.chunk_id).transform(({source_url:_url,...c})=>c);
++const answerFields={request_id:uuid,status:z.enum(["answered","abstained"]),answer:z.string().min(1).max(8000).nullable(),
++  reason:z.enum(["NO_SUPPORTED_EVIDENCE","CONFLICTING_EVIDENCE","OUTDATED_ONLY","AMBIGUOUS_REQUEST"]).nullable(),
++  confidence:z.enum(["low","unknown"]),provider_mode:z.enum(["fake","live","local"])};
++const supported=(a:{status:string;answer:string|null;reason:string|null;confidence:string;citations:unknown[]})=>a.status==="answered"?Boolean(a.answer&&a.citations.length&&a.reason===null&&a.confidence==="low"):a.answer===null&&a.reason!==null&&a.confidence==="unknown";
++export const WireAnswer=z.strictObject({...answerFields,citations:z.array(WireCitation).max(10)}).refine(supported);
++export const Answer=z.strictObject({...answerFields,citations:z.array(Citation).max(10)}).refine(supported);
++const sourceFields={request_id:uuid,excerpt:z.string().max(2000),truncated:z.boolean()};
++export const WireSource=z.strictObject({...sourceFields,citation:WireCitation});
++export const Source=z.strictObject({...sourceFields,citation:Citation});
++export type PolicyAnswer=z.infer<typeof Answer>;
++export type PolicySource=z.infer<typeof Source>;
+diff --git a/lib/ai-runs.test.ts b/lib/ai-runs.test.ts
+index 6e69358..83ffc2c 100644
+--- a/lib/ai-runs.test.ts
++++ b/lib/ai-runs.test.ts
+@@ -53,6 +53,18 @@ it("resumes a stored revision with fresh auth and checkpoints one fixed read exa
+   expect(JSON.stringify(data)).not.toContain("lease_id");
+ });
+ 
++it("returns actual read results only on the live resume response and never replays them on inspection",async()=>{
++  const {seen}=setup();const created=await(await handleRun(request({action:"start",question:"List imports"}))).json();
++  expect(created.observations).toEqual([]);
++  const resumed=await(await handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}))).json();
++  expect(resumed.observations).toHaveLength(1);
++  expect(resumed.observations[0]).toMatchObject({tool_name:"get_imports",status:"ok",data:{imports:[]}});
++  const inspected=await(await handleRun(request({action:"inspect",run_id:created.run.run_id}))).json();
++  expect(inspected.observations).toEqual([]);
++  expect(inspected.run.observations).toHaveLength(1);
++  expect(seen.filter(s=>s.url.endsWith("/api/ops/imports"))).toHaveLength(1);
++});
++
+ it("rejects a stale duplicate resume without repeating the read",async()=>{
+   const {seen}=setup();const created=await(await handleRun(request({action:"start",question:"List imports"}))).json();
+   expect((await handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}))).status).toBe(200);
+diff --git a/lib/ai-runs/handler.ts b/lib/ai-runs/handler.ts
+index 31c7bc3..b570b46 100644
+--- a/lib/ai-runs/handler.ts
++++ b/lib/ai-runs/handler.ts
+@@ -56,6 +56,7 @@ export class RunHandler implements AgentGatewaySpec {
+         return parsed.data;
+       };
+       let snapshot:Snapshot;
++      const observations:Observation[]=[];
+       if(input.action==="start"){
+         const conversation=randomUUID();
+         snapshot=await control({action:"start",question:input.question,collection_ids:scopes,conversation_id:conversation});
+@@ -105,6 +106,7 @@ export class RunHandler implements AgentGatewaySpec {
+               snapshot=await control({action:"record",expected_revision:leased.state.revision,lease_id:leased.lease_id,observation:observed},leased.state.step);
+               const summary=snapshot.state.observations.at(-1);
+               if(snapshot.state.step!==leased.state.step+1||snapshot.state.phase!=="idle"||snapshot.state.observations.length!==leased.state.observations.length+1||summary?.call_id!==observed.call_id||summary.status!==observed.status)throw new TransportFailure("OUTPUT_INVALID",502);
++              observations.push(observed);
+             }
+             if(!finished&&snapshot.state.status==="started")return fail("BUDGET_EXCEEDED",429);
+           }
+@@ -112,7 +114,7 @@ export class RunHandler implements AgentGatewaySpec {
+       }
+       const finalAuth=await session.check(auth.data,true);if(!finalAuth.success)return finalAuth;
+       if(snapshot.state.outcome?.status==="answered"&&(!snapshot.state.observations.length||snapshot.state.observations.some(o=>o.status!=="ok")))return fail("OUTPUT_INVALID",502);
+-      return {success:true,data:{run:snapshot.state}};
++      return {success:true,data:{run:snapshot.state,observations}};
+     }finally{this.cookies.push(...session.refreshedCookies);}
+   }
+ }
+diff --git a/lib/copilot-client.test.ts b/lib/copilot-client.test.ts
+new file mode 100644
+index 0000000..e12d516
+--- /dev/null
++++ b/lib/copilot-client.test.ts
+@@ -0,0 +1,25 @@
++import { afterEach, expect, it, vi } from "vitest";
++import { z } from "zod";
++import { copilotRequest } from "./copilot-client";
++
++afterEach(()=>vi.unstubAllGlobals());
++it("checks the current session and treats an invalid provider response as a typed failure without retry",async()=>{
++  const calls:string[]=[];
++  vi.stubGlobal("fetch",vi.fn(async(url:string,init?:RequestInit)=>{
++    calls.push(url);
++    if(url==="/api/auth/session")return Response.json({authenticated:true,roles:["ROLE_OPERATOR"],username:"operator",csrfToken:"current"});
++    expect(new Headers(init?.headers).get("X-CSRF-TOKEN")).toBe("current");
++    return Response.json({answer:"unexpected"});
++  }));
++  const result=await copilotRequest("ask",{},z.strictObject({status:z.literal("answered")}),new AbortController().signal);
++  expect(result).toMatchObject({success:false,code:"OUTPUT_INVALID"});
++  expect(calls).toEqual(["/api/auth/session","/api/ops/ai/ask"]);
++});
++
++it("clears access even when a 401 response has a malformed error body",async()=>{
++  const dispatchEvent=vi.fn();vi.stubGlobal("window",{dispatchEvent});
++  vi.stubGlobal("fetch",vi.fn(async(url:string)=>url==="/api/auth/session"?Response.json({authenticated:true,roles:["ROLE_OPERATOR"],username:"operator",csrfToken:"current"}):new Response("expired",{status:401})));
++  const result=await copilotRequest("source",{},z.unknown(),new AbortController().signal);
++  expect(result).toMatchObject({success:false,code:"SESSION_EXPIRED",status:401});
++  expect(dispatchEvent).toHaveBeenCalledTimes(1);
++});
+diff --git a/lib/copilot-client.ts b/lib/copilot-client.ts
+new file mode 100644
+index 0000000..f1dc080
+--- /dev/null
++++ b/lib/copilot-client.ts
+@@ -0,0 +1,37 @@
++import { z } from "zod";
++import { FailureCode, uuid, type Result } from "./ai-gateway/spec";
++import { getOperatorSession } from "./operator-session";
++
++const paths={ask:"/api/ops/ai/ask",source:"/api/ops/ai/citations/read",run:"/api/ops/ai/runs"} as const;
++export type ClientReply<T>=Result<T>&{request_id?:string};
++export function refreshOperatorAccess(){if(typeof window!=="undefined")window.dispatchEvent(new Event("vmarket-session-check"));}
++export async function copilotRequest<T>(action:keyof typeof paths,input:unknown,schema:z.ZodType<T>,signal:AbortSignal):Promise<ClientReply<T>>{
++  let request_id:string|undefined;
++  const timeout=AbortSignal.timeout(30000),combined=AbortSignal.any([signal,timeout]);
++  try{
++    const session=await getOperatorSession(combined);
++    if(!session.authenticated||!session.roles.includes("ROLE_OPERATOR")){
++      refreshOperatorAccess();return {success:false,code:"SESSION_EXPIRED",status:401};
++    }
++    const response=await fetch(paths[action],{method:"POST",headers:{"Content-Type":"application/json","X-CSRF-TOKEN":session.csrfToken},body:JSON.stringify(input),cache:"no-store",signal:combined});
++    const trace=uuid.safeParse(response.headers.get("X-Request-ID"));if(trace.success)request_id=trace.data;
++    if(response.status===401||response.status===403){
++      void response.body?.cancel().catch(()=>undefined);refreshOperatorAccess();
++      return {success:false,code:response.status===401?"SESSION_EXPIRED":"ACCESS_DENIED",status:response.status,request_id};
++    }
++    const reader=response.body?.getReader();if(!reader)return {success:false,code:"OUTPUT_INVALID",status:502,request_id};
++    const chunks:Uint8Array[]=[];let size=0;
++    const cancel=()=>{void reader.cancel().catch(()=>undefined);};combined.addEventListener("abort",cancel,{once:true});
++    try{while(true){combined.throwIfAborted();const next=await reader.read();combined.throwIfAborted();if(next.done)break;
++      size+=next.value.length;if(size>65536){cancel();return {success:false,code:"OUTPUT_INVALID",status:502,request_id};}chunks.push(next.value);
++    }}finally{combined.removeEventListener("abort",cancel);reader.releaseLock();}
++    const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
++    const raw:unknown=JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(bytes));
++    if(!response.ok){
++      const error=z.object({code:FailureCode}).safeParse(raw);
++      return {success:false,code:error.success?error.data.code:"DEPENDENCY_UNAVAILABLE",status:response.status,request_id};
++    }
++    const data=schema.safeParse(raw);
++    return data.success?{success:true,data:data.data,request_id}:{success:false,code:"OUTPUT_INVALID",status:502,request_id};
++  }catch{return {success:false,code:combined.aborted?"DEADLINE_EXCEEDED":"DEPENDENCY_UNAVAILABLE",status:combined.aborted?504:503,request_id};}
++}
+diff --git a/lib/copilot-runs.ts b/lib/copilot-runs.ts
+new file mode 100644
+index 0000000..558b9a7
+--- /dev/null
++++ b/lib/copilot-runs.ts
+@@ -0,0 +1,25 @@
++import { z } from "zod";
++import { RunState } from "./ai-runs/spec";
++import { uuid } from "./ai-gateway/spec";
++
++export const LiveObservation=z.strictObject({call_id:uuid,tool_name:z.enum(["get_integration_profiles","get_imports","inspect_import_job","get_reconciliation_report","search_supplier_knowledge"]),status:z.enum(["ok","denied","unavailable","invalid","timeout"]),observed_at:z.iso.datetime({offset:true}),truncated:z.boolean(),error_code:z.string().max(80).nullable(),data:z.unknown()});
++export const RunReply=z.strictObject({run:RunState,observations:z.array(LiveObservation).max(3)}).refine(r=>r.observations.every(o=>r.run.observations.some(s=>s.call_id===o.call_id&&s.tool_name===o.tool_name&&s.status===o.status)));
++export type Investigation=z.infer<typeof RunReply>;
++export type ReadObservation=z.infer<typeof LiveObservation>;
++export const toolLabels:Record<ReadObservation["tool_name"],string>={get_integration_profiles:"Read integration profiles",get_imports:"List import jobs",inspect_import_job:"Inspect import job",get_reconciliation_report:"Read reconciliation report",search_supplier_knowledge:"Search supplier knowledge"};
++const job=z.object({job_id:uuid,status:z.string().max(32),total_rows:z.number().int().nonnegative(),applied_rows:z.number().int().nonnegative(),rejected_rows:z.number().int().nonnegative()});
++const rows=z.object({imports:z.array(job).max(20)});
++const inspection=z.object({job,work_state:z.string().max(32),errors:z.array(z.object({row_number:z.number().int(),code:z.string().max(80)})).max(100)});
++const profiles=z.object({profiles:z.array(z.object({profile_id:z.string().max(48),version:z.number().int(),vendor_code:z.string().max(32),active:z.boolean()})).max(100)});
++const report=z.object({job_id:uuid,mismatch_count:z.number().int(),changed_since_import_rows:z.number().int(),stock_not_verified_rows:z.number().int()});
++const knowledge=z.object({hits:z.array(z.object({excerpt:z.string().max(2000),citation:z.object({locator:z.object({kind:z.enum(["section","page"]),value:z.union([z.string().max(160),z.number()])})})})).max(5)});
++export function observationLines(observation:ReadObservation):string[]{
++  if(observation.status!=="ok")return ["Read unavailable: "+(observation.error_code??observation.status)];
++  const describe=(j:z.infer<typeof job>)=>`${j.job_id} · ${j.status} · ${j.applied_rows}/${j.total_rows} applied · ${j.rejected_rows} rejected`;
++  if(observation.tool_name==="get_imports"){const result=rows.safeParse(observation.data);if(result.success)return result.data.imports.length?result.data.imports.map(describe):["No import jobs returned by the authorized read."];}
++  if(observation.tool_name==="inspect_import_job"){const result=inspection.safeParse(observation.data);if(result.success)return [describe(result.data.job),"Work state: "+result.data.work_state,...result.data.errors.slice(0,10).map(e=>`Row ${e.row_number}: ${e.code}`)];}
++  if(observation.tool_name==="get_integration_profiles"){const result=profiles.safeParse(observation.data);if(result.success)return result.data.profiles.length?result.data.profiles.slice(0,10).map(p=>`${p.profile_id} / v${p.version} / ${p.vendor_code} / ${p.active?"active":"inactive"}`):["No profiles returned."];}
++  if(observation.tool_name==="get_reconciliation_report"){const result=report.safeParse(observation.data);if(result.success)return [`Job: ${result.data.job_id}`,`Mismatches: ${result.data.mismatch_count}`,`Changed since import: ${result.data.changed_since_import_rows}`,`Stock not verified: ${result.data.stock_not_verified_rows}`];}
++  if(observation.tool_name==="search_supplier_knowledge"){const result=knowledge.safeParse(observation.data);if(result.success)return result.data.hits.length?result.data.hits.map(h=>`${h.citation.locator.kind} ${h.citation.locator.value}: ${h.excerpt}`):["No current knowledge hits returned."];}
++  return ["The read completed, but its details cannot be displayed safely."];
++}
+diff --git a/lib/copilot-ui.test.tsx b/lib/copilot-ui.test.tsx
+new file mode 100644
+index 0000000..cefe6e3
+--- /dev/null
++++ b/lib/copilot-ui.test.tsx
+@@ -0,0 +1,24 @@
++import { expect,it } from "vitest";
++import { renderToStaticMarkup } from "react-dom/server";
++import { OperatorCopilot } from "../components/operator-copilot";
++import { QueryClient,QueryClientProvider } from "@tanstack/react-query";
++
++it("keeps the manual workflow reachable when both Copilot capabilities are disabled",()=>{
++  const html=renderToStaticMarkup(<OperatorCopilot qaEnabled={false} runsEnabled={false}/>);
++  expect(html).toContain("Operator Copilot");
++  expect(html).toContain('href="#supplier-heading"');
++  expect(html).toContain("Policy Q&amp;A is disabled");
++  expect(html).not.toContain("API key");
++});
++
++it("labels the policy question and selects an actual supplier profile rather than browser authority",()=>{
++  const html=renderToStaticMarkup(<QueryClientProvider client={new QueryClient()}><OperatorCopilot qaEnabled runsEnabled={false}/></QueryClientProvider>);
++  expect(html).toContain("Supplier policy profile");expect(html).toContain("Policy question");
++  expect(html).toContain("Ask with sources");expect(html).not.toContain("Tenant");
++});
++
++it("offers a read-only investigation request with explicit run inspection and manual handoff",()=>{
++  const html=renderToStaticMarkup(<OperatorCopilot qaEnabled={false} runsEnabled/>);
++  expect(html).toContain("Investigation question");expect(html).toContain("Start investigation");
++  expect(html).toContain("Inspect saved run");expect(html).toContain("Read-only tools");
++});
+diff --git a/package.json b/package.json
+index fd45908..e6a63b7 100644
+--- a/package.json
++++ b/package.json
+@@ -16,7 +16,8 @@
+     "test": "vitest run",
+     "test:e2e": "python tools/qa_playwright.py",
+     "test:e2e:handoff": "python tools/qa_supplier_handoff.py",
+-    "test:e2e:mapping": "python tools/qa_mapping_drafts.py"
++    "test:e2e:mapping": "python tools/qa_mapping_drafts.py",
++    "test:e2e:copilot": "python tools/qa_copilot.py"
+   },
+   "dependencies": {
+     "@opennextjs/cloudflare": "1.20.12",
+diff --git a/tools/qa_copilot.py b/tools/qa_copilot.py
+new file mode 100644
+index 0000000..911c6e3
+--- /dev/null
++++ b/tools/qa_copilot.py
+@@ -0,0 +1,169 @@
++"""P12 headless browser interaction checks with explicitly mocked HTTP responses."""
++import asyncio
++import json
++import os
++import time
++from datetime import datetime, timezone
++from pathlib import Path
++from uuid import uuid4
++
++from playwright.async_api import async_playwright, expect
++
++BASE = os.environ.get("BASE_URL", "http://127.0.0.1:13014")
++OUT = Path(os.environ.get("QA_ARTIFACT_DIR", ".local/p12-browser"))
++
++
++async def main():
++    OUT.mkdir(parents=True, exist_ok=True)
++    async with async_playwright() as p:
++        browser = await p.chromium.launch(headless=True)
++        page = await browser.new_page(viewport={"width": 1440, "height": 1100})
++        page.set_default_timeout(8000)
++        page.on("pageerror", lambda error: print("BROWSER_ERROR", error))
++        chunk, run_id, conversation = (str(uuid4()) for _ in range(3))
++        trace = str(uuid4())
++        citation = {"document_id": chunk, "version_id": chunk, "chunk_id": chunk, "locator": {"kind": "section", "value": "encoding"}}
++        profiles = [{"profileId": "supplier-b", "version": 1, "encoding": "UTF-8", "vendorCode": "RIVERBYTE", "active": True, "mapping": {"sku": "SKU", "name": "ProductName", "on_hand": "AvailableQuantity"}, "skuNormalization": "TRIM"}]
++        faults = {"qa": "answer", "source": False, "auth": "operator", "run": "normal", "username": "synthetic"}
++        counts = {"start": 0, "resume": 0, "inspect": 0}
++        now = int(time.time())
++        run = {"run_id": run_id, "conversation_id": conversation, "initial_request_id": trace, "status": "started", "phase": "idle", "revision": 0, "step": 0, "created_at": now, "updated_at": now, "expires_at": now+600, "reason": None, "observations": [], "outcome": None, "can_resume": True, "can_cancel": True}
++
++        async def api(route):
++            nonlocal run
++            path = route.request.url.split("/api/", 1)[1]
++            if path == "auth/session":
++                if faults["auth"] == "down":
++                    await route.fulfill(status=503, json={"code": "DEPENDENCY_UNAVAILABLE"})
++                    return
++                data = {"authenticated": faults["auth"] != "expired", "username": faults["username"], "roles": ["ROLE_OPERATOR"] if faults["auth"] == "operator" else [], "csrfToken": "fixture"}
++            elif path == "ops/integration-profiles":
++                data = profiles
++            elif path == "ops/ai/ask":
++                assert route.request.post_data_json["profile_id"] == "supplier-b"
++                assert "collection_ids" not in route.request.post_data_json
++                if faults["qa"] in ("503", "504", "403"):
++                    code = {"503": "DEPENDENCY_UNAVAILABLE", "504": "DEADLINE_EXCEEDED", "403": "ACCESS_DENIED"}[faults["qa"]]
++                    await route.fulfill(status=int(faults["qa"]), json={"code": code}, headers={"X-Request-ID": trace})
++                    return
++                abstain = faults["qa"] == "abstain"
++                data = {"request_id": trace, "status": "abstained" if abstain else "answered", "answer": None if abstain else "Original bytes use UTF-8.", "reason": "NO_SUPPORTED_EVIDENCE" if abstain else None, "citations": [] if abstain else [citation], "confidence": "unknown" if abstain else "low", "provider_mode": "fake"}
++            elif path == "ops/ai/citations/read":
++                if faults["source"]:
++                    await route.fulfill(status=404, json={"code": "DOCUMENT_NOT_AVAILABLE"}, headers={"X-Request-ID": trace})
++                    return
++                data = {"request_id": trace, "citation": citation, "excerpt": "Original bytes use UTF-8. <img src=x onerror=alert(1)>", "truncated": False}
++            elif path == "ops/ai/runs":
++                action = route.request.post_data_json["action"]
++                counts[action] = counts.get(action, 0)+1
++                observations = []
++                if action == "start":
++                    run = {**run, "revision": 0, "status": "started", "phase": "idle", "step": 0, "observations": [], "outcome": None, "can_resume": True, "can_cancel": True}
++                elif action == "resume":
++                    if faults["run"] == "hold":
++                        run = {**run, "revision": 2, "status": "waiting_for_operator", "reason": "OUTCOME_UNKNOWN"}
++                        await asyncio.sleep(2)
++                        try:
++                            await route.fulfill(status=504, json={"code": "DEADLINE_EXCEEDED"})
++                        except Exception:
++                            pass  # The browser intentionally aborted this request.
++                        return
++                    handoff = faults["run"] == "handoff"
++                    observed = {"call_id": str(uuid4()), "tool_name": "get_imports", "status": "ok", "observed_at": datetime.now(timezone.utc).isoformat(), "truncated": False, "error_code": None, "data": {"imports": []}}
++                    observations = [] if handoff else [observed]
++                    summary = {k: v for k, v in observed.items() if k != "data"}
++                    run = {**run, "status": "completed", "phase": "terminal", "revision": 6, "step": 0 if handoff else 1, "reason": None, "observations": [] if handoff else [{**summary, "item_count": 0}], "outcome": {"kind": "handoff" if handoff else "final", "status": "human_action_required" if handoff else "answered", "handoff_reason": "IMPORT_CONFIRM" if handoff else None}, "can_resume": False, "can_cancel": False}
++                elif action == "cancel":
++                    run = {**run, "status": "cancelled", "phase": "terminal", "revision": run["revision"]+1, "can_resume": False, "can_cancel": False, "reason": "OPERATOR_CANCELLED"}
++                data = {"run": run, "observations": observations}
++            else:
++                data = []
++            await route.fulfill(json=data, headers={"X-Request-ID": trace})
++
++        await page.route("**/api/**", api)
++        await page.goto(BASE+"/ops")
++        await page.wait_for_load_state("networkidle")
++        panel = page.locator('section[aria-labelledby="copilot-heading"]')
++        await expect(panel.get_by_role("heading", name="Operator Copilot", exact=True)).to_be_visible()
++        await expect(panel.get_by_label("Supplier policy profile")).to_have_value("supplier-b:1")
++        await panel.get_by_label("Policy question", exact=True).fill("Which encoding preserves the original bytes?")
++        await panel.get_by_role("button", name="Ask with sources", exact=True).click()
++        await expect(panel.get_by_text("Suggested policy answer", exact=True)).to_be_visible()
++        source_button = panel.get_by_role("button", name="Source 1", exact=False)
++        await source_button.focus()
++        await page.keyboard.press("Enter")
++        dialog = page.get_by_role("dialog")
++        await expect(dialog.get_by_text("Original bytes use UTF-8. <img src=x onerror=alert(1)>", exact=True)).to_be_visible()
++        assert await dialog.locator("img").count() == 0
++        await page.keyboard.press("Escape")
++        await expect(source_button).to_be_focused()
++        faults["source"] = True
++        await source_button.click()
++        await expect(dialog.get_by_text("This source is no longer available with current access.", exact=True)).to_be_visible()
++        await dialog.get_by_role("button", name="Close source").click()
++        faults["qa"] = "abstain"
++        await panel.get_by_role("button", name="Ask with sources", exact=True).click()
++        await expect(panel.get_by_text("No supported answer", exact=True)).to_be_visible()
++        for fault in ("503", "504", "403"):
++            faults["qa"] = fault
++            await panel.get_by_role("button", name="Ask with sources", exact=True).click()
++            await expect(panel.get_by_role("alert")).to_be_visible()
++            await expect(panel.get_by_text("Suggested policy answer", exact=True)).to_have_count(0)
++        faults["qa"] = "answer"
++        await panel.get_by_role("button", name="Ask with sources", exact=True).click()
++        await expect(panel.get_by_text("Suggested policy answer", exact=True)).to_be_visible()
++        await panel.get_by_label("Investigation question", exact=True).fill("List imports")
++        await panel.get_by_role("button", name="Start investigation", exact=True).click()
++        await expect(panel.get_by_text("Investigation finished", exact=True)).to_be_visible()
++        await expect(panel.get_by_text("No import jobs returned by the authorized read.", exact=True)).to_be_visible()
++        await panel.screenshot(path=str(OUT/"copilot-panel-desktop.png"))
++        await panel.get_by_role("button", name="Inspect saved run", exact=True).click()
++        await expect(panel.get_by_text("Historical summary only.", exact=False)).to_be_visible()
++        assert counts == {"start": 1, "resume": 1, "inspect": 1}
++        await page.screenshot(path=str(OUT/"copilot-desktop.png"), full_page=True)
++        await panel.get_by_role("button", name="Ask another investigation question", exact=True).click()
++        await expect(panel.get_by_label("Investigation conversation")).to_contain_text("List imports")
++        await panel.get_by_label("Investigation question", exact=True).fill("List imports again")
++        faults["run"] = "hold"
++        await panel.get_by_role("button", name="Start investigation", exact=True).click()
++        await expect(panel.get_by_text("Reading authorized tools…", exact=True)).to_be_visible()
++        await panel.get_by_role("button", name="Stop waiting", exact=True).click()
++        await expect(panel.get_by_text("The request stopped before", exact=False)).to_be_visible()
++        await panel.get_by_role("button", name="Inspect saved run", exact=True).click()
++        await expect(panel.get_by_role("button", name="Resume read-only investigation", exact=True)).to_be_visible()
++        await panel.get_by_role("button", name="Cancel investigation", exact=True).click()
++        await expect(panel.get_by_text("Investigation cancelled", exact=True)).to_be_visible()
++        await panel.get_by_role("button", name="Forget reference", exact=True).click()
++        faults["run"] = "handoff"
++        await panel.get_by_label("Investigation question", exact=True).fill("Confirm this import")
++        await panel.get_by_role("button", name="Start investigation", exact=True).click()
++        await expect(panel.get_by_text("Human action required", exact=True)).to_be_visible()
++        await panel.get_by_role("link", name="Review the current profile", exact=False).click()
++        assert page.url.endswith("#supplier-heading")
++        await page.set_viewport_size({"width": 390, "height": 844})
++        assert await page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
++        await panel.scroll_into_view_if_needed()
++        await page.screenshot(path=str(OUT/"copilot-mobile.png"), full_page=True)
++        await panel.screenshot(path=str(OUT/"copilot-panel-mobile.png"))
++        assert "question" not in (await page.evaluate("JSON.stringify(sessionStorage)"))
++        faults["username"] = "another-synthetic-operator"
++        await page.evaluate("window.dispatchEvent(new Event('vmarket-session-check'))")
++        await expect(page.get_by_text("Signed in as another-synthetic-operator", exact=True)).to_be_visible()
++        await expect(panel.get_by_text("Human action required", exact=True)).to_have_count(0)
++        faults["auth"] = "expired"
++        await page.evaluate("window.dispatchEvent(new Event('vmarket-session-check'))")
++        await expect(page.get_by_role("heading", name="Operator sign-in")).to_be_visible()
++        await expect(panel).to_have_count(0)
++        faults["auth"] = "unauthorized"
++        await page.reload()
++        await expect(page.get_by_text("Your account does not have operator access.", exact=True)).to_be_visible()
++        faults["auth"] = "down"
++        await page.reload()
++        await expect(page.get_by_text("Unable to check your session.", exact=False)).to_be_visible()
++        await expect(panel).to_have_count(0)
++        (OUT/"report.json").write_text(json.dumps({"scope": "mocked HTTP browser interaction, not model quality", "passed": True, "timestamp_utc": datetime.now(timezone.utc).isoformat(), "browser": browser.version, "viewports": ["1440x1100", "390x844"], "counts": counts, "checks": ["source keyboard and Escape focus restore", "escaped source HTML", "revoked source", "no-answer", "model503/504", "access403", "read results versus historical summaries", "no automatic retry", "stop/inspect/cancel", "human handoff", "mobile overflow", "identity switch clears local results", "expired/unauthorized/Java down"]}, indent=2))
++        await browser.close()
++
++
++if __name__ == "__main__":
++    asyncio.run(main())
+diff --git a/tools/qa_copilot_real.py b/tools/qa_copilot_real.py
+new file mode 100644
+index 0000000..1642d1c
+--- /dev/null
++++ b/tools/qa_copilot_real.py
+@@ -0,0 +1,44 @@
++"""Actual local QA through the BFF; ephemeral session is accepted on stdin only."""
++import json
++import sys
++from datetime import datetime, timezone
++from pathlib import Path
++
++from playwright.sync_api import expect, sync_playwright
++
++def main():
++    config = json.load(sys.stdin)
++    out = Path(config["out"])
++    out.mkdir(parents=True, exist_ok=True)
++    with sync_playwright() as p:
++        browser = p.chromium.launch(headless=True)
++        context = browser.new_context(viewport={"width": 1440, "height": 1100})
++        context.add_cookies(config["cookies"])
++        page = context.new_page()
++        page.set_default_timeout(35000)
++        page.goto(config["base"]+"/ops")
++        page.wait_for_load_state("networkidle")
++        panel = page.locator('section[aria-labelledby="copilot-heading"]')
++        profile = config["profile"]
++        panel.get_by_label("Supplier policy profile").select_option(f'{profile["profile_id"]}:{profile["profile_version"]}')
++        panel.get_by_label("Policy question", exact=True).fill("Which original byte encoding does Supplier B supply?")
++        panel.get_by_role("button", name="Ask with sources", exact=True).click()
++        expect(panel.get_by_text("Suggested policy answer", exact=True)).to_be_visible()
++        expect(panel.get_by_label("Policy result")).to_contain_text("UTF-8")
++        panel.screenshot(path=str(out/"actual-local-answer-desktop.png"))
++        panel.get_by_role("button", name="Source 1", exact=False).click()
++        dialog = page.get_by_role("dialog")
++        expect(dialog.get_by_text("Supplier B supplies UTF-8", exact=False)).to_be_visible()
++        page.screenshot(path=str(out/"actual-current-source-desktop.png"))
++        page.keyboard.press("Escape")
++        page.set_viewport_size({"width": 390, "height": 844})
++        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
++        panel.screenshot(path=str(out/"actual-local-answer-mobile.png"))
++        report = {"scope": "actual authenticated Java/BFF/Python/Ollama UI", "passed": True,
++                  "timestamp_utc": datetime.now(timezone.utc).isoformat(), "browser": browser.version,
++                  "model": "qwen3.5:4b-q4_K_M", "screenshots": [p.name for p in out.glob("*.png")]}
++        print(json.dumps(report))
++        browser.close()
++
++if __name__ == "__main__":
++    main()
+-- 
+2.51.0.windows.1
+

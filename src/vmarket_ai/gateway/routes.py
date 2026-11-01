@@ -14,7 +14,7 @@ from vmarket_ai.gateway.security import ContextVerifier
 from vmarket_ai.gateway.wire import GatewayError, strict_json, validate
 from vmarket_ai.providers.ollama import OllamaChatModel
 from vmarket_ai.qa.backend import DEMO_ACTOR, DEMO_COLLECTIONS, PostgresEvidence
-from vmarket_ai.qa.service import wire
+from vmarket_ai.qa.service import AnswerService, wire
 from vmarket_ai.retrieval.spec import SearchRequest
 from vmarket_ai.settings import Settings
 
@@ -45,7 +45,12 @@ async def pending(
 
 
 def install(
-    app: FastAPI, config: Settings, engine: Engine, service: AgentService | None = None
+    app: FastAPI,
+    config: Settings,
+    engine: Engine,
+    service: AgentService | None = None,
+    *,
+    qa_service: AnswerService | None = None,
 ) -> None:
     verifier = ContextVerifier(engine, config.gateway_public_keys)
     agent = service or AgentService(
@@ -109,6 +114,96 @@ def install(
         ):
             raise GatewayError("ACCESS_DENIED", 403)
         return {"collection_ids": list(map(str, DEMO_COLLECTIONS)), "deadline_at": None}
+
+    if config.mode == "integrated" and config.qa_enabled:
+        from pydantic import ValidationError
+
+        from vmarket_ai.contracts import StrictModel
+        from vmarket_ai.qa.fake import FakeEvidenceModel
+        from vmarket_ai.qa.spec import AskRequest
+
+        class CitationRead(StrictModel):
+            chunk_id: UUID
+            collection_ids: tuple[UUID, ...]
+
+        prototype = qa_service or AnswerService(
+            evidence,
+            OllamaChatModel(config) if config.provider_mode == "local" else FakeEvidenceModel(),
+            mode="local" if config.provider_mode == "local" else "fake",
+        )
+
+        def qa_scope(payload: AskRequest | CitationRead, claims: dict[str, Any]) -> None:
+            if (
+                claims["step"] != 0
+                or not 1 <= len(payload.collection_ids) <= 10
+                or (
+                    len(set(payload.collection_ids)) != len(payload.collection_ids)
+                    or not set(map(str, payload.collection_ids)).issubset(claims["collection_ids"])
+                )
+            ):
+                raise GatewayError("ACCESS_DENIED", 403)
+
+        def qa_deadline(claims: dict[str, Any]) -> float:
+            return max(
+                0,
+                min(
+                    config.request_deadline_seconds,
+                    datetime.fromisoformat(claims["deadline_at"].replace("Z", "+00:00")).timestamp()
+                    - time.time(),
+                ),
+            )
+
+        @app.post("/ai/ask")
+        async def signed_ask(request: Request) -> dict[str, Any]:
+            claims = await context(request, "ask")
+            try:
+                payload = AskRequest.model_validate(strict_json(await request.body()))
+            except ValidationError:
+                raise GatewayError("INPUT_INVALID", 400) from None
+            qa_scope(payload, claims)
+            deadline = qa_deadline(claims)
+
+            async def answer() -> dict[str, Any]:
+                qa = AnswerService(
+                    prototype.retrieval,
+                    prototype.model,
+                    mode=prototype.mode,
+                    deadline_seconds=deadline,
+                )
+                result = await qa.ask(DEMO_ACTOR, payload, UUID(claims["request_id"]))
+                return result.model_dump(mode="json")
+
+            try:
+                return await pending(request, answer(), deadline)
+            except TimeoutError:
+                raise GatewayError("DEADLINE_EXCEEDED", 504) from None
+
+        @app.post("/ai/citations/read")
+        async def signed_citation(request: Request) -> dict[str, Any]:
+            claims = await context(request, "documents_read")
+            try:
+                payload = CitationRead.model_validate(strict_json(await request.body()))
+            except ValidationError:
+                raise GatewayError("INPUT_INVALID", 400) from None
+            qa_scope(payload, claims)
+
+            async def read() -> dict[str, Any]:
+                source = prototype.retrieval.current(
+                    DEMO_ACTOR, payload.collection_ids, payload.chunk_id
+                )
+                if source is None:
+                    raise GatewayError("DOCUMENT_NOT_AVAILABLE", 404)
+                return {
+                    "request_id": claims["request_id"],
+                    "citation": wire(source).model_dump(mode="json"),
+                    "excerpt": source.text[:2000],
+                    "truncated": len(source.text) > 2000,
+                }
+
+            try:
+                return await pending(request, read(), qa_deadline(claims))
+            except TimeoutError:
+                raise GatewayError("DEADLINE_EXCEEDED", 504) from None
 
     if config.runs_enabled:
         from pydantic import ValidationError
