@@ -1,0 +1,4 @@
+
+> v-market@0.1.0 test:e2e:handoff
+> python tools/qa_supplier_handoff.py
+

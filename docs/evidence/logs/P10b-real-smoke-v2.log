@@ -1,0 +1,41 @@
+DISPOSABLE_SERVICES_READY
+Traceback (most recent call last):
+  File "D:\CV\Project2\tools\qa_mapping_real.py", line 94, in <module>
+    main(json.load(sys.stdin))
+  File "D:\CV\Project2\tools\qa_mapping_real.py", line 76, in main
+    section.get_by_role("button", name="Confirm & queue", exact=True).click()
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py", line 15637, in click
+    self._sync(
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_locator.py", line 162, in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py", line 566, in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Locator.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("section[aria-labelledby=\"supplier-heading\"]").get_by_role("button", name="Confirm & queue", exact=True)
+    - locator resolved to <button disabled type="button" class="min-h-11 border border-[#2de1c2]/50 px-4 py-2 text-sm font-bold text-[#7ef5df] hover:bg-[#2de1c2]/10 disabled:opacity-40 mt-4 w-full bg-[#2de1c2]/10">Confirm & queue</button>
+  - attempting click action
+    2 � waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+    - waiting 20ms
+    2 � waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+      - waiting 100ms
+    19 � waiting for element to be visible, enabled and stable
+       - element is not enabled
+     - retrying click action
+       - waiting 500ms
+
+
+LOCAL_P10B_SMOKE_FAILED RuntimeError

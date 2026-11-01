@@ -1,0 +1,4 @@
+
+> v-market@0.1.0 test:e2e:mapping
+> python tools/qa_mapping_drafts.py
+

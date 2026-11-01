@@ -216,7 +216,7 @@ class MappingService:
             declared_encoding=request.declared_encoding,
             selected_vendor_code=request.selected_vendor_code,
             vendor_code=request.selected_vendor_code if scope else None,
-            vendor_verification="standalone_fixture" if scope else "unverified",
+            vendor_verification=self.policy.verification if scope else "unverified",
             status=status,
             assignments=assignments,
             unmapped_headers=unmapped,

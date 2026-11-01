@@ -110,6 +110,61 @@ def install(
             raise GatewayError("ACCESS_DENIED", 403)
         return {"collection_ids": list(map(str, DEMO_COLLECTIONS)), "deadline_at": None}
 
+    if config.mode == "integrated" and config.mapping_enabled:
+        from pydantic import ValidationError
+
+        from vmarket_ai.gateway.mapping import SignedMapping, SnapshotPolicy
+        from vmarket_ai.mapping.service import MappingService
+        from vmarket_ai.mapping.store import SQLDraftStore
+
+        @app.post("/ai/mapping/suggest")
+        async def mapping(request: Request) -> dict[str, Any]:
+            claims = await context(request, "mapping_suggest")
+            try:
+                payload = SignedMapping.model_validate(strict_json(await request.body()))
+            except ValidationError:
+                raise GatewayError("INPUT_INVALID", 400) from None
+            policy = SnapshotPolicy(payload)
+            scope = policy.scope(payload.input.selected_vendor_code)
+            if scope is None or str(scope) not in claims["collection_ids"] or claims["step"] != 0:
+                raise GatewayError("ACCESS_DENIED", 403)
+            deadline = min(
+                config.request_deadline_seconds,
+                datetime.fromisoformat(claims["deadline_at"].replace("Z", "+00:00")).timestamp()
+                - time.time(),
+            )
+
+            async def draft() -> dict[str, Any]:
+                mapper = MappingService(
+                    policy,
+                    SQLDraftStore(engine),
+                    agent.model,
+                    evidence,
+                    mode="local" if config.provider_mode == "local" else "fake",
+                    deadline_seconds=deadline,
+                )
+                result = await mapper.suggest(DEMO_ACTOR, payload.input, UUID(claims["request_id"]))
+                # Excerpts only for sources already selected by mapping, rechecking current ACL.
+                sources = {}
+                for assignment in result.assignments:
+                    for ref in assignment.citations:
+                        source = evidence.current(DEMO_ACTOR, (scope,), ref.chunk_id)
+                        if source is None or wire(source) != ref:
+                            raise GatewayError("DOCUMENT_NOT_AVAILABLE", 404)
+                        sources[str(ref.chunk_id)] = {
+                            "citation": ref.model_dump(mode="json"),
+                            "excerpt": source.text[:2000],
+                        }
+                return {
+                    "draft": result.model_dump(mode="json"),
+                    "evidence": list(sources.values())[:2],
+                }
+
+            try:
+                return await pending(request, draft(), deadline)
+            except TimeoutError:
+                raise GatewayError("DEADLINE_EXCEEDED", 504) from None
+
     @app.post("/ai/agent/step")
     async def step(request: Request) -> dict[str, Any]:
         claims = await context(request, "agent_step")

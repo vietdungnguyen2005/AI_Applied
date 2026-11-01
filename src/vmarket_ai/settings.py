@@ -74,13 +74,8 @@ class Settings(BaseSettings):
             import base64
             import re
 
-            if (
-                not self.agent_enabled
-                or self.qa_enabled
-                or self.mapping_enabled
-                or self.private_container
-            ):
-                raise ValueError("Integrated P09 permits signed agent/knowledge routes only")
+            if not self.agent_enabled or self.qa_enabled or self.private_container:
+                raise ValueError("Integrated mode requires signed gateway and disables unsigned QA")
             if not 1 <= len(self.gateway_public_keys) <= 3 or any(
                 not re.fullmatch(r"[A-Za-z0-9_-]{1,32}", kid)
                 or len(base64.b64decode(key, validate=True)) != 32

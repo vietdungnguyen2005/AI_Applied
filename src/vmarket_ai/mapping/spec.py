@@ -95,7 +95,7 @@ class MappingResponse(StrictModel):
     declared_encoding: Encoding
     selected_vendor_code: str
     vendor_code: str | None
-    vendor_verification: Literal["standalone_fixture", "unverified"]
+    vendor_verification: Literal["standalone_fixture", "bff_profile_snapshot", "unverified"]
     status: Literal["suggested", "needs_review", "abstained"]
     assignments: Annotated[tuple[Assignment, ...], Field(max_length=3)]
     unmapped_headers: Annotated[tuple[Header, ...], Field(max_length=100)]
@@ -118,7 +118,7 @@ class MappingResponse(StrictModel):
             raise ValueError("Draft status inconsistent")
         if self.vendor_code is not None and self.vendor_code != self.selected_vendor_code:
             raise ValueError("Vendor cannot be inferred")
-        if (self.vendor_verification == "standalone_fixture") != (self.vendor_code is not None):
+        if (self.vendor_verification != "unverified") != (self.vendor_code is not None):
             raise ValueError("Vendor verification inconsistent")
         if len(set(self.unmapped_headers)) != len(self.unmapped_headers) or (
             set(self.unmapped_headers) & set(headers)

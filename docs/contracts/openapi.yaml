@@ -1,6 +1,6 @@
 openapi: 3.1.1
 info:
-  title: V-Market AI Operations Copilot — proposed internal API
+  title: V-Market AI Operations Copilot â€” proposed internal API
   version: 0.1.0-design
   description: P02 signed integrated target. P07 implements an opt-in standalone ask/citation
     subset; inspect runtime OpenAPI for enabled routes. Signed BFF auth remains P09.
@@ -49,7 +49,8 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Validated response; P07 standalone subset, integrated target pending
+          description: Validated response; P07 standalone subset, integrated target
+            pending
           content:
             application/json:
               schema:
@@ -124,29 +125,17 @@ paths:
     post:
       operationId: suggestMapping
       summary: Suggest a draft from original CSV bytes
-      parameters:
-      - name: X-Source-Encoding
-        in: header
-        required: true
-        schema:
-          type: string
-          enum:
-          - UTF-8
-          - CP932
-      - name: X-Vendor-Code
-        in: header
-        required: true
-        schema:
-          type: string
-          maxLength: 32
-          minLength: 1
+      parameters: []
       responses:
         '200':
-          description: Validated response; design contract, not implemented
+          description: Untrusted mapping draft; integrated response wraps draft and
+            bounded evidence
           content:
             application/json:
               schema:
-                $ref: ./bff-tool-gateway.schema.json#/$defs/MappingResponse
+                oneOf:
+                - $ref: ./bff-tool-gateway.schema.json#/$defs/IntegratedMappingResponse
+                - $ref: ./bff-tool-gateway.schema.json#/$defs/MappingResponse
         '400': *id001
         '401': *id002
         '403': *id003
@@ -159,16 +148,20 @@ paths:
       requestBody:
         required: true
         content:
-          text/csv:
+          application/json:
             schema:
-              type: string
-              format: binary
-      x-implementation-status: planned
-      x-runtime-max-body-bytes: 5000000
+              oneOf:
+              - $ref: ./bff-tool-gateway.schema.json#/$defs/IntegratedMappingRequest
+              - $ref: ./bff-tool-gateway.schema.json#/$defs/MappingRequest
+      x-implementation-status: implemented-opt-in
+      x-runtime-max-body-bytes: 6700000
       x-required-operation: mapping_suggest
-      description: Signed BFF context required in integrated mode; loopback fixture-only
-        standalone exception is described in gateway-protocol.md. Enforce byte, time,
-        scope and semantic checks independently of JSON Schema.
+      description: 'Integrated: signed JSON wrapper containing original CSV base64,
+        declared encoding, vendor derived by BFF and one current active Java profile
+        snapshot. Standalone: existing MappingRequest JSON. Decoded original bytes
+        remain limited to 5,000,000; no normalization. No source/vendor headers, cookies
+        or Java secrets accepted by Python. Java human preview/confirm retain exact
+        text/csv and original contracts.'
   /ai/agent/step:
     post:
       operationId: agentStep

@@ -558,6 +558,7 @@
         "vendor_verification": {
           "enum": [
             "standalone_fixture",
+            "bff_profile_snapshot",
             "unverified"
           ],
           "title": "Vendor Verification",
@@ -2133,6 +2134,173 @@
       ],
       "title": "Difference",
       "type": "object"
+    },
+    "Candidate": {
+      "additionalProperties": false,
+      "properties": {
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "integer"
+        },
+        "vendor_code": {
+          "title": "Vendor Code",
+          "type": "string"
+        },
+        "encoding": {
+          "enum": [
+            "UTF-8",
+            "CP932"
+          ],
+          "title": "Encoding",
+          "type": "string"
+        },
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "mapping": {
+          "additionalProperties": {
+            "maxLength": 80,
+            "minLength": 1,
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "sku",
+              "name",
+              "on_hand"
+            ]
+          },
+          "title": "Mapping",
+          "type": "object"
+        }
+      },
+      "required": [
+        "profile_id",
+        "version",
+        "vendor_code",
+        "encoding",
+        "active",
+        "mapping"
+      ],
+      "title": "Candidate",
+      "type": "object"
+    },
+    "MappingRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_base64": {
+          "maxLength": 6666668,
+          "title": "Raw Base64",
+          "type": "string"
+        },
+        "declared_encoding": {
+          "enum": [
+            "UTF-8",
+            "CP932"
+          ],
+          "title": "Declared Encoding",
+          "type": "string"
+        },
+        "selected_vendor_code": {
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Selected Vendor Code",
+          "type": "string"
+        },
+        "profile_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5,
+          "title": "Profile Ids",
+          "type": "array"
+        },
+        "method": {
+          "default": "rule",
+          "enum": [
+            "rule",
+            "ai"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "synthetic": {
+          "const": true,
+          "title": "Synthetic",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "raw_base64",
+        "declared_encoding",
+        "selected_vendor_code",
+        "synthetic"
+      ],
+      "title": "MappingRequest",
+      "type": "object"
+    },
+    "IntegratedMappingRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/MappingRequest"
+        },
+        "profile_candidates": {
+          "items": {
+            "$ref": "#/$defs/Candidate"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "title": "Profile Candidates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "input",
+        "profile_candidates"
+      ],
+      "type": "object"
+    },
+    "IntegratedMappingResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "draft",
+        "evidence"
+      ],
+      "properties": {
+        "draft": {
+          "$ref": "#/$defs/MappingResponse"
+        },
+        "evidence": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "citation",
+              "excerpt"
+            ],
+            "properties": {
+              "citation": {
+                "$ref": "#/$defs/Citation"
+              },
+              "excerpt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

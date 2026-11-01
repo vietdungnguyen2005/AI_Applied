@@ -1,0 +1,11 @@
+{
+  "scope": "mocked HTTP browser only",
+  "passed": true,
+  "counts": {
+    "draft": 2,
+    "publish": 2,
+    "activate": 1,
+    "preview": 1,
+    "confirm": 1
+  }
+}

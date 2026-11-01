@@ -95,16 +95,23 @@ def main():
         "integrated_context_security",
         all(
             op.get("security", api["security"]) == [{"AIContext": [], "AISignature": []}]
-            and op.get("x-implementation-status") == "planned"
-            for _, op in secured
+            and op.get("x-implementation-status")
+            == ("implemented-opt-in" if path == "/ai/mapping/suggest" else "planned")
+            for path, op in secured
         ),
-        "All proposed protected routes declare context/signature; handler enforcement pending",
+        "Protected routes declare signed context; runtime enforcement tested separately",
     )
     record(
         "transport_byte_budgets",
         all(
             op["x-runtime-max-body-bytes"]
-            == (5_000_000 if path in {"/ai/mapping/suggest", "/ai/documents"} else 65_536)
+            == (
+                6_700_000
+                if path == "/ai/mapping/suggest"
+                else 5_000_000
+                if path == "/ai/documents"
+                else 65_536
+            )
             for path, op in secured
         ),
         "Declared extensions only; runtime streaming enforcement not tested",

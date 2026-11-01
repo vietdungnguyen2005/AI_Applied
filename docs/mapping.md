@@ -1,6 +1,6 @@
 # P08: standalone supplier mapping drafts
 
-Implemented: opt-in `POST /ai/mapping/suggest`, strict three-field drafts, original-byte storage/hash, exact-rule baseline, optional Ollama suggestions, authorized SOP context and profile differences. This is a synthetic host-only service. Publishing/activating a profile, previewing or confirming an import is not implemented here. Human review UI is P10/P12 work; the current difference view is structured JSON.
+Implemented: opt-in `POST /ai/mapping/suggest`, strict three-field drafts, original-byte storage/hash, exact-rule baseline, optional Ollama suggestions, authorized SOP context and profile differences. P10 adds a signed integrated request and a feature-OFF Project2 human review panel; [evidence](evidence/P10b.md). Only the authenticated human client calls the existing profile/preview/confirm workflow. Python has no business write client or operator cookies/secrets.
 
 ## Policy and input
 

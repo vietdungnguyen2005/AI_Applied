@@ -3,6 +3,7 @@
 Never imports dataset specifications, labels, test cases or a Java database client.
 """
 
+from typing import Literal
 from uuid import UUID
 
 from vmarket_ai.mapping.spec import TARGETS, Candidate, Target
@@ -38,6 +39,8 @@ ALIASES: dict[Target, frozenset[str]] = {
 
 
 class StandalonePolicy:
+    verification: Literal["standalone_fixture", "bff_profile_snapshot"] = "standalone_fixture"
+
     def scope(self, vendor: str) -> UUID | None:
         return SCOPES.get(vendor)
 

@@ -1,0 +1,789 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [
+    {
+      "name": "signed_draft_readonly",
+      "http": 200,
+      "raw_sha256": "0581c95cb8fd18a0cb9ba58ffa2c1c4c8b9fe08c7a7427076c1e780e69cdf44e",
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          2,
+          "4035fe3b233992a72b3fd9ab34a00e27"
+        ],
+        "audit_event": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          2,
+          "4035fe3b233992a72b3fd9ab34a00e27"
+        ],
+        "audit_event": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ]
+      }
+    },
+    {
+      "name": "tampered_original",
+      "http": 409,
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "6435e3cbf5db8daa062ea536a6cb21cf"
+        ],
+        "audit_event": [
+          2,
+          "3391278bc07fa1d8dd6b8c1de3796152"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "6435e3cbf5db8daa062ea536a6cb21cf"
+        ],
+        "audit_event": [
+          2,
+          "3391278bc07fa1d8dd6b8c1de3796152"
+        ]
+      }
+    },
+    {
+      "name": "stale_csrf",
+      "http": 403,
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "6435e3cbf5db8daa062ea536a6cb21cf"
+        ],
+        "audit_event": [
+          2,
+          "3391278bc07fa1d8dd6b8c1de3796152"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "6435e3cbf5db8daa062ea536a6cb21cf"
+        ],
+        "audit_event": [
+          2,
+          "3391278bc07fa1d8dd6b8c1de3796152"
+        ]
+      }
+    },
+    {
+      "name": "controlled_valid_signature_expired_receipt",
+      "http": 409,
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "6435e3cbf5db8daa062ea536a6cb21cf"
+        ],
+        "audit_event": [
+          2,
+          "3391278bc07fa1d8dd6b8c1de3796152"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "6435e3cbf5db8daa062ea536a6cb21cf"
+        ],
+        "audit_event": [
+          2,
+          "3391278bc07fa1d8dd6b8c1de3796152"
+        ]
+      }
+    },
+    {
+      "name": "deactivated_after_preview",
+      "http": 409,
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "a880470a99777adb0ec4d4ffd3939030"
+        ],
+        "audit_event": [
+          3,
+          "3722f8b378d3672cc7fd1aec5e3b08dc"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "3409e2b3df4ae28eacdf3130d5647a37"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "a880470a99777adb0ec4d4ffd3939030"
+        ],
+        "audit_event": [
+          3,
+          "3722f8b378d3672cc7fd1aec5e3b08dc"
+        ]
+      }
+    },
+    {
+      "name": "stock_changed_after_preview",
+      "http": 409,
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "4a56c01d1e9a07bab9eec10bf813b91b"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "b7cdf4a20d14f4614174989aa365b9e6"
+        ],
+        "audit_event": [
+          4,
+          "e35c1ad6458d3b4a99fdd43bf8b867b5"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "1ee5199956db12b120007857c25331a7"
+        ],
+        "inventory_stock": [
+          8,
+          "4a56c01d1e9a07bab9eec10bf813b91b"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "b7cdf4a20d14f4614174989aa365b9e6"
+        ],
+        "audit_event": [
+          4,
+          "e35c1ad6458d3b4a99fdd43bf8b867b5"
+        ]
+      }
+    },
+    {
+      "name": "product_changed_after_preview",
+      "http": 409,
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "aceb90aa01ad8a70d17e42794354a80d"
+        ],
+        "inventory_stock": [
+          8,
+          "4a56c01d1e9a07bab9eec10bf813b91b"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "b7cdf4a20d14f4614174989aa365b9e6"
+        ],
+        "audit_event": [
+          4,
+          "e35c1ad6458d3b4a99fdd43bf8b867b5"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "aceb90aa01ad8a70d17e42794354a80d"
+        ],
+        "inventory_stock": [
+          8,
+          "4a56c01d1e9a07bab9eec10bf813b91b"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          3,
+          "b7cdf4a20d14f4614174989aa365b9e6"
+        ],
+        "audit_event": [
+          4,
+          "e35c1ad6458d3b4a99fdd43bf8b867b5"
+        ]
+      }
+    },
+    {
+      "name": "wrong_mapping_no_acceptable_rows",
+      "http": 400,
+      "unchanged_11_tables": true,
+      "before": {
+        "product": [
+          8,
+          "aceb90aa01ad8a70d17e42794354a80d"
+        ],
+        "inventory_stock": [
+          8,
+          "4a56c01d1e9a07bab9eec10bf813b91b"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          4,
+          "6674b6656d1d86d9ab38967aa6a83621"
+        ],
+        "audit_event": [
+          6,
+          "c5c473438f8b0db38e5f7c6486b3ffab"
+        ]
+      },
+      "after": {
+        "product": [
+          8,
+          "aceb90aa01ad8a70d17e42794354a80d"
+        ],
+        "inventory_stock": [
+          8,
+          "4a56c01d1e9a07bab9eec10bf813b91b"
+        ],
+        "inventory_movement": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "customer_order": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "migration_job": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "import_work_item": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "staged_import_row": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_run": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "reconciliation_discrepancy": [
+          0,
+          "d41d8cd98f00b204e9800998ecf8427e"
+        ],
+        "integration_profile": [
+          4,
+          "6674b6656d1d86d9ab38967aa6a83621"
+        ],
+        "audit_event": [
+          6,
+          "c5c473438f8b0db38e5f7c6486b3ffab"
+        ]
+      }
+    }
+  ],
+  "next_build_id": "480T3F-j6zy66yqIBghV4",
+  "java_jar_sha256": "f5e1c7c9aa64bf9cd333ebe6e39b967da019b75c975a09a36d89ad5efc63591a",
+  "no_java_or_signing_secrets_in_python_env": true,
+  "status": "FAIL",
+  "failure_type": "RuntimeError",
+  "private_logs": "D:\\CV\\AI_Applied\\.local\\p10b-smoke-08fbb987"
+}

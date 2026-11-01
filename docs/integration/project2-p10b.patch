@@ -1,0 +1,954 @@
+From bc36754c6e1bd9966bacb32d41cf7b590f9a4e0f Mon Sep 17 00:00:00 2001
+From: vietdungnguyen2005 <vietdungnguyen2005@gmail.com>
+Date: Sun, 1 Nov 2026 16:29:23 +0700
+Subject: [PATCH] Add signed mapping drafts and explicit human profile
+ publication and activation
+
+---
+ .env.example                            |   1 +
+ .github/workflows/ci.yml                |  13 +++
+ app/api/ops/ai/mapping/suggest/route.ts |   4 +
+ app/ops/page.tsx                        |   3 +-
+ components/mapping-draft-review.tsx     | 108 +++++++++++++++++++++
+ components/operations-console.tsx       |   4 +-
+ components/supplier-onboarding.test.tsx |   4 +
+ components/supplier-onboarding.tsx      |  11 ++-
+ docs/ai-mapping.md                      |  52 ++++++++++
+ docs/supplier-handoff.md                |   7 +-
+ lib/ai-gateway/projection.ts            |   2 +-
+ lib/ai-gateway/transport.ts             |   6 +-
+ lib/ai-mapping.test.ts                  |  75 +++++++++++++++
+ lib/ai-mapping/client.ts                |  38 ++++++++
+ lib/ai-mapping/handler.ts               |  75 +++++++++++++++
+ lib/ai-mapping/spec.ts                  |  45 +++++++++
+ lib/profile-drafts.test.ts              |  21 ++++
+ package.json                            |   3 +-
+ tools/qa_mapping_drafts.py              | 123 ++++++++++++++++++++++++
+ tools/qa_mapping_real.py                |  94 ++++++++++++++++++
+ 20 files changed, 675 insertions(+), 14 deletions(-)
+ create mode 100644 app/api/ops/ai/mapping/suggest/route.ts
+ create mode 100644 components/mapping-draft-review.tsx
+ create mode 100644 docs/ai-mapping.md
+ create mode 100644 lib/ai-mapping.test.ts
+ create mode 100644 lib/ai-mapping/client.ts
+ create mode 100644 lib/ai-mapping/handler.ts
+ create mode 100644 lib/ai-mapping/spec.ts
+ create mode 100644 lib/profile-drafts.test.ts
+ create mode 100644 tools/qa_mapping_drafts.py
+ create mode 100644 tools/qa_mapping_real.py
+
+diff --git a/.env.example b/.env.example
+index 9d41d57..08fd145 100644
+--- a/.env.example
++++ b/.env.example
+@@ -29,6 +29,7 @@ CLOUDFLARE_API_TOKEN=
+ 
+ # Optional request-bound read-only AI gateway: OFF by default, server-only values.
+ AI_COPILOT_ENABLED=false
++AI_MAPPING_DRAFTS_ENABLED=false
+ AI_SERVICE_ORIGIN=http://127.0.0.1:8092
+ AI_SIGNING_KID=
+ # DER PKCS8 Ed25519 private key in base64; only the BFF may receive it.
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 78dc0f9..4dfef86 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -50,6 +50,18 @@ jobs:
+           npm run test:e2e
+           QA_ARTIFACT_DIR=docs/evidence/handoff npm run test:e2e:handoff
+ 
++      - name: Browser mapping draft contract QA
++        shell: bash
++        run: |
++          AI_COPILOT_ENABLED=true AI_MAPPING_DRAFTS_ENABLED=true npm run start -- --hostname 127.0.0.1 --port 3001 &
++          server_pid=$!
++          trap 'kill $server_pid' EXIT
++          for attempt in {1..30}; do
++            curl --fail --silent http://127.0.0.1:3001/ops >/dev/null && break
++            sleep 1
++          done
++          BASE_URL=http://127.0.0.1:3001 QA_ARTIFACT_DIR=docs/evidence/mapping npm run test:e2e:mapping
++
+       - name: Upload browser evidence
+         uses: actions/upload-artifact@v4
+         with:
+@@ -57,6 +69,7 @@ jobs:
+           path: |
+             docs/evidence/*.png
+             docs/evidence/handoff/
++            docs/evidence/mapping/
+ 
+       - name: Build Cloudflare Worker bundle (no deployment)
+         run: npm run build:worker
+diff --git a/app/api/ops/ai/mapping/suggest/route.ts b/app/api/ops/ai/mapping/suggest/route.ts
+new file mode 100644
+index 0000000..fba9b84
+--- /dev/null
++++ b/app/api/ops/ai/mapping/suggest/route.ts
+@@ -0,0 +1,4 @@
++import { handleMapping } from "@/lib/ai-mapping/handler";
++export const runtime="nodejs";
++export const dynamic="force-dynamic";
++export const POST=handleMapping;
+diff --git a/app/ops/page.tsx b/app/ops/page.tsx
+index 1a4bc4f..cbe487f 100644
+--- a/app/ops/page.tsx
++++ b/app/ops/page.tsx
+@@ -6,7 +6,8 @@ export const metadata: Metadata = {
+   title: "Migration Operations",
+   description: "Restartable legacy commerce import and reconciliation evidence.",
+ };
++export const dynamic="force-dynamic";
+ 
+ export default function OperationsPage() {
+-  return <OperatorAccess><OperationsConsole /></OperatorAccess>;
++  return <OperatorAccess><OperationsConsole mappingEnabled={process.env.AI_COPILOT_ENABLED==="true"&&process.env.AI_MAPPING_DRAFTS_ENABLED==="true"} /></OperatorAccess>;
+ }
+diff --git a/components/mapping-draft-review.tsx b/components/mapping-draft-review.tsx
+new file mode 100644
+index 0000000..3bf91b3
+--- /dev/null
++++ b/components/mapping-draft-review.tsx
+@@ -0,0 +1,108 @@
++"use client";
++
++import { useEffect,useRef,useState } from "react";
++import { ProfileDraftClient,suggestMapping } from "@/lib/ai-mapping/client";
++import { Definition,ProfileSummary,type DefinitionInput,type MappingViewValue,type ProfileValue } from "@/lib/ai-mapping/spec";
++import { loadIntegrationProfiles,type IntegrationProfile } from "@/lib/operations-api";
++
++const input="min-h-11 w-full border border-white/20 bg-[#0b0f0e] px-3 py-2 text-sm text-white focus:border-[#2de1c2] disabled:opacity-50";
++const button="min-h-11 border border-[#2de1c2]/50 px-4 py-2 text-sm font-bold text-[#7ef5df] hover:bg-[#2de1c2]/10 disabled:opacity-40";
++const targets=["sku","name","on_hand"] as const;
++type Props={source?:IntegrationProfile;disabled:boolean;filename:string;original:()=>ArrayBuffer;
++  onBusy:(value:boolean)=>void;onAdopt:(id:string,version:number,raw:ArrayBuffer,filename:string)=>Promise<void>};
++
++export function MappingDraftReview({source,disabled,filename,original,onBusy,onAdopt}:Props){
++  const [mapping,setMapping]=useState(()=>({...source?.mapping}));
++  const [id,setId]=useState(""),[version,setVersion]=useState(1);
++  const [normalization,setNormalization]=useState<"TRIM"|"TRIM_UPPER">(source?.skuNormalization??"TRIM");
++  const [method,setMethod]=useState<"rule"|"ai">("rule"),[reviewed,setReviewed]=useState(false);
++  const [draft,setDraft]=useState<MappingViewValue|null>(null),[snapshot,setSnapshot]=useState<ArrayBuffer|null>(null);
++  const [saved,setSaved]=useState<ProfileValue|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState("");
++  const [uncertain,setUncertain]=useState(false),[attempt,setAttempt]=useState<DefinitionInput|null>(null);
++  const [inspected,setInspected]=useState<{match:ProfileValue|null}|null>(null);
++  const controller=useRef<AbortController|null>(null);
++  useEffect(()=>()=>{controller.current?.abort();onBusy(false);},[onBusy]);
++  const definition=Definition.safeParse({profileId:id,version,encoding:source?.encoding,vendorCode:source?.vendorCode,mapping,skuNormalization:normalization});
++  const locked=disabled||busy||uncertain;
++  const begin=()=>{setBusy(true);onBusy(true);setError("");};
++  const finish=()=>{setBusy(false);onBusy(false);};
++  const suggest=async()=>{
++    if(!source)return;begin();controller.current=new AbortController();
++    try{
++      const raw=original();setSnapshot(raw);
++      const bytes=new Uint8Array(raw);let binary="";
++      for(let start=0;start<bytes.length;start+=32768)binary+=String.fromCharCode(...bytes.subarray(start,start+32768));
++      const result=await suggestMapping({raw_base64:btoa(binary),declared_encoding:source.encoding,source_profile_id:source.profileId,source_profile_version:source.version,method,synthetic:true},controller.current.signal);
++      if(!result.success){setError("Draft unavailable. Review and enter the source columns manually, or try again explicitly.");return;}
++      setDraft(result.data);setReviewed(false);setMapping(Object.fromEntries(result.data.draft.assignments.map(a=>[a.target_field,a.source_header])));
++    }catch{setError("Select an original file with the declared encoding before requesting a draft.");}
++    finally{finish();}
++  };
++  const publish=async()=>{
++    if(!reviewed||!definition.success)return;begin();setAttempt(definition.data);
++    try{
++      const raw=snapshot??original();setSnapshot(raw);
++      const result=await new ProfileDraftClient().publish(definition.data);
++      if(result.success){setSaved(result.data);setReviewed(false);}
++      else if(result.code==="INPUT_INVALID")setError("Review the profile definition and exact source column names.");
++      else{setUncertain(true);setError("Creation outcome requires inspection. Do not submit another version blindly.");}
++    }catch{setError("Original bytes are unavailable. Select the original file first.");}
++    finally{finish();}
++  };
++  const activate=async()=>{
++    if(!saved||!snapshot)return;begin();
++    const result=await new ProfileDraftClient().activate(saved);
++    if(result.success){setSaved(result.data);try{await onAdopt(result.data.profileId,result.data.version,snapshot,filename);}catch{setError("Activation was acknowledged. Reload profiles and select this active version before previewing.");}}
++    else{setUncertain(true);setError("Activation outcome requires inspection. Do not retry automatically.");}
++    finish();
++  };
++  const inspect=async()=>{
++    begin();setInspected(null);
++    try{
++      const profiles=await loadIntegrationProfiles();
++      const found=profiles.map(p=>ProfileSummary.safeParse(p)).filter(p=>p.success).map(p=>p.data).find(p=>p.profileId===attempt?.profileId&&p.version===attempt?.version);
++      const {active:_active,...fields}=found??{};
++      setInspected({match:found&&JSON.stringify(fields)===JSON.stringify(attempt)?found:null});
++    }catch{setError("Profile inspection failed. Sending remains locked.");}
++    finally{finish();}
++  };
++  return <section aria-labelledby="mapping-draft-heading" className="mt-5 border border-[#2de1c2]/30 bg-black/20 p-4 sm:p-5">
++    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#2de1c2]">01 / Suggest → Review → Save inactive → Activate</p>
++    <h3 id="mapping-draft-heading" className="mt-2 text-lg font-bold">Mapping draft / human review</h3>
++    <p className="mt-2 text-sm leading-6 text-[#9bb3a6]">Synthetic suppliers only. Suggestions can be wrong. You own the edits and approval; Java validates the profile and file again. No import runs until a separate preview and confirmation.</p>
++    {!source?<p className="mt-3 text-sm text-amber-200">Select an active source profile first.</p>:<>
++      <p className="mt-3 font-mono text-xs text-[#c6d7cd]">Source {source.profileId} / v{source.version} · vendor {source.vendorCode} · declared {source.encoding}</p>
++      <div className="mt-4 flex flex-wrap items-end gap-3">
++        <label className="grid gap-1 text-sm">Draft method<select className={input} value={method} disabled={locked||!!saved} onChange={e=>setMethod(e.target.value as "rule"|"ai")}><option value="rule">Frozen header rules</option><option value="ai">Local AI with SOP context</option></select></label>
++        <button type="button" className={button} disabled={locked||!!saved} onClick={()=>void suggest()}>Suggest mapping</button>
++      </div>
++      {draft?<div className="mt-4 border-l-2 border-amber-300/60 pl-3 text-xs leading-6 text-amber-100">
++        <p>{draft.draft.status} · {draft.draft.provider_mode} · original SHA256 <span className="break-all">{draft.draft.raw_sha256}</span></p>
++        <p>{draft.draft.warnings.join(" · ")}</p>
++        {draft.evidence.length?draft.evidence.map(e=><blockquote key={e.citation.chunk_id} className="mt-2 whitespace-pre-wrap break-words border-t border-white/15 pt-2">SOP {e.citation.document_id} / {e.citation.locator.kind} {e.citation.locator.value}: {e.excerpt}</blockquote>):<p>No linked SOP excerpt. Rule matches and model guesses are not approval.</p>}
++      </div>:null}
++      <fieldset disabled={locked||!!saved} className="mt-4 grid gap-4 disabled:opacity-60">
++        <div className="grid gap-3 md:grid-cols-3">{targets.map(target=><label key={target} className="grid gap-2 text-sm"><span>Source column for {target}</span>
++          <input aria-label={`Source column for ${target}`} className={input} value={mapping[target]??""} maxLength={80} onChange={e=>{setMapping({...mapping,[target]:e.target.value});setReviewed(false);}}/>
++          <span className="break-words text-xs text-[#9bb3a6]">Current: {source.mapping[target]} → edited: {mapping[target]||"missing"}</span>
++          {draft?.draft.assignments.filter(a=>a.target_field===target).map(a=><span key={target} className="text-xs leading-5 text-amber-100">Hint: {a.source_header} · {a.basis} · uncertainty {a.uncertainty}. {a.reason}</span>)}
++        </label>)}</div>
++        <div className="grid gap-3 sm:grid-cols-3">
++          <label className="grid gap-2 text-sm">New profile ID<input className={input} value={id} maxLength={48} onChange={e=>{setId(e.target.value);setReviewed(false);}}/></label>
++          <label className="grid gap-2 text-sm">New profile version<input className={input} type="number" min={1} max={2147483647} value={version} onChange={e=>{setVersion(Number(e.target.value));setReviewed(false);}}/></label>
++          <label className="grid gap-2 text-sm">SKU normalization<select className={input} value={normalization} onChange={e=>{setNormalization(e.target.value as "TRIM"|"TRIM_UPPER");setReviewed(false);}}><option>TRIM</option><option>TRIM_UPPER</option></select></label>
++        </div>
++        <label className="flex items-start gap-3 text-sm leading-6"><input type="checkbox" className="mt-1 size-5 accent-[#2de1c2]" checked={reviewed} onChange={e=>setReviewed(e.target.checked)}/>I reviewed the exact source columns, vendor, encoding and new immutable profile version. Create it inactive.</label>
++      </fieldset>
++      {!saved?<button type="button" className={`${button} mt-4`} disabled={locked||!reviewed||!definition.success} onClick={()=>void publish()}>Create inactive profile</button>:<div className="mt-4 grid gap-3 text-sm text-[#7ef5df]">
++        <p>Saved {saved.profileId} / v{saved.version} · {saved.active?"active":"inactive"}. No import submitted.</p>
++        {!saved.active?<button type="button" className={button} disabled={locked} onClick={()=>void activate()}>Activate saved profile</button>:<button type="button" className={button} disabled={locked||!snapshot} onClick={()=>snapshot&&void onAdopt(saved.profileId,saved.version,snapshot,filename)}>Use active profile for preview</button>}
++      </div>}
++      {uncertain?<div className="mt-4 grid gap-3 border border-amber-300/40 p-3 text-sm text-amber-100">
++        <button type="button" className={button} disabled={busy||disabled} onClick={()=>void inspect()}>Inspect saved profiles</button>
++        {inspected?<><p>{inspected.match?`Matching version found: ${inspected.match.active?"active":"inactive"}.`:"No exact definition found in the latest profiles. Absence does not prove the operation failed; inspect the profile/version before choosing a new immutable version."}</p><button type="button" className={button} onClick={()=>{setSaved(inspected.match);setUncertain(false);setInspected(null);setReviewed(false);setError("");}}>I inspected the profile outcome</button></>:null}
++      </div>:null}
++    </>}
++    {error?<p role="alert" className="mt-3 text-sm text-amber-200">{error}</p>:null}
++  </section>;
++}
+diff --git a/components/operations-console.tsx b/components/operations-console.tsx
+index b8ecf3b..f3b1716 100644
+--- a/components/operations-console.tsx
++++ b/components/operations-console.tsx
+@@ -29,7 +29,7 @@ function statusStyle(status: MigrationSummary["status"]): string {
+   return "border-cyan-400/40 bg-cyan-400/10 text-cyan-100";
+ }
+ 
+-export function OperationsConsole() {
++export function OperationsConsole({mappingEnabled=false}:{mappingEnabled?:boolean}) {
+   const queryClient = useQueryClient();
+   const [sourceName, setSourceName] = useState("legacy-catalog.csv");
+   const [encoding, setEncoding] = useState<"UTF-8" | "CP932">("UTF-8");
+@@ -129,7 +129,7 @@ export function OperationsConsole() {
+           </div>
+         ) : null}
+ 
+-        <SupplierOnboarding onImported={rememberJob} />
++        <SupplierOnboarding onImported={rememberJob} mappingEnabled={mappingEnabled} />
+ 
+         <section aria-labelledby="orders-heading" className="mt-8 border border-white/15 bg-[#111715] p-5 sm:p-6">
+           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
+diff --git a/components/supplier-onboarding.test.tsx b/components/supplier-onboarding.test.tsx
+index 8ab6545..c0e8caf 100644
+--- a/components/supplier-onboarding.test.tsx
++++ b/components/supplier-onboarding.test.tsx
+@@ -4,6 +4,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+ import { SupplierOnboarding } from "@/components/supplier-onboarding";
+ 
+ describe("supplier onboarding", () => {
++  it("offers a separate mapping review panel only when explicitly enabled",()=>{
++    const html=renderToStaticMarkup(<QueryClientProvider client={new QueryClient()}><SupplierOnboarding onImported={async()=>{}} mappingEnabled /></QueryClientProvider>);
++    expect(html).toContain("Mapping draft / human review");
++  });
+   it("starts with a read-only preview step and no enabled confirmation", () => {
+     const html=renderToStaticMarkup(<QueryClientProvider client={new QueryClient()}><SupplierOnboarding onImported={async()=>{}} /></QueryClientProvider>);
+     expect(html).toContain("Supplier onboarding");
+diff --git a/components/supplier-onboarding.tsx b/components/supplier-onboarding.tsx
+index 0130ead..347e118 100644
+--- a/components/supplier-onboarding.tsx
++++ b/components/supplier-onboarding.tsx
+@@ -3,6 +3,7 @@
+ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+ import { useEffect, useState } from "react";
+ import { receiptExpiry } from "@/lib/supplier-handoff";
++import { MappingDraftReview } from "./mapping-draft-review";
+ import { confirmSupplier, loadIntegrationProfiles, loadMigrationJobs, previewSupplier, selectImportPayload,
+   type IntegrationProfile, type MigrationSummary, type SupplierPreview } from "@/lib/operations-api";
+ 
+@@ -10,7 +11,7 @@ const inputStyle="min-h-11 w-full border border-white/20 bg-[#0b0f0e] px-3 py-2
+ const buttonStyle="min-h-11 border border-[#2de1c2]/50 px-4 py-2 text-sm font-bold text-[#7ef5df] hover:bg-[#2de1c2]/10 disabled:opacity-40";
+ type Review={profile:IntegrationProfile;body:string|ArrayBuffer;sourceName:string;result:SupplierPreview};
+ 
+-export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummary)=>Promise<void>}) {
++export function SupplierOnboarding({onImported,mappingEnabled=false}:{onImported:(job:MigrationSummary)=>Promise<void>;mappingEnabled?:boolean}) {
+   const queryClient=useQueryClient();
+   const profiles=useQuery({queryKey:["integration-profiles"],queryFn:({signal})=>loadIntegrationProfiles(signal),retry:false});
+   const [selected,setSelected]=useState("supplier-b:1");
+@@ -23,13 +24,14 @@ export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummar
+   const [approved,setApproved]=useState(false);
+   const [inspectionRequired,setInspectionRequired]=useState(false);
+   const [refreshError,setRefreshError]=useState(false);
++  const [mappingBusy,setMappingBusy]=useState(false),[sourceRevision,setSourceRevision]=useState(0);
+   const inspection=useMutation({retry:false,mutationFn:()=>loadMigrationJobs(),onSuccess:jobs=>queryClient.setQueryData(["migration-jobs"],jobs)});
+   const [now,setNow]=useState(()=>Date.now());
+   useEffect(()=>{const timer=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(timer);},[]);
+   const expires=review?receiptExpiry(review.result.confirmationReceipt):null;
+   const expired=review!==null && (expires===null || expires<=now);
+   const profile=profiles.data?.find(item=>`${item.profileId}:${item.version}`===selected && item.active);
+-  const invalidate=()=>{setReview(null);setApproved(false);};
++  const invalidate=()=>{setReview(null);setApproved(false);setSourceRevision(value=>value+1);};
+   const preview=useMutation({retry:false,mutationFn:async()=>{
+     if (inspectionRequired) throw new Error("Inspect current Import runs before preparing another preview.");
+     if (!profile) throw new Error("Select an active profile version.");
+@@ -46,7 +48,7 @@ export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummar
+     return confirmSupplier(review.profile.profileId,review.profile.version,review.sourceName,review.body,review.result.confirmationReceipt);
+   },onSuccess:job=>{invalidate();setRefreshError(false);void onImported(job).catch(()=>setRefreshError(true));},
+   onError:()=>{setInspectionRequired(true);setApproved(false);inspection.reset();}});
+-  const busy=preview.isPending || confirm.isPending || fileLoading || inspectionRequired;
++  const busy=preview.isPending || confirm.isPending || fileLoading || inspectionRequired || mappingBusy;
+ 
+   return <section aria-labelledby="supplier-heading" className="mt-8 border border-[#2de1c2]/30 bg-[#111715] p-5 sm:p-6">
+     <div className="border-b border-white/15 pb-4">
+@@ -54,6 +56,9 @@ export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummar
+       <h2 id="supplier-heading" className="mt-1 text-2xl font-black">Supplier onboarding</h2>
+       <p className="mt-3 max-w-3xl text-sm leading-6 text-[#9bb3a6]">Synthetic suppliers, one shared store. Preview is read-only. Vendor, price and concurrency versions come from the canonical catalog; changed rows are rejected rather than overwriting later stock or metadata.</p>
+     </div>
++    {mappingEnabled?<MappingDraftReview key={`${sourceRevision}:${profile?.profileId}:${profile?.version}`} source={profile} disabled={preview.isPending||confirm.isPending||fileLoading||inspectionRequired} filename={sourceName} onBusy={setMappingBusy}
++      original={()=>{if(!profile)throw new Error("Profile required");const body=selectImportPayload(profile.encoding,csv,fileBytes);return typeof body==="string"?new TextEncoder().encode(body).buffer:body.slice(0);}}
++      onAdopt={async(id,version,raw,filename)=>{const current=await loadIntegrationProfiles();if(!current.some(p=>p.profileId===id&&p.version===version&&p.active))throw new Error("Active profile unavailable");queryClient.setQueryData(["integration-profiles"],current);setSelected(`${id}:${version}`);setFileBytes(raw.slice(0));setSourceName(filename);invalidate();preview.reset();confirm.reset();}}/>:null}
+     <div className="mt-5 grid gap-6 lg:grid-cols-2">
+       <form className="grid content-start gap-4" onSubmit={event=>{event.preventDefault();invalidate();preview.mutate();}}>
+         <fieldset disabled={busy} className="grid gap-4 disabled:opacity-60">
+diff --git a/docs/ai-mapping.md b/docs/ai-mapping.md
+new file mode 100644
+index 0000000..347d5ed
+--- /dev/null
++++ b/docs/ai-mapping.md
+@@ -0,0 +1,52 @@
++# Human-owned mapping draft workflow
++
++The minimal draft panel is off by default. Enable server-only
++`AI_COPILOT_ENABLED=true` and `AI_MAPPING_DRAFTS_ENABLED=true`, with the existing
++BFF signing configuration. `/ops` reads flags at request time. Do not expose the
++private signing key or actor HMAC key to browser or Python environments.
++
++`POST /api/ops/ai/mapping/suggest` accepts original file base64, explicit UTF-8 or
++CP932 encoding, an active source profile ID/version, method rule/ai, and the
++synthetic-fixture declaration. The browser cannot supply vendor, actor, profile
++candidates or an executable mapping. BFF checks current OPERATOR/CSRF, reads Java
++profiles, derives vendor and the one public synthetic document scope, signs the
++body, and calls Python's draft endpoint. It checks returned digest/profile binding
++and re-reads session/profile before returning. Limits: original5MB, JSON6.7MB,
++response64KiB, outer25seconds. There is no inference or business-write retry.
++
++Header rules are the default, selected by P08's known-case comparison. Optional
++local AI uses the existing Ollama adapter; it has no paid fallback. Both are
++untrusted hints. The panel shows proposed headers, uncertainty, reason, current
++versus edited fields and any bounded authorized SOP excerpts. Vendor/encoding
++remain tied to the selected Java source profile. Manual edits remain usable when
++draft inference fails. No quality improvement, independent labels or operator
++time saving is inferred from plumbing tests.
++
++The operator edits exact source headers, chooses an immutable ID/version and SKU
++normalization, and explicitly approves creating an **inactive** profile. The
++client calls the existing protected Java publication endpoint through its existing
++BFF proxy. Activation requires a second click. Only then can the same original
++bytes be adopted for preview. No preview or confirm happens automatically. Java
++continues to enforce immutable definitions, active vendor/profile, CSV policy,
++receipt identity/expiry, actor, checksum uniqueness and stock/product guards.
++
++If create/activate returns an unknown result, editing/sending within the panel
++locks until the operator reads current profiles and acknowledges inspection.
++Matching definitions can be resumed without creating another version; absence
++from recent profiles does not prove a write failed. Acknowledgement never sends
++another write. The existing [preview/confirm recovery](supplier-handoff.md) then
++requires a new preview and explicit review after a lost confirm response. These
++UI guards are browser-local; Java remains authoritative across reloads/tabs.
++
++`npm run test:e2e:mapping` exercises mocked browser HTTP against an enabled local
++Next server. It forces a wrong hint, human correction, separate create/activate,
++renewed preview review, draft503 manual fallback and lost-create inspection.
++`tools/qa_mapping_real.py` is invoked by AI_Applied's disposable integration runner;
++it takes ephemeral operator credentials via stdin and executes real authenticated
++UTF-8/CP932 browser journeys, including a deliberately lost real202 response.
++Never point the fault-injection runner at a non-disposable business database.
++
++No Java source, auth/import/checkout semantics, dependency lock, deployment or
++persistent key provisioning is part of this change. Production multi-tenancy,
++distributed limits, durable agent runs and real stakeholder acceptance remain
++outside this synthetic local integration.
+diff --git a/docs/supplier-handoff.md b/docs/supplier-handoff.md
+index 62fbce2..6d0bbb1 100644
+--- a/docs/supplier-handoff.md
++++ b/docs/supplier-handoff.md
+@@ -30,6 +30,7 @@ identity and pending acknowledgement. It also checks mobile overflow. Its result
+ do not prove real Java/database integration or AI mapping quality. Existing Java
+ integration tests remain separate.
+ 
+-This is the first P10 increment. Signed mapping drafts, editable new inactive
+-profile creation, separate activation and real draft-to-import database-invariant
+-acceptance remain pending. Existing AI feature defaults remain off.
++The P10b [mapping draft panel](ai-mapping.md) adds signed suggestions, editable
++inactive profile creation and separate activation, followed by this workflow.
++AI feature defaults remain off. Real local integration evidence is published in
++AI_Applied; browser mock results alone are not database acceptance evidence.
+diff --git a/lib/ai-gateway/projection.ts b/lib/ai-gateway/projection.ts
+index ee76f9b..2aa2fa4 100644
+--- a/lib/ai-gateway/projection.ts
++++ b/lib/ai-gateway/projection.ts
+@@ -20,7 +20,7 @@ const validation = z.strictObject({
+   name: z.strictObject({ type: z.literal("string"), minLength: z.literal(1), maxLength: z.literal(160) }),
+   on_hand: z.strictObject({ type: z.literal("integer"), min: z.literal(0), max: z.literal(1000000) }),
+ });
+-const Profile = z.object({ profileId, version, encoding: z.enum(["UTF-8", "CP932"]), vendorCode: z.string().min(1).max(32),
++export const Profile = z.object({ profileId, version, encoding: z.enum(["UTF-8", "CP932"]), vendorCode: z.string().min(1).max(32),
+   mapping, skuNormalization: z.enum(["TRIM", "TRIM_UPPER"]), active: z.boolean(),
+   requiredFields: z.tuple([z.literal("sku"), z.literal("name"), z.literal("on_hand")]), validation,
+   normalization: z.strictObject({ sku: z.enum(["TRIM", "TRIM_UPPER"]), name: z.literal("TRIM"), on_hand: z.literal("TRIM_INTEGER") }),
+diff --git a/lib/ai-gateway/transport.ts b/lib/ai-gateway/transport.ts
+index ca93ba0..333c319 100644
+--- a/lib/ai-gateway/transport.ts
++++ b/lib/ai-gateway/transport.ts
+@@ -3,9 +3,9 @@ import { createHash, createPrivateKey, randomUUID, sign } from "node:crypto";
+ export type TransportContext = { actor_ref: string; request_id: string; run_id: string; step: number;
+   collection_ids: string[]; deadline_at: string };
+ 
+-export function signedRequest(context: TransportContext, path: "/ai/agent/step" | "/ai/knowledge/search", payload: unknown): { body: string; headers: Headers } {
++export function signedRequest(context: TransportContext, path: "/ai/agent/step" | "/ai/knowledge/search" | "/ai/mapping/suggest", payload: unknown): { body: string; headers: Headers } {
+   const body = JSON.stringify(payload);
+-  if (Buffer.byteLength(body, "utf8") > 65_536) throw new Error("INPUT_INVALID");
++  if (Buffer.byteLength(body, "utf8") > (path==="/ai/mapping/suggest"?6_700_000:65_536)) throw new Error("INPUT_INVALID");
+   const issued = Math.floor(Date.now()/1000);
+   const expires = Math.min(issued+30, Math.floor(Date.parse(context.deadline_at)/1000));
+   if (expires <= issued) throw new Error("DEADLINE_EXCEEDED");
+@@ -15,7 +15,7 @@ export function signedRequest(context: TransportContext, path: "/ai/agent/step"
+   if (!/^[A-Za-z0-9_-]{1,32}$/.test(kid)) throw new Error("CONFIGURATION_UNAVAILABLE");
+   const encoded = Buffer.from(JSON.stringify({ version: 1, issuer: "vmarket-bff", audience: "vmarket-ai",
+     mode: "integrated", kid, ...context, nonce: randomUUID(), issued_at: issued, expires_at: expires,
+-    operation: path === "/ai/agent/step" ? "agent_step" : "knowledge_search", request_digest: requestDigest,
++    operation: path === "/ai/agent/step" ? "agent_step" : path === "/ai/mapping/suggest" ? "mapping_suggest" : "knowledge_search", request_digest: requestDigest,
+   })).toString("base64url");
+   const key = createPrivateKey({ key: Buffer.from(process.env.AI_SIGNING_KEY_PKCS8_BASE64 ?? "", "base64"),
+     type: "pkcs8", format: "der" });
+diff --git a/lib/ai-mapping.test.ts b/lib/ai-mapping.test.ts
+new file mode 100644
+index 0000000..3ae2f45
+--- /dev/null
++++ b/lib/ai-mapping.test.ts
+@@ -0,0 +1,75 @@
++import { afterEach, expect, it, vi } from "vitest";
++import { handleMapping } from "./ai-mapping/handler";
++import { MappingInput } from "./ai-mapping/spec";
++import { createHash, generateKeyPairSync, verify } from "node:crypto";
++
++const columns={sku:"SKU",name:"ProductName",on_hand:"AvailableQuantity"};
++const profile={profileId:"supplier-b",version:7,encoding:"UTF-8",vendorCode:"RIVERBYTE",mapping:columns,active:true,
++  skuNormalization:"TRIM",requiredFields:["sku","name","on_hand"],validation:{sku:{type:"string",minLength:1,maxLength:64},
++  name:{type:"string",minLength:1,maxLength:160},on_hand:{type:"integer",min:0,max:1000000}},normalization:{sku:"TRIM",name:"TRIM",on_hand:"TRIM_INTEGER"}};
++const input={raw_base64:Buffer.from("SKU,ProductName,AvailableQuantity\nVM-002,Desk,60\n").toString("base64"),declared_encoding:"UTF-8",source_profile_id:"supplier-b",source_profile_version:7,method:"rule",synthetic:true};
++function request(){return new Request("http://localhost/api/ops/ai/mapping/suggest",{method:"POST",headers:{Origin:"http://localhost","Content-Type":"application/json","X-CSRF-TOKEN":"current",Cookie:"VMARKET_SESSION=session"},body:JSON.stringify(input)});}
++
++function setup(){
++  const key=generateKeyPairSync("ed25519");
++  for(const [k,v] of Object.entries({AI_COPILOT_ENABLED:"true",AI_MAPPING_DRAFTS_ENABLED:"true",BACKEND_ORIGIN:"http://java",AI_SERVICE_ORIGIN:"http://ai",AI_SIGNING_KID:"test",AI_ACTOR_HMAC_KEY:"x".repeat(64),AI_SIGNING_KEY_PKCS8_BASE64:key.privateKey.export({format:"der",type:"pkcs8"}).toString("base64")}))vi.stubEnv(k,v);
++  const seen:{url:string;init:RequestInit}[]=[];
++  const state={active:true,revoked:false,wrongHash:false};
++  const actor=crypto.randomUUID();
++  vi.stubGlobal("fetch",vi.fn(async(url:string,init:RequestInit)=>{
++    seen.push({url,init});
++    if(url.endsWith("/api/auth/session"))return Response.json({authenticated:!state.revoked,username:actor,roles:["ROLE_OPERATOR"],csrfToken:"current"});
++    if(url.endsWith("/api/ops/integration-profiles"))return Response.json([{...profile,active:state.active}]);
++    const signed=new Headers(init.headers),claims=JSON.parse(Buffer.from(signed.get("X-AI-Context")!,"base64url").toString());
++    expect(verify(null,Buffer.from("vmarket-ai-context:v1."+signed.get("X-AI-Context")),key.publicKey,Buffer.from(signed.get("X-AI-Signature")!,"base64url"))).toBe(true);
++    return Response.json({draft:{request_id:claims.request_id,raw_sha256:state.wrongHash?"a".repeat(64):createHash("sha256").update(Buffer.from(input.raw_base64,"base64")).digest("hex"),declared_encoding:"UTF-8",selected_vendor_code:"RIVERBYTE",vendor_code:"RIVERBYTE",vendor_verification:"bff_profile_snapshot",status:"suggested",assignments:Object.entries(columns).map(([target_field,source_header])=>({target_field,source_header,uncertainty:"medium",basis:"rule",reason:"Exact rule",citations:[]})),unmapped_headers:[],missing_required_fields:[],warnings:["BUSINESS_VALIDATION_REQUIRED"],reason:"RULE_BASELINE",profile_differences:[{profile_id:"supplier-b",version:7,active:true,encoding_matches:true,changes:{}}],requires_human_acceptance:true,provider_mode:"fake"},evidence:[]});
++  }));
++  return {seen,state};
++}
++
++afterEach(()=>{vi.unstubAllEnvs();vi.unstubAllGlobals();});
++it("keeps the mapping gateway off before reading a session or calling any provider",async()=>{
++  vi.stubEnv("AI_MAPPING_DRAFTS_ENABLED","false");
++  const fetch=vi.fn();vi.stubGlobal("fetch",fetch);
++  const response=await handleMapping(new Request("http://localhost/api/ops/ai/mapping/suggest",{method:"POST"}));
++  expect(response.status).toBe(503);expect(await response.json()).toEqual({code:"AI_DISABLED"});
++  expect(fetch).not.toHaveBeenCalled();
++});
++
++it("derives vendor and current version from Java, signs only the draft read and rechecks authority",async()=>{
++  const {seen}=setup();
++  const response=await handleMapping(request());
++  expect(response.status).toBe(200);
++  const ai=seen.filter(s=>s.url==="http://ai/ai/mapping/suggest");expect(ai).toHaveLength(1);
++  const payload=JSON.parse(ai[0].init.body as string);expect(payload.input.selected_vendor_code).toBe("RIVERBYTE");
++  expect(payload.profile_candidates[0].version).toBe(7);
++  const headers=new Headers(ai[0].init.headers);expect(headers.has("Cookie")).toBe(false);expect(headers.has("X-CSRF-TOKEN")).toBe(false);
++  const claims=JSON.parse(Buffer.from(headers.get("X-AI-Context")!,"base64url").toString());expect(claims.operation).toBe("mapping_suggest");
++  expect(claims.collection_ids).toEqual(["4aa83e9f-0a0a-5558-8f5e-0f87db27c923"]);
++  expect(seen.filter(s=>s.url.endsWith("integration-profiles"))).toHaveLength(2);
++  expect(seen.filter(s=>s.url.startsWith("http://java")).every(s=>s.init.method==="GET")).toBe(true);
++});
++
++it("rejects a wrong original-byte digest from the AI service",async()=>{
++  const {state}=setup();state.wrongHash=true;
++  expect((await handleMapping(request())).status).toBe(502);
++});
++
++it("discards a draft if the selected Java profile is deactivated during inference",async()=>{
++  const {state}=setup();const original=global.fetch;
++  vi.stubGlobal("fetch",async(url:string,init:RequestInit)=>{const response=await original(url,init);if(url.endsWith("/ai/mapping/suggest"))state.active=false;return response;});
++  expect((await handleMapping(request())).status).toBe(409);
++});
++
++it("discards a draft after operator revocation rather than returning cached authority",async()=>{
++  const {state}=setup();const original=global.fetch;
++  vi.stubGlobal("fetch",async(url:string,init:RequestInit)=>{const response=await original(url,init);if(url.endsWith("/ai/mapping/suggest"))state.revoked=true;return response;});
++  expect((await handleMapping(request())).status).toBe(401);
++});
++
++it("accepts only original bytes and a profile reference, never browser vendor or profile authority",()=>{
++  const input={raw_base64:"YQ==",declared_encoding:"UTF-8",source_profile_id:"supplier-b",source_profile_version:1,method:"rule",synthetic:true};
++  expect(MappingInput.safeParse(input).success).toBe(true);
++  for(const extra of [{selected_vendor_code:"NAMI"},{profile_candidates:[]},{actor_ref:"admin"},{mapping:{sku:"x"}}])
++    expect(MappingInput.safeParse({...input,...extra}).success).toBe(false);
++});
+diff --git a/lib/ai-mapping/client.ts b/lib/ai-mapping/client.ts
+new file mode 100644
+index 0000000..155f98f
+--- /dev/null
++++ b/lib/ai-mapping/client.ts
+@@ -0,0 +1,38 @@
++import { operatorFetch } from "../operator-session";
++import { Definition,ProfileSummary,MappingInput,MappingView,type MappingViewValue,type DefinitionInput,type ProfileValue,type ClientResult,type ProfileDraftSpec } from "./spec";
++import type { z } from "zod";
++
++export class ProfileDraftClient implements ProfileDraftSpec {
++  async activate(profile:ProfileValue):Promise<ClientResult<ProfileValue>>{
++    const parsed=ProfileSummary.safeParse(profile);if(!parsed.success||parsed.data.active)return {success:false,code:"INPUT_INVALID"};
++    try{
++      const response=await operatorFetch(`/api/ops/integration-profiles/${encodeURIComponent(profile.profileId)}/${profile.version}`,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({active:true})});
++      if(!response.ok)return {success:false,code:"OUTCOME_UNKNOWN"};
++      const value=ProfileSummary.safeParse(await response.json());
++      if(!value.success||JSON.stringify(value.data)!==JSON.stringify({...parsed.data,active:true}))return {success:false,code:"OUTPUT_INVALID"};
++      return {success:true,data:value.data};
++    }catch{return {success:false,code:"OUTCOME_UNKNOWN"};}
++  }
++  async publish(definition:DefinitionInput):Promise<ClientResult<ProfileValue>>{
++    const input=Definition.safeParse(definition);if(!input.success)return {success:false,code:"INPUT_INVALID"};
++    try{
++      const response=await operatorFetch("/api/ops/integration-profiles",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(input.data)});
++      if(!response.ok)return {success:false,code:"OUTCOME_UNKNOWN"};
++      const value=ProfileSummary.safeParse(await response.json());
++      if(!value.success)return {success:false,code:"OUTPUT_INVALID"};
++      const {active,...saved}=value.data;
++      if(active||JSON.stringify(saved)!==JSON.stringify(input.data))return {success:false,code:"OUTPUT_INVALID"};
++      return {success:true,data:value.data};
++    }catch{return {success:false,code:"OUTCOME_UNKNOWN"};}
++  }
++}
++
++export async function suggestMapping(input:z.infer<typeof MappingInput>,signal:AbortSignal):Promise<ClientResult<MappingViewValue>>{
++  const parsed=MappingInput.safeParse(input);if(!parsed.success)return {success:false,code:"INPUT_INVALID"};
++  try{
++    const response=await operatorFetch("/api/ops/ai/mapping/suggest",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(parsed.data),signal});
++    if(!response.ok)return {success:false,code:"REQUEST_FAILED"};
++    const value=MappingView.safeParse(await response.json());
++    return value.success?{success:true,data:value.data}:{success:false,code:"OUTPUT_INVALID"};
++  }catch{return {success:false,code:"REQUEST_FAILED"};}
++}
+diff --git a/lib/ai-mapping/handler.ts b/lib/ai-mapping/handler.ts
+new file mode 100644
+index 0000000..6bd0ab1
+--- /dev/null
++++ b/lib/ai-mapping/handler.ts
+@@ -0,0 +1,75 @@
++import { createHash, createHmac, randomUUID } from "node:crypto";
++import { z } from "zod";
++import { JavaSession,readBounded } from "../ai-gateway/io";
++import { Profile } from "../ai-gateway/projection";
++import { signedRequest } from "../ai-gateway/transport";
++import { actorRateLimit } from "../ai-gateway/limits";
++import type { AgentGatewaySpec,GatewayFailure,Result } from "../ai-gateway/spec";
++import { MappingInput,MappingOutput } from "./spec";
++
++const scopes:Record<string,string>={NAMI:"ed76d914-7c66-5102-9178-676334063938",RIVERBYTE:"4aa83e9f-0a0a-5558-8f5e-0f87db27c923"};
++const fail=(code:GatewayFailure,status:number):Result<never>=>({success:false,code,status});
++export class MappingGatewayHandler implements AgentGatewaySpec {
++  readonly requestId=randomUUID();readonly cookies:string[]=[];
++  async execute(request:Request):Promise<Result<unknown>>{
++    if(process.env.AI_COPILOT_ENABLED!=="true"||process.env.AI_MAPPING_DRAFTS_ENABLED!=="true")return fail("AI_DISABLED",503);
++    const controller=new AbortController(),signal=AbortSignal.any([request.signal,controller.signal]);
++    const deadline=Date.now()+25000,timer=setTimeout(()=>controller.abort(),25000);
++    let abort=()=>{};
++    try{return await Promise.race([this.run(request,signal,deadline),new Promise<Result<never>>(resolve=>{
++      abort=()=>resolve(fail("DEADLINE_EXCEEDED",request.signal.aborted?499:504));
++      signal.addEventListener("abort",abort,{once:true});if(signal.aborted)abort();
++    })]);}catch{return fail(signal.aborted?"DEADLINE_EXCEEDED":"DEPENDENCY_UNAVAILABLE",signal.aborted?504:503);}
++    finally{clearTimeout(timer);signal.removeEventListener("abort",abort);controller.abort();}
++  }
++  private async run(request:Request,signal:AbortSignal,deadline:number):Promise<Result<unknown>>{
++    const url=new URL(request.url);if(request.headers.get("host"))url.host=request.headers.get("host")!;
++    if(request.method!=="POST"||request.headers.get("origin")!==url.origin||request.headers.get("sec-fetch-site")==="cross-site")return fail("ACCESS_DENIED",403);
++    let input;
++    try{input=MappingInput.parse(JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(request,6700000,signal))));}
++    catch(error){return fail("INPUT_INVALID",error instanceof Error&&error.message==="BODY_LIMIT"?413:400);}
++    const raw=Buffer.from(input.raw_base64,"base64");
++    if(!raw.length||raw.length>5000000||raw.toString("base64")!==input.raw_base64)return fail("INPUT_INVALID",400);
++    const session=new JavaSession(request,signal,this.requestId);
++    try{
++      const auth=await session.check(undefined,true);if(!auth.success)return auth;
++      const key=process.env.AI_ACTOR_HMAC_KEY??"",origin=process.env.AI_SERVICE_ORIGIN?.replace(/\/$/,"");
++      if(Buffer.byteLength(key)<32||!origin||!/^https?:\/\//.test(origin))return fail("CONFIGURATION_UNAVAILABLE",503);
++      const actor=createHmac("sha256",key).update("vmarket-ai-actor:v1\n"+auth.data).digest("hex");
++      if(!actorRateLimit.consume(actor))return fail("BUDGET_EXCEEDED",429);
++      const readProfile=async()=>{
++        const response=await session.get("/api/ops/integration-profiles");
++        if(!response.ok){void response.body?.cancel();return null;}
++        const profiles=z.array(Profile).max(100).parse(JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(response,5000000,signal))));
++        return profiles.find(p=>p.profile_id===input.source_profile_id&&p.version===input.source_profile_version&&p.active&&p.encoding===input.declared_encoding)??null;
++      };
++      const profile=await readProfile();if(!profile)return fail(session.authorizationStatus?"ACCESS_DENIED":"STEP_CONFLICT",session.authorizationStatus??409);
++      const scope=scopes[profile.vendor_code];
++      const configured=process.env.AI_COLLECTION_IDS_JSON?JSON.parse(process.env.AI_COLLECTION_IDS_JSON) as unknown:Object.values(scopes);
++      if(!Array.isArray(configured)||configured.some(s=>!Object.values(scopes).includes(s)))return fail("CONFIGURATION_UNAVAILABLE",503);
++      if(!scope||!configured.includes(scope))return fail("ACCESS_DENIED",403);
++      const {sku_normalization:_normalization,required_fields:_fields,...candidate}=profile;
++      const signed=signedRequest({actor_ref:actor,request_id:this.requestId,run_id:randomUUID(),step:0,collection_ids:[scope],deadline_at:new Date(deadline).toISOString()},"/ai/mapping/suggest",{
++        input:{raw_base64:input.raw_base64,declared_encoding:input.declared_encoding,selected_vendor_code:profile.vendor_code,profile_ids:[profile.profile_id],method:input.method,synthetic:true},profile_candidates:[candidate],
++      });
++      signal.throwIfAborted();
++      const response=await fetch(origin+"/ai/mapping/suggest",{method:"POST",...signed,signal,redirect:"error",cache:"no-store"});
++      if(!response.ok){void response.body?.cancel();const status=[400,401,403,409,413,429,504].includes(response.status)?response.status:503;return fail(status===504?"DEADLINE_EXCEEDED":status===401||status===403?"ACCESS_DENIED":status===409?"STEP_CONFLICT":status===400||status===413?"INPUT_INVALID":"DEPENDENCY_UNAVAILABLE",status);}
++      const result=MappingOutput.safeParse(JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(response,65536,signal))));
++      if(!result.success)return fail("OUTPUT_INVALID",502);
++      const draft=result.data.draft,diff=draft.profile_differences[0];
++      if(draft.request_id!==this.requestId||draft.raw_sha256!==createHash("sha256").update(raw).digest("hex")||draft.declared_encoding!==profile.encoding||draft.vendor_code!==profile.vendor_code||draft.selected_vendor_code!==profile.vendor_code||diff.profile_id!==profile.profile_id||diff.version!==profile.version||!diff.active||!diff.encoding_matches)return fail("OUTPUT_INVALID",502);
++      const finalAuth=await session.check(auth.data,true);if(!finalAuth.success)return finalAuth;
++      const current=await readProfile();if(!current||JSON.stringify(current)!==JSON.stringify(profile))return fail(session.authorizationStatus?"ACCESS_DENIED":"STEP_CONFLICT",session.authorizationStatus??409);
++      signal.throwIfAborted();
++      return {success:true,data:{...result.data,source_profile:profile}};
++    }finally{this.cookies.push(...session.refreshedCookies);}
++  }
++}
++
++export async function handleMapping(request:Request):Promise<Response>{
++  const handler=new MappingGatewayHandler(),result=await handler.execute(request);
++  const headers=new Headers({"Cache-Control":"no-store","X-Request-ID":handler.requestId});
++  for(const cookie of handler.cookies)headers.append("Set-Cookie",cookie);
++  return Response.json(result.success?result.data:{code:result.code},{status:result.success?200:result.status,headers});
++}
+diff --git a/lib/ai-mapping/spec.ts b/lib/ai-mapping/spec.ts
+new file mode 100644
+index 0000000..9e38686
+--- /dev/null
++++ b/lib/ai-mapping/spec.ts
+@@ -0,0 +1,45 @@
++import { z } from "zod";
++import { uuid } from "../ai-gateway/spec";
++
++export const MappingInput=z.strictObject({raw_base64:z.string().min(4).max(6_666_668),
++  declared_encoding:z.enum(["UTF-8","CP932"]),source_profile_id:z.string().regex(/^[a-z][a-z0-9-]{0,47}$/),
++  source_profile_version:z.number().int().min(1).max(2147483647),method:z.enum(["rule","ai"]),synthetic:z.literal(true)});
++
++export const Header=z.string().min(1).max(80).refine(s=>s===s.trim()&&![...s].some(c=>c.charCodeAt(0)<32||(c.charCodeAt(0)>=127&&c.charCodeAt(0)<=159)));
++export const Columns=z.strictObject({sku:Header,name:Header,on_hand:Header}).refine(m=>new Set(Object.values(m)).size===3);
++const Target=z.enum(["sku","name","on_hand"]);
++const Citation=z.strictObject({document_id:uuid,version_id:uuid,chunk_id:uuid,
++  locator:z.strictObject({kind:z.enum(["section","page"]),value:z.union([z.string().min(1).max(160),z.number().int().min(1).max(200)])}),
++  source_url:z.string().regex(/^\/ai\/citations\/[0-9a-f-]{36}$/),
++});
++export const MappingDraft=z.strictObject({request_id:uuid,raw_sha256:z.string().regex(/^[a-f0-9]{64}$/),
++  declared_encoding:z.enum(["UTF-8","CP932"]),selected_vendor_code:z.string().min(1).max(32),vendor_code:z.string().min(1).max(32),
++  vendor_verification:z.literal("bff_profile_snapshot"),status:z.enum(["suggested","needs_review","abstained"]),
++  assignments:z.array(z.strictObject({source_header:Header,target_field:Target,uncertainty:z.enum(["low","medium","high","unknown"]),
++    basis:z.enum(["rule","document","model"]),reason:z.string().min(1).max(500),citations:z.array(Citation).max(5)})).max(3),
++  unmapped_headers:z.array(Header).max(100),missing_required_fields:z.array(Target).max(3),
++  warnings:z.array(z.enum(["AMBIGUOUS_HEADER","UNMAPPED_HEADER","FRESHNESS_UNVERIFIED","VENDOR_NOT_VERIFIED","ENCODING_DECLARED","SOURCE_UNTRUSTED","RULE_BASELINE","MODEL_UNAVAILABLE","MODEL_OUTPUT_INVALID","BUSINESS_VALIDATION_REQUIRED","PROFILE_MISMATCH","SAMPLE_TRUNCATED","ROW_REVIEW_REQUIRED","NO_AUTHORIZED_SOP"])).max(14),
++  reason:z.string().min(1).max(500),profile_differences:z.array(z.strictObject({profile_id:z.string().max(48),version:z.number().int().min(1),active:z.boolean(),encoding_matches:z.boolean(),
++    changes:z.partialRecord(Target,z.tuple([Header,Header.nullable()]))})).length(1),requires_human_acceptance:z.literal(true),provider_mode:z.enum(["fake","local"]),
++}).refine(d=>{
++  const fields=d.assignments.map(a=>a.target_field),headers=d.assignments.map(a=>a.source_header);
++  return new Set(fields).size===fields.length&&new Set(headers).size===headers.length&&
++    (d.status!=="suggested"||fields.length===3)&&(d.status!=="abstained"||fields.length===0)&&
++    JSON.stringify(d.missing_required_fields)===JSON.stringify(["sku","name","on_hand"].filter(t=>!fields.includes(t as z.infer<typeof Target>)))&&
++    new Set(d.unmapped_headers).size===d.unmapped_headers.length&&!d.unmapped_headers.some(h=>headers.includes(h));
++});
++export const MappingOutput=z.strictObject({draft:MappingDraft,evidence:z.array(z.strictObject({citation:Citation,excerpt:z.string().min(1).max(2000)})).max(2)});
++export type Draft=z.infer<typeof MappingDraft>;
++
++export const Definition=z.strictObject({profileId:z.string().regex(/^[a-z][a-z0-9-]{0,47}$/),version:z.number().int().min(1).max(2147483647),
++  encoding:z.enum(["UTF-8","CP932"]),vendorCode:z.string().min(1).max(32),mapping:Columns,skuNormalization:z.enum(["TRIM","TRIM_UPPER"])});
++export const ProfileSummary=z.object({...Definition.shape,active:z.boolean()});
++export type DefinitionInput=z.infer<typeof Definition>;
++export type ProfileValue=z.infer<typeof ProfileSummary>;
++export type ClientResult<T>={success:true;data:T}|{success:false;code:"INPUT_INVALID"|"REQUEST_FAILED"|"OUTCOME_UNKNOWN"|"OUTPUT_INVALID"};
++export interface ProfileDraftSpec {
++  publish(definition:DefinitionInput):Promise<ClientResult<ProfileValue>>;
++  activate(profile:ProfileValue):Promise<ClientResult<ProfileValue>>;
++}
++export const MappingView=MappingOutput.extend({source_profile:z.strictObject({profile_id:z.string().max(48),version:z.number().int().min(1),vendor_code:z.string().max(32),encoding:z.enum(["UTF-8","CP932"]),mapping:Columns,sku_normalization:z.enum(["TRIM","TRIM_UPPER"]),active:z.literal(true),required_fields:z.tuple([z.literal("sku"),z.literal("name"),z.literal("on_hand")])})});
++export type MappingViewValue=z.infer<typeof MappingView>;
+diff --git a/lib/profile-drafts.test.ts b/lib/profile-drafts.test.ts
+new file mode 100644
+index 0000000..4d4b884
+--- /dev/null
++++ b/lib/profile-drafts.test.ts
+@@ -0,0 +1,21 @@
++import { afterEach,expect,it,vi } from "vitest";
++import { ProfileDraftClient } from "./ai-mapping/client";
++afterEach(()=>vi.unstubAllGlobals());
++it("creates only an inactive version on an explicit call and never activates or imports it",async()=>{
++  const definition={profileId:"operator-draft",version:1,encoding:"UTF-8" as const,vendorCode:"RIVERBYTE",mapping:{sku:"SKU",name:"ProductName",on_hand:"AvailableQuantity"},skuNormalization:"TRIM" as const};
++  const fetch=vi.fn(async(url:string)=>url==="/api/auth/session"?Response.json({authenticated:true,csrfToken:"current"}):Response.json({...definition,active:false}));
++  vi.stubGlobal("fetch",fetch);
++  const result=await new ProfileDraftClient().publish(definition);
++  expect(result.success).toBe(true);expect(fetch).toHaveBeenCalledTimes(2);
++  expect(fetch.mock.calls[1][0]).toBe("/api/ops/integration-profiles");
++});
++
++it("activates only a saved profile on a separate call with current CSRF",async()=>{
++  const saved={profileId:"operator-draft",version:2,encoding:"UTF-8" as const,vendorCode:"RIVERBYTE",mapping:{sku:"SKU",name:"ProductName",on_hand:"AvailableQuantity"},skuNormalization:"TRIM" as const,active:false};
++  const calls:{url:string;init?:RequestInit}[]=[];
++  vi.stubGlobal("fetch",async(url:string,init?:RequestInit)=>{calls.push({url,init});return url==="/api/auth/session"?Response.json({authenticated:true,csrfToken:"fresh"}):Response.json({...saved,active:true});});
++  expect((await new ProfileDraftClient().activate(saved)).success).toBe(true);
++  expect(calls[1].url).toBe("/api/ops/integration-profiles/operator-draft/2");expect(calls[1].init?.method).toBe("PATCH");
++  expect(JSON.parse(calls[1].init?.body as string)).toEqual({active:true});
++  expect(new Headers(calls[1].init?.headers).get("X-CSRF-TOKEN")).toBe("fresh");
++});
+diff --git a/package.json b/package.json
+index 1faa149..fd45908 100644
+--- a/package.json
++++ b/package.json
+@@ -15,7 +15,8 @@
+     "verify": "npm run test && npm run lint && npm run typecheck && npm run build",
+     "test": "vitest run",
+     "test:e2e": "python tools/qa_playwright.py",
+-    "test:e2e:handoff": "python tools/qa_supplier_handoff.py"
++    "test:e2e:handoff": "python tools/qa_supplier_handoff.py",
++    "test:e2e:mapping": "python tools/qa_mapping_drafts.py"
+   },
+   "dependencies": {
+     "@opennextjs/cloudflare": "1.20.12",
+diff --git a/tools/qa_mapping_drafts.py b/tools/qa_mapping_drafts.py
+new file mode 100644
+index 0000000..1191dc5
+--- /dev/null
++++ b/tools/qa_mapping_drafts.py
+@@ -0,0 +1,123 @@
++"""Browser-only draft review/explicit publish/activation acceptance; HTTP is mocked."""
++import base64
++import hashlib
++import json
++import os
++import time
++from pathlib import Path
++from playwright.sync_api import expect, sync_playwright
++
++OUT = Path(os.environ.get("QA_ARTIFACT_DIR", ".local/p10b-browser"))
++OUT.mkdir(parents=True, exist_ok=True)
++BASE = os.environ.get("BASE_URL", "http://127.0.0.1:3000")
++
++
++def main():
++    with sync_playwright() as p:
++        browser = p.chromium.launch(headless=True)
++        page = browser.new_page(viewport={"width": 1440, "height": 1100})
++        page.set_default_timeout(5000)
++        columns = {"sku": "SKU", "name": "ProductName", "on_hand": "AvailableQuantity"}
++        profiles = [{"profileId": "supplier-b", "version": 1, "encoding": "UTF-8", "vendorCode": "RIVERBYTE", "mapping": columns, "skuNormalization": "TRIM", "active": True}]
++        state = {"draft": 0, "publish": 0, "activate": 0, "preview": 0, "confirm": 0}
++        faults = {"draft_unavailable": False, "publish_lost": False}
++        original = None
++
++        def api(route):
++            nonlocal original
++            request = route.request
++            path = request.url.split("/api/", 1)[1]
++            if path == "auth/session":
++                data = {"authenticated": True, "username": "synthetic", "roles": ["ROLE_OPERATOR"], "csrfToken": "fixture"}
++            elif path == "ops/ai/mapping/suggest":
++                state["draft"] += 1
++                if faults["draft_unavailable"]:
++                    route.fulfill(status=503, json={"code": "CONTROLLED_UNAVAILABLE"})
++                    return
++                body = request.post_data_json
++                assert "selected_vendor_code" not in body and "profile_candidates" not in body
++                original = base64.b64decode(body["raw_base64"])
++                # Deliberately wrong but structurally valid hint; human corrects both columns.
++                wrong = {"sku": "ProductName", "name": "SKU", "on_hand": "AvailableQuantity"}
++                data = {"draft": {"request_id": "11111111-1111-4111-8111-111111111111", "raw_sha256": hashlib.sha256(original).hexdigest(), "declared_encoding": "UTF-8", "selected_vendor_code": "RIVERBYTE", "vendor_code": "RIVERBYTE", "vendor_verification": "bff_profile_snapshot", "status": "needs_review", "assignments": [{"source_header": v, "target_field": k, "uncertainty": "high", "basis": "model", "reason": "Controlled wrong hint", "citations": []} for k, v in wrong.items()], "unmapped_headers": [], "missing_required_fields": [], "warnings": ["BUSINESS_VALIDATION_REQUIRED"], "reason": "HUMAN_REVIEW_REQUIRED", "profile_differences": [{"profile_id": "supplier-b", "version": 1, "active": True, "encoding_matches": True, "changes": {}}], "requires_human_acceptance": True, "provider_mode": "fake"}, "evidence": [], "source_profile": {"profile_id": "supplier-b", "version": 1, "encoding": "UTF-8", "vendor_code": "RIVERBYTE", "mapping": columns, "sku_normalization": "TRIM", "active": True, "required_fields": ["sku", "name", "on_hand"]}}
++            elif path == "ops/integration-profiles":
++                if request.method == "POST":
++                    state["publish"] += 1
++                    data = {**request.post_data_json, "active": False}
++                    assert data["mapping"] == columns
++                    profiles.append(data)
++                    if faults["publish_lost"]:
++                        route.fulfill(status=502, json={"code": "CONTROLLED_LOST_CREATE"})
++                        return
++                else:
++                    data = profiles
++            elif path.startswith("ops/integration-profiles/"):
++                state["activate"] += 1
++                assert request.method == "PATCH" and request.post_data_json == {"active": True}
++                profiles[-1]["active"] = True
++                data = profiles[-1]
++            elif path.endswith("/preview"):
++                state["preview"] += 1
++                assert request.post_data_buffer == original
++                data = {"profileId": profiles[-1]["profileId"], "version": 1, "encoding": "UTF-8", "mapping": columns, "acceptedRows": 1, "rejectedRows": 0, "sample": [], "errors": [], "confirmationReceipt": f"{int(time.time())+600}:" + ":".join(["a" * 64] * 3)}
++            elif path.endswith("/confirm"):
++                state["confirm"] += 1
++                assert request.post_data_buffer == original
++                data = {"id": "mock-human-import", "status": "STAGED", "sourceName": "synthetic.csv", "encoding": "UTF-8", "totalRows": 1, "validRows": 1, "appliedRows": 0, "rejectedRows": 0, "checkpointRow": 0, "createdAt": "2026-11-01T00:00:00Z"}
++            else:
++                data = []
++            route.fulfill(json=data)
++
++        page.route("**/api/**", api)
++        page.goto(BASE + "/ops")
++        page.wait_for_load_state("networkidle")
++        panel = page.get_by_role("region", name="Mapping draft / human review")
++        panel.get_by_role("button", name="Suggest mapping", exact=True).click()
++        expect(panel.get_by_text("Controlled wrong hint", exact=False).first).to_be_visible()
++        assert state == {"draft": 1, "publish": 0, "activate": 0, "preview": 0, "confirm": 0}
++        panel.get_by_label("Source column for sku", exact=True).fill("SKU")
++        panel.get_by_label("Source column for name", exact=True).fill("ProductName")
++        panel.get_by_label("New profile ID", exact=True).fill("human-reviewed")
++        panel.get_by_label("New profile version", exact=True).fill("1")
++        expect(panel.get_by_role("button", name="Create inactive profile", exact=True)).to_be_disabled()
++        panel.get_by_role("checkbox").check()
++        panel.get_by_role("button", name="Create inactive profile", exact=True).click()
++        expect(panel.get_by_role("button", name="Activate saved profile", exact=True)).to_be_visible()
++        assert state["publish"] == 1 and state["activate"] == 0 and state["preview"] == 0
++        page.screenshot(path=str(OUT / "inactive-profile.png"), full_page=True)
++        panel.get_by_role("button", name="Activate saved profile", exact=True).click()
++        expect(page.get_by_label("Supplier profile version")).to_have_value("human-reviewed:1")
++        assert state["activate"] == 1 and state["preview"] == 0 and state["confirm"] == 0
++        supplier = page.locator('section[aria-labelledby="supplier-heading"]')
++        supplier.get_by_role("button", name="Preview & validate", exact=True).click()
++        expect(supplier.get_by_role("button", name="Confirm & queue", exact=True)).to_be_disabled()
++        supplier.get_by_role("checkbox").last.check()
++        supplier.get_by_role("button", name="Confirm & queue", exact=True).click()
++        expect(supplier.get_by_text("Acknowledged job mock-human-import", exact=False)).to_be_visible()
++        assert state == {"draft": 1, "publish": 1, "activate": 1, "preview": 1, "confirm": 1}
++        faults["draft_unavailable"] = True
++        panel.get_by_role("button", name="Suggest mapping", exact=True).click()
++        expect(panel.get_by_text("Draft unavailable.", exact=False)).to_be_visible()
++        expect(panel.get_by_label("Source column for sku", exact=True)).to_be_enabled()
++        assert state["publish"] == 1
++        panel.get_by_label("New profile ID", exact=True).fill("manual-fallback")
++        panel.get_by_role("checkbox").check()
++        faults["publish_lost"] = True
++        panel.get_by_role("button", name="Create inactive profile", exact=True).click()
++        expect(panel.get_by_role("button", name="Inspect saved profiles", exact=True)).to_be_visible()
++        expect(panel.get_by_role("button", name="Create inactive profile", exact=True)).to_be_disabled()
++        assert state["publish"] == 2
++        panel.get_by_role("button", name="Inspect saved profiles", exact=True).click()
++        expect(panel.get_by_text("Matching version found: inactive.", exact=True)).to_be_visible()
++        panel.get_by_role("button", name="I inspected the profile outcome", exact=True).click()
++        expect(panel.get_by_text("Saved manual-fallback", exact=False)).to_be_visible()
++        assert state == {"draft": 2, "publish": 2, "activate": 1, "preview": 1, "confirm": 1}
++        page.set_viewport_size({"width": 390, "height": 844})
++        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
++        page.screenshot(path=str(OUT / "manual-fallback-mobile.png"), full_page=True)
++        browser.close()
++        (OUT / "report.json").write_text(json.dumps({"scope": "mocked HTTP browser only", "passed": True, "counts": state}, indent=2))
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tools/qa_mapping_real.py b/tools/qa_mapping_real.py
+new file mode 100644
+index 0000000..2bcd508
+--- /dev/null
++++ b/tools/qa_mapping_real.py
+@@ -0,0 +1,94 @@
++"""Real local OPERATOR browser. Credentials arrive on stdin, never command arguments."""
++import base64
++import json
++import sys
++from pathlib import Path
++from playwright.sync_api import expect, sync_playwright
++
++
++def main(config):
++    output = Path(config["output"])
++    output.mkdir(parents=True, exist_ok=True)
++    with sync_playwright() as p:
++        browser = p.chromium.launch(headless=True)
++        page = browser.new_page(viewport={"width": 1440, "height": 1100})
++        page.set_default_timeout(10000)
++        page.goto(config["base"] + "/ops")
++        page.wait_for_load_state("networkidle")
++        page.get_by_label("Username", exact=True).fill(config["username"])
++        page.get_by_label("Password", exact=True).fill(config["password"])
++        page.get_by_role("button", name="Sign in", exact=True).click()
++        expect(page.get_by_role("heading", name="OPERATIONS LEDGER")).to_be_visible()
++        records = []
++        for supplier, encoding, profile_id, text in [
++            ("supplier-b", "utf-8", "browser-b", "SKU,ProductName,AvailableQuantity\r\nVM-002,Reviewed desk,60\r\n"),
++            ("supplier-a", "cp932", "browser-a", "商品コード,商品名,在庫数\r\nVM-001,確認済み商品,32\r\n"),
++        ]:
++            raw = text.encode(encoding)
++            source = page.get_by_label("Supplier profile version", exact=True)
++            source.select_option(supplier + ":1")
++            page.get_by_label("Supplier original CSV file", exact=True).set_input_files({"name": profile_id + ".csv", "mimeType": "text/csv", "buffer": raw})
++            panel = page.get_by_role("region", name="Mapping draft / human review")
++            with page.expect_response(lambda r: r.url.endswith("/api/ops/ai/mapping/suggest")) as suggested:
++                panel.get_by_role("button", name="Suggest mapping", exact=True).click()
++            assert suggested.value.status == 200, "Real signed mapping unavailable"
++            draft = suggested.value.json()["draft"]
++            assert draft["vendor_verification"] == "bff_profile_snapshot"
++            panel.get_by_label("New profile ID", exact=True).fill(profile_id)
++            panel.get_by_label("New profile version", exact=True).fill("1")
++            panel.get_by_role("checkbox").check()
++            with page.expect_response(lambda r: r.url.endswith("/api/ops/integration-profiles") and r.request.method == "POST") as published:
++                panel.get_by_role("button", name="Create inactive profile", exact=True).click()
++            assert published.value.status == 201 and published.value.json()["active"] is False
++            page.screenshot(path=str(output / (profile_id + "-inactive.png")), full_page=True)
++            panel.get_by_role("button", name="Activate saved profile", exact=True).click()
++            expect(source).to_have_value(profile_id + ":1")
++            section = page.locator('section[aria-labelledby="supplier-heading"]')
++            with page.expect_response(lambda r: r.url.endswith("/preview")) as preview:
++                section.get_by_role("button", name="Preview & validate", exact=True).click()
++            assert preview.value.status == 200 and preview.value.json()["acceptedRows"] == 1
++            expect(section.get_by_role("button", name="Confirm & queue", exact=True)).to_be_disabled()
++            section.get_by_role("checkbox").last.check()
++            if supplier == "supplier-b":
++                captured = {}
++
++                def lose_response(route):
++                    response = route.fetch()
++                    assert response.status == 202
++                    captured["job_id"] = response.json()["id"]
++                    route.fulfill(status=502, json={"code": "CONTROLLED_LOST_202"})
++
++                page.route("**/confirm", lose_response)
++                section.get_by_role("button", name="Confirm & queue", exact=True).click()
++                expect(section.get_by_role("button", name="Inspect current Import runs", exact=True)).to_be_visible()
++                expect(section.get_by_role("button", name="Preview & validate", exact=True)).to_be_disabled()
++                page.unroute("**/confirm", lose_response)
++                section.get_by_role("button", name="Inspect current Import runs", exact=True).click()
++                expect(section.get_by_text(captured["job_id"], exact=False).last).to_be_visible()
++                section.get_by_role("button", name="I inspected the jobs", exact=False).click()
++                with page.expect_response(lambda r: r.url.endswith("/preview")) as renewed:
++                    section.get_by_role("button", name="Preview & validate", exact=True).click()
++                assert renewed.value.status == 200
++                expect(section.get_by_role("button", name="Confirm & queue", exact=True)).to_be_visible()
++                expect(section.get_by_role("checkbox").last).not_to_be_checked()
++                section.get_by_role("checkbox").last.check()
++                with page.expect_response(lambda r: r.url.endswith("/confirm")) as retried:
++                    section.get_by_role("button", name="Confirm & queue", exact=True).click()
++                assert retried.value.status == 202 and retried.value.json()["id"] == captured["job_id"]
++                job_id = captured["job_id"]
++            else:
++                with page.expect_response(lambda r: r.url.endswith("/confirm")) as confirmed:
++                    section.get_by_role("button", name="Confirm & queue", exact=True).click()
++                assert confirmed.value.status == 202
++                job_id = confirmed.value.json()["id"]
++            expect(section.get_by_text("Pending: stock application is not yet confirmed.", exact=False)).to_be_visible()
++            records.append({"profile_id": profile_id, "job_id": job_id, "encoding": encoding, "raw_base64": base64.b64encode(raw).decode(), "lost_202_recovered": supplier == "supplier-b"})
++        page.set_viewport_size({"width": 390, "height": 844})
++        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
++        page.screenshot(path=str(output / "real-mobile.png"), full_page=True)
++        browser.close()
++    print(json.dumps({"status": "PASS", "records": records}))
++
++
++if __name__ == "__main__":
++    main(json.load(sys.stdin))
+-- 
+2.51.0.windows.1
+

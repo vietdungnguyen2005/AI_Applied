@@ -1,0 +1,14 @@
+unformatted: File would be reformatted
+  --> src\vmarket_ai\settings.py:77:16
+   |
+76 |
+   -             if (
+   -                 not self.agent_enabled
+   -                 or self.qa_enabled
+   -                 or self.private_container
+   -             ):
+77 +             if not self.agent_enabled or self.qa_enabled or self.private_container:
+78 |                 raise ValueError("Integrated mode requires signed gateway and disables unsigned QA")
+   |
+
+1 file would be reformatted, 81 files already formatted

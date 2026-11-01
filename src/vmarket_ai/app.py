@@ -201,7 +201,7 @@ def create_app(
         )
         return JSONResponse(response.model_dump(), status_code=200 if available else 503)
 
-    if config.qa_enabled or config.mapping_enabled:
+    if config.mode == "standalone" and (config.qa_enabled or config.mapping_enabled):
         if qa_service is None:
             evidence = PostgresEvidence(database, config)
             chat: ChatModel

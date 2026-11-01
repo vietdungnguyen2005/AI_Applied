@@ -1,6 +1,6 @@
 # V-Market AI Operations Copilot
 
-Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Foundation through P09 extractive Q&A, mapping drafts and read-only agent/BFF gateway is implemented. P10 is in progress: human preview expiry/recovery guards are verified; the full AI draft/profile handoff remains pending.** Live comparative QA evaluation is partial. No production deployment or real customer outcome is claimed.
+Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Technical implementation through P10 includes extractive Q&A, signed mapping drafts, a read-only agent/BFF gateway and explicit human profile/preview/confirm handoff. Real disposable CP932/UTF-8 browser and DB invariant checks pass.** Model-quality evaluation and independent human acceptance remain partial. No production deployment or real customer outcome is claimed.
 
 Default service exposes only `/health`, `/ready` and `/openapi.json`. P07 adds [opt-in host-loopback ask/citation routes](docs/qa.md). Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
 
@@ -72,7 +72,8 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 ## Status and evidence
 
 - [P09 read-only gateway](docs/gateway.md): signed context/replay protection, bounded intent loop, feature-OFF Project2 BFF patch and real disposable OPERATOR tests. [Evidence](docs/evidence/P09.md).
-- [P10a human confirmation recovery](docs/evidence/P10a.md): server receipt expiry, no automatic confirm retry, explicit Import runs inspection and fresh review; production browser checks and an incremental Project2 patch. P10 is not complete.
+- [P10a human confirmation recovery](docs/evidence/P10a.md): first increment with server receipt expiry, no automatic confirm retry, explicit Import runs inspection and fresh review; production browser checks and an incremental Project2 patch.
+- [P10b signed mapping and human handoff](docs/evidence/P10b.md): current Java profile snapshots, manual edit/create inactive/activate, real browser lost202 recovery and DB rejection/idempotency checks. Completes the P10 technical increment; human acceptance remains pending.
 - [P08 mapping drafts](docs/mapping.md): original-byte hash/storage, server-owned three-field policy, bounded local AI or exact header rules, provenance and profile differences. Human acceptance remains required; no profile/import write. [Evidence](docs/evidence/P08.md).
 - [P07 extractive QA](docs/qa.md): English/Japanese live quote/citation smoke passed; full live baseline comparison remains partial. One real request is unsettled, so the provider ledger remains blocked. Fake mode and offline checks remain usable. [Evidence](docs/evidence/P07.md).
 
@@ -84,4 +85,4 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 - [Source-of-truth boundaries](docs/source-of-truth.md), [threat model](docs/threat-model.md), [design review](docs/design-review-checklist.md).
 - [Historical provider connectivity](docs/provider-connectivity-2026-10-31.md): a dated API snapshot, not RAG/product evaluation.
 
-Project2 has the additive feature-OFF P09 gateway in a local commit/reviewable patch; Java/business code is unchanged. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, integrated authentication, durable agent, independently validated answer quality, actual customer UAT or public production rollout is claimed.
+Project2 has additive feature-OFF P09/P10 integration in local commits/reviewable patches; Java/business code is unchanged. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, durable agent, independently validated answer quality, actual customer UAT or public production rollout is claimed.
