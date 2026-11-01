@@ -1,0 +1,15 @@
+{
+  "base_commit": "95086a77dfa10f147f6b0bf2a7a85b25e35cfdac",
+  "scanned_files": 542,
+  "sensitive_values_checked": 3,
+  "secret_matches": 0,
+  "frozen_datasets_evaluation_outputs_unchanged": true,
+  "project2_clean_local_commit": "4febdf55c9fb8ef1e4e3becb5d1622c5f4c3a6f6",
+  "project2_patch_verified": true,
+  "Project2_remote_push": false,
+  "production_deployment": false,
+  "persistent_secret_provisioning": false,
+  "external_provider_inference_calls": 0,
+  "provider_ledger_unchanged": true,
+  "model_weights_committed": false
+}

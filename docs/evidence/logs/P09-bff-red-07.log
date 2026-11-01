@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (6 tests | 1 failed) 30ms
+   × projects stored reconciliation reports without values/notes and validates discrepancy types 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > projects stored reconciliation reports without values/notes and validates discrepancy types
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ lib/ai-gateway.test.ts:73:26
+     71|     discrepancies: [{ sku: "VM-002", type: "QUANTITY_MISMATCH", expect…
+     72|   const result = projectTool("get_reconciliation_report", raw);
+     73|   expect(result.success).toBe(true);
+       |                          ^
+     74|   expect(JSON.stringify(result)).not.toContain("private");
+     75|   expect(projectTool("get_reconciliation_report", { ...raw, discrepanc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  14:43:21
+   Duration  342ms (transform 43ms, setup 0ms, import 152ms, tests 30ms, environment 0ms)
+

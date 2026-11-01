@@ -2,8 +2,8 @@
 install:
 	python -m uv sync --locked
 lint:
-	python -m uv run --frozen ruff check src tests migrations tools/validate_contracts.py evals/retrieval/analyze.py evals/mapping/analyze.py
-	python -m uv run --frozen ruff format --check src tests migrations tools/validate_contracts.py evals/retrieval/analyze.py evals/mapping/analyze.py
+	python -m uv run --frozen ruff check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py
+	python -m uv run --frozen ruff format --check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py
 typecheck:
 	python -m uv run --frozen mypy
 test:

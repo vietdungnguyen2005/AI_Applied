@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (5 tests | 1 failed) 30ms
+   × bounds inspection errors and replaces unknown row text with a code 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > bounds inspection errors and replaces unknown row text with a code
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ lib/ai-gateway.test.ts:62:26
+     60|   const result = projectTool("inspect_import_job", { job: rawJob, work…
+     61|     restartAllowed: true, lastRecoveryReason: "private recovery", erro…
+     62|   expect(result.success).toBe(true);
+       |                          ^
+     63|   expect(JSON.stringify(result)).not.toContain("private");
+     64|   if (result.success) expect(result.data.truncated).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  14:43:00
+   Duration  342ms (transform 40ms, setup 0ms, import 152ms, tests 30ms, environment 0ms)
+

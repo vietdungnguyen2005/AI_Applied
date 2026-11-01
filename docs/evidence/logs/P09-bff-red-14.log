@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (17 tests | 1 failed) 55ms
+   × refuses an authenticated upstream session without a stable account identity 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > refuses an authenticated upstream session without a stable account identity
+AssertionError: expected 503 to be 502 // Object.is equality
+
+- Expected
++ Received
+
+- 502
++ 503
+
+ ❯ lib/ai-gateway.test.ts:217:27
+    215|   const response=await handleAgent(new Request("http://localhost:3000/…
+    216|     headers:{Origin:"http://localhost:3000","X-CSRF-TOKEN":"current"},…
+    217|   expect(response.status).toBe(502);
+       |                           ^
+    218| });
+    219|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  14:56:11
+   Duration  705ms (transform 82ms, setup 0ms, import 241ms, tests 55ms, environment 0ms)
+

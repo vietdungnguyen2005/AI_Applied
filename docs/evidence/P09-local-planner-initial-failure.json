@@ -1,0 +1,9 @@
+{
+  "mode": "synthetic_local_diagnostic",
+  "records": [
+    {
+      "http_status": 400,
+      "native_error": "{\"error\":{\"code\":400,\"message\":\"Failed to initialize samplers: failed to parse grammar\",\"type\":\"invalid_request_error\"}}"
+    }
+  ]
+}

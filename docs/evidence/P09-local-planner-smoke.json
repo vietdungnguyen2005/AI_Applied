@@ -1,0 +1,140 @@
+{
+  "case": "known_synthetic_profiles_smoke_only",
+  "output": {
+    "result": {
+      "protocol_version": 1,
+      "request_id": "2df4affc-f536-4253-a0ca-7b843197d4b0",
+      "run_id": "a1c327b3-5baf-40d8-9c0f-804f8de00f46",
+      "step": 2,
+      "kind": "final",
+      "message": "get_integration_profiles: 2 observed profiles; get_integration_profiles: 2 observed profiles",
+      "citations": [],
+      "status": "answered",
+      "handoff_reason": null
+    },
+    "observations": [
+      {
+        "call_id": "7a8712fb-7f78-4148-9002-6c9c39eb4794",
+        "tool_name": "get_integration_profiles",
+        "status": "ok",
+        "observed_at": "2026-11-01T08:15:25.549822+00:00",
+        "truncated": false,
+        "error_code": null,
+        "data": {
+          "profiles": [
+            {
+              "profile_id": "supplier-a",
+              "version": 1,
+              "vendor_code": "NAMI",
+              "encoding": "CP932",
+              "active": true,
+              "mapping": {
+                "sku": "商品コード",
+                "name": "商品名",
+                "on_hand": "在庫数"
+              },
+              "sku_normalization": "TRIM_UPPER",
+              "required_fields": [
+                "sku",
+                "name",
+                "on_hand"
+              ]
+            },
+            {
+              "profile_id": "supplier-b",
+              "version": 1,
+              "vendor_code": "RIVERBYTE",
+              "encoding": "UTF-8",
+              "active": true,
+              "mapping": {
+                "sku": "SKU",
+                "name": "ProductName",
+                "on_hand": "AvailableQuantity"
+              },
+              "sku_normalization": "TRIM_UPPER",
+              "required_fields": [
+                "sku",
+                "name",
+                "on_hand"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "call_id": "372349c3-69e5-42dc-8c61-e4df566fb822",
+        "tool_name": "get_integration_profiles",
+        "status": "ok",
+        "observed_at": "2026-11-01T08:15:26.349016+00:00",
+        "truncated": false,
+        "error_code": null,
+        "data": {
+          "profiles": [
+            {
+              "profile_id": "supplier-a",
+              "version": 1,
+              "vendor_code": "NAMI",
+              "encoding": "CP932",
+              "active": true,
+              "mapping": {
+                "sku": "商品コード",
+                "name": "商品名",
+                "on_hand": "在庫数"
+              },
+              "sku_normalization": "TRIM_UPPER",
+              "required_fields": [
+                "sku",
+                "name",
+                "on_hand"
+              ]
+            },
+            {
+              "profile_id": "supplier-b",
+              "version": 1,
+              "vendor_code": "RIVERBYTE",
+              "encoding": "UTF-8",
+              "active": true,
+              "mapping": {
+                "sku": "SKU",
+                "name": "ProductName",
+                "on_hand": "AvailableQuantity"
+              },
+              "sku_normalization": "TRIM_UPPER",
+              "required_fields": [
+                "sku",
+                "name",
+                "on_hand"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "source_mode": "synthetic_mock"
+  },
+  "local_model_outputs": [
+    {
+      "text": "{\"tool_name\": \"get_integration_profiles\", \"job_id\": \"\", \"query\": \"\"}",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_tokens": 344,
+      "completion_tokens": 20,
+      "billed_usd": "0"
+    },
+    {
+      "text": "{\"tool_name\": \"get_integration_profiles\", \"job_id\": \"\", \"query\": \"\"}",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_tokens": 626,
+      "completion_tokens": 20,
+      "billed_usd": "0"
+    },
+    {
+      "text": "{\"tool_name\": \"stop\", \"job_id\": \"\", \"query\": \"\"}",
+      "model": "qwen3.5:4b-q4_K_M",
+      "prompt_tokens": 907,
+      "completion_tokens": 18,
+      "billed_usd": "0"
+    }
+  ],
+  "external_provider_calls": 0,
+  "quality_benchmark": "NOT_RUN"
+}

@@ -12,6 +12,7 @@ $localValues = @{
     AI_LIVE_ENABLED = 'false'
     AI_QA_ENABLED = 'true'
     AI_MAPPING_ENABLED = 'true'
+    AI_AGENT_ENABLED = 'true'
     AI_QA_EMBEDDING_MODE = 'local'
     AI_QA_MODEL_BUNDLE = Join-Path $repoRoot '.local/models/multilingual-e5-small'
     AI_OLLAMA_MODEL = $Model

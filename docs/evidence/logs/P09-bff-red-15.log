@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (18 tests | 1 failed) 53ms
+   × refuses a claimed answered result with no tool observations 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > refuses a claimed answered result with no tool observations
+AssertionError: expected 200 to be 502 // Object.is equality
+
+- Expected
++ Received
+
+- 502
++ 200
+
+ ❯ lib/ai-gateway.test.ts:239:27
+    237|   const {response}=await scenario(body=>({protocol_version:1,request_i…
+    238|     kind:"final",message:"Imports completed",citations:[],status:"answ…
+    239|   expect(response.status).toBe(502);
+       |                           ^
+    240| });
+    241|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  15:00:48
+   Duration  396ms (transform 67ms, setup 0ms, import 185ms, tests 53ms, environment 0ms)
+

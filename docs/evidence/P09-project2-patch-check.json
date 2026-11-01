@@ -1,0 +1,9 @@
+{
+  "project2_base": "32d82862526754b46efb774327ccc4774a4decf7",
+  "project2_commit": "4febdf55c9fb8ef1e4e3becb5d1622c5f4c3a6f6",
+  "patch_sha256": "a20592b8d4a264a910e8b7b5cdb4c8d9d2f0cafe394621389705f6d8396e1d72",
+  "patch_tree_equals_committed_tree": true,
+  "project2_worktree_clean": true,
+  "java_sources_changed": false,
+  "publication": "Local Project2 commit and reviewable patch in AI_Applied; no Project2 remote push or deployment"
+}

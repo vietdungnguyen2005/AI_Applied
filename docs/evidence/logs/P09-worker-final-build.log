@@ -1,0 +1,86 @@
+
+> v-market@0.1.0 build:worker
+> opennextjs-cloudflare build
+
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+App directory: D:\CV\Project2
+Next.js version : 16.4.2
+@opennextjs/cloudflare version: 1.20.12
+@opennextjs/aws version: 4.1.11
+workerd compatibility_date: 2026-07-23
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+
+> v-market@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 768ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 693ms
+  Running TypeScript ...
+  Finished TypeScript in 2.4s ...
+  Collecting page data using 25 workers ...
+  Generating static pages using 25 workers (0/15) ...
+  Generating static pages using 25 workers (3/15) 
+  Generating static pages using 25 workers (7/15) 
+  Generating static pages using 25 workers (11/15) 
+✓ Generating static pages using 25 workers (15/15) in 879ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/[action]
+├ ƒ /api/cart/quantity
+├ ƒ /api/catalog/products
+├ ƒ /api/ops/ai/agent
+├ ƒ /api/ops/imports
+├ ƒ /api/ops/imports/[jobId]/inspection
+├ ƒ /api/ops/imports/[jobId]/restart
+├ ƒ /api/ops/integration-profiles
+├ ƒ /api/ops/integration-profiles/[profileId]/[version]
+├ ƒ /api/ops/inventory/snapshot
+├ ƒ /api/ops/onboarding/[profileId]/[version]/[action]
+├ ƒ /api/ops/orders
+├ ƒ /api/ops/orders/[orderNumber]/fulfillment
+├ ƒ /api/ops/reconciliations
+├ ƒ /api/orders
+├ ƒ /api/orders/[orderNumber]
+├ ƒ /api/orders/checkout
+├ ƒ /api/orders/checkout/cancel
+├ ○ /ops
+├ ƒ /products/[sku]
+└ ƒ /track
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 3.168s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+[35mWorker saved in `.open-next\worker.js` 🚀
+[0m
+OpenNext build complete.

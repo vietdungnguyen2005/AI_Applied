@@ -1,0 +1,175 @@
+{
+  "unchanged_from_P08": true,
+  "external_provider_calls": 0,
+  "ledger": {
+    "controls": [
+      {
+        "provider": "openrouter",
+        "pending_usage_id": "f561a639-8d07-4a72-8e9c-e6434cf05381",
+        "blocked": true
+      }
+    ],
+    "usage": [
+      {
+        "id": "a54e34c5-2ae8-4e6d-8430-0aedf1a5d15e",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      },
+      {
+        "id": "8a25bdfb-a0da-4448-8fbb-f821b0a4cb85",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      },
+      {
+        "id": "aedbe42f-fd91-4262-897f-fe5b863b31b3",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      },
+      {
+        "id": "3f47b926-195e-4594-b951-838d155ae03e",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      },
+      {
+        "id": "3d419131-e74a-4e4c-98c0-0f2352d6cc45",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      },
+      {
+        "id": "17658fc0-911c-4c5c-92e2-e30cd4628968",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      },
+      {
+        "id": "40504f01-ba1e-4d2e-bbcd-ba5b53abc871",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      },
+      {
+        "id": "40ac39d7-42ac-4299-9702-da376986c469",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": 631,
+        "completion_tokens": 252
+      },
+      {
+        "id": "54882579-0429-487f-a56a-1c84a9da44f0",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": 81,
+        "completion_tokens": 77
+      },
+      {
+        "id": "99c9d137-0005-4d02-bfd9-955294cc7670",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": 650,
+        "completion_tokens": 512
+      },
+      {
+        "id": "ffd849a2-9789-4121-b66d-515a42d9b7ae",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": 526,
+        "completion_tokens": 510
+      },
+      {
+        "id": "bbc270ce-49e6-414c-862b-bfe56cce300c",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": 631,
+        "completion_tokens": 15
+      },
+      {
+        "id": "00b83b53-dafe-407e-aa73-cb0c0dd062ac",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": 652,
+        "completion_tokens": 79
+      },
+      {
+        "id": "43cac3c4-0d5f-4522-82b9-b7e3dc962cba",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "completed",
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "prompt_tokens": 671,
+        "completion_tokens": 74
+      },
+      {
+        "id": "f561a639-8d07-4a72-8e9c-e6434cf05381",
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "state": "uncertain",
+        "reserved_microusd": 1000,
+        "spent_microusd": null,
+        "prompt_tokens": null,
+        "completion_tokens": null
+      }
+    ],
+    "days": [
+      {
+        "provider": "openrouter",
+        "day": "2026-10-31",
+        "requests_used": 15,
+        "reserved_microusd": 1000,
+        "spent_microusd": 0,
+        "blocked": true
+      }
+    ]
+  }
+}

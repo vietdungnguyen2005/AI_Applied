@@ -1,0 +1,120 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (27 tests | 5 failed) 65ms
+   × preserves a safe AI transport failure status 401 without raw error text 3ms
+   × preserves a safe AI transport failure status 403 without raw error text 1ms
+   × preserves a safe AI transport failure status 413 without raw error text 1ms
+   × preserves a safe AI transport failure status 429 without raw error text 1ms
+   × preserves a safe AI transport failure status 502 without raw error text 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > preserves a safe AI transport failure status 401 without raw error text
+AssertionError: expected 503 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 503
+
+ ❯ lib/ai-gateway.test.ts:262:27
+    260| it.each([401,403,409,413,429,502,504])("preserves a safe AI transport …
+    261|   const {response}=await scenario(()=>new Response("private upstream e…
+    262|   expect(response.status).toBe(status);
+       |                           ^
+    263|   expect(JSON.stringify(await response.json())).not.toContain("private…
+    264| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  lib/ai-gateway.test.ts > preserves a safe AI transport failure status 403 without raw error text
+AssertionError: expected 503 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 503
+
+ ❯ lib/ai-gateway.test.ts:262:27
+    260| it.each([401,403,409,413,429,502,504])("preserves a safe AI transport …
+    261|   const {response}=await scenario(()=>new Response("private upstream e…
+    262|   expect(response.status).toBe(status);
+       |                           ^
+    263|   expect(JSON.stringify(await response.json())).not.toContain("private…
+    264| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  lib/ai-gateway.test.ts > preserves a safe AI transport failure status 413 without raw error text
+AssertionError: expected 503 to be 413 // Object.is equality
+
+- Expected
++ Received
+
+- 413
++ 503
+
+ ❯ lib/ai-gateway.test.ts:262:27
+    260| it.each([401,403,409,413,429,502,504])("preserves a safe AI transport …
+    261|   const {response}=await scenario(()=>new Response("private upstream e…
+    262|   expect(response.status).toBe(status);
+       |                           ^
+    263|   expect(JSON.stringify(await response.json())).not.toContain("private…
+    264| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  lib/ai-gateway.test.ts > preserves a safe AI transport failure status 429 without raw error text
+AssertionError: expected 503 to be 429 // Object.is equality
+
+- Expected
++ Received
+
+- 429
++ 503
+
+ ❯ lib/ai-gateway.test.ts:262:27
+    260| it.each([401,403,409,413,429,502,504])("preserves a safe AI transport …
+    261|   const {response}=await scenario(()=>new Response("private upstream e…
+    262|   expect(response.status).toBe(status);
+       |                           ^
+    263|   expect(JSON.stringify(await response.json())).not.toContain("private…
+    264| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  lib/ai-gateway.test.ts > preserves a safe AI transport failure status 502 without raw error text
+AssertionError: expected 503 to be 502 // Object.is equality
+
+- Expected
++ Received
+
+- 502
++ 503
+
+ ❯ lib/ai-gateway.test.ts:262:27
+    260| it.each([401,403,409,413,429,502,504])("preserves a safe AI transport …
+    261|   const {response}=await scenario(()=>new Response("private upstream e…
+    262|   expect(response.status).toBe(status);
+       |                           ^
+    263|   expect(JSON.stringify(await response.json())).not.toContain("private…
+    264| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 22 passed (27)
+   Start at  15:05:03
+   Duration  403ms (transform 63ms, setup 0ms, import 179ms, tests 65ms, environment 0ms)
+

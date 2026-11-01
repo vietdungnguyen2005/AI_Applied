@@ -1,0 +1,49 @@
+{
+  "8090": {
+    "/health": {
+      "status": "ok"
+    },
+    "/ready": {
+      "status": "ready",
+      "provider_mode": "fake"
+    },
+    "routes": [
+      "/health",
+      "/ready"
+    ]
+  },
+  "8091": {
+    "/health": {
+      "status": "ok"
+    },
+    "/ready": {
+      "status": "ready",
+      "provider_mode": "local"
+    },
+    "routes": [
+      "/health",
+      "/ready",
+      "/ai/ask",
+      "/ai/mapping/suggest",
+      "/ai/citations/{chunk_id}",
+      "/ai/agent/demo",
+      "/ai/agent/step",
+      "/ai/knowledge/search"
+    ]
+  },
+  "host_handoff_without_inference": {
+    "result": {
+      "protocol_version": 1,
+      "request_id": "e3d47431-9b1c-4886-afa2-e35b00085a66",
+      "run_id": "cf31d4ba-28d2-4a8f-9393-1b58368f9188",
+      "step": 0,
+      "kind": "handoff",
+      "message": "Use the existing authenticated operator workflow for the requested business action.",
+      "citations": [],
+      "status": "human_action_required",
+      "handoff_reason": "OTHER_BUSINESS_MUTATION"
+    },
+    "observations": [],
+    "source_mode": "synthetic_mock"
+  }
+}

@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+stdout | lib/ai-gateway.test.ts > does not repeat Python's unsupported business-success narrative after a successful read
+{"event":"ai_tool_read","request_id":"f5b86219-373f-4d31-8ab3-a84a2e528139","run_id":"7d8c91c4-6b6d-4b4a-a83f-57f460a23ef3","step":0,"tool_name":"get_imports","status":"ok"}
+
+ ❯ lib/ai-gateway.test.ts (19 tests | 1 failed) 57ms
+   × does not repeat Python's unsupported business-success narrative after a successful read 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > does not repeat Python's unsupported business-success narrative after a successful read
+AssertionError: expected '{"result":{"protocol_version":1,"requ…' not to contain 'Inventory updated'
+
+Expected: "Inventory updated"
+Received: "{"result":{"protocol_version":1,"request_id":"f5b86219-373f-4d31-8ab3-a84a2e528139","run_id":"7d8c91c4-6b6d-4b4a-a83f-57f460a23ef3","step":1,"kind":"final","message":"Inventory updated successfully","citations":[],"status":"answered","handoff_reason":null},"observations":[{"call_id":"10f80b2b-eb49-437f-94ca-3c5ec535a566","tool_name":"get_imports","observed_at":"2026-11-01T08:01:04.369Z","truncated":false,"data":{"imports":[{"job_id":"11111111-1111-4111-8111-111111111111","status":"FAILED","total_rows":1,"valid_rows":0,"applied_rows":0,"rejected_rows":1,"checkpoint_row":0,"import_mode":"VERSIONED_STOCK","profile_id":"supplier-b","profile_version":1}]},"status":"ok","error_code":null}]}"
+
+ ❯ lib/ai-gateway.test.ts:248:53
+    246|       citations:[],status:"answered",handoff_reason:null});
+    247|   expect(response.status).toBe(200);
+    248|   expect(JSON.stringify(await response.json())).not.toContain("Invento…
+       |                                                     ^
+    249| });
+    250|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 passed (19)
+   Start at  15:01:03
+   Duration  399ms (transform 68ms, setup 0ms, import 186ms, tests 57ms, environment 0ms)
+

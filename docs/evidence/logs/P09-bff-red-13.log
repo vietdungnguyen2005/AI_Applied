@@ -1,0 +1,33 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (16 tests | 1 failed) 50ms
+   × generates its own request trace instead of trusting a caller trace or actor 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > generates its own request trace instead of trusting a caller trace or actor
+TypeError: .toMatch() expects to receive a string, but got object
+ ❯ lib/ai-gateway.test.ts:208:48
+    206|   const response=await handleAgent(new Request("http://localhost:3000/…
+    207|     method:"POST",headers:{"X-Request-ID":supplied,"X-AI-Actor":"admin…
+    208|   expect(response.headers.get("X-Request-ID")).toMatch(/^[0-9a-f-]{36}…
+       |                                                ^
+    209|   expect(response.headers.get("X-Request-ID")).not.toBe(supplied);
+    210| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 passed (16)
+   Start at  14:53:51
+   Duration  390ms (transform 64ms, setup 0ms, import 181ms, tests 50ms, environment 0ms)
+

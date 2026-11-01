@@ -1,6 +1,6 @@
 # Internal gateway protocol v1 — design contract
 
-Status: proposed P02 protocol, no live executor/signature middleware implemented. Schemas: [OpenAPI](openapi.yaml), [gateway envelope](bff-tool-gateway.schema.json). JSON Schema checks syntax only; all semantic/security steps below require P03/P09 implementation and tests. Requirement trace: FR03, FR09–FR15, NFR01–NFR06/NFR09; invariants I01–I10.
+Status: P09 implements the signed agent-step/knowledge subset and request-bound read-only BFF executor; see [runtime and limits](../gateway.md). Other proposed operations remain disabled/design-only. Schemas: [OpenAPI](openapi.yaml), [gateway envelope](bff-tool-gateway.schema.json). JSON Schema checks syntax only; all semantic/security steps below require P03/P09 implementation and tests. Requirement trace: FR03, FR09–FR15, NFR01–NFR06/NFR09; invariants I01–I10.
 
 ## Entry and identity
 

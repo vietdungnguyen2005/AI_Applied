@@ -1,0 +1,16 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+
+ Test Files  1 passed (1)
+      Tests  36 passed (36)
+   Start at  15:19:11
+   Duration  406ms (transform 66ms, setup 0ms, import 181ms, tests 76ms, environment 0ms)
+

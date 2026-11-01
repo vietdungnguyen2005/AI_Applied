@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (20 tests | 1 failed) 56ms
+   × checks the connection Host for Next's internal localhost URL and ignores forwarded-host spoofing 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > checks the connection Host for Next's internal localhost URL and ignores forwarded-host spoofing
+AssertionError: expected 403 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 403
+
+ ❯ lib/ai-gateway.test.ts:256:27
+    254|   const response=await handleAgent(new Request("http://localhost:13009…
+    255|     headers:{Host:"127.0.0.1:13009",Origin:"http://127.0.0.1:13009","X…
+    256|   expect(response.status).toBe(401);
+       |                           ^
+    257| });
+    258|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 passed (20)
+   Start at  15:02:50
+   Duration  399ms (transform 65ms, setup 0ms, import 183ms, tests 56ms, environment 0ms)
+

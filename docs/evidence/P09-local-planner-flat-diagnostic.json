@@ -1,0 +1,9 @@
+{
+  "outputs": [
+    {
+      "text": "{\"tool_name\":\"search_supplier_knowledge\",\"job_id\":\"\",\"query\":\"List integration profiles for collection IDs ed76d914-7c66-5102-9178-676334063938 and 4aa83e9f-0a0a-5558-8f5e-0f87db27c923\"}",
+      "prompt_tokens": 261,
+      "completion_tokens": 95
+    }
+  ]
+}

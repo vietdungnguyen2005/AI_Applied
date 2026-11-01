@@ -1,0 +1,37 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (5 tests | 1 failed) 30ms
+   × bounds inspection errors and replaces unknown row text with a code 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > bounds inspection errors and replaces unknown row text with a code
+AssertionError: expected '{"success":true,"data":{"data":{"job"…' to contain '"code":"UNKNOWN_ROW_ERROR"'
+
+Expected: ""code":"UNKNOWN_ROW_ERROR""
+Received: "{"success":true,"data":{"data":{"job":{"job_id":"11111111-1111-4111-8111-111111111111","status":"FAILED","total_rows":1,"valid_rows":0,"applied_rows":0,"rejected_rows":1,"checkpoint_row":0,"import_mode":"VERSIONED_STOCK","profile_id":"supplier-b","profile_version":1},"work_state":"FAILED","recovery_count":1,"restart_allowed":true,"errors":[{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"},{"row_number":2,"reason_code":"UNKNOWN_ROW_ERROR"}]},"truncated":true}}"
+
+ ❯ lib/ai-gateway.test.ts:64:34
+     62|   expect(result.success).toBe(true);
+     63|   expect(JSON.stringify(result)).not.toContain("private");
+     64|   expect(JSON.stringify(result)).toContain('"code":"UNKNOWN_ROW_ERROR"…
+       |                                  ^
+     65|   if (result.success) expect(result.data.truncated).toBe(true);
+     66| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  14:43:18
+   Duration  352ms (transform 41ms, setup 0ms, import 154ms, tests 30ms, environment 0ms)
+

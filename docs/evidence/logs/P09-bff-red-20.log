@@ -1,0 +1,37 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (34 tests | 1 failed) 75ms
+   × maps source-verified row-error prefixes to codes while discarding their details 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > maps source-verified row-error prefixes to codes while discarding their details
+AssertionError: expected '{"success":true,"data":{"data":{"job"…' to contain '"code":"STALE_STOCK_VERSION"'
+
+Expected: ""code":"STALE_STOCK_VERSION""
+Received: "{"success":true,"data":{"data":{"job":{"job_id":"11111111-1111-4111-8111-111111111111","status":"FAILED","total_rows":1,"valid_rows":0,"applied_rows":0,"rejected_rows":1,"checkpoint_row":0,"import_mode":"VERSIONED_STOCK","profile_id":"supplier-b","profile_version":1},"work_state":"FAILED","recovery_count":0,"restart_allowed":true,"errors":[{"row_number":2,"code":"UNKNOWN_ROW_ERROR"}]},"truncated":false}}"
+
+ ❯ lib/ai-gateway.test.ts:305:34
+    303|     errors:[{rowNumber:2,reason:"STALE_STOCK_VERSION: PRIVATE_SOURCE_S…
+    304|   expect(result.success).toBe(true);
+    305|   expect(JSON.stringify(result)).toContain('"code":"STALE_STOCK_VERSIO…
+       |                                  ^
+    306|   expect(JSON.stringify(result)).not.toContain("PRIVATE_SOURCE_SENTINE…
+    307| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 33 passed (34)
+   Start at  15:09:16
+   Duration  426ms (transform 68ms, setup 0ms, import 190ms, tests 75ms, environment 0ms)
+

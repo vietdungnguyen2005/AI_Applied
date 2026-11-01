@@ -1,0 +1,76 @@
+
+> v-market@0.1.0 verify
+> npm run test && npm run lint && npm run typecheck && npm run build
+
+
+> v-market@0.1.0 test
+> vitest run
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+
+ Test Files  12 passed (12)
+      Tests  94 passed (94)
+   Start at  15:20:02
+   Duration  521ms (transform 624ms, setup 0ms, import 1.44s, tests 384ms, environment 1ms)
+
+
+> v-market@0.1.0 lint
+> eslint .
+
+
+> v-market@0.1.0 typecheck
+> tsc --noEmit
+
+
+> v-market@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 761ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 925ms
+  Running TypeScript ...
+  Finished TypeScript in 2.7s ...
+  Collecting page data using 25 workers ...
+  Generating static pages using 25 workers (0/15) ...
+  Generating static pages using 25 workers (3/15) 
+  Generating static pages using 25 workers (7/15) 
+  Generating static pages using 25 workers (11/15) 
+✓ Generating static pages using 25 workers (15/15) in 869ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/[action]
+├ ƒ /api/cart/quantity
+├ ƒ /api/catalog/products
+├ ƒ /api/ops/ai/agent
+├ ƒ /api/ops/imports
+├ ƒ /api/ops/imports/[jobId]/inspection
+├ ƒ /api/ops/imports/[jobId]/restart
+├ ƒ /api/ops/integration-profiles
+├ ƒ /api/ops/integration-profiles/[profileId]/[version]
+├ ƒ /api/ops/inventory/snapshot
+├ ƒ /api/ops/onboarding/[profileId]/[version]/[action]
+├ ƒ /api/ops/orders
+├ ƒ /api/ops/orders/[orderNumber]/fulfillment
+├ ƒ /api/ops/reconciliations
+├ ƒ /api/orders
+├ ƒ /api/orders/[orderNumber]
+├ ƒ /api/orders/checkout
+├ ƒ /api/orders/checkout/cancel
+├ ○ /ops
+├ ƒ /products/[sku]
+└ ƒ /track
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

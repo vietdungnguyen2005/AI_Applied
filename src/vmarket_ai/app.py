@@ -71,6 +71,8 @@ class RequestBoundary:
         )
         if scope["path"] == "/ai/ask":
             route = "/ai/ask"
+        elif scope["path"] in {"/ai/agent/step", "/ai/agent/demo", "/ai/knowledge/search"}:
+            route = scope["path"]
         elif scope["path"].startswith("/ai/citations/"):
             route = "/ai/citations/{chunk_id}"
         elif scope["path"] == "/ai/mapping/suggest":
@@ -265,5 +267,10 @@ def create_app(
             if source is None:
                 raise QAError("DOCUMENT_NOT_AVAILABLE", 404)
             return source.model_dump(mode="json")
+
+    if config.agent_enabled:
+        from vmarket_ai.gateway.routes import install
+
+        install(app, config, database)
 
     return app

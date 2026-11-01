@@ -1,0 +1,1 @@
+{"status": "ingestion_demo_only", "storage": "sqlite", "profile": {"model": "fake-sha256-32", "dimensions": 32, "mode": "fake"}, "counts": {"versions": 14, "chunks": 46, "embeddings": 46}, "authorized_current_chunks": 18, "model_quality_metrics": "NOT_RUN"}

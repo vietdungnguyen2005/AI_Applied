@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (3 tests | 1 failed) 28ms
+   × rejects a guest from current Java session and never forwards forged credentials 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > rejects a guest from current Java session and never forwards forged credentials
+AssertionError: expected 503 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 503
+
+ ❯ lib/ai-gateway.test.ts:36:27
+     34|       "X-V-Market-BFF-Secret": "forged", "X-CSRF-TOKEN": "current" }, …
+     35|   }));
+     36|   expect(response.status).toBe(401);
+       |                           ^
+     37|   expect(fetchMock).toHaveBeenCalledTimes(1);
+     38|   expect(new Headers(fetchMock.mock.calls[0][1].headers).get("X-V-Mark…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  02:40:59
+   Duration  319ms (transform 25ms, setup 0ms, import 135ms, tests 28ms, environment 0ms)
+

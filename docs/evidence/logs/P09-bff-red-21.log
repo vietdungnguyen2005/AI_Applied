@@ -1,0 +1,33 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (35 tests | 1 failed) 75ms
+   × does not extend the signed deadline by time already spent authenticating 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > does not extend the signed deadline by time already spent authenticating
+AssertionError: expected 1793521093080 to be less than or equal to 1793521089080
+ ❯ lib/ai-gateway.test.ts:321:57
+    319|         message:"No observation",status:"abstained",citations:[],hando…
+    320|     },5000);
+    321|     expect(response.status).toBe(200); expect(deadline).toBeLessThanOr…
+       |                                                         ^
+    322|   } finally {vi.useRealTimers();}
+    323| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 34 passed (35)
+   Start at  15:17:43
+   Duration  420ms (transform 66ms, setup 0ms, import 185ms, tests 75ms, environment 0ms)
+

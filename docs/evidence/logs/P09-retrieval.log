@@ -1,0 +1,3 @@
+{"predictions": 84, "queries_with_identical_authorized_corpus": 28, "forbidden_hits": 0, "measured_query_embedding_calls": 52, "measured_query_input_tokens": 928, "billed_embedding_usd": 0.0, "selected_method": "dense"}
+Observed lexical MRR@5 wins: 0
+Observed dense MRR@5 wins: 13

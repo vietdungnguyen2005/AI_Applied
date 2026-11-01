@@ -1,0 +1,19 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [
+    {
+      "question": "List profiles",
+      "expected_http": 401,
+      "actual_http": 401,
+      "request_id": "7af63b66-f148-4ef0-9694-d4112a514b54",
+      "response": {
+        "code": "SESSION_EXPIRED"
+      }
+    }
+  ],
+  "no_java_or_signing_secrets_in_python_env": true,
+  "status": "FAIL",
+  "failure_type": "RuntimeError",
+  "private_logs": "D:\\CV\\AI_Applied\\.local\\p09-smoke-0d696bde"
+}

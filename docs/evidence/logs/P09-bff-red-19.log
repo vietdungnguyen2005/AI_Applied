@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (33 tests | 1 failed) 72ms
+   × reads the actual Java RowError.reason contract and never passes its text through 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > reads the actual Java RowError.reason contract and never passes its text through
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ lib/ai-gateway.test.ts:297:26
+    295|   const result=projectTool("inspect_import_job",{job:rawJob,workState:…
+    296|     errors:[{rowNumber:2,reason:"PRIVATE_ROW_SENTINEL"}]});
+    297|   expect(result.success).toBe(true);
+       |                          ^
+    298|   expect(JSON.stringify(result)).not.toContain("PRIVATE_ROW_SENTINEL");
+    299| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 passed (33)
+   Start at  15:08:13
+   Duration  420ms (transform 68ms, setup 0ms, import 186ms, tests 72ms, environment 0ms)
+

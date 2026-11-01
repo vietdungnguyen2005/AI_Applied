@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (10 tests | 1 failed) 43ms
+   × executes knowledge search only through a separately signed narrowed AI request 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > executes knowledge search only through a separately signed narrowed AI request
+AssertionError: expected 502 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 502
+
+ ❯ lib/ai-gateway.test.ts:163:27
+    161|     headers: { Origin: "http://localhost:3000", "X-CSRF-TOKEN": "curre…
+    162|     body: JSON.stringify({ question: "Search supplier knowledge", coll…
+    163|   expect(response.status).toBe(200); expect(searches).toBe(1);
+       |                           ^
+    164| });
+    165|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  14:49:28
+   Duration  367ms (transform 54ms, setup 0ms, import 165ms, tests 43ms, environment 0ms)
+

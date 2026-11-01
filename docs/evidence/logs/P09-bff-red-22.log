@@ -1,0 +1,40 @@
+
+> v-market@0.1.0 test
+> vitest run lib/ai-gateway.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 D:/CV/Project2
+
+ ❯ lib/ai-gateway.test.ts (36 tests | 1 failed) 77ms
+   × rejects a browser body above the byte cap before authentication or AI calls 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/ai-gateway.test.ts > rejects a browser body above the byte cap before authentication or AI calls
+AssertionError: expected 400 to be 413 // Object.is equality
+
+- Expected
++ Received
+
+- 413
++ 400
+
+ ❯ lib/ai-gateway.test.ts:329:27
+    327|   const response=await handleAgent(new Request("http://localhost:3000/…
+    328|     headers:{Origin:"http://localhost:3000"},body:"x".repeat(65537)}));
+    329|   expect(response.status).toBe(413); expect(fetchMock).not.toHaveBeenC…
+       |                           ^
+    330| });
+    331|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 35 passed (36)
+   Start at  15:19:10
+   Duration  412ms (transform 67ms, setup 0ms, import 183ms, tests 77ms, environment 0ms)
+

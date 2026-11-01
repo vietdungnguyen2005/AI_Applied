@@ -2,6 +2,7 @@ from alembic import context
 from sqlalchemy import text
 
 from vmarket_ai.database import Base, create_db_engine
+from vmarket_ai.gateway import security as _gateway_models  # noqa: F401
 from vmarket_ai.ingestion import models as _document_models  # noqa: F401
 from vmarket_ai.mapping import store as _mapping_models  # noqa: F401
 from vmarket_ai.settings import load_settings

@@ -1,0 +1,488 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [
+    {
+      "question": "List profiles",
+      "expected_http": 401,
+      "actual_http": 401,
+      "request_id": "9e152582-4e53-4156-9ef2-2bf9799b88ef",
+      "response": {
+        "code": "SESSION_EXPIRED"
+      }
+    },
+    {
+      "question": "List integration profiles",
+      "expected_http": 200,
+      "actual_http": 200,
+      "request_id": "b92da3f1-d34a-4c13-9975-7e8bbda917c8",
+      "response": {
+        "result": {
+          "protocol_version": 1,
+          "request_id": "b92da3f1-d34a-4c13-9975-7e8bbda917c8",
+          "run_id": "8adf3f41-af48-4161-91ec-c006c6b1599a",
+          "step": 1,
+          "kind": "final",
+          "message": "get_integration_profiles: ok",
+          "citations": [],
+          "status": "answered",
+          "handoff_reason": null
+        },
+        "observations": [
+          {
+            "call_id": "de364ca2-0b5d-4d2a-9b49-4766b944d3a8",
+            "tool_name": "get_integration_profiles",
+            "observed_at": "2026-11-01T08:21:49.893Z",
+            "truncated": false,
+            "data": {
+              "profiles": [
+                {
+                  "profile_id": "supplier-a",
+                  "version": 1,
+                  "vendor_code": "NAMI",
+                  "encoding": "CP932",
+                  "mapping": {
+                    "sku": "\u5546\u54c1\u30b3\u30fc\u30c9",
+                    "name": "\u5546\u54c1\u540d",
+                    "on_hand": "\u5728\u5eab\u6570"
+                  },
+                  "sku_normalization": "TRIM_UPPER",
+                  "active": true,
+                  "required_fields": [
+                    "sku",
+                    "name",
+                    "on_hand"
+                  ]
+                },
+                {
+                  "profile_id": "supplier-b",
+                  "version": 1,
+                  "vendor_code": "RIVERBYTE",
+                  "encoding": "UTF-8",
+                  "mapping": {
+                    "sku": "SKU",
+                    "name": "ProductName",
+                    "on_hand": "AvailableQuantity"
+                  },
+                  "sku_normalization": "TRIM_UPPER",
+                  "active": true,
+                  "required_fields": [
+                    "sku",
+                    "name",
+                    "on_hand"
+                  ]
+                }
+              ]
+            },
+            "status": "ok",
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "question": "List imports",
+      "expected_http": 200,
+      "actual_http": 200,
+      "request_id": "44b0cb5e-0703-4ee4-9887-039254744e58",
+      "response": {
+        "result": {
+          "protocol_version": 1,
+          "request_id": "44b0cb5e-0703-4ee4-9887-039254744e58",
+          "run_id": "821e296d-4ab9-47e2-af12-461e337342a4",
+          "step": 1,
+          "kind": "final",
+          "message": "get_imports: ok",
+          "citations": [],
+          "status": "answered",
+          "handoff_reason": null
+        },
+        "observations": [
+          {
+            "call_id": "df4a6884-3e2a-42c1-ba49-7a3811b8de22",
+            "tool_name": "get_imports",
+            "observed_at": "2026-11-01T08:21:50.119Z",
+            "truncated": false,
+            "data": {
+              "imports": [
+                {
+                  "job_id": "11111111-1111-4111-8111-111111111111",
+                  "status": "FAILED",
+                  "total_rows": 1,
+                  "valid_rows": 0,
+                  "applied_rows": 0,
+                  "rejected_rows": 1,
+                  "checkpoint_row": 0,
+                  "import_mode": "METADATA_ONLY",
+                  "profile_id": null,
+                  "profile_version": null
+                }
+              ]
+            },
+            "status": "ok",
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "question": "Inspect import job 11111111-1111-4111-8111-111111111111",
+      "expected_http": 200,
+      "actual_http": 200,
+      "request_id": "a23e884d-c00f-4147-a4b2-2cf785e58e7f",
+      "response": {
+        "result": {
+          "protocol_version": 1,
+          "request_id": "a23e884d-c00f-4147-a4b2-2cf785e58e7f",
+          "run_id": "ee62e6f4-4d57-4c3e-a0a4-a99336affd44",
+          "step": 1,
+          "kind": "final",
+          "message": "inspect_import_job: ok",
+          "citations": [],
+          "status": "answered",
+          "handoff_reason": null
+        },
+        "observations": [
+          {
+            "call_id": "5bf255f3-7c09-45ab-9aae-19089fb54664",
+            "tool_name": "inspect_import_job",
+            "observed_at": "2026-11-01T08:21:50.344Z",
+            "truncated": false,
+            "data": {
+              "job": {
+                "job_id": "11111111-1111-4111-8111-111111111111",
+                "status": "FAILED",
+                "total_rows": 1,
+                "valid_rows": 0,
+                "applied_rows": 0,
+                "rejected_rows": 1,
+                "checkpoint_row": 0,
+                "import_mode": "METADATA_ONLY",
+                "profile_id": null,
+                "profile_version": null
+              },
+              "work_state": "FAILED",
+              "recovery_count": 0,
+              "restart_allowed": true,
+              "errors": [
+                {
+                  "row_number": 2,
+                  "code": "UNKNOWN_ROW_ERROR"
+                }
+              ]
+            },
+            "status": "ok",
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "question": "Get reconciliation report for 11111111-1111-4111-8111-111111111111",
+      "expected_http": 200,
+      "actual_http": 200,
+      "request_id": "f7f1c204-177c-40cb-8660-319d826b4d5d",
+      "response": {
+        "result": {
+          "protocol_version": 1,
+          "request_id": "f7f1c204-177c-40cb-8660-319d826b4d5d",
+          "run_id": "92ec466a-861b-43c2-b2a3-930e5e63c6a3",
+          "step": 1,
+          "kind": "final",
+          "message": "get_reconciliation_report: ok",
+          "citations": [],
+          "status": "answered",
+          "handoff_reason": null
+        },
+        "observations": [
+          {
+            "call_id": "52215163-76da-419b-9ef9-d8e8d10594a6",
+            "tool_name": "get_reconciliation_report",
+            "observed_at": "2026-11-01T08:21:50.534Z",
+            "truncated": false,
+            "data": {
+              "report_id": "21f56f1b-9a4b-4f3e-b857-7a1a16636701",
+              "job_id": "11111111-1111-4111-8111-111111111111",
+              "status": "COMPLETED",
+              "mismatch_count": 1,
+              "changed_since_import_rows": 0,
+              "stock_not_verified_rows": 0,
+              "discrepancies": []
+            },
+            "status": "ok",
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "question": "Search supplier knowledge encoding",
+      "expected_http": 200,
+      "actual_http": 200,
+      "request_id": "b39fb5d8-c453-43ac-be58-890fae8c926b",
+      "response": {
+        "result": {
+          "protocol_version": 1,
+          "request_id": "b39fb5d8-c453-43ac-be58-890fae8c926b",
+          "run_id": "c9e1019e-e0b4-4498-94b4-188c00ba9fa9",
+          "step": 1,
+          "kind": "final",
+          "message": "search_supplier_knowledge: ok",
+          "citations": [],
+          "status": "answered",
+          "handoff_reason": null
+        },
+        "observations": [
+          {
+            "call_id": "3ebeb67e-275c-4f25-9f49-22bdd16ac90e",
+            "tool_name": "search_supplier_knowledge",
+            "observed_at": "2026-11-01T08:21:50.776Z",
+            "status": "ok",
+            "truncated": false,
+            "data": {
+              "hits": [
+                {
+                  "citation": {
+                    "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                    "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391",
+                    "chunk_id": "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+                    "locator": {
+                      "kind": "section",
+                      "value": "escalation"
+                    }
+                  },
+                  "excerpt": "\u73fe\u5728\u306e\u6a21\u64ec\u624b\u9806\u3067\u306f\u3001\u4e0d\u660e\u306a\u5217\u306e\u610f\u5473\u306f supplier contact \u306b\u78ba\u8a8d\u3057\u3066\u304b\u3089\u30de\u30c3\u30d4\u30f3\u30b0\u3092\u4fdd\u5b58\u3057\u307e\u3059\u3002",
+                  "score": 0.8548809289932251,
+                  "retrieval_mode": "dense"
+                },
+                {
+                  "citation": {
+                    "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                    "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391",
+                    "chunk_id": "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+                    "locator": {
+                      "kind": "section",
+                      "value": "encoding"
+                    }
+                  },
+                  "excerpt": "Supplier A \u306e\u539f\u672c\u306f CP932 \u3067\u3059\u3002\u6539\u884c\u3084\u30d0\u30a4\u30c8\u5217\u3092\u5909\u3048\u305a\u3001\u6307\u5b9a\u3055\u308c\u305f\u6587\u5b57\u30b3\u30fc\u30c9\u3092\u4f7f\u7528\u3057\u307e\u3059\u3002",
+                  "score": 0.8382041108073033,
+                  "retrieval_mode": "dense"
+                },
+                {
+                  "citation": {
+                    "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                    "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391",
+                    "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                    "locator": {
+                      "kind": "section",
+                      "value": "mapping"
+                    }
+                  },
+                  "excerpt": "\u5546\u54c1\u30b3\u30fc\u30c9\u306f sku\u3001\u5546\u54c1\u540d\u306f name\u3001\u5728\u5eab\u6570\u306f on_hand \u306b\u5bfe\u5fdc\u3057\u307e\u3059\u3002\u8a31\u53ef\u3055\u308c\u308b\u5bfe\u8c61\u306f\u3053\u306e\u4e09\u3064\u3060\u3051\u3067\u3059\u3002\u6570\u91cf\u306f\u6574\u6570 0 \u304b\u3089 1000000 \u307e\u3067\u3067\u3059\u3002",
+                  "score": 0.8326815366744995,
+                  "retrieval_mode": "dense"
+                },
+                {
+                  "citation": {
+                    "document_id": "716676ba-1506-598c-b0bd-ceadfadbcd6f",
+                    "version_id": "d189457d-c5fa-5d11-862b-95cc66ed8916",
+                    "chunk_id": "90a020bb-7dce-5c23-986d-f98234015918",
+                    "locator": {
+                      "kind": "section",
+                      "value": "correction_window"
+                    }
+                  },
+                  "excerpt": "\u6a21\u64ec policy X: Supplier A \u306e\u8a02\u6b63\u9023\u7d61\u671f\u9650\u306f\u540c\u3058\u55b6\u696d\u65e5\u306e\u7d42\u4e86\u6642\u523b\u3067\u3059\u3002",
+                  "score": 0.8219290375709534,
+                  "retrieval_mode": "dense"
+                },
+                {
+                  "citation": {
+                    "document_id": "49519294-0865-5438-8cbf-ec39e821d213",
+                    "version_id": "5298aed6-f01a-59df-8238-41328663ed62",
+                    "chunk_id": "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+                    "locator": {
+                      "kind": "section",
+                      "value": "correction_window"
+                    }
+                  },
+                  "excerpt": "\u6a21\u64ec policy Y: Supplier A \u306e\u8a02\u6b63\u9023\u7d61\u671f\u9650\u306f\u7fcc\u55b6\u696d\u65e5\u306e\u7d42\u4e86\u6642\u523b\u3067\u3059\u3002\u512a\u5148\u9806\u4f4d\u306f\u672a\u78ba\u5b9a\u3067\u3059\u3002",
+                  "score": 0.8130511045455933,
+                  "retrieval_mode": "dense"
+                }
+              ]
+            },
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "question": "Confirm import 11111111-1111-4111-8111-111111111111",
+      "expected_http": 200,
+      "actual_http": 200,
+      "request_id": "61445426-a0af-497d-a8b3-3812f448b230",
+      "response": {
+        "result": {
+          "protocol_version": 1,
+          "request_id": "61445426-a0af-497d-a8b3-3812f448b230",
+          "run_id": "869fa363-1b7b-465b-bb3b-1ac732d62066",
+          "step": 0,
+          "kind": "handoff",
+          "message": "Use the existing authenticated operator workflow for this business action.",
+          "citations": [],
+          "status": "human_action_required",
+          "handoff_reason": "OTHER_BUSINESS_MUTATION"
+        },
+        "observations": []
+      }
+    },
+    {
+      "question": "List imports",
+      "expected_http": 403,
+      "actual_http": 403,
+      "request_id": "8d356c33-6e80-463b-86b7-4c4ef99709da",
+      "response": {
+        "code": "ACCESS_DENIED"
+      }
+    },
+    {
+      "question": "List imports",
+      "expected_http": 403,
+      "actual_http": 403,
+      "request_id": "14760ea9-06b7-4b3d-a3fd-7e1837916bb3",
+      "response": {
+        "code": "ACCESS_DENIED"
+      }
+    },
+    {
+      "question": "List imports",
+      "expected_http": 401,
+      "actual_http": 401,
+      "request_id": "44bf006c-1f4b-4ff6-a38a-95adb32c0fc2",
+      "response": {
+        "code": "SESSION_EXPIRED"
+      }
+    },
+    {
+      "question": "List imports",
+      "expected_http": 401,
+      "actual_http": 401,
+      "request_id": "ac179e99-bafd-4228-ba69-c44d11dd3888",
+      "response": {
+        "code": "SESSION_EXPIRED"
+      }
+    },
+    {
+      "question": "List imports",
+      "expected_http": 401,
+      "actual_http": 401,
+      "request_id": "6a12c23f-0f62-4457-9518-561d7ab71d10",
+      "response": {
+        "code": "SESSION_EXPIRED"
+      }
+    }
+  ],
+  "next_build_id": "kokKmFANgP0zJjIDifH_i",
+  "java_jar_sha256": "8e3a0594685bc30acb63403264837942633340b321248a31eb2e0206108ece91",
+  "no_java_or_signing_secrets_in_python_env": true,
+  "status": "PASS",
+  "business_table_snapshots_unchanged": true,
+  "business_before": {
+    "product": [
+      8,
+      "2c591ce29c1219b779118472c06c5eec"
+    ],
+    "inventory_stock": [
+      8,
+      "303b8d715541a23cd4af9e5d9f2c55a5"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      1,
+      "d55c861bedb5142a0bdea3a22ed94589"
+    ],
+    "import_work_item": [
+      1,
+      "58e9990466523bdf1e2fd71671367fba"
+    ],
+    "staged_import_row": [
+      1,
+      "70a86b6619756fcba8781a0c98277bcd"
+    ],
+    "reconciliation_run": [
+      1,
+      "88548d611bd5f6a43d7ef302777664a8"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "9ec33d63be2f67583bad5898f7476519"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_after": {
+    "product": [
+      8,
+      "2c591ce29c1219b779118472c06c5eec"
+    ],
+    "inventory_stock": [
+      8,
+      "303b8d715541a23cd4af9e5d9f2c55a5"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      1,
+      "d55c861bedb5142a0bdea3a22ed94589"
+    ],
+    "import_work_item": [
+      1,
+      "58e9990466523bdf1e2fd71671367fba"
+    ],
+    "staged_import_row": [
+      1,
+      "70a86b6619756fcba8781a0c98277bcd"
+    ],
+    "reconciliation_run": [
+      1,
+      "88548d611bd5f6a43d7ef302777664a8"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "9ec33d63be2f67583bad5898f7476519"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "keys": "ephemeral_process_only",
+  "java_provider": "real_disposable_Java",
+  "agent_planner": "fake",
+  "retrieval": "real_local_E5_and_AI_PostgreSQL"
+}

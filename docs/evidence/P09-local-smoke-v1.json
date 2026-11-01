@@ -1,0 +1,19 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [
+    {
+      "question": "List profiles",
+      "expected_http": 401,
+      "actual_http": 403,
+      "request_id": "3d6aa023-54ef-4e6e-a3d1-22dc8073aaf4",
+      "response": {
+        "code": "ACCESS_DENIED"
+      }
+    }
+  ],
+  "no_java_or_signing_secrets_in_python_env": true,
+  "status": "FAIL",
+  "failure_type": "AssertionError",
+  "private_logs": "D:\\CV\\AI_Applied\\.local\\p09-smoke-5b1a6157"
+}

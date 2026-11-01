@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     request_deadline_seconds: float = Field(default=8, gt=0, le=30)
     qa_enabled: bool = False
     mapping_enabled: bool = False
+    agent_enabled: bool = False
+    gateway_public_keys: dict[str, str] = Field(default_factory=dict, repr=False)
     qa_embedding_mode: Literal["fake", "local"] = "fake"
     qa_model_bundle: Path | None = None
     ollama_model: Literal["qwen3.5:4b-q4_K_M", "qwen3.5:9b-q4_K_M"] = "qwen3.5:4b-q4_K_M"
@@ -56,8 +58,35 @@ class Settings(BaseSettings):
                 raise ValueError("QA requires separate AI PostgreSQL")
             if self.qa_embedding_mode == "local" and self.qa_model_bundle is None:
                 raise ValueError("Local QA embeddings require a pinned bundle")
-        if self.mode != "standalone":
-            raise ValueError("Integrated authentication is not implemented in P03")
+        if self.agent_enabled and self.provider_mode == "live":
+            raise ValueError("P09 agent supports fake/local only")
+        if self.agent_enabled and (
+            self.private_container or self.bind_host not in {"127.0.0.1", "localhost", "::1"}
+        ):
+            raise ValueError("P09 agent requires a host loopback listener")
+        if (
+            self.agent_enabled
+            and self.qa_embedding_mode == "local"
+            and self.qa_model_bundle is None
+        ):
+            raise ValueError("Local knowledge embedding bundle required")
+        if self.mode == "integrated":
+            import base64
+            import re
+
+            if (
+                not self.agent_enabled
+                or self.qa_enabled
+                or self.mapping_enabled
+                or self.private_container
+            ):
+                raise ValueError("Integrated P09 permits signed agent/knowledge routes only")
+            if not 1 <= len(self.gateway_public_keys) <= 3 or any(
+                not re.fullmatch(r"[A-Za-z0-9_-]{1,32}", kid)
+                or len(base64.b64decode(key, validate=True)) != 32
+                for kid, key in self.gateway_public_keys.items()
+            ):
+                raise ValueError("Trusted Ed25519 public keys required")
         if self.bind_host not in {"127.0.0.1", "::1", "localhost"} and not (
             self.private_container and self.bind_host == "0.0.0.0"
         ):

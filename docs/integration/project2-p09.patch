@@ -1,0 +1,898 @@
+From 4febdf55c9fb8ef1e4e3becb5d1622c5f4c3a6f6 Mon Sep 17 00:00:00 2001
+From: vietdungnguyen2005 <vietdungnguyen2005@gmail.com>
+Date: Sun, 1 Nov 2026 15:23:54 +0700
+Subject: [PATCH] Add feature-off authenticated read-only AI tool gateway
+
+---
+ .env.example                  |  11 ++
+ README.md                     |   4 +
+ app/api/ops/ai/agent/route.ts |   5 +
+ docs/ai-copilot.md            |  23 +++
+ lib/ai-gateway.test.ts        | 330 ++++++++++++++++++++++++++++++++++
+ lib/ai-gateway/handler.ts     | 121 +++++++++++++
+ lib/ai-gateway/io.ts          |  78 ++++++++
+ lib/ai-gateway/knowledge.ts   |  11 ++
+ lib/ai-gateway/limits.ts      |  13 ++
+ lib/ai-gateway/projection.ts  |  75 ++++++++
+ lib/ai-gateway/spec.ts        |  36 ++++
+ lib/ai-gateway/tools.ts       |  48 +++++
+ lib/ai-gateway/transport.ts   |  26 +++
+ 13 files changed, 781 insertions(+)
+ create mode 100644 app/api/ops/ai/agent/route.ts
+ create mode 100644 docs/ai-copilot.md
+ create mode 100644 lib/ai-gateway.test.ts
+ create mode 100644 lib/ai-gateway/handler.ts
+ create mode 100644 lib/ai-gateway/io.ts
+ create mode 100644 lib/ai-gateway/knowledge.ts
+ create mode 100644 lib/ai-gateway/limits.ts
+ create mode 100644 lib/ai-gateway/projection.ts
+ create mode 100644 lib/ai-gateway/spec.ts
+ create mode 100644 lib/ai-gateway/tools.ts
+ create mode 100644 lib/ai-gateway/transport.ts
+
+diff --git a/.env.example b/.env.example
+index edaf24f..9d41d57 100644
+--- a/.env.example
++++ b/.env.example
+@@ -26,3 +26,14 @@ SPRINGDOC_ENABLED=true
+ # Cloudflare deployment (used by Wrangler/GitHub Actions, not application runtime)
+ CLOUDFLARE_ACCOUNT_ID=
+ CLOUDFLARE_API_TOKEN=
++
++# Optional request-bound read-only AI gateway: OFF by default, server-only values.
++AI_COPILOT_ENABLED=false
++AI_SERVICE_ORIGIN=http://127.0.0.1:8092
++AI_SIGNING_KID=
++# DER PKCS8 Ed25519 private key in base64; only the BFF may receive it.
++AI_SIGNING_KEY_PKCS8_BASE64=
++# Independent random pseudonymization key, at least 32 bytes; BFF-only.
++AI_ACTOR_HMAC_KEY=
++# Optional JSON array narrowing the two public synthetic collection IDs.
++# AI_COLLECTION_IDS_JSON=[]
+diff --git a/README.md b/README.md
+index ebac9b5..460f3f3 100644
+--- a/README.md
++++ b/README.md
+@@ -183,3 +183,7 @@ Data-access/transaction failures return sanitized backend 503 `DATABASE_UNAVAILA
+ These limits protect different waits, not an additive latency SLA or a promise that Java always finishes before the BFF. Spring timeout is applied through JDBC statements; network cancellation/commit acknowledgement can take longer. Driver/pool settings affect all datasource users, including imports and Flyway, so long maintenance work needs explicit review/overrides. Connection URL/deployment overrides can change effective settings. This phase does not prove packet-loss recovery, cover every servlet/auth/Redis/OTLP wait, or replace ingress/concurrency limits.
+ 
+ The current Cloudflare deployment points to the live Render backend through a server-only `BACKEND_ORIGIN`; provider secret stores hold the BFF and operations credentials.
++
++## Optional read-only AI copilot gateway
++
++P09 adds a feature-OFF [request-bound OPERATOR gateway](docs/ai-copilot.md). No write/import/checkout semantics or production deployment changed.
+diff --git a/app/api/ops/ai/agent/route.ts b/app/api/ops/ai/agent/route.ts
+new file mode 100644
+index 0000000..f35341d
+--- /dev/null
++++ b/app/api/ops/ai/agent/route.ts
+@@ -0,0 +1,5 @@
++import { handleAgent } from "@/lib/ai-gateway/handler";
++
++export const runtime = "nodejs";
++export const dynamic = "force-dynamic";
++export const POST = handleAgent;
+diff --git a/docs/ai-copilot.md b/docs/ai-copilot.md
+new file mode 100644
+index 0000000..449354f
+--- /dev/null
++++ b/docs/ai-copilot.md
+@@ -0,0 +1,23 @@
++# Optional read-only AI gateway (P09)
++
++`POST /api/ops/ai/agent` is additive and **OFF by default** (`AI_COPILOT_ENABLED=false`). Existing operations, checkout, import, profile and Java authorization code are unchanged. There is no AI UI, write tool, deployment or persistent key provisioning in this change.
++
++With the flag off, it returns 503 AI_DISABLED and makes no upstream call. When explicitly configured, input is only a bounded question and optional collection IDs. The BFF checks the connection Host/current origin (never forwarded-host), current Java OPERATOR session and timing-safe current CSRF token. Unknown browser identity/tool/result/URL fields are rejected. It generates its own request/run IDs, pseudonymizes the verified username with a BFF-only HMAC key, and signs exact body/route/context using an independent Ed25519 private key. Python receives only its public key; no Java secret, cookie, CSRF token or username is forwarded.
++
++Required server-only configuration is listed in `.env.example`: fixed Java/AI origins, existing Java BFF/ops credentials, AI signing key ID and base64 DER PKCS8 private key, and an independent >=32-byte actor HMAC key. `AI_COLLECTION_IDS_JSON` may narrow the fixed two public synthetic collection IDs. This is a shared synthetic store for all OPERATORs, not tenant isolation. Key rotation changes pseudonyms and invalidates old transport contexts. Keys are not generated or installed by the route.
++
++The live request owns result history, call IDs, deadline and tool budget. Limits: 25 seconds including authentication, at most four Python step calls/three tool executions, 65,536 request/step bytes, 16,384 projected tool-result bytes. Current process rate limit is eight accepted requests per pseudonymous actor/minute, with at most 1024 rate windows. It caches no sessions/results and is not a distributed rate limiter. Browser cancellation aborts fetch/stream work; no later privileged step continues. Reads already received by Java cannot be retroactively cancelled or revoked.
++
++Before every tool and final response, the BFF checks the current Java session again with the same request-local cookie jar. A different account/expired/disabled/revoked operator stops the loop. Legitimate VMARKET_SESSION refresh/deletion is propagated only to the same browser response. Each Java GET independently reauthorizes. No model envelope is accepted as a new callback/execution request.
++
++Closed tools:
++
++- get_integration_profiles -> GET /api/ops/integration-profiles, verifies exact three-target Java policy and strips audit identities.
++- get_imports -> GET /api/ops/imports, at most 20, omits filename/account data.
++- inspect_import_job -> GET /api/ops/imports/{canonical UUID}/inspection; rowNumber/reason is converted to bounded row-number/code pairs, no raw errors/recovery details.
++- get_reconciliation_report -> GET /api/ops/reconciliations, latest 20 only, filter exact job ID and choose newest stored report. No invented by-ID GET or reconciliation POST.
++- search_supplier_knowledge -> separately signed Python POST /ai/knowledge/search, only a subset of current signed scopes. Excerpts/IDs are data, not links/executable markup.
++
++Tool names/arguments/IDs, response identity/step, per-result bytes and call uniqueness are checked. Final UI summary is rebuilt from validated observation statuses; unsupported Python business-success prose is discarded. The response contains bounded structured observations with timestamps, not proof of freshness or business approval. Failed/truncated tools remain explicit. No retries, arbitrary fetch, SQL, headers, preview, confirm, restart, profile mutation or stock/checkout write can be selected by an intent.
++
++Tests follow the incremental red/green workflow and use a typed Spec/Handler Result interface. Run `npm run verify` and `npm run build:worker` (bundle only, no deploy). The paired AI_Applied P09 evidence contains disposable real Java/Next/Python auth/read checks, unchanged business-table snapshots, separate local-model/mock-tool smoke and known limitations. Java source/tests stay unchanged; its 115-test baseline remains verified. Existing dependency audit has 19 advisories (17 moderate/two high), tracked separately for P14.
+diff --git a/lib/ai-gateway.test.ts b/lib/ai-gateway.test.ts
+new file mode 100644
+index 0000000..4d945cc
+--- /dev/null
++++ b/lib/ai-gateway.test.ts
+@@ -0,0 +1,330 @@
++import { afterEach, expect, it, vi } from "vitest";
++import { handleAgent } from "./ai-gateway/handler";
++import { BrowserInput, ToolIntent } from "./ai-gateway/spec";
++import { projectTool } from "./ai-gateway/projection";
++import { executeRead } from "./ai-gateway/tools";
++import { JavaSession } from "./ai-gateway/io";
++import { generateKeyPairSync, verify } from "node:crypto";
++import { signedRequest } from "./ai-gateway/transport";
++import { ActorRateLimit } from "./ai-gateway/limits";
++
++afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); });
++
++it("fails closed while feature is off without reading browser identity or calling upstream", async () => {
++  vi.stubEnv("AI_COPILOT_ENABLED", "false");
++  const fetchMock = vi.fn(); vi.stubGlobal("fetch", fetchMock);
++  const response = await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent", {
++    method: "POST", headers: { "X-AI-Actor": "admin" }, body: "{}",
++  }));
++  expect(response.status).toBe(503);
++  expect(await response.json()).toEqual({ code: "AI_DISABLED" });
++  expect(fetchMock).not.toHaveBeenCalled();
++});
++
++it("parses only browser question/scopes and closed read-only tool arguments", () => {
++  expect(BrowserInput.safeParse({ question: "Inspect imports", actor_ref: "admin" }).success).toBe(false);
++  expect(BrowserInput.safeParse({ question: "Inspect imports" }).success).toBe(true);
++  expect(ToolIntent.safeParse({ call_id: crypto.randomUUID(), tool_name: "confirm_import", arguments: {} }).success).toBe(false);
++  expect(ToolIntent.safeParse({ call_id: crypto.randomUUID(), tool_name: "inspect_import_job", arguments: { job_id: "../restart" } }).success).toBe(false);
++  expect(ToolIntent.safeParse({ call_id: crypto.randomUUID(), tool_name: "get_imports", arguments: {} }).success).toBe(true);
++});
++
++it("rejects a guest from current Java session and never forwards forged credentials", async () => {
++  vi.stubEnv("AI_COPILOT_ENABLED", "true");
++  vi.stubEnv("BACKEND_ORIGIN", "http://127.0.0.1:8080");
++  vi.stubEnv("BFF_SHARED_SECRET", "server-bff");
++  const fetchMock = vi.fn().mockResolvedValue(Response.json({ authenticated: false, username: "", roles: [], csrfToken: "current" }));
++  vi.stubGlobal("fetch", fetchMock);
++  const response = await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent", {
++    method: "POST", headers: { Origin: "http://localhost:3000", "Content-Type": "application/json",
++      "X-V-Market-BFF-Secret": "forged", "X-CSRF-TOKEN": "current" }, body: JSON.stringify({ question: "List imports" }),
++  }));
++  expect(response.status).toBe(401);
++  expect(fetchMock).toHaveBeenCalledTimes(1);
++  expect(new Headers(fetchMock.mock.calls[0][1].headers).get("X-V-Market-BFF-Secret")).toBe("server-bff");
++});
++
++it("projects profiles without audit identity and refuses incompatible Java target policy", () => {
++  const profile = { profileId: "supplier-b", version: 1, vendorCode: "RIVERBYTE", encoding: "UTF-8",
++    mapping: { sku: "SKU", name: "ProductName", on_hand: "AvailableQuantity" }, skuNormalization: "TRIM_UPPER",
++    active: true, requiredFields: ["sku", "name", "on_hand"],
++    normalization: { sku: "TRIM_UPPER", name: "TRIM", on_hand: "TRIM_INTEGER" },
++    validation: { sku: { type: "string", minLength: 1, maxLength: 64 }, name: { type: "string", minLength: 1, maxLength: 160 }, on_hand: { type: "integer", min: 0, max: 1000000 } },
++    createdBy: "private-user", updatedBy: "private-user" };
++  const projected = projectTool("get_integration_profiles", [profile]);
++  expect(projected.success).toBe(true);
++  expect(JSON.stringify(projected)).not.toContain("private-user");
++  expect(projectTool("get_integration_profiles", [{ ...profile, requiredFields: ["price"] }]).success).toBe(false);
++});
++
++const rawJob = { id: "11111111-1111-4111-8111-111111111111", status: "FAILED", totalRows: 1,
++  validRows: 0, appliedRows: 0, rejectedRows: 1, checkpointRow: 0, importMode: "VERSIONED_STOCK",
++  profileId: "supplier-b", profileVersion: 1, sourceName: "private.csv" };
++
++it("bounds inspection errors and replaces unknown row text with a code", () => {
++  const result = projectTool("inspect_import_job", { job: rawJob, workState: "FAILED", recoveryCount: 1,
++    restartAllowed: true, lastRecoveryReason: "private recovery", errors: Array.from({ length: 101 }, () => ({ rowNumber: 2, reason: "private source cell and token" })) });
++  expect(result.success).toBe(true);
++  expect(JSON.stringify(result)).not.toContain("private");
++  expect(JSON.stringify(result)).toContain('"code":"UNKNOWN_ROW_ERROR"');
++  if (result.success) expect(result.data.truncated).toBe(true);
++});
++
++it("projects stored reconciliation reports without values/notes and validates discrepancy types", () => {
++  const raw = { id: crypto.randomUUID(), migrationJobId: rawJob.id, status: "COMPLETED", mismatchCount: 1,
++    changedSinceImportRows: 0, stockNotVerifiedRows: 0, createdAt: "2026-11-01T00:00:00Z",
++    discrepancies: [{ sku: "VM-002", type: "QUANTITY_MISMATCH", expectedValue: "private", actualValue: "private", resolutionNote: "private" }] };
++  const result = projectTool("get_reconciliation_report", raw);
++  expect(result.success).toBe(true);
++  expect(JSON.stringify(result)).not.toContain("private");
++  expect(projectTool("get_reconciliation_report", { ...raw, discrepancies: [{ sku: "VM-002", type: "RUN_SQL" }] }).success).toBe(false);
++});
++
++it("executes only fixed Java GETs and reports a missing job without retrying", async () => {
++  vi.stubEnv("BACKEND_ORIGIN", "http://127.0.0.1:8080");
++  const fetchMock = vi.fn().mockResolvedValue(new Response("private upstream failure", { status: 400 }));
++  vi.stubGlobal("fetch", fetchMock);
++  const intent = ToolIntent.parse({ call_id: crypto.randomUUID(), tool_name: "inspect_import_job", arguments: { job_id: rawJob.id } });
++  const result = await executeRead(intent, new JavaSession(new Request("http://localhost"), new AbortController().signal));
++  expect(result.status).toBe("unavailable");
++  expect(JSON.stringify(result)).not.toContain("private");
++  expect(fetchMock).toHaveBeenCalledTimes(1);
++  expect(fetchMock.mock.calls[0][0]).toBe(`http://127.0.0.1:8080/api/ops/imports/${rawJob.id}/inspection`);
++  expect(fetchMock.mock.calls[0][1].method).toBe("GET");
++});
++
++it("signs exact body/route and pseudonymous context without forwarding Java credentials", () => {
++  const keys = generateKeyPairSync("ed25519");
++  vi.stubEnv("AI_SIGNING_KEY_PKCS8_BASE64", keys.privateKey.export({ format: "der", type: "pkcs8" }).toString("base64"));
++  vi.stubEnv("AI_SIGNING_KID", "test");
++  const signed = signedRequest({ actor_ref: "a".repeat(64), request_id: crypto.randomUUID(), run_id: crypto.randomUUID(),
++    step: 0, collection_ids: [], deadline_at: new Date(Date.now()+20000).toISOString() }, "/ai/agent/step", { question: "List imports" });
++  expect(verify(null, Buffer.from("vmarket-ai-context:v1."+signed.headers.get("X-AI-Context")), keys.publicKey,
++    Buffer.from(signed.headers.get("X-AI-Signature")!, "base64url"))).toBe(true);
++  expect(signed.headers.has("Cookie")).toBe(false);
++  expect(signed.headers.has("X-V-Market-BFF-Secret")).toBe(false);
++  const context = JSON.parse(Buffer.from(signed.headers.get("X-AI-Context")!, "base64url").toString());
++  expect(context.actor_ref).toBe("a".repeat(64));
++  expect(context.operation).toBe("agent_step");
++});
++
++it("runs an authenticated bounded two-step read with per-tool and final session checks", async () => {
++  const key = generateKeyPairSync("ed25519");
++  vi.stubEnv("AI_COPILOT_ENABLED", "true"); vi.stubEnv("BACKEND_ORIGIN", "http://127.0.0.1:8080");
++  vi.stubEnv("AI_SERVICE_ORIGIN", "http://127.0.0.1:8092"); vi.stubEnv("AI_ACTOR_HMAC_KEY", "a".repeat(64));
++  vi.stubEnv("AI_SIGNING_KID", "test"); vi.stubEnv("AI_SIGNING_KEY_PKCS8_BASE64", key.privateKey.export({ format: "der", type: "pkcs8" }).toString("base64"));
++  const seen: { url: string; init: RequestInit }[] = [];
++  const fetchMock = vi.fn(async (url: string, init: RequestInit) => {
++    seen.push({ url, init });
++    if (url.endsWith("/api/auth/session")) return Response.json({ authenticated: true, username: "private-operator", roles: ["ROLE_OPERATOR"], csrfToken: "current" });
++    if (url.endsWith("/api/ops/imports")) return Response.json([rawJob]);
++    const headers = new Headers(init.headers);
++    expect(headers.has("Cookie")).toBe(false); expect(headers.has("X-CSRF-TOKEN")).toBe(false);
++    expect(headers.has("X-V-Market-BFF-Secret")).toBe(false);
++    const body = JSON.parse(init.body as string);
++    if (body.step === 0) return Response.json({ protocol_version: 1, request_id: body.request_id, run_id: body.run_id,
++      step: 0, kind: "tool_intent", intent: { call_id: crypto.randomUUID(), tool_name: "get_imports", arguments: {} } });
++    expect(body.tool_result.data.imports[0].job_id).toBe(rawJob.id);
++    return Response.json({ protocol_version: 1, request_id: body.request_id, run_id: body.run_id, step: 1,
++      kind: "final", message: "One observed import job", citations: [], status: "answered", handoff_reason: null });
++  });
++  vi.stubGlobal("fetch", fetchMock);
++  const response = await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent", { method: "POST",
++    headers: { Origin: "http://localhost:3000", "Content-Type": "application/json", "X-CSRF-TOKEN": "current", Cookie: "VMARKET_SESSION=browser-session" },
++    body: JSON.stringify({ question: "List imports" }) }));
++  expect(response.status).toBe(200);
++  expect(seen.filter(s => s.url.endsWith("/api/auth/session"))).toHaveLength(3);
++  expect(JSON.stringify(await response.json())).not.toContain("private-operator");
++});
++
++it("executes knowledge search only through a separately signed narrowed AI request", async () => {
++  const key = generateKeyPairSync("ed25519");
++  vi.stubEnv("AI_COPILOT_ENABLED", "true"); vi.stubEnv("BACKEND_ORIGIN", "http://127.0.0.1:8080");
++  vi.stubEnv("AI_SERVICE_ORIGIN", "http://127.0.0.1:8092"); vi.stubEnv("AI_ACTOR_HMAC_KEY", "k".repeat(64));
++  vi.stubEnv("AI_SIGNING_KID", "test"); vi.stubEnv("AI_SIGNING_KEY_PKCS8_BASE64", key.privateKey.export({ format: "der", type: "pkcs8" }).toString("base64"));
++  const collection = "ed76d914-7c66-5102-9178-676334063938";
++  let searches = 0;
++  vi.stubGlobal("fetch", vi.fn(async (url: string, init: RequestInit) => {
++    if (url.endsWith("/api/auth/session")) return Response.json({ authenticated: true, username: "knowledge-operator", roles: ["ROLE_OPERATOR"], csrfToken: "current" });
++    const body = JSON.parse(init.body as string);
++    if (url.endsWith("/ai/knowledge/search")) {
++      searches++;
++      const claims = JSON.parse(Buffer.from(new Headers(init.headers).get("X-AI-Context")!, "base64url").toString());
++      expect(claims.operation).toBe("knowledge_search"); expect(body.collection_ids).toEqual([collection]);
++      return Response.json({ hits: [] });
++    }
++    if (body.step === 0) return Response.json({ protocol_version: 1, request_id: body.request_id, run_id: body.run_id, step: 0,
++      kind: "tool_intent", intent: { call_id: crypto.randomUUID(), tool_name: "search_supplier_knowledge", arguments: { query: "encoding", collection_ids: [collection], top_k: 1 } } });
++    return Response.json({ protocol_version: 1, request_id: body.request_id, run_id: body.run_id, step: 1, kind: "final",
++      message: "No knowledge hits", status: "abstained", citations: [], handoff_reason: null });
++  }));
++  const response = await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent", { method: "POST",
++    headers: { Origin: "http://localhost:3000", "X-CSRF-TOKEN": "current" },
++    body: JSON.stringify({ question: "Search supplier knowledge", collection_ids: [collection] }) }));
++  expect(response.status).toBe(200); expect(searches).toBe(1);
++});
++
++it("bounds per-actor requests and rate-limit memory without caching tool results", () => {
++  const limit = new ActorRateLimit(2, 1000, 2);
++  expect(limit.consume("actor-a", 0)).toBe(true);
++  expect(limit.consume("actor-a", 1)).toBe(true);
++  expect(limit.consume("actor-a", 2)).toBe(false);
++  expect(limit.consume("actor-b", 2)).toBe(true);
++  expect(limit.consume("actor-c", 2)).toBe(false);
++  expect(limit.consume("actor-a", 1001)).toBe(true);
++});
++
++it.each([{ authenticated: false, roles: [], expected: 401 },
++  { authenticated: true, roles: ["ROLE_GUEST"], expected: 403 },
++  { authenticated: true, roles: ["ROLE_OPERATOR"], expected: 403 },
++])("rejects expired/revoked/role-denied or stale CSRF before AI work: $expected", async ({ authenticated, roles, expected }) => {
++  vi.stubEnv("AI_COPILOT_ENABLED", "true"); vi.stubEnv("BACKEND_ORIGIN", "http://127.0.0.1:8080");
++  const fetchMock = vi.fn().mockResolvedValue(Response.json({ authenticated, roles, username: "operator", csrfToken: "current" }));
++  vi.stubGlobal("fetch",fetchMock);
++  const response = await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent", { method: "POST",
++    headers: { Origin: "http://localhost:3000", "X-CSRF-TOKEN": "stale" }, body: JSON.stringify({ question: "List imports" }) }));
++  expect(response.status).toBe(expected); expect(fetchMock).toHaveBeenCalledTimes(1);
++});
++
++it("aborts a hanging upstream at the outer deadline without continuing a privileged loop", async () => {
++  vi.useFakeTimers();
++  try {
++    vi.stubEnv("AI_COPILOT_ENABLED", "true"); vi.stubEnv("BACKEND_ORIGIN", "http://127.0.0.1:8080");
++    let upstreamSignal: AbortSignal | undefined;
++    vi.stubGlobal("fetch",vi.fn((_url,init) => { upstreamSignal=init.signal; return new Promise(() => {}); }));
++    const pending=handleAgent(new Request("http://localhost:3000/api/ops/ai/agent", { method: "POST",
++      headers: { Origin: "http://localhost:3000" }, body: JSON.stringify({ question: "List imports" }) }));
++    await vi.advanceTimersByTimeAsync(25_001);
++    const response=await pending;
++    expect(response.status).toBe(504); expect(upstreamSignal?.aborted).toBe(true);
++  } finally { vi.useRealTimers(); }
++});
++
++it("generates its own request trace instead of trusting a caller trace or actor", async () => {
++  vi.stubEnv("AI_COPILOT_ENABLED","false");
++  const supplied=crypto.randomUUID();
++  const response=await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent",{
++    method:"POST",headers:{"X-Request-ID":supplied,"X-AI-Actor":"admin"},body:"{}"}));
++  expect(response.headers.get("X-Request-ID")).toMatch(/^[0-9a-f-]{36}$/);
++  expect(response.headers.get("X-Request-ID")).not.toBe(supplied);
++});
++
++it("refuses an authenticated upstream session without a stable account identity", async () => {
++  vi.stubEnv("AI_COPILOT_ENABLED","true"); vi.stubEnv("BACKEND_ORIGIN","http://127.0.0.1:8080");
++  vi.stubGlobal("fetch",vi.fn().mockResolvedValue(Response.json({authenticated:true,username:"",roles:["ROLE_OPERATOR"],csrfToken:"current"})));
++  const response=await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent",{method:"POST",
++    headers:{Origin:"http://localhost:3000","X-CSRF-TOKEN":"current"},body:JSON.stringify({question:"List imports"})}));
++  expect(response.status).toBe(502);
++});
++
++async function scenario(reply: (body: { request_id: string; run_id: string; step: number },init:RequestInit) => unknown, authClockShift=0) {
++  const key=generateKeyPairSync("ed25519");
++  vi.stubEnv("AI_COPILOT_ENABLED","true"); vi.stubEnv("BACKEND_ORIGIN","http://127.0.0.1:8080");
++  vi.stubEnv("AI_SERVICE_ORIGIN","http://127.0.0.1:8092"); vi.stubEnv("AI_ACTOR_HMAC_KEY",crypto.randomUUID()+crypto.randomUUID());
++  vi.stubEnv("AI_SIGNING_KID","test"); vi.stubEnv("AI_SIGNING_KEY_PKCS8_BASE64",key.privateKey.export({format:"der",type:"pkcs8"}).toString("base64"));
++  const fetchMock=vi.fn(async (url:string,init:RequestInit) => {
++    if(url.endsWith("/api/auth/session")) {
++      if(authClockShift) { vi.setSystemTime(Date.now()+authClockShift); authClockShift=0; }
++      return Response.json({authenticated:true,username:"scenario-operator",roles:["ROLE_OPERATOR"],csrfToken:"current"});
++    }
++    if(url.endsWith("/api/ops/imports")) return Response.json([rawJob]);
++    const result=reply(JSON.parse(init.body as string),init);
++    return result instanceof Response ? result : Response.json(result);
++  });
++  vi.stubGlobal("fetch",fetchMock);
++  const response=await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent",{method:"POST",
++    headers:{Origin:"http://localhost:3000","X-CSRF-TOKEN":"current"},body:JSON.stringify({question:"List imports"})}));
++  return {response,fetchMock};
++}
++
++it("refuses a claimed answered result with no tool observations",async()=>{
++  const {response}=await scenario(body=>({protocol_version:1,request_id:body.request_id,run_id:body.run_id,step:body.step,
++    kind:"final",message:"Imports completed",citations:[],status:"answered",handoff_reason:null}));
++  expect(response.status).toBe(502);
++});
++
++it("does not repeat Python's unsupported business-success narrative after a successful read",async()=>{
++  const {response}=await scenario(body=>body.step===0 ? {protocol_version:1,request_id:body.request_id,run_id:body.run_id,step:0,
++    kind:"tool_intent",intent:{call_id:crypto.randomUUID(),tool_name:"get_imports",arguments:{}}} :
++    {protocol_version:1,request_id:body.request_id,run_id:body.run_id,step:1,kind:"final",message:"Inventory updated successfully",
++      citations:[],status:"answered",handoff_reason:null});
++  expect(response.status).toBe(200);
++  expect(JSON.stringify(await response.json())).not.toContain("Inventory updated");
++});
++
++it("checks the connection Host for Next's internal localhost URL and ignores forwarded-host spoofing",async()=>{
++  vi.stubEnv("AI_COPILOT_ENABLED","true"); vi.stubEnv("BACKEND_ORIGIN","http://127.0.0.1:8080");
++  vi.stubGlobal("fetch",vi.fn().mockResolvedValue(Response.json({authenticated:false,username:"",roles:[],csrfToken:"x"})));
++  const response=await handleAgent(new Request("http://localhost:13009/api/ops/ai/agent",{method:"POST",
++    headers:{Host:"127.0.0.1:13009",Origin:"http://127.0.0.1:13009","X-Forwarded-Host":"evil.example"},body:JSON.stringify({question:"List imports"})}));
++  expect(response.status).toBe(401);
++});
++
++it.each([401,403,409,413,429,502,504])("preserves a safe AI transport failure status %s without raw error text",async status=>{
++  const {response}=await scenario(()=>new Response("private upstream error",{status}));
++  expect(response.status).toBe(status);
++  expect(JSON.stringify(await response.json())).not.toContain("private");
++});
++
++it("rejects a fourth tool and never issues a Java write",async()=>{
++  const {response,fetchMock}=await scenario(body=>({protocol_version:1,request_id:body.request_id,run_id:body.run_id,step:body.step,
++    kind:"tool_intent",intent:{call_id:crypto.randomUUID(),tool_name:"get_imports",arguments:{}}}));
++  expect(response.status).toBe(429);
++  const businessCalls=fetchMock.mock.calls.filter(([url])=>url.includes("/api/ops/"));
++  expect(businessCalls).toHaveLength(3);
++  expect(businessCalls.every(([,init])=>init.method==="GET")).toBe(true);
++});
++
++it("revalidates session between Python intent and Java tool execution",async()=>{
++  const revoked=vi.fn().mockResolvedValue(Response.json({authenticated:false,username:"",roles:[],csrfToken:"new"}));
++  const {response}=await scenario(body=>{
++    vi.stubGlobal("fetch",revoked);
++    return {protocol_version:1,request_id:body.request_id,run_id:body.run_id,step:body.step,kind:"tool_intent",
++      intent:{call_id:crypto.randomUUID(),tool_name:"get_imports",arguments:{}}};
++  });
++  expect(response.status).toBe(401);
++  expect(revoked).toHaveBeenCalledTimes(1);
++  expect(revoked.mock.calls[0][0]).toBe("http://127.0.0.1:8080/api/auth/session");
++});
++
++it.each(["confirm_import","http://evil.example","run_sql"])("rejects adversarial tool name %s before Java",async tool_name=>{
++  const {response,fetchMock}=await scenario(body=>({protocol_version:1,request_id:body.request_id,run_id:body.run_id,step:body.step,
++    kind:"tool_intent",intent:{call_id:crypto.randomUUID(),tool_name,arguments:{url:"http://evil.example"}}}));
++  expect(response.status).toBe(502);
++  expect(fetchMock.mock.calls.some(([url])=>url.includes("/api/ops/"))).toBe(false);
++});
++
++it("reads the actual Java RowError.reason contract and never passes its text through",()=>{
++  const result=projectTool("inspect_import_job",{job:rawJob,workState:"FAILED",recoveryCount:0,restartAllowed:true,
++    errors:[{rowNumber:2,reason:"PRIVATE_ROW_SENTINEL"}]});
++  expect(result.success).toBe(true);
++  expect(JSON.stringify(result)).not.toContain("PRIVATE_ROW_SENTINEL");
++});
++
++it("maps source-verified row-error prefixes to codes while discarding their details",()=>{
++  const result=projectTool("inspect_import_job",{job:rawJob,workState:"FAILED",recoveryCount:0,restartAllowed:true,
++    errors:[{rowNumber:2,reason:"STALE_STOCK_VERSION: PRIVATE_SOURCE_SENTINEL"}]});
++  expect(result.success).toBe(true);
++  expect(JSON.stringify(result)).toContain('"code":"STALE_STOCK_VERSION"');
++  expect(JSON.stringify(result)).not.toContain("PRIVATE_SOURCE_SENTINEL");
++});
++
++it("does not extend the signed deadline by time already spent authenticating",async()=>{
++  vi.useFakeTimers();
++  try {
++    const started=Date.now(); let deadline=0;
++    const {response}=await scenario((body,init)=>{
++      deadline=Date.parse(JSON.parse(Buffer.from(new Headers(init.headers).get("X-AI-Context")!,"base64url").toString()).deadline_at);
++      return {protocol_version:1,request_id:body.request_id,run_id:body.run_id,step:body.step,kind:"final",
++        message:"No observation",status:"abstained",citations:[],handoff_reason:null};
++    },5000);
++    expect(response.status).toBe(200); expect(deadline).toBeLessThanOrEqual(started+25000);
++  } finally {vi.useRealTimers();}
++});
++
++it("rejects a browser body above the byte cap before authentication or AI calls",async()=>{
++  vi.stubEnv("AI_COPILOT_ENABLED","true"); const fetchMock=vi.fn(); vi.stubGlobal("fetch",fetchMock);
++  const response=await handleAgent(new Request("http://localhost:3000/api/ops/ai/agent",{method:"POST",
++    headers:{Origin:"http://localhost:3000"},body:"x".repeat(65537)}));
++  expect(response.status).toBe(413); expect(fetchMock).not.toHaveBeenCalled();
++});
+diff --git a/lib/ai-gateway/handler.ts b/lib/ai-gateway/handler.ts
+new file mode 100644
+index 0000000..601180a
+--- /dev/null
++++ b/lib/ai-gateway/handler.ts
+@@ -0,0 +1,121 @@
++import { createHmac, randomUUID } from "node:crypto";
++import { BrowserInput, StepResponse, type AgentGatewaySpec, type GatewayFailure, type Result } from "./spec";
++import { JavaSession, readBounded } from "./io";
++import { signedRequest, type TransportContext } from "./transport";
++import { executeRead, type Observation } from "./tools";
++import { KnowledgeData } from "./knowledge";
++import { actorRateLimit } from "./limits";
++
++const SYNTHETIC = ["ed76d914-7c66-5102-9178-676334063938", "4aa83e9f-0a0a-5558-8f5e-0f87db27c923"];
++const fail = (code: GatewayFailure, status: number): Result<never> => ({ success: false, code, status });
++function transportFailure(response: Response): Result<never> {
++  void response.body?.cancel().catch(() => undefined);
++  const codes: Partial<Record<number,GatewayFailure>> = { 400:"INPUT_INVALID",401:"ACCESS_DENIED",403:"ACCESS_DENIED",
++    409:"STEP_CONFLICT",413:"INPUT_INVALID",429:"BUDGET_EXCEEDED",502:"OUTPUT_INVALID",504:"DEADLINE_EXCEEDED" };
++  return fail(codes[response.status] ?? "DEPENDENCY_UNAVAILABLE", codes[response.status] ? response.status : 503);
++}
++
++export class AgentGatewayHandler implements AgentGatewaySpec {
++  readonly cookies: string[] = [];
++  readonly requestId = randomUUID();
++  private deadlineAt = 0;
++  async execute(request: Request): Promise<Result<unknown>> {
++    if (process.env.AI_COPILOT_ENABLED !== "true") return fail("AI_DISABLED", 503);
++    this.deadlineAt = Date.now()+25_000;
++    const controller = new AbortController();
++    const signal = AbortSignal.any([request.signal, controller.signal]);
++    let timer: ReturnType<typeof setTimeout> | undefined;
++    try {
++      return await Promise.race([this.run(request, signal), new Promise<Result<never>>(resolve => {
++        timer = setTimeout(() => { controller.abort(); resolve(fail("DEADLINE_EXCEEDED", 504)); }, 25_000);
++      }), new Promise<Result<never>>(resolve => {
++        if (request.signal.aborted) resolve(fail("DEADLINE_EXCEEDED", 499));
++        else request.signal.addEventListener("abort", () => resolve(fail("DEADLINE_EXCEEDED", 499)), { once: true });
++      })]);
++    } catch (error) {
++      if (signal.aborted || (error instanceof Error && error.message === "DEADLINE_EXCEEDED")) return fail("DEADLINE_EXCEEDED",504);
++      return fail("DEPENDENCY_UNAVAILABLE",503);
++    }
++    finally { clearTimeout(timer); controller.abort(); }
++  }
++
++  private async run(request: Request, signal: AbortSignal): Promise<Result<unknown>> {
++    const url = new URL(request.url);
++    const host = request.headers.get("host");
++    if (host) url.host = host;
++    if (request.method !== "POST" || request.headers.get("origin") !== url.origin || request.headers.get("sec-fetch-site") === "cross-site") return fail("ACCESS_DENIED", 403);
++    let input;
++    try { input = BrowserInput.parse(JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(await readBounded(request, 65_536, signal)))); }
++    catch (error) { return fail("INPUT_INVALID", error instanceof Error && error.message === "BODY_LIMIT" ? 413 : 400); }
++    const session = new JavaSession(request, signal, this.requestId);
++    try {
++      const authenticated = await session.check(undefined, true);
++      if (!authenticated.success) return authenticated;
++      const actor = authenticated.data;
++      const actorKey = process.env.AI_ACTOR_HMAC_KEY ?? "";
++      if (Buffer.byteLength(actorKey) < 32) return fail("CONFIGURATION_UNAVAILABLE", 503);
++      const configured = process.env.AI_COLLECTION_IDS_JSON ? JSON.parse(process.env.AI_COLLECTION_IDS_JSON) as unknown : SYNTHETIC;
++      if (!Array.isArray(configured) || configured.length > 10 || configured.some(s => !SYNTHETIC.includes(s))) return fail("CONFIGURATION_UNAVAILABLE", 503);
++      const scopes = input.collection_ids ?? configured as string[];
++      if (new Set(scopes).size !== scopes.length || scopes.some(s => !configured.includes(s))) return fail("ACCESS_DENIED", 403);
++      const context: TransportContext = { actor_ref: createHmac("sha256", actorKey).update("vmarket-ai-actor:v1\n"+actor).digest("hex"),
++        request_id: this.requestId, run_id: randomUUID(), step: 0, collection_ids: scopes, deadline_at: new Date(this.deadlineAt).toISOString() };
++      if (!actorRateLimit.consume(context.actor_ref)) return fail("BUDGET_EXCEEDED",429);
++      const history: Observation[] = [], callIds = new Set<string>();
++      const origin = process.env.AI_SERVICE_ORIGIN?.replace(/\/$/, "");
++      if (!origin || !/^https?:\/\//.test(origin)) return fail("CONFIGURATION_UNAVAILABLE", 503);
++      for (let step = 0; step <= 3; step++) {
++        signal.throwIfAborted(); context.step = step;
++        const payload = { protocol_version: 1, request_id: context.request_id, run_id: context.run_id, step,
++          question: input.question, collection_ids: scopes, tool_result: history.at(-1) ?? null, previous_results: history.slice(0,-1) };
++        const signed = signedRequest(context, "/ai/agent/step", payload);
++        const response = await fetch(origin+"/ai/agent/step", { method: "POST", ...signed, cache: "no-store", redirect: "error", signal });
++        if (!response.ok) return transportFailure(response);
++        const parsed = StepResponse.safeParse(JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(await readBounded(response,65_536,signal))));
++        if (!parsed.success) return fail("OUTPUT_INVALID", 502);
++        const next = parsed.data;
++        if (next.request_id !== context.request_id || next.run_id !== context.run_id || next.step !== step) return fail("STEP_CONFLICT",409);
++        if (next.kind !== "tool_intent") {
++          const checked = await session.check(actor, true);
++          if (!checked.success) return checked;
++          if (next.status === "answered" && (!history.length || history.some(h => h.status !== "ok"))) return fail("OUTPUT_INVALID",502);
++          const message = next.kind === "handoff"
++            ? "Use the existing authenticated operator workflow for this business action."
++            : history.map(h => `${h.tool_name}: ${h.status}${h.truncated ? " (truncated)" : ""}`).join("; ") || "No supported read-only observation.";
++          return { success: true, data: { result: { ...next, message }, observations: history } };
++        }
++        if (step === 3 || callIds.has(next.intent.call_id)) return fail("BUDGET_EXCEEDED",429);
++        callIds.add(next.intent.call_id);
++        const checked = await session.check(actor,true);
++        if (!checked.success) return checked;
++        if ("job_id" in next.intent.arguments && !(input.question+JSON.stringify(history)).includes(next.intent.arguments.job_id)) return fail("OUTPUT_INVALID",502);
++        let observed: Observation;
++        if (next.intent.tool_name === "search_supplier_knowledge") {
++          if (next.intent.arguments.collection_ids.some(s => !scopes.includes(s))) return fail("ACCESS_DENIED",403);
++          const search = signedRequest(context,"/ai/knowledge/search",next.intent.arguments);
++          const response = await fetch(origin+"/ai/knowledge/search", { method: "POST", ...search, signal, cache: "no-store", redirect: "error" });
++          if (!response.ok) return transportFailure(response);
++          const data = KnowledgeData.safeParse(JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(await readBounded(response,16_384,signal))));
++          if (!data.success) return fail("OUTPUT_INVALID",502);
++          observed = { call_id: next.intent.call_id, tool_name: next.intent.tool_name, observed_at: new Date().toISOString(),
++            status: "ok", truncated: false, data: data.data, error_code: null };
++          if (Buffer.byteLength(JSON.stringify(observed)) > 16_384) return fail("OUTPUT_INVALID",502);
++        } else observed = await executeRead(next.intent,session);
++        if (observed.status === "denied") return fail("ACCESS_DENIED",session.authorizationStatus ?? 403);
++        history.push(observed);
++        console.info(JSON.stringify({ event: "ai_tool_read", request_id: context.request_id, run_id: context.run_id,
++          step, tool_name: observed.tool_name, status: observed.status }));
++      }
++      return fail("BUDGET_EXCEEDED",429);
++    } finally { this.cookies.push(...session.refreshedCookies); }
++  }
++}
++
++export async function handleAgent(request: Request): Promise<Response> {
++  const gateway = new AgentGatewayHandler();
++  const result = await gateway.execute(request);
++  const headers = new Headers({ "Cache-Control": "no-store", "Content-Type": "application/json" });
++  headers.set("X-Request-ID",gateway.requestId);
++  for (const cookie of gateway.cookies) headers.append("Set-Cookie",cookie);
++  return Response.json(result.success ? result.data : { code: result.code }, { status: result.success ? 200 : result.status, headers });
++}
+diff --git a/lib/ai-gateway/io.ts b/lib/ai-gateway/io.ts
+new file mode 100644
+index 0000000..8ffc691
+--- /dev/null
++++ b/lib/ai-gateway/io.ts
+@@ -0,0 +1,78 @@
++import { timingSafeEqual, randomUUID } from "node:crypto";
++import { z } from "zod";
++import type { Result } from "./spec";
++
++export async function readBounded(response: Response | Request, limit: number, signal?: AbortSignal): Promise<Uint8Array<ArrayBuffer>> {
++  const reader = response.body?.getReader();
++  if (!reader) return new Uint8Array();
++  const chunks: Uint8Array[] = []; let size = 0;
++  const cancel = () => { void reader.cancel().catch(() => undefined); };
++  signal?.addEventListener("abort", cancel, { once: true });
++  try {
++    while (true) {
++      signal?.throwIfAborted();
++      const next = await reader.read();
++      signal?.throwIfAborted();
++      if (next.done) break;
++      size += next.value.length;
++      if (size > limit) { cancel(); throw new Error("BODY_LIMIT"); }
++      chunks.push(next.value);
++    }
++    const bytes = new Uint8Array(size); let offset = 0;
++    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
++    return bytes;
++  } finally { signal?.removeEventListener("abort", cancel); reader.releaseLock(); }
++}
++
++export function equal(a: string, b: string): boolean {
++  const x = Buffer.from(a), y = Buffer.from(b);
++  return x.length > 0 && x.length === y.length && timingSafeEqual(x, y);
++}
++
++const Session = z.object({ authenticated: z.boolean(), username: z.string().max(200),
++  roles: z.array(z.string().max(100)).max(20), csrfToken: z.string().min(1).max(4096) })
++  .refine(s => !s.authenticated || s.username.trim().length > 0);
++
++export class JavaSession {
++  private cookie: string;
++  readonly refreshedCookies: string[] = [];
++  authorizationStatus: 401 | 403 | undefined;
++  constructor(private request: Request, readonly signal: AbortSignal, readonly requestId = randomUUID()) {
++    const cookies = (request.headers.get("cookie") ?? "").split(";").map(v => v.trim())
++      .filter(v => v.startsWith("VMARKET_SESSION="));
++    this.cookie = cookies.length === 1 && cookies[0].length <= 4096 ? cookies[0] : "";
++  }
++  async get(path: string): Promise<Response> {
++    const origin = process.env.BACKEND_ORIGIN?.replace(/\/$/, "");
++    if (!origin || !/^https?:\/\//.test(origin)) throw new Error("CONFIGURATION_UNAVAILABLE");
++    const headers = new Headers({ Accept: "application/json" });
++    headers.set("X-Request-Id",this.requestId);
++    if (this.cookie) headers.set("Cookie", this.cookie);
++    headers.set("X-V-Market-BFF-Secret", process.env.BFF_SHARED_SECRET ?? "");
++    if (path.startsWith("/api/ops/")) headers.set("X-V-Market-Ops-Secret", process.env.VMARKET_OPS_SECRET ?? "");
++    const response = await fetch(origin + path, { method: "GET", headers, signal: this.signal,
++      cache: "no-store", redirect: "error" });
++    if (response.status === 401 || response.status === 403) this.authorizationStatus = response.status;
++    for (const item of response.headers.getSetCookie()) {
++      const part = item.split(";")[0];
++      if (part.startsWith("VMARKET_SESSION=") && part.length <= 4096) {
++        this.cookie = part; this.refreshedCookies.push(item);
++      }
++    }
++    return response;
++  }
++  async check(expected?: string, csrf = false): Promise<Result<string>> {
++    try {
++      const response = await this.get("/api/auth/session");
++      if (!response.ok) void response.body?.cancel().catch(() => undefined);
++      if (response.status === 401 || response.status === 403) return { success: false, code: "SESSION_EXPIRED", status: response.status };
++      if (!response.ok) return { success: false, code: "DEPENDENCY_UNAVAILABLE", status: 503 };
++      const data = Session.safeParse(JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(await readBounded(response, 16_384, this.signal))));
++      if (!data.success) return { success: false, code: "OUTPUT_INVALID", status: 502 };
++      if (!data.data.authenticated) return { success: false, code: "SESSION_EXPIRED", status: 401 };
++      if (!data.data.roles.includes("ROLE_OPERATOR") || (expected && expected !== data.data.username)) return { success: false, code: "ACCESS_DENIED", status: 403 };
++      if (csrf && !equal(this.request.headers.get("x-csrf-token") ?? "", data.data.csrfToken)) return { success: false, code: "ACCESS_DENIED", status: 403 };
++      return { success: true, data: data.data.username };
++    } catch { return { success: false, code: "DEPENDENCY_UNAVAILABLE", status: 503 }; }
++  }
++}
+diff --git a/lib/ai-gateway/knowledge.ts b/lib/ai-gateway/knowledge.ts
+new file mode 100644
+index 0000000..3b8540d
+--- /dev/null
++++ b/lib/ai-gateway/knowledge.ts
+@@ -0,0 +1,11 @@
++import { z } from "zod";
++import { uuid } from "./spec";
++
++export const KnowledgeData = z.strictObject({ hits: z.array(z.strictObject({
++  citation: z.object({ document_id: uuid, version_id: uuid, chunk_id: uuid,
++    locator: z.union([z.strictObject({ kind: z.literal("section"), value: z.string().min(1).max(160) }),
++      z.strictObject({ kind: z.literal("page"), value: z.number().int().min(1).max(200) })]),
++    source_url: z.string().regex(/^\/ai\/citations\/[0-9a-f-]{36}$/).optional(),
++  }).transform(c => ({ document_id: c.document_id, version_id: c.version_id, chunk_id: c.chunk_id, locator: c.locator })),
++  excerpt: z.string().min(1).max(2000), score: z.number(), retrieval_mode: z.enum(["lexical", "dense", "hybrid"]),
++})).max(5) });
+diff --git a/lib/ai-gateway/limits.ts b/lib/ai-gateway/limits.ts
+new file mode 100644
+index 0000000..fbbfe61
+--- /dev/null
++++ b/lib/ai-gateway/limits.ts
+@@ -0,0 +1,13 @@
++export class ActorRateLimit {
++  private windows = new Map<string, { until: number; used: number }>();
++  constructor(private requests = 8, private milliseconds = 60_000, private actors = 1024) {}
++  consume(actor: string, now = Date.now()): boolean {
++    for (const [key, value] of this.windows) if (value.until <= now) this.windows.delete(key);
++    const window = this.windows.get(actor);
++    if (window) { if (window.used >= this.requests) return false; window.used++; return true; }
++    if (this.windows.size >= this.actors) return false;
++    this.windows.set(actor, { until: now+this.milliseconds, used: 1 }); return true;
++  }
++}
++
++export const actorRateLimit = new ActorRateLimit();
+diff --git a/lib/ai-gateway/projection.ts b/lib/ai-gateway/projection.ts
+new file mode 100644
+index 0000000..ee76f9b
+--- /dev/null
++++ b/lib/ai-gateway/projection.ts
+@@ -0,0 +1,75 @@
++import { z } from "zod";
++import { uuid, type Intent, type Result } from "./spec";
++
++const header = z.string().min(1).max(80).refine(s => s === s.trim() && ![...s].some(c => c.charCodeAt(0) < 32 || (c.charCodeAt(0) >= 127 && c.charCodeAt(0) <= 159)));
++const mapping = z.strictObject({ sku: header, name: header, on_hand: header }).refine(m => new Set(Object.values(m)).size === 3);
++const profileId = z.string().regex(/^[a-z][a-z0-9-]{0,47}$/);
++const integer = z.number().int().min(0).max(2147483647);
++const version = z.number().int().min(1).max(2147483647);
++const count = z.number().int().min(0).max(1000);
++function rowCode(reason: string): string {
++  const prefix = reason.match(/^(UNKNOWN_SKU|VENDOR_MISMATCH|STALE_STOCK_VERSION|STALE_PRODUCT_VERSION|DUPLICATE_SKU):/);
++  if (prefix) return prefix[1];
++  if (reason === "invalid SKU") return "INVALID_SKU";
++  if (reason === "invalid product name") return "INVALID_NAME";
++  if (reason === "on_hand must be a non-negative integer" || reason === "on_hand must be an integer between 0 and 1000000") return "INVALID_QUANTITY";
++  return "UNKNOWN_ROW_ERROR";
++}
++const validation = z.strictObject({
++  sku: z.strictObject({ type: z.literal("string"), minLength: z.literal(1), maxLength: z.literal(64) }),
++  name: z.strictObject({ type: z.literal("string"), minLength: z.literal(1), maxLength: z.literal(160) }),
++  on_hand: z.strictObject({ type: z.literal("integer"), min: z.literal(0), max: z.literal(1000000) }),
++});
++const Profile = z.object({ profileId, version, encoding: z.enum(["UTF-8", "CP932"]), vendorCode: z.string().min(1).max(32),
++  mapping, skuNormalization: z.enum(["TRIM", "TRIM_UPPER"]), active: z.boolean(),
++  requiredFields: z.tuple([z.literal("sku"), z.literal("name"), z.literal("on_hand")]), validation,
++  normalization: z.strictObject({ sku: z.enum(["TRIM", "TRIM_UPPER"]), name: z.literal("TRIM"), on_hand: z.literal("TRIM_INTEGER") }),
++}).refine(p => p.normalization.sku === p.skuNormalization).transform(p => ({
++  profile_id: p.profileId, version: p.version, vendor_code: p.vendorCode, encoding: p.encoding,
++  mapping: p.mapping, sku_normalization: p.skuNormalization, active: p.active, required_fields: p.requiredFields,
++}));
++const Job = z.object({ id: uuid, status: z.enum(["STAGED", "RUNNING", "COMPLETED", "COMPLETED_WITH_ERRORS", "FAILED"]),
++  totalRows: count, validRows: count, appliedRows: count, rejectedRows: count,
++  checkpointRow: z.number().int().min(0).max(1001), importMode: z.enum(["VERSIONED_STOCK", "METADATA_ONLY", "LEGACY_UNVERIFIED"]),
++  profileId: profileId.nullable(), profileVersion: version.nullable(),
++}).refine(j => (j.profileId === null) === (j.profileVersion === null)).transform(j => ({
++  job_id: j.id, status: j.status, total_rows: j.totalRows, valid_rows: j.validRows, applied_rows: j.appliedRows,
++  rejected_rows: j.rejectedRows, checkpoint_row: j.checkpointRow, import_mode: j.importMode,
++  profile_id: j.profileId, profile_version: j.profileVersion,
++}));
++
++export function projectTool(tool: Intent["tool_name"], raw: unknown): Result<{ data: unknown; truncated: boolean }> {
++  try {
++    if (tool === "get_integration_profiles") {
++      const data = z.array(Profile).max(100).parse(raw);
++      return { success: true, data: { data: { profiles: data }, truncated: false } };
++    }
++    if (tool === "get_imports") {
++      const data = z.array(Job).max(20).parse(raw);
++      return { success: true, data: { data: { imports: data }, truncated: false } };
++    }
++    if (tool === "inspect_import_job") {
++      const item = z.object({ job: Job, workState: z.enum(["READY", "CLAIMED", "FINISHED", "FAILED", "BLOCKED"]),
++        recoveryCount: integer, restartAllowed: z.boolean(), errors: z.array(z.object({
++          rowNumber: z.number().int().min(1).max(1001), reason: z.string().max(8000),
++        })).max(1000) }).parse(raw);
++      return { success: true, data: { data: { job: item.job, work_state: item.workState,
++        recovery_count: item.recoveryCount, restart_allowed: item.restartAllowed,
++        errors: item.errors.slice(0, 100).map(e => ({ row_number: e.rowNumber, code: rowCode(e.reason) })),
++      }, truncated: item.errors.length > 100 } };
++    }
++    if (tool === "get_reconciliation_report") {
++      const item = z.object({ id: uuid, migrationJobId: uuid, status: z.literal("COMPLETED"),
++        mismatchCount: integer.max(1000000), changedSinceImportRows: integer.max(1000000), stockNotVerifiedRows: integer.max(1000000),
++        discrepancies: z.array(z.object({ sku: z.string().min(1).max(64),
++          type: z.enum(["MISSING_PRODUCT", "STOCK_VERSION_REGRESSION", "QUANTITY_MISMATCH", "PRODUCT_VERSION_REGRESSION", "PRICE_MISMATCH"]),
++        })).max(10000) }).parse(raw);
++      return { success: true, data: { data: { report_id: item.id, job_id: item.migrationJobId,
++        status: item.status, mismatch_count: item.mismatchCount,
++        changed_since_import_rows: item.changedSinceImportRows, stock_not_verified_rows: item.stockNotVerifiedRows,
++        discrepancies: item.discrepancies.slice(0, 100),
++      }, truncated: item.discrepancies.length > 100 } };
++    }
++    return { success: false, code: "OUTPUT_INVALID", status: 502 };
++  } catch { return { success: false, code: "OUTPUT_INVALID", status: 502 }; }
++}
+diff --git a/lib/ai-gateway/spec.ts b/lib/ai-gateway/spec.ts
+new file mode 100644
+index 0000000..9a578c9
+--- /dev/null
++++ b/lib/ai-gateway/spec.ts
+@@ -0,0 +1,36 @@
++import { z } from "zod";
++
++export const uuid = z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
++export const BrowserInput = z.strictObject({
++  question: z.string().trim().min(1).max(2000),
++  collection_ids: z.array(uuid).max(10).optional(),
++});
++const empty = z.strictObject({});
++const job = z.strictObject({ job_id: uuid });
++export const ToolIntent = z.discriminatedUnion("tool_name", [
++  z.strictObject({ call_id: uuid, tool_name: z.literal("get_integration_profiles"), arguments: empty }),
++  z.strictObject({ call_id: uuid, tool_name: z.literal("get_imports"), arguments: empty }),
++  z.strictObject({ call_id: uuid, tool_name: z.literal("inspect_import_job"), arguments: job }),
++  z.strictObject({ call_id: uuid, tool_name: z.literal("get_reconciliation_report"), arguments: job }),
++  z.strictObject({ call_id: uuid, tool_name: z.literal("search_supplier_knowledge"), arguments: z.strictObject({
++    query: z.string().min(1).max(2000), collection_ids: z.array(uuid).min(1).max(10),
++    top_k: z.number().int().min(1).max(5),
++  }) }),
++]);
++export type Intent = z.infer<typeof ToolIntent>;
++export const FailureCode = z.enum(["AI_DISABLED", "INPUT_INVALID", "ACCESS_DENIED", "SESSION_EXPIRED",
++  "CONFIGURATION_UNAVAILABLE", "OUTPUT_INVALID", "DEPENDENCY_UNAVAILABLE", "DEADLINE_EXCEEDED",
++  "BUDGET_EXCEEDED", "STEP_CONFLICT"]);
++export type GatewayFailure = z.infer<typeof FailureCode>;
++export type Result<T> = { success: true; data: T } | { success: false; code: GatewayFailure; status: number };
++export interface AgentGatewaySpec { execute(request: Request): Promise<Result<unknown>> }
++
++const identity = { protocol_version: z.literal(1), request_id: uuid, run_id: uuid, step: z.number().int().min(0).max(3) };
++const message = z.string().min(1).max(8000).refine(s => !/[<>]|https?:\/\//i.test(s));
++export const StepResponse = z.union([
++  z.strictObject({ ...identity, kind: z.literal("tool_intent"), intent: ToolIntent }),
++  z.strictObject({ ...identity, kind: z.literal("final"), message, citations: z.array(z.never()).max(0),
++    status: z.enum(["answered", "abstained"]), handoff_reason: z.null() }),
++  z.strictObject({ ...identity, kind: z.literal("handoff"), message, citations: z.array(z.never()).max(0),
++    status: z.literal("human_action_required"), handoff_reason: z.enum(["PROFILE_CHANGE", "IMPORT_CONFIRM", "JOB_RESTART", "RECONCILIATION_CREATE", "OTHER_BUSINESS_MUTATION"]) }),
++]);
+diff --git a/lib/ai-gateway/tools.ts b/lib/ai-gateway/tools.ts
+new file mode 100644
+index 0000000..af11168
+--- /dev/null
++++ b/lib/ai-gateway/tools.ts
+@@ -0,0 +1,48 @@
++import { z } from "zod";
++import { JavaSession, readBounded } from "./io";
++import { projectTool } from "./projection";
++import { uuid, type Intent } from "./spec";
++
++export type Observation = {
++  call_id: string; tool_name: Intent["tool_name"]; status: "ok" | "denied" | "unavailable" | "invalid" | "timeout";
++  observed_at: string; truncated: boolean; data: unknown; error_code: string | null;
++};
++
++export async function executeRead(intent: Intent, session: JavaSession): Promise<Observation> {
++  const base = { call_id: intent.call_id, tool_name: intent.tool_name, observed_at: new Date().toISOString(),
++    truncated: false, data: null };
++  const fail = (status: Observation["status"], error_code: string): Observation => ({ ...base, observed_at:new Date().toISOString(), status, error_code });
++  try {
++    let path: string;
++    switch (intent.tool_name) {
++      case "get_integration_profiles": path = "/api/ops/integration-profiles"; break;
++      case "get_imports": path = "/api/ops/imports"; break;
++      case "inspect_import_job": path = `/api/ops/imports/${intent.arguments.job_id}/inspection`; break;
++      case "get_reconciliation_report": path = "/api/ops/reconciliations"; break;
++      default: return fail("invalid", "TOOL_OUTPUT_INVALID");
++    }
++    const response = await session.get(path);
++    if (!response.ok) void response.body?.cancel().catch(() => undefined);
++    if (response.status === 401 || response.status === 403) return fail("denied", "ACCESS_DENIED");
++    if ([400, 404, 409].includes(response.status)) return fail("unavailable", "UPSTREAM_RESOURCE_UNAVAILABLE");
++    if (!response.ok) return fail("unavailable", "UPSTREAM_UNAVAILABLE");
++    let raw: unknown = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(await readBounded(response, 5_000_000, session.signal)));
++    if (intent.tool_name === "get_reconciliation_report") {
++      const reports = z.array(z.object({ migrationJobId: uuid, createdAt: z.iso.datetime({ offset: true }) }).passthrough()).max(20).parse(raw);
++      raw = reports.filter(r => r.migrationJobId === intent.arguments.job_id)
++        .sort((a,b) => Date.parse(b.createdAt)-Date.parse(a.createdAt))[0];
++      if (!raw) return fail("unavailable", "UPSTREAM_RESOURCE_UNAVAILABLE");
++    }
++    const projected = projectTool(intent.tool_name, raw);
++    if (!projected.success) return fail("invalid", "TOOL_OUTPUT_INVALID");
++    const result: Observation = { ...base, observed_at: new Date().toISOString(), status: "ok", error_code: null,
++      ...projected.data };
++    if (Buffer.byteLength(JSON.stringify(result), "utf8") > 16_384) return fail("invalid", "TOOL_RESULT_TOO_LARGE");
++    return result;
++  } catch (error) {
++    if(session.signal.aborted) return fail("timeout","DEADLINE_EXCEEDED");
++    if(error instanceof Error && error.message === "BODY_LIMIT") return fail("invalid","TOOL_RESULT_TOO_LARGE");
++    if(error instanceof SyntaxError || error instanceof z.ZodError) return fail("invalid","TOOL_OUTPUT_INVALID");
++    return fail("unavailable", "UPSTREAM_UNAVAILABLE");
++  }
++}
+diff --git a/lib/ai-gateway/transport.ts b/lib/ai-gateway/transport.ts
+new file mode 100644
+index 0000000..ca93ba0
+--- /dev/null
++++ b/lib/ai-gateway/transport.ts
+@@ -0,0 +1,26 @@
++import { createHash, createPrivateKey, randomUUID, sign } from "node:crypto";
++
++export type TransportContext = { actor_ref: string; request_id: string; run_id: string; step: number;
++  collection_ids: string[]; deadline_at: string };
++
++export function signedRequest(context: TransportContext, path: "/ai/agent/step" | "/ai/knowledge/search", payload: unknown): { body: string; headers: Headers } {
++  const body = JSON.stringify(payload);
++  if (Buffer.byteLength(body, "utf8") > 65_536) throw new Error("INPUT_INVALID");
++  const issued = Math.floor(Date.now()/1000);
++  const expires = Math.min(issued+30, Math.floor(Date.parse(context.deadline_at)/1000));
++  if (expires <= issued) throw new Error("DEADLINE_EXCEEDED");
++  const requestDigest = createHash("sha256").update(["vmarket-ai-request:v1", "POST", path, "application/json",
++    ...Array(7).fill(""), createHash("sha256").update(body).digest("hex"), ""].join("\n")).digest("hex");
++  const kid = process.env.AI_SIGNING_KID ?? "";
++  if (!/^[A-Za-z0-9_-]{1,32}$/.test(kid)) throw new Error("CONFIGURATION_UNAVAILABLE");
++  const encoded = Buffer.from(JSON.stringify({ version: 1, issuer: "vmarket-bff", audience: "vmarket-ai",
++    mode: "integrated", kid, ...context, nonce: randomUUID(), issued_at: issued, expires_at: expires,
++    operation: path === "/ai/agent/step" ? "agent_step" : "knowledge_search", request_digest: requestDigest,
++  })).toString("base64url");
++  const key = createPrivateKey({ key: Buffer.from(process.env.AI_SIGNING_KEY_PKCS8_BASE64 ?? "", "base64"),
++    type: "pkcs8", format: "der" });
++  if (key.asymmetricKeyType !== "ed25519" || encoded.length > 4096) throw new Error("CONFIGURATION_UNAVAILABLE");
++  return { body, headers: new Headers({ "Content-Type": "application/json", "X-Request-ID": context.request_id,
++    "X-AI-Context": encoded, "X-AI-Signature": sign(null, Buffer.from("vmarket-ai-context:v1."+encoded), key).toString("base64url"),
++  }) };
++}
+-- 
+2.51.0.windows.1
+
