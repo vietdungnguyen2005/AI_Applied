@@ -2,7 +2,7 @@
 
 Source of requirements: [saved prompt package](implementation-prompts.md). Date: 2026-10-31. Execution is sequential with evidence and acceptance gates. No phase is complete merely because its documentation exists.
 
-Progress update: 2026-11-01 Asia/Bangkok, through P09 technical implementation. P06's test split is now consumed; later phases must distinguish regression reuse from fresh unseen evaluation.
+Progress update: 2026-11-01 Asia/Bangkok, P09 technical implementation and the first P10 increment. P06's test split is now consumed; later phases must distinguish regression reuse from fresh unseen evaluation.
 
 Implementation owner: coding agent; acceptance owner: repository owner. Real stakeholder feedback and human labels must be supplied or explicitly labeled simulation/developer review. Fake provider tests prove deterministic plumbing, never real model quality.
 
@@ -18,7 +18,7 @@ Implementation owner: coding agent; acceptance owner: repository owner. Real sta
 | P07 | P06 | Grounded QA, citations, abstention and provider negatives | Agent | Opt-in extractive API/citation checks and English/Japanese live positives verified; balanced live comparison PARTIAL, human review pending, real live ledger blocked on one uncertain outcome; see evidence/P07.md |
 | P08 | P04–P07 | Strict draft mapping and rule-only comparison | Agent | Standalone draft API, original-byte storage, strict local/rule suggestions and 228 retained known-case outputs verified; rules selected by measured comparison, human/unseen/business-quality gates pending; see evidence/P08.md |
 | P09 | P02,P03,P07,P08 | Mock tools and feature-OFF real BFF gateway with per-action auth tests | Agent / owner | Technical standalone/integrated local read-only delivery verified with real disposable OPERATOR/auth and unchanged business snapshots; Project2 local commit + reviewable patch, flags OFF, no deploy; quality/human gates pending; see evidence/P09.md |
-| P10 | P08–P09 | Explicit human profile/preview/confirm handoff, DB invariant tests | Agent / owner | NOT STARTED |
+| P10 | P08–P09 | Explicit human profile/preview/confirm handoff, DB invariant tests | Agent / owner | IN PROGRESS: P10a preview expiry and explicit recovery after uncertain confirmation verified; signed draft/profile creation/activation and full real DB handoff acceptance pending; see evidence/P10a.md |
 | P11 | P09–P10 | Durable bounded state and actual restart/resume tests | Agent | NOT STARTED |
 | P12 | P07–P11 | Flagged operator panel, browser QA and manual fallback | Agent | NOT STARTED |
 | P13 | P04–P12 | Frozen held-out metrics, ablations, raw outputs, failure analysis | Agent / human review | NOT STARTED |

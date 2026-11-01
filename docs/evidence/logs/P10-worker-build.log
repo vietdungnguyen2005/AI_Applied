@@ -1,0 +1,34 @@
+
+> v-market@0.1.0 build:worker
+> opennextjs-cloudflare build
+
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+App directory: D:\CV\Project2
+Next.js version : 16.4.2
+@opennextjs/cloudflare version: 1.20.12
+@opennextjs/aws version: 4.1.11
+workerd compatibility_date: 2026-07-23
+node:fs:1236
+  return binding.rmSync(getValidatedPath(path), opts.maxRetries, opts.recursive, opts.retryDelay);
+                 ^
+
+Error: EPERM, Permission denied: \\?\D:\CV\Project2\.open-next '\\?\D:\CV\Project2\.open-next'
+    at Object.rmSync (node:fs:1236:18)
+    at Module.initOutputDir (file:///D:/CV/Project2/node_modules/@opennextjs/aws/dist/build/helper.js:348:8)
+    at build (file:///D:/CV/Project2/node_modules/@opennextjs/cloudflare/dist/cli/build/build.js:56:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async buildCommand (file:///D:/CV/Project2/node_modules/@opennextjs/cloudflare/dist/cli/commands/build.js:40:5) {
+  errno: 1,
+  code: 'EPERM',
+  path: '\\\\?\\D:\\CV\\Project2\\.open-next',
+  syscall: 'rm'
+}
+
+Node.js v24.12.0

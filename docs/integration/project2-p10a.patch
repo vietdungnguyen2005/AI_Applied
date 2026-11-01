@@ -1,0 +1,408 @@
+From 40e18f8cb1fef59c9f8d9a59e21f7fac8ae77980 Mon Sep 17 00:00:00 2001
+From: vietdungnguyen2005 <vietdungnguyen2005@gmail.com>
+Date: Sun, 1 Nov 2026 16:02:27 +0700
+Subject: [PATCH] Guard supplier confirmation expiry and require inspection
+ after uncertain outcomes
+
+---
+ .github/workflows/ci.yml           |   5 +-
+ .gitignore                         |   1 +
+ AGENTS.md                          |   9 ++
+ components/supplier-onboarding.tsx |  52 +++++++++---
+ docs/supplier-handoff.md           |  35 ++++++++
+ lib/supplier-handoff.test.ts       |   9 ++
+ lib/supplier-handoff.ts            |   5 ++
+ package.json                       |   3 +-
+ tools/qa_playwright.py             |   3 +-
+ tools/qa_supplier_handoff.py       | 129 +++++++++++++++++++++++++++++
+ 10 files changed, 235 insertions(+), 16 deletions(-)
+ create mode 100644 AGENTS.md
+ create mode 100644 docs/supplier-handoff.md
+ create mode 100644 lib/supplier-handoff.test.ts
+ create mode 100644 lib/supplier-handoff.ts
+ create mode 100644 tools/qa_supplier_handoff.py
+
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 0319ece..78dc0f9 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -48,12 +48,15 @@ jobs:
+             sleep 1
+           done
+           npm run test:e2e
++          QA_ARTIFACT_DIR=docs/evidence/handoff npm run test:e2e:handoff
+ 
+       - name: Upload browser evidence
+         uses: actions/upload-artifact@v4
+         with:
+           name: browser-evidence
+-          path: docs/evidence/*.png
++          path: |
++            docs/evidence/*.png
++            docs/evidence/handoff/
+ 
+       - name: Build Cloudflare Worker bundle (no deployment)
+         run: npm run build:worker
+diff --git a/.gitignore b/.gitignore
+index 572fad0..b3a5db0 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,4 +1,5 @@
+ .next/
++.local/
+ .open-next/
+ .wrangler/
+ node_modules/
+diff --git a/AGENTS.md b/AGENTS.md
+new file mode 100644
+index 0000000..af3b7c8
+--- /dev/null
++++ b/AGENTS.md
+@@ -0,0 +1,9 @@
++<!-- BEGIN:nextjs-agent-rules -->
++
++## This is NOT the Next.js you know
++
++This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
++
++This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
++
++<!-- END:nextjs-agent-rules -->
+diff --git a/components/supplier-onboarding.tsx b/components/supplier-onboarding.tsx
+index 30df19c..0130ead 100644
+--- a/components/supplier-onboarding.tsx
++++ b/components/supplier-onboarding.tsx
+@@ -1,8 +1,9 @@
+ "use client";
+ 
+-import { useMutation, useQuery } from "@tanstack/react-query";
+-import { useState } from "react";
+-import { confirmSupplier, loadIntegrationProfiles, previewSupplier, selectImportPayload,
++import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
++import { useEffect, useState } from "react";
++import { receiptExpiry } from "@/lib/supplier-handoff";
++import { confirmSupplier, loadIntegrationProfiles, loadMigrationJobs, previewSupplier, selectImportPayload,
+   type IntegrationProfile, type MigrationSummary, type SupplierPreview } from "@/lib/operations-api";
+ 
+ const inputStyle="min-h-11 w-full border border-white/20 bg-[#0b0f0e] px-3 py-2 text-sm text-white outline-none focus:border-[#2de1c2] disabled:opacity-50";
+@@ -10,6 +11,7 @@ const buttonStyle="min-h-11 border border-[#2de1c2]/50 px-4 py-2 text-sm font-bo
+ type Review={profile:IntegrationProfile;body:string|ArrayBuffer;sourceName:string;result:SupplierPreview};
+ 
+ export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummary)=>Promise<void>}) {
++  const queryClient=useQueryClient();
+   const profiles=useQuery({queryKey:["integration-profiles"],queryFn:({signal})=>loadIntegrationProfiles(signal),retry:false});
+   const [selected,setSelected]=useState("supplier-b:1");
+   const [csv,setCsv]=useState("SKU,ProductName,AvailableQuantity\nVM-002,Modular desk,60\nVM-005,Linen baskets,invalid\n");
+@@ -19,19 +21,32 @@ export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummar
+   const [fileError,setFileError]=useState<string|null>(null);
+   const [review,setReview]=useState<Review|null>(null);
+   const [approved,setApproved]=useState(false);
++  const [inspectionRequired,setInspectionRequired]=useState(false);
++  const [refreshError,setRefreshError]=useState(false);
++  const inspection=useMutation({retry:false,mutationFn:()=>loadMigrationJobs(),onSuccess:jobs=>queryClient.setQueryData(["migration-jobs"],jobs)});
++  const [now,setNow]=useState(()=>Date.now());
++  useEffect(()=>{const timer=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(timer);},[]);
++  const expires=review?receiptExpiry(review.result.confirmationReceipt):null;
++  const expired=review!==null && (expires===null || expires<=now);
+   const profile=profiles.data?.find(item=>`${item.profileId}:${item.version}`===selected && item.active);
+   const invalidate=()=>{setReview(null);setApproved(false);};
+-  const preview=useMutation({mutationFn:async()=>{
++  const preview=useMutation({retry:false,mutationFn:async()=>{
++    if (inspectionRequired) throw new Error("Inspect current Import runs before preparing another preview.");
+     if (!profile) throw new Error("Select an active profile version.");
+-    const body=selectImportPayload(profile.encoding,csv,fileBytes);
++    const selectedBody=selectImportPayload(profile.encoding,csv,fileBytes);
++    const body=typeof selectedBody==="string"?selectedBody:selectedBody.slice(0);
+     const result=await previewSupplier(profile.profileId,profile.version,body);
+     return {profile,body,sourceName,result};
+-  },onSuccess:value=>{setReview(value);setApproved(false);}});
+-  const confirm=useMutation({mutationFn:async()=>{
++  },onSuccess:value=>{setNow(Date.now());setReview(value);setApproved(false);}});
++  const confirm=useMutation({retry:false,mutationFn:async()=>{
++    if (inspectionRequired) throw new Error("Inspect current Import runs before any retry.");
+     if (!review || !approved) throw new Error("Review and explicitly approve this preview first.");
++    const expiry=receiptExpiry(review.result.confirmationReceipt);
++    if (expiry===null || expiry<=Date.now()) throw new Error("Preview expired. Prepare and review a fresh preview.");
+     return confirmSupplier(review.profile.profileId,review.profile.version,review.sourceName,review.body,review.result.confirmationReceipt);
+-  },onSuccess:async job=>{invalidate();await onImported(job);}});
+-  const busy=preview.isPending || confirm.isPending || fileLoading;
++  },onSuccess:job=>{invalidate();setRefreshError(false);void onImported(job).catch(()=>setRefreshError(true));},
++  onError:()=>{setInspectionRequired(true);setApproved(false);inspection.reset();}});
++  const busy=preview.isPending || confirm.isPending || fileLoading || inspectionRequired;
+ 
+   return <section aria-labelledby="supplier-heading" className="mt-8 border border-[#2de1c2]/30 bg-[#111715] p-5 sm:p-6">
+     <div className="border-b border-white/15 pb-4">
+@@ -78,6 +93,7 @@ export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummar
+       <div className="min-w-0 border border-white/10 bg-black/20 p-4" aria-live="polite">
+         {!review?<p className="text-sm leading-6 text-[#9bb3a6]">01 / Choose a contract and preview the file. No inventory, orders, movements or import jobs are written until explicit confirmation.</p>:<>
+           <h3 className="font-bold text-white">Mapping preview / {review.profile.profileId} v{review.profile.version}</h3>
++          <p role="status" className="mt-2 text-sm text-amber-200">{expired?"Preview expired or receipt unavailable. Prepare and review a fresh preview.":`Preview expires ${new Date(expires!).toISOString()} · ${Math.max(0,Math.ceil((expires!-now)/1000))}s remaining. Java rechecks validity on confirmation.`}</p>
+           <p className="mt-3 font-mono text-sm text-[#7ef5df]">{review.result.acceptedRows} accepted · {review.result.rejectedRows} rejected</p>
+           <p className="mt-2 text-xs leading-5 text-[#9bb3a6]">First 10 accepted rows. Rejected rows are quarantined; validation is not a reservation. Catalog changes require a new preview or are rejected when applied.</p>
+           <ul className="mt-3 grid gap-2">{review.result.sample.map(row=><li key={row.rowNumber} className="break-words border-l border-white/20 pl-3 text-sm text-[#c6d7cd]">Row {row.rowNumber} · {row.sku} · {row.name} · stock {row.onHand}</li>)}</ul>
+@@ -91,13 +107,23 @@ export function SupplierOnboarding({onImported}:{onImported:(job:MigrationSummar
+             const link=document.createElement("a");link.href=url;link.download="supplier-validation-report.json";link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+           }}>Export sanitized report</button>
+           <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-[#c6d7cd]">
+-            <input type="checkbox" checked={approved} disabled={busy} onChange={event=>setApproved(event.target.checked)} className="mt-1 size-5 shrink-0 accent-[#2de1c2]" />
++            <input type="checkbox" checked={approved} disabled={busy || expired} onChange={event=>setApproved(event.target.checked)} className="mt-1 size-5 shrink-0 accent-[#2de1c2]" />
+             I reviewed this mapping, accepted rows and rejected rows, and approve applying this snapshot to the shared store.
+           </label>
+-          <button type="button" disabled={!approved || busy || review.result.acceptedRows===0} onClick={()=>confirm.mutate()} className={`${buttonStyle} mt-4 w-full bg-[#2de1c2]/10`}>{confirm.isPending?"Queueing…":"Confirm & queue"}</button>
++          <button type="button" disabled={!approved || busy || expired || review.result.acceptedRows===0} onClick={()=>confirm.mutate()} className={`${buttonStyle} mt-4 w-full bg-[#2de1c2]/10`}>{confirm.isPending?"Queueing…":"Confirm & queue"}</button>
+         </>}
+-        {confirm.data?<p role="status" className="mt-4 break-all text-sm text-[#7ef5df]">Acknowledged job {confirm.data.id}. Inspect Import runs for its final outcome.</p>:null}
+-        {confirm.error?<p role="alert" className="mt-4 text-sm text-rose-300">{confirm.error.message} If the response was lost, refresh Import runs before retrying. Acknowledgement may be unknown.</p>:null}
++        {confirm.data?<p role="status" className="mt-4 break-all text-sm text-[#7ef5df]">Acknowledged job {confirm.data.id} · {confirm.data.status}. {confirm.data.status==="STAGED" || confirm.data.status==="RUNNING"?"Pending: stock application is not yet confirmed.":"Inspect Import runs for the recorded outcome."}</p>:null}
++        {refreshError?<p role="alert" className="mt-4 text-sm text-amber-200">The job was acknowledged, but the list could not be refreshed. Reload Import runs to inspect its outcome.</p>:null}
++        {inspectionRequired?<div className="mt-4 grid gap-3 border border-amber-300/40 p-3">
++          <p role="alert" className="text-sm text-amber-200">Confirmation outcome requires inspection. A lost response may still have created an import. Sending is locked until you inspect current Import runs.</p>
++          <button type="button" className={buttonStyle} disabled={inspection.isPending} onClick={()=>inspection.mutate()}>Inspect current Import runs</button>
++          {inspection.error?<p role="alert" className="text-sm text-rose-300">Inspection failed. Sending remains locked. Sign in again if your session expired, then inspect.</p>:null}
++          {inspection.isSuccess?<>
++            <p className="text-xs text-[#c6d7cd]">Latest {inspection.data.length} visible imports. An absent job does not prove that nothing was applied. Compare the profile, source and outcome before proceeding.</p>
++            <ul className="max-h-52 overflow-auto text-xs text-[#c6d7cd]">{inspection.data.map(job=><li key={job.id} className="break-all py-1">{job.id} · {job.status} · {job.profileId??"legacy"} v{job.profileVersion??"—"} · {job.sourceName} · {job.createdAt}</li>)}</ul>
++            <button type="button" className={buttonStyle} onClick={()=>{invalidate();confirm.reset();preview.reset();inspection.reset();setInspectionRequired(false);}}>I inspected the jobs — prepare a fresh preview</button>
++          </>:null}
++        </div>:null}
+       </div>
+     </div>
+   </section>;
+diff --git a/docs/supplier-handoff.md b/docs/supplier-handoff.md
+new file mode 100644
+index 0000000..62fbce2
+--- /dev/null
++++ b/docs/supplier-handoff.md
+@@ -0,0 +1,35 @@
++# Supplier preview and confirmation recovery
++
++The operator obtains a Java preview, reviews it, and confirms it explicitly. The
++browser retains a copy of the exact original file bytes for confirmation, including
++CP932. Editing the source invalidates approval.
++
++The receipt's epoch expiry is displayed as UTC and counted down. An expired or
++malformed receipt disables confirmation. This is a display guard: only Java checks
++the signature, actor, exact bytes, current active profile and catalog versions.
++
++Preview, confirm and recovery reads disable React Query's inherited mutation
++retry. A confirm error locks source editing, new previews and confirmation until
++the operator explicitly refreshes current Import runs, reads the returned list and
++acknowledges inspection. A failed inspection keeps the lock. Absence from the latest
++20 runs does not establish that an import did not happen. After acknowledgement,
++the operator must request another preview, review it and approve it again. No
++request is resubmitted automatically. This recovery guard is browser-local;
++Java's receipt verification and idempotency remain the server authority across
++reloads and tabs.
++
++A successful STAGED/RUNNING acknowledgement is shown as pending. It does not claim
++stock was applied. Failure to refresh the list after acknowledgement is a read
++error, not a failed confirmation to resend.
++
++Run `npm run verify`, then start the production server and execute
++`npm run test:e2e:handoff` (default http://127.0.0.1:3000; override BASE_URL).
++The browser test mocks HTTP and verifies expiry, one request on lost response,
++failed/successful recovery inspection, explicit renewed review, UTF-8/CP932 byte
++identity and pending acknowledgement. It also checks mobile overflow. Its results
++do not prove real Java/database integration or AI mapping quality. Existing Java
++integration tests remain separate.
++
++This is the first P10 increment. Signed mapping drafts, editable new inactive
++profile creation, separate activation and real draft-to-import database-invariant
++acceptance remain pending. Existing AI feature defaults remain off.
+diff --git a/lib/supplier-handoff.test.ts b/lib/supplier-handoff.test.ts
+new file mode 100644
+index 0000000..13b83b4
+--- /dev/null
++++ b/lib/supplier-handoff.test.ts
+@@ -0,0 +1,9 @@
++import { expect, it } from "vitest";
++import { receiptExpiry } from "./supplier-handoff";
++
++it("uses the server receipt expiry and rejects malformed receipts", () => {
++  const hash = "a".repeat(64);
++  expect(receiptExpiry(`1793520600:${hash}:${hash}:${hash}`)).toBe(1793520600000);
++  expect(receiptExpiry(`1793520600:${hash}:${hash}`)).toBeNull();
++  expect(receiptExpiry(`1793520600:${hash}:${hash}:${hash}:extra`)).toBeNull();
++});
+diff --git a/lib/supplier-handoff.ts b/lib/supplier-handoff.ts
+new file mode 100644
+index 0000000..4a71187
+--- /dev/null
++++ b/lib/supplier-handoff.ts
+@@ -0,0 +1,5 @@
++/** Display only: Java verifies the signature, actor, expiry and exact original bytes. */
++export function receiptExpiry(receipt: string): number | null {
++  const match = /^([0-9]{10,12}):[a-f0-9]{64}:[a-f0-9]{64}:[a-f0-9]{64}$/.exec(receipt);
++  return match ? Number(match[1]) * 1000 : null;
++}
+diff --git a/package.json b/package.json
+index d03ae1c..1faa149 100644
+--- a/package.json
++++ b/package.json
+@@ -14,7 +14,8 @@
+     "typecheck": "tsc --noEmit",
+     "verify": "npm run test && npm run lint && npm run typecheck && npm run build",
+     "test": "vitest run",
+-    "test:e2e": "python tools/qa_playwright.py"
++    "test:e2e": "python tools/qa_playwright.py",
++    "test:e2e:handoff": "python tools/qa_supplier_handoff.py"
+   },
+   "dependencies": {
+     "@opennextjs/cloudflare": "1.20.12",
+diff --git a/tools/qa_playwright.py b/tools/qa_playwright.py
+index 85cd206..f22fa52 100644
+--- a/tools/qa_playwright.py
++++ b/tools/qa_playwright.py
+@@ -1,4 +1,5 @@
+ import os
++import time
+ from pathlib import Path
+ from playwright.sync_api import expect, sync_playwright
+ 
+@@ -52,7 +53,7 @@ def install_api_contract(page):
+         "profileId":"supplier-b","version":1,"encoding":"UTF-8",
+         "mapping":{"sku":"SKU","name":"ProductName","on_hand":"AvailableQuantity"},
+         "acceptedRows":1,"rejectedRows":1,"sample":[{"rowNumber":2,"sku":"VM-002","name":"Modular desk","onHand":60}],
+-        "errors":[{"rowNumber":3,"reason":"on_hand must be an integer between 0 and 1000000"}],"confirmationReceipt":"fixture-receipt"
++        "errors":[{"rowNumber":3,"reason":"on_hand must be an integer between 0 and 1000000"}],"confirmationReceipt":f"{int(time.time())+600}:"+":".join(["a"*64]*3)
+     }))
+     page.route("**/api/ops/onboarding/supplier-b/1/confirm",lambda route: route.fulfill(status=202,json={
+         "id":"fixture-supplier-job","status":"STAGED","profileId":"supplier-b","profileVersion":1,
+diff --git a/tools/qa_supplier_handoff.py b/tools/qa_supplier_handoff.py
+new file mode 100644
+index 0000000..af173f3
+--- /dev/null
++++ b/tools/qa_supplier_handoff.py
+@@ -0,0 +1,129 @@
++"""Headless UI fault tests with mocked HTTP, not Java/DB acceptance evidence."""
++import json
++import hashlib
++import os
++import time
++from pathlib import Path
++
++from playwright.sync_api import expect, sync_playwright
++
++ROOT = Path(__file__).resolve().parents[1]
++BASE = os.environ.get("BASE_URL", "http://127.0.0.1:3000")
++OUT = Path(os.environ.get("QA_ARTIFACT_DIR", ROOT / ".local" / "p10-browser"))
++OUT.mkdir(parents=True, exist_ok=True)
++
++
++def main():
++    with sync_playwright() as p:
++        browser = p.chromium.launch(headless=True)
++        page = browser.new_page(viewport={"width": 1440, "height": 1080})
++        state = {"expiry": int(time.time()) - 1, "previews": 0, "confirms": 0, "imports": 0, "inspection_fails": False, "confirm_ok": False, "byte_checks": []}
++        preview_bytes = {}
++        mapping = {"sku": "SKU", "name": "ProductName", "on_hand": "AvailableQuantity"}
++
++        def api(route):
++            path = route.request.url.split("/api/", 1)[1]
++            if path == "auth/session":
++                data = {"authenticated": True, "username": "synthetic", "roles": ["ROLE_OPERATOR"], "csrfToken": "fixture"}
++            elif path == "ops/integration-profiles":
++                data = [{"profileId": name, "version": 1, "encoding": enc, "vendorCode": vendor, "mapping": columns, "skuNormalization": "TRIM", "active": True}
++                        for name, enc, vendor, columns in [("supplier-b", "UTF-8", "RIVERBYTE", mapping), ("supplier-a", "CP932", "NAMI", {"sku": "商品コード", "name": "商品名", "on_hand": "在庫数"})]]
++            elif path.endswith("/preview"):
++                state["previews"] += 1
++                name = path.split("/")[2]
++                preview_bytes[name] = route.request.post_data_buffer
++                data = {"profileId": name, "version": 1, "encoding": "CP932" if name == "supplier-a" else "UTF-8", "mapping": mapping,
++                        "acceptedRows": 1, "rejectedRows": 0, "sample": [], "errors": [],
++                        "confirmationReceipt": f'{state["expiry"]}:' + ":".join(["a" * 64] * 3)}
++            elif path.endswith("/confirm"):
++                state["confirms"] += 1
++                name = path.split("/")[2]
++                assert route.request.post_data_buffer == preview_bytes[name]
++                state["byte_checks"].append({"profile": name, "sha256": hashlib.sha256(preview_bytes[name]).hexdigest()})
++                if state["confirm_ok"]:
++                    route.fulfill(status=202, json={"id": f"mock-job-{state['confirms']}", "status": "STAGED", "profileId": name, "profileVersion": 1,
++                        "sourceName": "synthetic.csv", "encoding": "CP932" if name == "supplier-a" else "UTF-8", "totalRows": 1, "validRows": 1,
++                        "appliedRows": 0, "rejectedRows": 0, "checkpointRow": 0, "createdAt": "2026-11-01T00:00:00Z"})
++                    return
++                route.fulfill(status=502, json={"message": "Controlled lost response"})
++                return
++            elif path == "ops/imports":
++                state["imports"] += 1
++                if state["inspection_fails"]:
++                    route.fulfill(status=401, json={"message": "Controlled expired session"})
++                    return
++                data = []
++            else:
++                data = []
++            route.fulfill(json=data)
++
++        page.route("**/api/**", api)
++        page.goto(BASE + "/ops")
++        page.wait_for_load_state("networkidle")
++        panel = page.locator('section[aria-labelledby="supplier-heading"]')
++        panel.get_by_role("button", name="Preview & validate", exact=True).click()
++        expect(panel.get_by_text("Preview expired", exact=False)).to_be_visible()
++        expect(panel.get_by_role("button", name="Confirm & queue", exact=True)).to_be_disabled()
++        assert state["confirms"] == 0
++        page.screenshot(path=str(OUT / "expired.png"), full_page=True)
++        state["expiry"] = int(time.time()) + 600
++        panel.get_by_role("button", name="Preview & validate", exact=True).click()
++        panel.get_by_role("checkbox").check()
++        panel.get_by_role("button", name="Confirm & queue", exact=True).click()
++        expect(panel.get_by_role("button", name="Inspect current Import runs", exact=True)).to_be_visible()
++        expect(panel.get_by_role("button", name="Confirm & queue", exact=True)).to_be_disabled()
++        expect(panel.get_by_role("button", name="Preview & validate", exact=True)).to_be_disabled()
++        expect(panel.get_by_label("Supplier source filename")).to_be_disabled()
++        assert state["confirms"] == 1, state
++        state["inspection_fails"] = True
++        panel.get_by_role("button", name="Inspect current Import runs", exact=True).click()
++        expect(panel.get_by_text("Inspection failed.", exact=False)).to_be_visible()
++        expect(panel.get_by_role("button", name="Preview & validate", exact=True)).to_be_disabled()
++        assert state["confirms"] == 1
++        state["inspection_fails"] = False
++        panel.get_by_role("button", name="Inspect current Import runs", exact=True).click()
++        expect(panel.get_by_text("An absent job does not prove", exact=False)).to_be_visible()
++        expect(panel.get_by_role("button", name="Preview & validate", exact=True)).to_be_disabled()
++        page.screenshot(path=str(OUT / "inspection.png"), full_page=True)
++        panel.get_by_role("button", name="I inspected the jobs", exact=False).click()
++        expect(panel.get_by_role("button", name="Preview & validate", exact=True)).to_be_enabled()
++        expect(panel.get_by_role("button", name="Confirm & queue", exact=True)).to_have_count(0)
++        assert state["previews"] == 2 and state["confirms"] == 1
++        panel.get_by_role("button", name="Preview & validate", exact=True).click()
++        expect(panel.get_by_role("checkbox")).not_to_be_checked()
++        expect(panel.get_by_role("button", name="Confirm & queue", exact=True)).to_be_disabled()
++        assert state["confirms"] == 1
++        state["confirm_ok"] = True
++        panel.get_by_role("checkbox").check()
++        panel.get_by_role("button", name="Confirm & queue", exact=True).click()
++        expect(panel.get_by_text("Pending: stock application is not yet confirmed.", exact=False)).to_be_visible()
++        assert state["confirms"] == 2
++        panel.get_by_label("Supplier profile version").select_option("supplier-a:1")
++        raw = "商品コード,商品名,在庫数\r\nVM-001,机,32\r\n".encode("cp932")
++        panel.get_by_label("Supplier original CSV file").set_input_files({"name": "synthetic-cp932.csv", "mimeType": "text/csv", "buffer": raw})
++        panel.get_by_role("button", name="Preview & validate", exact=True).click()
++        expect(panel.get_by_role("checkbox")).not_to_be_checked()
++        panel.get_by_role("checkbox").check()
++        panel.get_by_role("button", name="Confirm & queue", exact=True).click()
++        expect(panel.get_by_text("Acknowledged job mock-job-3", exact=False)).to_be_visible()
++        assert preview_bytes["supplier-a"] == raw
++        assert state["confirms"] == 3
++        # Expiry also locks a preview already on screen; rendering never extends it.
++        page.clock.install()
++        state["expiry"] = int(time.time()) + 3
++        panel.get_by_role("button", name="Preview & validate", exact=True).click()
++        panel.get_by_role("checkbox").check()
++        expect(panel.get_by_role("button", name="Confirm & queue", exact=True)).to_be_enabled()
++        page.clock.fast_forward(5000)
++        expect(panel.get_by_text("Preview expired", exact=False)).to_be_visible()
++        expect(panel.get_by_role("button", name="Confirm & queue", exact=True)).to_be_disabled()
++        assert state["confirms"] == 3
++        page.set_viewport_size({"width": 390, "height": 844})
++        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
++        page.screenshot(path=str(OUT / "mobile-expired.png"), full_page=True)
++        browser.close()
++        (OUT / "report.json").write_text(json.dumps({"scope": "mocked browser only", "state": state, "passed": True}, indent=2))
++
++
++if __name__ == "__main__":
++    main()
+-- 
+2.51.0.windows.1
+

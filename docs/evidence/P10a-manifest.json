@@ -1,0 +1,26 @@
+{
+  "project2_commit": "40e18f8cb1fef59c9f8d9a59e21f7fac8ae77980",
+  "project2_worktree_clean": true,
+  "java_and_npm_lock_unchanged": true,
+  "external_provider_calls": 0,
+  "secret_scan_passed": true,
+  "artifacts": {
+    "docs/evidence/P10a-browser/expired.png": "85088883ce06f6e9ef2b48375f4dcfbf7998fccf48ba148674cd5835e5637698",
+    "docs/evidence/P10a-browser/inspection.png": "77fceeeb3657664557082c715faae130a37cf00181806323c9996268da9fff06",
+    "docs/evidence/P10a-browser/mobile-expired.png": "f10b3151b8f453ea9f0c4800e85f7f8c9dc298be9acb16c25653cff9be913e10",
+    "docs/evidence/P10a-browser/report.json": "a79964dd5654c74824db0dc866f36605a6f0470c55de1d99dcdfda93b3838eb4",
+    "docs/evidence/P10a-general-browser/operations-ledger.png": "b23adb2e0ed547d118bdcbbf82e5beb640b31f6bf2ad26fdb92b930bbd916287",
+    "docs/evidence/P10a-general-browser/order-tracking.png": "96569db1ca579803a81f9bff3b311f1474ded88e5991141972ab8a77ff12c365",
+    "docs/evidence/P10a-general-browser/storefront-desktop.png": "d79766a71e5d644eceb2c0275b489b6c7591d5dd01f06e89ed1833f4fa593fc1",
+    "docs/evidence/P10a-general-browser/storefront-mobile.png": "4218f4c9c1ef2ecbbe5d71cea6228ea42c5e1aebb26a557917063708d210607b",
+    "docs/evidence/logs/P10-general-production-browser.log": "101191c754935bf747e6c66baa8e4e862fb736de22c7103690a2e997e6f045ed",
+    "docs/evidence/logs/P10-handoff-production-browser.log": "f009f1180033ebdcf9a0649fcac5d591b9e37e6c6c03cce84829518dc450aa8a",
+    "docs/evidence/logs/P10-java-regression.log": "e91ff707eaa7998fdbd1ba064aa87afc47398e9fc143b92a737e38e6d578acb7",
+    "docs/evidence/logs/P10-project2-before-tests.log": "4593d8f513df8d6bd6d1359166e571495cda05bfd3eabde4010cebdb37618c35",
+    "docs/evidence/logs/P10-project2-verify.log": "b868a7dcf9f14071570e8c78afef9c322e65c19eb7857f7de7404566ccb1ab68",
+    "docs/evidence/logs/P10-python-regression.log": "753dd9da1620ab6a44dd55040d1e5b8703c4f0052d81f3d5e7c9095940396fc4",
+    "docs/evidence/logs/P10-worker-build-final.log": "f3b235d626f5490d8536285331724c933c4d22be4319981a39a6227edb2f834f",
+    "docs/evidence/logs/P10-worker-build.log": "4b15257447c6b2a6d994fee85432ce874e9cf8df5fc901ab9242557e94b56c4f",
+    "docs/integration/project2-p10a.patch": "5e7017e0befb9b3ca583bc60abcf1e192da53cbd4e08fa3d9f80f7cc65e9d337"
+  }
+}
