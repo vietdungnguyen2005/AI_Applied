@@ -1,6 +1,6 @@
 import json
 import re
-from typing import Any, Literal
+from typing import Any, Literal, cast
 from uuid import UUID, uuid4
 
 from pydantic import Field, TypeAdapter, ValidationError
@@ -9,7 +9,7 @@ from vmarket_ai.contracts import ChatModel, ChatRequest, Message, StrictModel, T
 from vmarket_ai.gateway.wire import GatewayError, strict_json, validate
 from vmarket_ai.providers.openrouter import ProviderError
 
-INTENT: TypeAdapter[ToolIntent] = TypeAdapter(ToolIntent)  # type: ignore[arg-type]
+INTENT: TypeAdapter[ToolIntent] = TypeAdapter(cast(Any, ToolIntent))
 SYSTEM = """Select one read-only tool, or tool_name=stop to finish.
 get_integration_profiles: LIST business integration profiles, mappings and their active versions.
 get_imports: LIST recent business import jobs and statuses.

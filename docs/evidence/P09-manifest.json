@@ -1,6 +1,7 @@
 {
   "base_commit": "95086a77dfa10f147f6b0bf2a7a85b25e35cfdac",
   "project2_commit": "4febdf55c9fb8ef1e4e3becb5d1622c5f4c3a6f6",
+  "initial_source_commit": "8d060c2b3d9fb5489d839fb8a7f4afa5ebbe9d13",
   "method": "SHA256 of staged Git blobs, excludes manifest itself",
   "files": [
     {
@@ -95,8 +96,8 @@
     },
     {
       "path": "docs/evidence/P09.md",
-      "sha256_git_blob_bytes": "aa335b9e74303db13fb77491d7315b8407d2c7c7d50eacf0523c2075c5f8542f",
-      "bytes": 10043
+      "sha256_git_blob_bytes": "0771858f4157331a15fc46959bbf787d1cd4527b78e81102293167c1cfdbb7a9",
+      "bytes": 10434
     },
     {
       "path": "docs/evidence/logs/P09-bff-auth-negatives.log",
@@ -344,6 +345,11 @@
       "bytes": 650
     },
     {
+      "path": "docs/evidence/logs/P09-ci-initial-failure.log",
+      "sha256_git_blob_bytes": "6bbf55c605b2cbabaa38eb3aac6589774317cf73b4ca388cf02743fe5eaabb2f",
+      "bytes": 22452
+    },
+    {
       "path": "docs/evidence/logs/P09-compose-final.log",
       "sha256_git_blob_bytes": "5a356bee3137f276e08ca3def3173ce406df8a05cbd0fcb8c19b2f9d1a5ebd77",
       "bytes": 6613
@@ -362,6 +368,11 @@
       "path": "docs/evidence/logs/P09-format.log",
       "sha256_git_blob_bytes": "9144b1a7fd7af309e14ae8b98d8730a6b4cfaccb8b6d9f957122c5043b2b12df",
       "bytes": 28
+    },
+    {
+      "path": "docs/evidence/logs/P09-gateway-final.log",
+      "sha256_git_blob_bytes": "4266e5daafd088498d682722a8fe73053d1dacdf094202ec8201df77146af82a",
+      "bytes": 598
     },
     {
       "path": "docs/evidence/logs/P09-ingestion.log",
@@ -434,6 +445,11 @@
       "bytes": 284
     },
     {
+      "path": "docs/evidence/logs/P09-types-final.log",
+      "sha256_git_blob_bytes": "dcb694f11778ae44041ad96d947549bf77cffe07393be2e8e5cf5e5974810786",
+      "bytes": 45
+    },
+    {
       "path": "docs/evidence/logs/P09-types.log",
       "sha256_git_blob_bytes": "dcb694f11778ae44041ad96d947549bf77cffe07393be2e8e5cf5e5974810786",
       "bytes": 45
@@ -500,8 +516,8 @@
     },
     {
       "path": "src/vmarket_ai/gateway/agent.py",
-      "sha256_git_blob_bytes": "abb3f60be92a60eb20b67bec5e821d09f2deac5fd31944f04ad6073cbc0b5c7a",
-      "bytes": 9822
+      "sha256_git_blob_bytes": "03f07f7cf0fd1774b5298f0bfe6eea59b40e64580e72ebe8fd62fd3a8537b2fc",
+      "bytes": 9813
     },
     {
       "path": "src/vmarket_ai/gateway/mock.py",

@@ -1,0 +1,299 @@
+﻿2026-11-01T08:34:47.2203026Z Current runner version: '2.338.2'
+2026-11-01T08:34:47.2241660Z ##[group]Runner Image Provisioner
+2026-11-01T08:34:47.2243091Z Hosted Compute Agent
+2026-11-01T08:34:47.2244113Z Version: 20261021.618
+2026-11-01T08:34:47.2245332Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-01T08:34:47.2246833Z Build Date: 2026-10-21T00:45:21Z
+2026-11-01T08:34:47.2248398Z Worker ID: {46e5d0ad-1206-4dbf-b890-264c62341e89}
+2026-11-01T08:34:47.2249747Z Region: eastus
+2026-11-01T08:34:47.2251367Z Cloud: Azure
+2026-11-01T08:34:47.2252425Z ##[endgroup]
+2026-11-01T08:34:47.2254873Z ##[group]Operating System
+2026-11-01T08:34:47.2256067Z Ubuntu
+2026-11-01T08:34:47.2257042Z 26.04.1
+2026-11-01T08:34:47.2258323Z LTS
+2026-11-01T08:34:47.2259254Z ##[endgroup]
+2026-11-01T08:34:47.2260213Z ##[group]Runner Image
+2026-11-01T08:34:47.2261393Z Image: ubuntu-26.04
+2026-11-01T08:34:47.2262439Z Version: 20261025.179.1
+2026-11-01T08:34:47.2264690Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-01T08:34:47.2267880Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-01T08:34:47.2269654Z ##[endgroup]
+2026-11-01T08:34:47.2271716Z ##[group]GITHUB_TOKEN Permissions
+2026-11-01T08:34:47.2274746Z Contents: read
+2026-11-01T08:34:47.2275883Z Metadata: read
+2026-11-01T08:34:47.2276839Z ##[endgroup]
+2026-11-01T08:34:47.2280324Z Secret source: Actions
+2026-11-01T08:34:47.2281840Z Cache mode: write
+2026-11-01T08:34:47.2283487Z Prepare workflow directory
+2026-11-01T08:34:47.2774540Z Prepare all required actions
+2026-11-01T08:34:47.2823060Z Getting action download info
+2026-11-01T08:34:47.4285707Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-01T08:34:47.5942259Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-01T08:34:47.7593224Z Complete job name: python
+2026-11-01T08:34:47.8541449Z ##[group]Run actions/checkout@v4
+2026-11-01T08:34:47.8542364Z with:
+2026-11-01T08:34:47.8542803Z   fetch-depth: 0
+2026-11-01T08:34:47.8543302Z   repository: vietdungnguyen2005/AI_Applied
+2026-11-01T08:34:47.8547104Z   token: ***
+2026-11-01T08:34:47.8547754Z   ssh-strict: true
+2026-11-01T08:34:47.8548211Z   ssh-user: git
+2026-11-01T08:34:47.8548664Z   persist-credentials: true
+2026-11-01T08:34:47.8549164Z   clean: true
+2026-11-01T08:34:47.8549613Z   sparse-checkout-cone-mode: true
+2026-11-01T08:34:47.8550141Z   fetch-tags: false
+2026-11-01T08:34:47.8550599Z   show-progress: true
+2026-11-01T08:34:47.8551054Z   lfs: false
+2026-11-01T08:34:47.8551479Z   submodules: false
+2026-11-01T08:34:47.8551942Z   set-safe-directory: true
+2026-11-01T08:34:47.8552456Z   allow-unsafe-pr-checkout: false
+2026-11-01T08:34:47.8553257Z ##[endgroup]
+2026-11-01T08:34:48.1641382Z Syncing repository: vietdungnguyen2005/AI_Applied
+2026-11-01T08:34:48.1644135Z ##[group]Getting Git version info
+2026-11-01T08:34:48.1645663Z Working directory is '/home/runner/work/AI_Applied/AI_Applied'
+2026-11-01T08:34:48.1647914Z [command]/usr/bin/git version
+2026-11-01T08:34:48.1648818Z git version 2.56.0
+2026-11-01T08:34:48.1669511Z ##[endgroup]
+2026-11-01T08:34:48.1686272Z Temporarily overriding HOME='/home/runner/work/_temp/0cae2950-fc3f-44f3-981c-19f33ef7ef42' before making global git config changes
+2026-11-01T08:34:48.1689525Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-01T08:34:48.1692374Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/AI_Applied/AI_Applied
+2026-11-01T08:34:48.1765163Z Deleting the contents of '/home/runner/work/AI_Applied/AI_Applied'
+2026-11-01T08:34:48.1772020Z ##[group]Initializing the repository
+2026-11-01T08:34:48.1778821Z [command]/usr/bin/git init /home/runner/work/AI_Applied/AI_Applied
+2026-11-01T08:34:48.1958579Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-01T08:34:48.1960795Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-01T08:34:48.1962789Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-01T08:34:48.1964323Z hint: call:
+2026-11-01T08:34:48.1965041Z hint:
+2026-11-01T08:34:48.1966048Z hint: 	git config --global init.defaultBranch <name>
+2026-11-01T08:34:48.1967174Z hint:
+2026-11-01T08:34:48.1969140Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-01T08:34:48.1970918Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-01T08:34:48.1972253Z hint:
+2026-11-01T08:34:48.1972972Z hint: 	git branch -m <name>
+2026-11-01T08:34:48.1973844Z hint:
+2026-11-01T08:34:48.1974985Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-01T08:34:48.1978983Z Initialized empty Git repository in /home/runner/work/AI_Applied/AI_Applied/.git/
+2026-11-01T08:34:48.1992866Z [command]/usr/bin/git remote add origin https://github.com/vietdungnguyen2005/AI_Applied
+2026-11-01T08:34:48.2062118Z ##[endgroup]
+2026-11-01T08:34:48.2063799Z ##[group]Disabling automatic garbage collection
+2026-11-01T08:34:48.2080541Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-01T08:34:48.2126151Z ##[endgroup]
+2026-11-01T08:34:48.2128490Z ##[group]Setting up auth
+2026-11-01T08:34:48.2134479Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-01T08:34:48.2181303Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-01T08:34:48.2792692Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-01T08:34:48.2829768Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-01T08:34:48.3121624Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-01T08:34:48.3159582Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-01T08:34:48.3445624Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-01T08:34:48.3487274Z ##[endgroup]
+2026-11-01T08:34:48.3497838Z ##[group]Fetching the repository
+2026-11-01T08:34:48.3499366Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-01T08:34:48.6999046Z From https://github.com/vietdungnguyen2005/AI_Applied
+2026-11-01T08:34:48.7001346Z  * [new branch]      audit/p00-baseline     -> origin/audit/p00-baseline
+2026-11-01T08:34:48.7009520Z  * [new branch]      codex/local-llm        -> origin/codex/local-llm
+2026-11-01T08:34:48.7011136Z  * [new branch]      codex/p08-mapping      -> origin/codex/p08-mapping
+2026-11-01T08:34:48.7012612Z  * [new branch]      codex/p09-read-tools   -> origin/codex/p09-read-tools
+2026-11-01T08:34:48.7013854Z  * [new branch]      main                   -> origin/main
+2026-11-01T08:34:48.7015104Z  * [new branch]      phase/p01-discovery    -> origin/phase/p01-discovery
+2026-11-01T08:34:48.7016739Z  * [new branch]      phase/p02-architecture -> origin/phase/p02-architecture
+2026-11-01T08:34:48.7018704Z  * [new branch]      phase/p03-foundation   -> origin/phase/p03-foundation
+2026-11-01T08:34:48.7020440Z  * [new branch]      phase/p04-synthetic-data -> origin/phase/p04-synthetic-data
+2026-11-01T08:34:48.7022158Z  * [new branch]      phase/p05-ingestion    -> origin/phase/p05-ingestion
+2026-11-01T08:34:48.7023877Z  * [new branch]      phase/p06-retrieval    -> origin/phase/p06-retrieval
+2026-11-01T08:34:48.7025568Z  * [new branch]      phase/p07-grounded-qa  -> origin/phase/p07-grounded-qa
+2026-11-01T08:34:48.7029239Z [command]/usr/bin/git branch --list --remote origin/codex/p09-read-tools
+2026-11-01T08:34:48.7044666Z   origin/codex/p09-read-tools
+2026-11-01T08:34:48.7057045Z [command]/usr/bin/git rev-parse refs/remotes/origin/codex/p09-read-tools
+2026-11-01T08:34:48.7079521Z 8d060c2b3d9fb5489d839fb8a7f4afa5ebbe9d13
+2026-11-01T08:34:48.7085930Z ##[endgroup]
+2026-11-01T08:34:48.7089004Z ##[group]Determining the checkout info
+2026-11-01T08:34:48.7091853Z ##[endgroup]
+2026-11-01T08:34:48.7093864Z [command]/usr/bin/git sparse-checkout disable
+2026-11-01T08:34:48.7151198Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-01T08:34:48.7183447Z ##[group]Checking out the ref
+2026-11-01T08:34:48.7187379Z [command]/usr/bin/git checkout --progress --force -B codex/p09-read-tools refs/remotes/origin/codex/p09-read-tools
+2026-11-01T08:34:48.7738646Z Switched to a new branch 'codex/p09-read-tools'
+2026-11-01T08:34:48.7745740Z branch 'codex/p09-read-tools' set up to track 'origin/codex/p09-read-tools'.
+2026-11-01T08:34:48.7755315Z ##[endgroup]
+2026-11-01T08:34:48.7801033Z [command]/usr/bin/git log -1 --format=%H
+2026-11-01T08:34:48.7826652Z 8d060c2b3d9fb5489d839fb8a7f4afa5ebbe9d13
+2026-11-01T08:34:48.8215751Z ##[group]Run actions/setup-python@v5
+2026-11-01T08:34:48.8217019Z with:
+2026-11-01T08:34:48.8218111Z   python-version: 3.12
+2026-11-01T08:34:48.8219146Z   check-latest: false
+2026-11-01T08:34:48.8229701Z   token: ***
+2026-11-01T08:34:48.8230656Z   update-environment: true
+2026-11-01T08:34:48.8231782Z   allow-prereleases: false
+2026-11-01T08:34:48.8232870Z   freethreaded: false
+2026-11-01T08:34:48.8233849Z ##[endgroup]
+2026-11-01T08:34:48.9770403Z ##[group]Installed versions
+2026-11-01T08:34:48.9894114Z (node:2346) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-01T08:34:48.9899171Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-01T08:34:48.9902448Z Successfully set up CPython (3.12.15)
+2026-11-01T08:34:48.9905816Z ##[endgroup]
+2026-11-01T08:34:49.0109445Z ##[group]Run python -m pip install uv==0.13.6
+2026-11-01T08:34:49.0110986Z [36;1mpython -m pip install uv==0.13.6[0m
+2026-11-01T08:34:49.0166500Z shell: /usr/bin/bash -e {0}
+2026-11-01T08:34:49.0167973Z env:
+2026-11-01T08:34:49.0169130Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:49.0171041Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-01T08:34:49.0172947Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:49.0174667Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:49.0176381Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:49.0178354Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-01T08:34:49.0179820Z ##[endgroup]
+2026-11-01T08:34:50.7005807Z Collecting uv==0.13.6
+2026-11-01T08:34:50.7230786Z   Downloading uv-0.13.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+2026-11-01T08:34:50.7329894Z Downloading uv-0.13.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)
+2026-11-01T08:34:50.8446766Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.3/17.3 MB 177.5 MB/s  0:00:00
+2026-11-01T08:34:50.9166238Z Installing collected packages: uv
+2026-11-01T08:34:51.0903034Z Successfully installed uv-0.13.6
+2026-11-01T08:34:51.1420130Z ##[group]Run python -m uv sync --locked
+2026-11-01T08:34:51.1420525Z [36;1mpython -m uv sync --locked[0m
+2026-11-01T08:34:51.1451912Z shell: /usr/bin/bash -e {0}
+2026-11-01T08:34:51.1452167Z env:
+2026-11-01T08:34:51.1452442Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:51.1452886Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-01T08:34:51.1453328Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:51.1453711Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:51.1454117Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:51.1454535Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-01T08:34:51.1455092Z ##[endgroup]
+2026-11-01T08:34:51.2213789Z Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python
+2026-11-01T08:34:51.2214880Z Creating virtual environment at: .venv
+2026-11-01T08:34:51.2248156Z Resolved 74 packages in 0.99ms
+2026-11-01T08:34:51.2387847Z    Building vmarket-ai @ file:///home/runner/work/AI_Applied/AI_Applied
+2026-11-01T08:34:51.3175069Z Downloading ruff (10.1MiB)
+2026-11-01T08:34:51.3180026Z Downloading mypy (14.1MiB)
+2026-11-01T08:34:51.3181200Z Downloading lxml (5.0MiB)
+2026-11-01T08:34:51.3200958Z Downloading psycopg-binary (5.0MiB)
+2026-11-01T08:34:51.3203359Z Downloading numpy (15.8MiB)
+2026-11-01T08:34:51.3205039Z Downloading sqlalchemy (3.3MiB)
+2026-11-01T08:34:51.3207278Z Downloading pygments (1.2MiB)
+2026-11-01T08:34:51.3209483Z Downloading pydantic-core (2.1MiB)
+2026-11-01T08:34:51.3211973Z Downloading cryptography (4.5MiB)
+2026-11-01T08:34:51.5049474Z  Downloaded pygments
+2026-11-01T08:34:51.5208535Z  Downloaded pydantic-core
+2026-11-01T08:34:51.5619936Z  Downloaded sqlalchemy
+2026-11-01T08:34:51.5973293Z  Downloaded psycopg-binary
+2026-11-01T08:34:51.6108756Z  Downloaded cryptography
+2026-11-01T08:34:51.6138308Z  Downloaded lxml
+2026-11-01T08:34:51.6778387Z  Downloaded ruff
+2026-11-01T08:34:51.7312611Z  Downloaded numpy
+2026-11-01T08:34:51.7785303Z  Downloaded mypy
+2026-11-01T08:34:51.9993825Z       Built vmarket-ai @ file:///home/runner/work/AI_Applied/AI_Applied
+2026-11-01T08:34:52.0030252Z Prepared 63 packages in 774ms
+2026-11-01T08:34:52.0611230Z Installed 63 packages in 60ms
+2026-11-01T08:34:52.0611947Z  + alembic==1.20.1
+2026-11-01T08:34:52.0612310Z  + annotated-doc==0.0.5
+2026-11-01T08:34:52.0612709Z  + annotated-types==0.8.0
+2026-11-01T08:34:52.0613378Z  + anyio==4.15.1
+2026-11-01T08:34:52.0613717Z  + attrs==26.1.0
+2026-11-01T08:34:52.0614058Z  + certifi==2026.10.23
+2026-11-01T08:34:52.0614413Z  + cffi==2.1.1
+2026-11-01T08:34:52.0614761Z  + charset-normalizer==3.5.2
+2026-11-01T08:34:52.0615175Z  + click==8.5.0
+2026-11-01T08:34:52.0615556Z  + cryptography==50.0.2
+2026-11-01T08:34:52.0615935Z  + defusedxml==0.7.1
+2026-11-01T08:34:52.0616281Z  + fastapi==0.162.0
+2026-11-01T08:34:52.0616715Z  + greenlet==3.5.6
+2026-11-01T08:34:52.0617048Z  + h11==0.16.0
+2026-11-01T08:34:52.0617378Z  + httpcore==1.0.9
+2026-11-01T08:34:52.0617986Z  + httpx==0.28.1
+2026-11-01T08:34:52.0618314Z  + idna==3.20
+2026-11-01T08:34:52.0618705Z  + iniconfig==2.3.1
+2026-11-01T08:34:52.0619055Z  + jsonschema==4.26.0
+2026-11-01T08:34:52.0619442Z  + jsonschema-path==0.3.4
+2026-11-01T08:34:52.0619866Z  + jsonschema-specifications==2025.9.1
+2026-11-01T08:34:52.0620373Z  + lazy-object-proxy==1.13.0
+2026-11-01T08:34:52.0620797Z  + librt==0.16.0
+2026-11-01T08:34:52.0621122Z  + lxml==6.1.3
+2026-11-01T08:34:52.0621430Z  + mako==1.4.3
+2026-11-01T08:34:52.0621761Z  + markupsafe==3.0.4
+2026-11-01T08:34:52.0622101Z  + mypy==1.20.2
+2026-11-01T08:34:52.0622572Z  + mypy-extensions==1.1.0
+2026-11-01T08:34:52.0622968Z  + numpy==2.2.6
+2026-11-01T08:34:52.0623429Z  + openapi-schema-validator==0.6.3
+2026-11-01T08:34:52.0623897Z  + openapi-spec-validator==0.7.2
+2026-11-01T08:34:52.0624473Z  + opentelemetry-api==1.45.2
+2026-11-01T08:34:52.0624890Z  + packaging==26.3
+2026-11-01T08:34:52.0625269Z  + pathable==0.4.4
+2026-11-01T08:34:52.0625900Z  + pathspec==1.1.1
+2026-11-01T08:34:52.0626273Z  + pgvector==0.4.2
+2026-11-01T08:34:52.0626609Z  + pluggy==1.7.0
+2026-11-01T08:34:52.0626944Z  + psycopg==3.3.6
+2026-11-01T08:34:52.0627656Z  + psycopg-binary==3.3.6
+2026-11-01T08:34:52.0628081Z  + pycparser==3.12
+2026-11-01T08:34:52.0628422Z  + pydantic==2.14.2
+2026-11-01T08:34:52.0628800Z  + pydantic-core==2.50.2
+2026-11-01T08:34:52.0629195Z  + pydantic-settings==2.16.2
+2026-11-01T08:34:52.0629596Z  + pygments==2.21.0
+2026-11-01T08:34:52.0629930Z  + pypdf==6.21.4
+2026-11-01T08:34:52.0630259Z  + pytest==9.2.0
+2026-11-01T08:34:52.0630604Z  + pytest-asyncio==1.4.1
+2026-11-01T08:34:52.0630982Z  + python-docx==1.2.0
+2026-11-01T08:34:52.0631352Z  + python-dotenv==1.2.4
+2026-11-01T08:34:52.0632083Z  + pyyaml==6.0.3
+2026-11-01T08:34:52.0632423Z  + referencing==0.36.2
+2026-11-01T08:34:52.0632786Z  + requests==2.34.2
+2026-11-01T08:34:52.0633133Z  + rfc3339-validator==0.1.4
+2026-11-01T08:34:52.0633518Z  + rpds-py==2026.9.1
+2026-11-01T08:34:52.0633864Z  + ruff==0.17.3
+2026-11-01T08:34:52.0634177Z  + six==1.17.0
+2026-11-01T08:34:52.0634501Z  + sqlalchemy==2.0.55
+2026-11-01T08:34:52.0634851Z  + starlette==1.10.0
+2026-11-01T08:34:52.0635210Z  + typing-extensions==4.16.0
+2026-11-01T08:34:52.0635626Z  + typing-inspection==0.4.4
+2026-11-01T08:34:52.0635980Z  + urllib3==2.8.0
+2026-11-01T08:34:52.0636178Z  + uvicorn==0.54.0
+2026-11-01T08:34:52.0636528Z  + vmarket-ai==0.1.0 (from file:///home/runner/work/AI_Applied/AI_Applied)
+2026-11-01T08:34:52.0866499Z ##[group]Run make lint typecheck test contracts dataset-check ingestion-demo retrieval-eval-check mapping-eval-check
+2026-11-01T08:34:52.0870217Z [36;1mmake lint typecheck test contracts dataset-check ingestion-demo retrieval-eval-check mapping-eval-check[0m
+2026-11-01T08:34:52.0925547Z shell: /usr/bin/bash -e {0}
+2026-11-01T08:34:52.0926551Z env:
+2026-11-01T08:34:52.0926922Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:52.0928901Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-01T08:34:52.0930222Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:52.0931523Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:52.0932818Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:34:52.0933405Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-01T08:34:52.0934525Z ##[endgroup]
+2026-11-01T08:34:52.1174763Z python -m uv run --frozen ruff check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py
+2026-11-01T08:34:52.2206330Z All checks passed!
+2026-11-01T08:34:52.2229757Z python -m uv run --frozen ruff format --check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py
+2026-11-01T08:34:52.2778521Z 78 files already formatted
+2026-11-01T08:34:52.2799731Z python -m uv run --frozen mypy
+2026-11-01T08:35:05.6249682Z src/vmarket_ai/gateway/agent.py:12: error: Unused "type: ignore" comment  [unused-ignore]
+2026-11-01T08:35:05.8370504Z Found 1 error in 1 file (checked 54 source files)
+2026-11-01T08:35:05.8711061Z make: *** [Makefile:8: typecheck] Error 1
+2026-11-01T08:35:05.8728232Z ##[error]Process completed with exit code 2.
+2026-11-01T08:35:05.8800927Z ##[group]Run docker compose -p ai-ci down
+2026-11-01T08:35:05.8801273Z [36;1mdocker compose -p ai-ci down[0m
+2026-11-01T08:35:05.8831476Z shell: /usr/bin/bash -e {0}
+2026-11-01T08:35:05.8831721Z env:
+2026-11-01T08:35:05.8831986Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:35:05.8832419Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-01T08:35:05.8832842Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:35:05.8833236Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:35:05.8833608Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-01T08:35:05.8833979Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-01T08:35:05.8834296Z ##[endgroup]
+2026-11-01T08:35:06.1298978Z time="2026-11-01T08:35:06Z" level=warning msg="Warning: No resource found to remove for project \"ai-ci\"."
+2026-11-01T08:35:06.1472947Z Post job cleanup.
+2026-11-01T08:35:06.2383853Z [command]/usr/bin/git version
+2026-11-01T08:35:06.2430763Z git version 2.56.0
+2026-11-01T08:35:06.2481828Z Temporarily overriding HOME='/home/runner/work/_temp/d4621dc2-6d3a-408a-9649-11d7b7ddfe2f' before making global git config changes
+2026-11-01T08:35:06.2483371Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-01T08:35:06.2487254Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/AI_Applied/AI_Applied
+2026-11-01T08:35:06.2533352Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-01T08:35:06.2578207Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-01T08:35:06.2920172Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-01T08:35:06.2948685Z http.https://github.com/.extraheader
+2026-11-01T08:35:06.2970515Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-01T08:35:06.3018804Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-01T08:35:06.3324760Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-01T08:35:06.3360703Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-01T08:35:06.3806300Z Cleaning up orphan processes
+2026-11-01T08:35:06.4192203Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
