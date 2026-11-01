@@ -1,0 +1,21 @@
+DISPOSABLE_SERVICES_READY
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 47926)
+Traceback (most recent call last):
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 761, in __init__
+    self.handle()
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\CV\AI_Applied\tools\p11_proxy.py", line 58, in forward
+    self.wfile.write(response.content)
+  File "C:\Users\steve\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 840, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+LOCAL_P11_SMOKE_PASS

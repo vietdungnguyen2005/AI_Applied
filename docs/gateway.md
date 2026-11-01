@@ -1,5 +1,9 @@
 # P09: request-bound read-only agent gateway
 
+P11 adds a separate opt-in [durable run API](runs.md); the P09 live-request path
+below retains its original ownership/deadline semantics. [P11 evidence](evidence/P11.md)
+records actual process restarts, current-session resume checks and DB fencing.
+
 Implemented: an opt-in Python step planner/knowledge reader, standalone mock gateway, and minimal additive authenticated Next BFF route in Project2. Both feature flags are OFF by default. No business write tool, UI approval, production deployment or persistent key provisioning.
 
 ## Code and reviewable integration

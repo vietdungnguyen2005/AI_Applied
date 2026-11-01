@@ -1,0 +1,45 @@
+{
+  "revision": "0006_durable_runs",
+  "health": {
+    "status": "ok"
+  },
+  "ready": {
+    "status": "ready",
+    "provider_mode": "fake"
+  },
+  "default_feature_routes": {
+    "/ai/runs/control": 404,
+    "/ai/agent/step": 404,
+    "/ai/mapping/suggest": 404,
+    "/ai/ask": 404
+  },
+  "provider_ledger_unchanged": true,
+  "ledger_before": {
+    "provider_controls": [
+      1,
+      "196162d01d7dd0502ea34091a2e6b9b5"
+    ],
+    "provider_budget_days": [
+      1,
+      "aa4daf80cb9008ced280ed06eaaba26b"
+    ],
+    "provider_usage": [
+      15,
+      "67a92e0e1d907bfbdd019c618daf4e52"
+    ]
+  },
+  "ledger_after": {
+    "provider_controls": [
+      1,
+      "196162d01d7dd0502ea34091a2e6b9b5"
+    ],
+    "provider_budget_days": [
+      1,
+      "aa4daf80cb9008ced280ed06eaaba26b"
+    ],
+    "provider_usage": [
+      15,
+      "67a92e0e1d907bfbdd019c618daf4e52"
+    ]
+  }
+}

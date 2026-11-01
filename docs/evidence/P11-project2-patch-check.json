@@ -1,0 +1,10 @@
+{
+  "baseline": "bc36754c6e1bd9966bacb32d41cf7b590f9a4e0f",
+  "project2_commit": "acec14c5e3c477c47cbd9b5adb7ecf84b27836b1",
+  "patch_sha256": "e41666476e950357c34aa32388c3055f89699d8e79ec55c2c43426bac48f722a",
+  "applied_tree": "7afa04d63457b583d2459fd7744eb18dda888830",
+  "committed_tree": "7afa04d63457b583d2459fd7744eb18dda888830",
+  "match": true,
+  "method": "Separate GIT_INDEX_FILE, read-tree baseline, apply --cached, write-tree",
+  "project2_remote_push": false
+}

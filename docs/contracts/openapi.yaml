@@ -370,6 +370,88 @@ paths:
       description: Signed BFF context required in integrated mode; loopback fixture-only
         standalone exception is described in gateway-protocol.md. Enforce byte, time,
         scope and semantic checks independently of JSON Schema.
+  /ai/runs/control:
+    post:
+      operationId: controlRun
+      summary: Signed owner-bound durable read-only run command
+      parameters: []
+      responses:
+        '200':
+          description: Internal run snapshot; BFF returns only public state to authorized
+            browser.
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/RunSnapshot
+        '400':
+          description: Invalid bounded input
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '401':
+          description: Invalid/missing signed context
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '403':
+          description: Denied operation or scope
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '409':
+          description: Replay or step/version conflict
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '413':
+          description: Input exceeds runtime byte/parser limits
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '429':
+          description: Budget/rate limit
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '502':
+          description: Invalid provider/tool output
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '504':
+          description: Deadline exceeded
+          content:
+            application/json:
+              schema:
+                $ref: ./bff-tool-gateway.schema.json#/$defs/Error
+        '404':
+          description: Run absent or not owned by the current actor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./bff-tool-gateway.schema.json#/$defs/RunCommand
+      x-implementation-status: implemented-opt-in
+      x-runtime-max-body-bytes: 65536
+      x-required-operation: run_control
+      description: Opt-in integrated runs only. Nonce, owner/scope, revision and lease
+        fencing enforced. Start creates a new run without dispatching tools. Browser
+        calls only BFF start/inspect/resume/cancel; private plan/claim/record/recover
+        require BFF signing. No business approval or write.
 components:
   securitySchemes:
     AIContext:

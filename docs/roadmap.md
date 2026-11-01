@@ -2,7 +2,7 @@
 
 Source of requirements: [saved prompt package](implementation-prompts.md). Date: 2026-10-31. Execution is sequential with evidence and acceptance gates. No phase is complete merely because its documentation exists.
 
-Progress update: 2026-11-01 Asia/Bangkok, through P10 technical implementation and real disposable human handoff checks. P06's test split is now consumed; later phases must distinguish regression reuse from fresh unseen evaluation.
+Progress update: 2026-11-02 Asia/Bangkok, through P11 technical implementation and actual BFF/Python process-restart drills. P06's test split is now consumed; later phases must distinguish regression reuse from fresh unseen evaluation.
 
 Implementation owner: coding agent; acceptance owner: repository owner. Real stakeholder feedback and human labels must be supplied or explicitly labeled simulation/developer review. Fake provider tests prove deterministic plumbing, never real model quality.
 
@@ -19,7 +19,7 @@ Implementation owner: coding agent; acceptance owner: repository owner. Real sta
 | P08 | P04–P07 | Strict draft mapping and rule-only comparison | Agent | Standalone draft API, original-byte storage, strict local/rule suggestions and 228 retained known-case outputs verified; rules selected by measured comparison, human/unseen/business-quality gates pending; see evidence/P08.md |
 | P09 | P02,P03,P07,P08 | Mock tools and feature-OFF real BFF gateway with per-action auth tests | Agent / owner | Technical standalone/integrated local read-only delivery verified with real disposable OPERATOR/auth and unchanged business snapshots; Project2 local commit + reviewable patch, flags OFF, no deploy; quality/human gates pending; see evidence/P09.md |
 | P10 | P08–P09 | Explicit human profile/preview/confirm handoff, DB invariant tests | Agent / owner | Technical implementation verified: signed current-profile draft, explicit edit/create inactive/activate, real CP932/UTF-8 browser journeys, lost202 recovery, completed replay and rejection DB invariants; independent human/UAT/quality gates pending; see evidence/P10b.md |
-| P11 | P09–P10 | Durable bounded state and actual restart/resume tests | Agent | NOT STARTED |
+| P11 | P09–P10 | Durable bounded state and actual restart/resume tests | Agent | Technical delivery verified: owner-bound SQL checkpoints, revision/lease fencing, explicit uncertain-read recovery, current authorization, TTL/owner retention, real process restarts and no redispatch; see evidence/P11.md. UI remains P12; human/model-quality gates pending |
 | P12 | P07–P11 | Flagged operator panel, browser QA and manual fallback | Agent | NOT STARTED |
 | P13 | P04–P12 | Frozen held-out metrics, ablations, raw outputs, failure analysis | Agent / human review | NOT STARTED |
 | P14 | P09–P13 | Security negatives, both repo regressions, dependency remediation | Agent / owner | NOT STARTED; R08 open |

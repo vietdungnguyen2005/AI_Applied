@@ -96,7 +96,11 @@ def main():
         all(
             op.get("security", api["security"]) == [{"AIContext": [], "AISignature": []}]
             and op.get("x-implementation-status")
-            == ("implemented-opt-in" if path == "/ai/mapping/suggest" else "planned")
+            == (
+                "implemented-opt-in"
+                if path in {"/ai/mapping/suggest", "/ai/runs/control"}
+                else "planned"
+            )
             for path, op in secured
         ),
         "Protected routes declare signed context; runtime enforcement tested separately",

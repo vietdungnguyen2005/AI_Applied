@@ -1,0 +1,408 @@
+From acec14c5e3c477c47cbd9b5adb7ecf84b27836b1 Mon Sep 17 00:00:00 2001
+From: vietdungnguyen2005 <vietdungnguyen2005@gmail.com>
+Date: Mon, 2 Nov 2026 01:06:57 +0700
+Subject: [PATCH] Add feature-off durable run controls with current
+ authorization and fenced read dispatch
+
+---
+ .env.example                 |   1 +
+ app/api/ops/ai/runs/route.ts |   4 ++
+ docs/ai-runs.md              |  49 ++++++++++++++
+ lib/ai-gateway/spec.ts       |   2 +-
+ lib/ai-gateway/transport.ts  |   4 +-
+ lib/ai-runs.test.ts          | 107 ++++++++++++++++++++++++++++++
+ lib/ai-runs/handler.ts       | 124 +++++++++++++++++++++++++++++++++++
+ lib/ai-runs/spec.ts          |  22 +++++++
+ 8 files changed, 310 insertions(+), 3 deletions(-)
+ create mode 100644 app/api/ops/ai/runs/route.ts
+ create mode 100644 docs/ai-runs.md
+ create mode 100644 lib/ai-runs.test.ts
+ create mode 100644 lib/ai-runs/handler.ts
+ create mode 100644 lib/ai-runs/spec.ts
+
+diff --git a/.env.example b/.env.example
+index 08fd145..17c7b68 100644
+--- a/.env.example
++++ b/.env.example
+@@ -29,6 +29,7 @@ CLOUDFLARE_API_TOKEN=
+ 
+ # Optional request-bound read-only AI gateway: OFF by default, server-only values.
+ AI_COPILOT_ENABLED=false
++AI_RUNS_ENABLED=false
+ AI_MAPPING_DRAFTS_ENABLED=false
+ AI_SERVICE_ORIGIN=http://127.0.0.1:8092
+ AI_SIGNING_KID=
+diff --git a/app/api/ops/ai/runs/route.ts b/app/api/ops/ai/runs/route.ts
+new file mode 100644
+index 0000000..43e2642
+--- /dev/null
++++ b/app/api/ops/ai/runs/route.ts
+@@ -0,0 +1,4 @@
++import { handleRun } from "@/lib/ai-runs/handler";
++export const runtime="nodejs";
++export const dynamic="force-dynamic";
++export const POST=handleRun;
+diff --git a/docs/ai-runs.md b/docs/ai-runs.md
+new file mode 100644
+index 0000000..b7cc71a
+--- /dev/null
++++ b/docs/ai-runs.md
+@@ -0,0 +1,49 @@
++# Durable read-only run API (P11)
++
++`AI_COPILOT_ENABLED=true` and server-only `AI_RUNS_ENABLED=true` enable
++`POST /api/ops/ai/runs`. Defaults are false. Configure the existing fixed AI/Java
++origins, signing key and actor HMAC key; Python must also enable signed durable
++runs against dedicated AI PostgreSQL. No credentials enter browser JS.
++
++Input is a strict union:
++
++```json
++{"action":"start","question":"List imports"}
++{"action":"inspect","run_id":"<server UUID>"}
++{"action":"resume","run_id":"<server UUID>","expected_revision":0}
++{"action":"cancel","run_id":"<server UUID>","expected_revision":0}
++```
++
++Start persists a fresh conversation/run before model/tool dispatch. Preserve the
++returned reference; resume is a separate current-authorized request. Successful
++responses contain only `{run: RunState}` and request correlation header. Current
++OPERATOR/CSRF, same origin, owner HMAC and current scopes apply to every command.
++Each read dispatch and public response rechecks session, and Java independently
++authorizes its fixed GET. The BFF alone can send signed plan/claim/record/recover
++commands; browser tool results, actor, lease, approval and URL fields are rejected.
++
++The BFF performs at most three closed P09 read tools under a25-second request
++deadline. Its20/minute command limit is process-local; database revisions, lease
++fencing and eight active actor slots survive process restarts. A stale duplicate
++resume returns409. An active lease is not resumed by another worker. After the
++lease expires, inspection surfaces OUTCOME_UNKNOWN. Explicit resume records that
++uncertain read as unavailable and ends with an abstention, without sending the
++GET again. No automatic retry/provider fallback or background continuation exists.
++
++Business handoff is terminal for AI continuation, with `can_resume=false`. Resume
++cannot grant profile/import/stock approval. Operators continue through the existing
++P10 UI. A cancelled run fences late results; a GET already accepted by Java cannot
++be retracted. If a request times out or its reply is lost, inspect before deciding
++what to do next. A completed run describes controller completion, not a business
++mutation or the present truth of an earlier observation.
++
++Public snapshots expose historical status/count/time summaries. Raw questions,
++cached Java result bodies, document excerpts, leases and transport headers stay
++out of browser snapshots. Knowledge text/citations are not checkpointed for reuse.
++Runs expire at a fixed600seconds; Python owner maintenance scrubs/purges according
++to its documented retention. Ownership inherits P09's verified-username HMAC and
++shared synthetic scope limitations. Production tenancy/identity recycling and
++distributed rate control are not claimed.
++
++The API has no new UI in P11; P12 adds the operator chat/panels. Java source,
++business/auth contracts, existing gateway and mapping flows remain unchanged.
+diff --git a/lib/ai-gateway/spec.ts b/lib/ai-gateway/spec.ts
+index 9a578c9..3cc14f3 100644
+--- a/lib/ai-gateway/spec.ts
++++ b/lib/ai-gateway/spec.ts
+@@ -20,7 +20,7 @@ export const ToolIntent = z.discriminatedUnion("tool_name", [
+ export type Intent = z.infer<typeof ToolIntent>;
+ export const FailureCode = z.enum(["AI_DISABLED", "INPUT_INVALID", "ACCESS_DENIED", "SESSION_EXPIRED",
+   "CONFIGURATION_UNAVAILABLE", "OUTPUT_INVALID", "DEPENDENCY_UNAVAILABLE", "DEADLINE_EXCEEDED",
+-  "BUDGET_EXCEEDED", "STEP_CONFLICT"]);
++  "BUDGET_EXCEEDED", "STEP_CONFLICT", "RUN_NOT_AVAILABLE"]);
+ export type GatewayFailure = z.infer<typeof FailureCode>;
+ export type Result<T> = { success: true; data: T } | { success: false; code: GatewayFailure; status: number };
+ export interface AgentGatewaySpec { execute(request: Request): Promise<Result<unknown>> }
+diff --git a/lib/ai-gateway/transport.ts b/lib/ai-gateway/transport.ts
+index 333c319..10bfd57 100644
+--- a/lib/ai-gateway/transport.ts
++++ b/lib/ai-gateway/transport.ts
+@@ -3,7 +3,7 @@ import { createHash, createPrivateKey, randomUUID, sign } from "node:crypto";
+ export type TransportContext = { actor_ref: string; request_id: string; run_id: string; step: number;
+   collection_ids: string[]; deadline_at: string };
+ 
+-export function signedRequest(context: TransportContext, path: "/ai/agent/step" | "/ai/knowledge/search" | "/ai/mapping/suggest", payload: unknown): { body: string; headers: Headers } {
++export function signedRequest(context: TransportContext, path: "/ai/agent/step" | "/ai/knowledge/search" | "/ai/mapping/suggest" | "/ai/runs/control", payload: unknown): { body: string; headers: Headers } {
+   const body = JSON.stringify(payload);
+   if (Buffer.byteLength(body, "utf8") > (path==="/ai/mapping/suggest"?6_700_000:65_536)) throw new Error("INPUT_INVALID");
+   const issued = Math.floor(Date.now()/1000);
+@@ -15,7 +15,7 @@ export function signedRequest(context: TransportContext, path: "/ai/agent/step"
+   if (!/^[A-Za-z0-9_-]{1,32}$/.test(kid)) throw new Error("CONFIGURATION_UNAVAILABLE");
+   const encoded = Buffer.from(JSON.stringify({ version: 1, issuer: "vmarket-bff", audience: "vmarket-ai",
+     mode: "integrated", kid, ...context, nonce: randomUUID(), issued_at: issued, expires_at: expires,
+-    operation: path === "/ai/agent/step" ? "agent_step" : path === "/ai/mapping/suggest" ? "mapping_suggest" : "knowledge_search", request_digest: requestDigest,
++    operation: path === "/ai/agent/step" ? "agent_step" : path === "/ai/mapping/suggest" ? "mapping_suggest" : path === "/ai/runs/control" ? "run_control" : "knowledge_search", request_digest: requestDigest,
+   })).toString("base64url");
+   const key = createPrivateKey({ key: Buffer.from(process.env.AI_SIGNING_KEY_PKCS8_BASE64 ?? "", "base64"),
+     type: "pkcs8", format: "der" });
+diff --git a/lib/ai-runs.test.ts b/lib/ai-runs.test.ts
+new file mode 100644
+index 0000000..6e69358
+--- /dev/null
++++ b/lib/ai-runs.test.ts
+@@ -0,0 +1,107 @@
++import { afterEach,expect,it,vi } from "vitest";
++import { handleRun } from "./ai-runs/handler";
++import { RunInput,type Snapshot } from "./ai-runs/spec";
++import { generateKeyPairSync,verify } from "node:crypto";
++
++function setup(){
++  const key=generateKeyPairSync("ed25519"),actor=crypto.randomUUID();
++  for(const [k,v] of Object.entries({AI_COPILOT_ENABLED:"true",AI_RUNS_ENABLED:"true",BACKEND_ORIGIN:"http://java",AI_SERVICE_ORIGIN:"http://ai",AI_SIGNING_KID:"test",AI_ACTOR_HMAC_KEY:"r".repeat(64),AI_SIGNING_KEY_PKCS8_BASE64:key.privateKey.export({format:"der",type:"pkcs8"}).toString("base64")}))vi.stubEnv(k,v);
++  const seen:{url:string;init:RequestInit}[]=[];
++  const faults={revoked:false,wrongTool:false};
++  let snapshot:Snapshot;
++  vi.stubGlobal("fetch",vi.fn(async(url:string,init:RequestInit)=>{
++    seen.push({url,init});
++    if(url.endsWith("/api/auth/session"))return Response.json({authenticated:!faults.revoked,username:actor,roles:["ROLE_OPERATOR"],csrfToken:"current"});
++    if(url.endsWith("/api/ops/imports"))return Response.json([]);
++    const headers=new Headers(init.headers),encoded=headers.get("X-AI-Context")!;
++    expect(verify(null,Buffer.from("vmarket-ai-context:v1."+encoded),key.publicKey,Buffer.from(headers.get("X-AI-Signature")!,"base64url"))).toBe(true);
++    const claims=JSON.parse(Buffer.from(encoded,"base64url").toString()),body=JSON.parse(init.body as string);
++    expect(claims.operation).toBe("run_control");
++    if(body.action==="start")snapshot={state:{run_id:claims.run_id,conversation_id:body.conversation_id,initial_request_id:claims.request_id,status:"started",phase:"idle",revision:0,step:0,created_at:Math.floor(Date.now()/1000),updated_at:Math.floor(Date.now()/1000),expires_at:Math.floor(Date.now()/1000)+600,reason:null,observations:[],outcome:null,can_resume:true,can_cancel:true},collection_ids:claims.collection_ids,pending_intent:null,lease_id:null,known_job_ids:[]};
++    if(body.action==="plan"){
++      snapshot.state.revision+=2;
++      if(snapshot.state.observations.length){snapshot.state.status="completed";snapshot.state.phase="terminal";snapshot.state.can_resume=false;snapshot.state.can_cancel=false;snapshot.state.outcome={kind:"final",status:"answered",handoff_reason:null};}
++      else{snapshot.state.phase="ready";snapshot.pending_intent={call_id:crypto.randomUUID(),tool_name:"get_imports",arguments:{}};}
++    }
++    if(body.action==="claim"){snapshot.state.revision++;snapshot.state.phase="executing";snapshot.state.can_resume=false;snapshot.lease_id=crypto.randomUUID();}
++    if(body.action==="record"){
++      snapshot.state.revision++;snapshot.state.phase="idle";snapshot.state.step++;snapshot.state.can_resume=true;
++      const o=body.observation;snapshot.state.observations.push({call_id:o.call_id,tool_name:o.tool_name,status:o.status,observed_at:o.observed_at,truncated:o.truncated,error_code:o.error_code,item_count:0});snapshot.pending_intent=null;snapshot.lease_id=null;
++    }
++    if(body.action==="cancel"){snapshot.state.revision++;snapshot.state.status="cancelled";snapshot.state.phase="terminal";snapshot.state.reason="OPERATOR_CANCELLED";snapshot.state.can_resume=false;snapshot.state.can_cancel=false;snapshot.pending_intent=null;snapshot.lease_id=null;}
++    if(faults.wrongTool&&body.action==="plan")return Response.json({...snapshot,pending_intent:{call_id:crypto.randomUUID(),tool_name:"confirm_import",arguments:{}}});
++    return Response.json(snapshot);
++  }));
++  return {seen,get:()=>snapshot,faults};
++}
++function request(body:unknown){return new Request("http://localhost/api/ops/ai/runs",{method:"POST",headers:{Origin:"http://localhost","X-CSRF-TOKEN":"current",Cookie:"VMARKET_SESSION=session"},body:JSON.stringify(body)});}
++
++afterEach(()=>{vi.unstubAllGlobals();vi.unstubAllEnvs();});
++it("disables durable commands before any session or provider access",async()=>{
++  vi.stubEnv("AI_RUNS_ENABLED","false");const fetch=vi.fn();vi.stubGlobal("fetch",fetch);
++  const response=await handleRun(new Request("http://localhost/api/ops/ai/runs",{method:"POST",body:"{}"}));
++  expect(response.status).toBe(503);expect(fetch).not.toHaveBeenCalled();
++});
++
++it("resumes a stored revision with fresh auth and checkpoints one fixed read exactly once",async()=>{
++  const {seen}=setup();const created=await(await handleRun(request({action:"start",question:"List imports"}))).json();
++  const response=await handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}));
++  expect(response.status).toBe(200);const data=await response.json();expect(data.run.status).toBe("completed");
++  expect(data.run.observations).toHaveLength(1);
++  expect(seen.filter(s=>s.url.endsWith("/api/ops/imports"))).toHaveLength(1);
++  expect(seen.filter(s=>s.url.startsWith("http://java")).every(s=>s.init.method==="GET")).toBe(true);
++  expect(JSON.stringify(data)).not.toContain("lease_id");
++});
++
++it("rejects a stale duplicate resume without repeating the read",async()=>{
++  const {seen}=setup();const created=await(await handleRun(request({action:"start",question:"List imports"}))).json();
++  expect((await handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}))).status).toBe(200);
++  expect((await handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}))).status).toBe(409);
++  expect(seen.filter(s=>s.url.endsWith("/api/ops/imports"))).toHaveLength(1);
++});
++
++it("rechecks current session after a pause and rejects expiry before any checkpoint or tool access",async()=>{
++  const {seen,faults,get}=setup();const created=await(await handleRun(request({action:"start",question:"List imports"}))).json();
++  const before=seen.length;faults.revoked=true;
++  expect((await handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}))).status).toBe(401);
++  expect(seen.slice(before).every(s=>s.url.endsWith("/api/auth/session"))).toBe(true);expect(get().state.revision).toBe(0);
++});
++
++it("rejects a write tool name in a restored planner response before dispatch",async()=>{
++  const {seen,faults}=setup();const created=await(await handleRun(request({action:"start",question:"List imports"}))).json();faults.wrongTool=true;
++  expect((await handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}))).status).toBe(502);
++  expect(seen.some(s=>s.url.endsWith("/api/ops/imports"))).toBe(false);
++});
++
++it("aborts an in-flight read at the request deadline without recording or retrying it",async()=>{
++  vi.useFakeTimers();
++  try{
++    const {seen,get}=setup(),original=global.fetch;
++    const created=await(await handleRun(request({action:"start",question:"List imports"}))).json();
++    vi.stubGlobal("fetch",async(url:string,init:RequestInit)=>{
++      if(url.endsWith("/api/ops/imports"))return new Promise<Response>((_resolve,reject)=>init.signal!.addEventListener("abort",()=>reject(new DOMException("Aborted","AbortError")),{once:true}));
++      return original(url,init);
++    });
++    const pending=handleRun(request({action:"resume",run_id:created.run.run_id,expected_revision:0}));
++    await vi.advanceTimersByTimeAsync(25001);
++    expect((await pending).status).toBe(504);expect(get().state.phase).toBe("executing");
++    expect(seen.filter(s=>s.url==="http://ai/ai/runs/control").map(s=>JSON.parse(s.init.body as string).action)).not.toContain("record");
++  }finally{vi.useRealTimers();}
++});
++
++it("persists a new server-owned conversation/run before any model or tool is executed",async()=>{
++  const {seen}=setup();const response=await handleRun(request({action:"start",question:"List imports"}));
++  expect(response.status).toBe(200);const body=await response.json();expect(body.run.status).toBe("started");expect(body.run.revision).toBe(0);
++  expect(seen.filter(s=>s.url==="http://ai/ai/runs/control")).toHaveLength(1);
++  expect(seen.filter(s=>s.url.startsWith("http://java")).every(s=>s.url.endsWith("/api/auth/session"))).toBe(true);
++  const wire=seen.find(s=>s.url.startsWith("http://ai"))!;expect(new Headers(wire.init.headers).has("Cookie")).toBe(false);
++  expect(JSON.stringify(body)).not.toContain("lease_id");expect(JSON.stringify(body)).not.toContain("question");
++});
++
++it("accepts only an explicit revision-bound resume, not tool results or approval authority",()=>{
++  const input={action:"resume",run_id:crypto.randomUUID(),expected_revision:0};
++  expect(RunInput.safeParse(input).success).toBe(true);
++  for(const extra of [{observation:{}},{actor_ref:"admin"},{approved:true},{question:"publish profile"}])
++    expect(RunInput.safeParse({...input,...extra}).success).toBe(false);
++  expect(RunInput.safeParse({action:"resume",run_id:input.run_id}).success).toBe(false);
++});
+diff --git a/lib/ai-runs/handler.ts b/lib/ai-runs/handler.ts
+new file mode 100644
+index 0000000..31c7bc3
+--- /dev/null
++++ b/lib/ai-runs/handler.ts
+@@ -0,0 +1,124 @@
++import { createHmac,randomUUID } from "node:crypto";
++import { JavaSession,readBounded } from "../ai-gateway/io";
++import { ActorRateLimit } from "../ai-gateway/limits";
++import { signedRequest,type TransportContext } from "../ai-gateway/transport";
++import type { AgentGatewaySpec,GatewayFailure,Result } from "../ai-gateway/spec";
++import { RunInput,RunSnapshot,type Snapshot } from "./spec";
++import { executeRead,type Observation } from "../ai-gateway/tools";
++import { KnowledgeData } from "../ai-gateway/knowledge";
++
++const SCOPES=["ed76d914-7c66-5102-9178-676334063938","4aa83e9f-0a0a-5558-8f5e-0f87db27c923"];
++const rate=new ActorRateLimit(20);
++const fail=(code:GatewayFailure,status:number):Result<never>=>({success:false,code,status});
++class TransportFailure extends Error {constructor(readonly code:GatewayFailure,readonly status:number){super(code);}}
++
++export class RunHandler implements AgentGatewaySpec {
++  readonly requestId=randomUUID();readonly cookies:string[]=[];
++  async execute(request:Request):Promise<Result<unknown>>{
++    if(process.env.AI_COPILOT_ENABLED!=="true"||process.env.AI_RUNS_ENABLED!=="true")return fail("AI_DISABLED",503);
++    const controller=new AbortController(),signal=AbortSignal.any([request.signal,controller.signal]);
++    const deadline=Date.now()+25000,timer=setTimeout(()=>controller.abort(),25000);
++    let abort=()=>{};
++    try{return await Promise.race([this.run(request,signal,deadline),new Promise<Result<never>>(resolve=>{
++      abort=()=>resolve(fail("DEADLINE_EXCEEDED",request.signal.aborted?499:504));signal.addEventListener("abort",abort,{once:true});if(signal.aborted)abort();
++    })]);}catch(error){return error instanceof TransportFailure?fail(error.code,error.status):fail(signal.aborted?"DEADLINE_EXCEEDED":"DEPENDENCY_UNAVAILABLE",signal.aborted?504:503);}
++    finally{clearTimeout(timer);signal.removeEventListener("abort",abort);controller.abort();}
++  }
++  private async run(request:Request,signal:AbortSignal,deadline:number):Promise<Result<unknown>>{
++    const url=new URL(request.url);if(request.headers.get("host"))url.host=request.headers.get("host")!;
++    if(request.method!=="POST"||request.headers.get("origin")!==url.origin||request.headers.get("sec-fetch-site")==="cross-site")return fail("ACCESS_DENIED",403);
++    let input;
++    try{input=RunInput.parse(JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(request,65536,signal))));}
++    catch{return fail("INPUT_INVALID",400);}
++    const session=new JavaSession(request,signal,this.requestId);
++    try{
++      const auth=await session.check(undefined,true);if(!auth.success)return auth;
++      const key=process.env.AI_ACTOR_HMAC_KEY??"",origin=process.env.AI_SERVICE_ORIGIN?.replace(/\/$/,"");
++      if(Buffer.byteLength(key)<32||!origin||!/^https?:\/\//.test(origin))return fail("CONFIGURATION_UNAVAILABLE",503);
++      const configured=process.env.AI_COLLECTION_IDS_JSON?JSON.parse(process.env.AI_COLLECTION_IDS_JSON) as unknown:SCOPES;
++      if(!Array.isArray(configured)||configured.length>10||new Set(configured).size!==configured.length||configured.some(s=>!SCOPES.includes(s)))return fail("CONFIGURATION_UNAVAILABLE",503);
++      const scopes=input.action==="start"?(input.collection_ids??configured as string[]):configured as string[];
++      if(new Set(scopes).size!==scopes.length||scopes.some(s=>!configured.includes(s)))return fail("ACCESS_DENIED",403);
++      const actor=createHmac("sha256",key).update("vmarket-ai-actor:v1\n"+auth.data).digest("hex");
++      if(!rate.consume(actor))return fail("BUDGET_EXCEEDED",429);
++      const context:TransportContext={actor_ref:actor,request_id:this.requestId,run_id:input.action==="start"?randomUUID():input.run_id,step:0,collection_ids:scopes,deadline_at:new Date(deadline).toISOString()};
++      let bound:Snapshot|undefined;
++      const control=async(payload:Record<string,unknown>,step=0):Promise<Snapshot>=>{
++        signal.throwIfAborted();context.step=step;
++        const signed=signedRequest(context,"/ai/runs/control",payload);
++        const response=await fetch(origin+"/ai/runs/control",{method:"POST",...signed,signal,redirect:"error",cache:"no-store"});
++        if(!response.ok){void response.body?.cancel();const codes:Partial<Record<number,GatewayFailure>>={400:"INPUT_INVALID",401:"ACCESS_DENIED",403:"ACCESS_DENIED",404:"RUN_NOT_AVAILABLE",409:"STEP_CONFLICT",413:"INPUT_INVALID",429:"BUDGET_EXCEEDED",502:"OUTPUT_INVALID",504:"DEADLINE_EXCEEDED"};throw new TransportFailure(codes[response.status]??"DEPENDENCY_UNAVAILABLE",codes[response.status]?response.status:503);}
++        const parsed=RunSnapshot.safeParse(JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(response,16384,signal))));
++        if(!parsed.success||parsed.data.state.run_id!==context.run_id||parsed.data.collection_ids.some(s=>!scopes.includes(s)))throw new TransportFailure("OUTPUT_INVALID",502);
++        if(bound&&(parsed.data.state.conversation_id!==bound.state.conversation_id||parsed.data.state.initial_request_id!==bound.state.initial_request_id||JSON.stringify(parsed.data.collection_ids)!==JSON.stringify(bound.collection_ids)))throw new TransportFailure("OUTPUT_INVALID",502);
++        if(typeof payload.expected_revision==="number"&&parsed.data.state.revision!==payload.expected_revision+(payload.action==="plan"?2:1))throw new TransportFailure("OUTPUT_INVALID",502);
++        bound=parsed.data;
++        return parsed.data;
++      };
++      let snapshot:Snapshot;
++      if(input.action==="start"){
++        const conversation=randomUUID();
++        snapshot=await control({action:"start",question:input.question,collection_ids:scopes,conversation_id:conversation});
++        if(snapshot.state.conversation_id!==conversation||snapshot.state.revision!==0||snapshot.state.status!=="started"||snapshot.state.phase!=="idle"||snapshot.state.step!==0||snapshot.state.initial_request_id!==this.requestId||snapshot.state.observations.length)throw new TransportFailure("OUTPUT_INVALID",502);
++      }else{
++        snapshot=await control({action:"inspect"});
++        if(input.action!=="inspect"){
++          if(snapshot.state.revision!==input.expected_revision)return fail("STEP_CONFLICT",409);
++          if(input.action==="cancel")snapshot=await control({action:"cancel",expected_revision:input.expected_revision},snapshot.state.step);
++          else {
++            if(!snapshot.state.can_resume)return fail("STEP_CONFLICT",409);
++            if(snapshot.state.status==="waiting_for_operator")snapshot=await control({action:"recover",expected_revision:snapshot.state.revision},snapshot.state.step);
++            let finished=false;
++            for(let iteration=0;iteration<12;iteration++){
++              if(snapshot.state.status!=="started"){finished=true;break;}
++              signal.throwIfAborted();const checked=await session.check(auth.data,true);if(!checked.success)return checked;
++              if(snapshot.state.phase==="idle"){
++                const previous=snapshot;
++                snapshot=await control({action:"plan",expected_revision:snapshot.state.revision},snapshot.state.step);
++                if(snapshot.state.step!==previous.state.step||snapshot.state.observations.length!==previous.state.observations.length)throw new TransportFailure("OUTPUT_INVALID",502);
++                if(snapshot.state.status==="started"&&snapshot.state.phase!=="ready")throw new TransportFailure("OUTPUT_INVALID",502);
++                continue;
++              }
++              if(snapshot.state.phase!=="ready"||!snapshot.pending_intent||snapshot.state.step>=3)return fail("STEP_CONFLICT",409);
++              const intent=snapshot.pending_intent;
++              if(snapshot.state.observations.some(o=>o.call_id===intent.call_id))return fail("STEP_CONFLICT",409);
++              if("job_id" in intent.arguments&&!snapshot.known_job_ids.includes(intent.arguments.job_id))return fail("OUTPUT_INVALID",502);
++              if(intent.tool_name==="search_supplier_knowledge"&&intent.arguments.collection_ids.some(s=>!snapshot.collection_ids.includes(s)))return fail("ACCESS_DENIED",403);
++              const ready=snapshot;
++              snapshot=await control({action:"claim",expected_revision:ready.state.revision},ready.state.step);
++              if(snapshot.state.status!=="started"||snapshot.state.phase!=="executing"||!snapshot.lease_id||snapshot.pending_intent?.call_id!==intent.call_id||snapshot.state.step!==ready.state.step)throw new TransportFailure("OUTPUT_INVALID",502);
++              const current=await session.check(auth.data,true);if(!current.success)return current;
++              let observed:Observation;
++              if(intent.tool_name==="search_supplier_knowledge"){
++                context.step=snapshot.state.step;
++                const signed=signedRequest(context,"/ai/knowledge/search",intent.arguments);
++                const response=await fetch(origin+"/ai/knowledge/search",{method:"POST",...signed,signal,cache:"no-store",redirect:"error"});
++                if(!response.ok){void response.body?.cancel();throw new TransportFailure(response.status===401||response.status===403?"ACCESS_DENIED":"DEPENDENCY_UNAVAILABLE",response.status===401||response.status===403?response.status:503);}
++                const result=KnowledgeData.safeParse(JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(await readBounded(response,16384,signal))));
++                if(!result.success)throw new TransportFailure("OUTPUT_INVALID",502);
++                observed={call_id:intent.call_id,tool_name:intent.tool_name,status:"ok",observed_at:new Date().toISOString(),truncated:false,error_code:null,data:result.data};
++                if(Buffer.byteLength(JSON.stringify(observed))>16384)observed={...observed,status:"invalid",error_code:"TOOL_RESULT_TOO_LARGE",data:null};
++              }else observed=await executeRead(intent,session);
++              if(observed.status==="denied")return fail("ACCESS_DENIED",session.authorizationStatus??403);
++              const afterRead=await session.check(auth.data,true);if(!afterRead.success)return afterRead;
++              const leased=snapshot;
++              snapshot=await control({action:"record",expected_revision:leased.state.revision,lease_id:leased.lease_id,observation:observed},leased.state.step);
++              const summary=snapshot.state.observations.at(-1);
++              if(snapshot.state.step!==leased.state.step+1||snapshot.state.phase!=="idle"||snapshot.state.observations.length!==leased.state.observations.length+1||summary?.call_id!==observed.call_id||summary.status!==observed.status)throw new TransportFailure("OUTPUT_INVALID",502);
++            }
++            if(!finished&&snapshot.state.status==="started")return fail("BUDGET_EXCEEDED",429);
++          }
++        }
++      }
++      const finalAuth=await session.check(auth.data,true);if(!finalAuth.success)return finalAuth;
++      if(snapshot.state.outcome?.status==="answered"&&(!snapshot.state.observations.length||snapshot.state.observations.some(o=>o.status!=="ok")))return fail("OUTPUT_INVALID",502);
++      return {success:true,data:{run:snapshot.state}};
++    }finally{this.cookies.push(...session.refreshedCookies);}
++  }
++}
++
++export async function handleRun(request:Request):Promise<Response>{
++  const handler=new RunHandler(),result=await handler.execute(request),headers=new Headers({"Cache-Control":"no-store","X-Request-ID":handler.requestId});
++  for(const cookie of handler.cookies)headers.append("Set-Cookie",cookie);
++  return Response.json(result.success?result.data:{code:result.code},{status:result.success?200:result.status,headers});
++}
+diff --git a/lib/ai-runs/spec.ts b/lib/ai-runs/spec.ts
+new file mode 100644
+index 0000000..ba3b1da
+--- /dev/null
++++ b/lib/ai-runs/spec.ts
+@@ -0,0 +1,22 @@
++import { z } from "zod";
++import { ToolIntent,uuid } from "../ai-gateway/spec";
++
++const reference={run_id:uuid,expected_revision:z.number().int().min(0).max(64)};
++export const RunInput=z.discriminatedUnion("action",[
++  z.strictObject({action:z.literal("start"),question:z.string().trim().min(1).max(2000),collection_ids:z.array(uuid).max(10).optional()}),
++  z.strictObject({action:z.literal("inspect"),run_id:uuid}),
++  z.strictObject({action:z.literal("resume"),...reference}),
++  z.strictObject({action:z.literal("cancel"),...reference}),
++]);
++
++const nullableCode=z.string().regex(/^[A-Z_]{1,40}$/).nullable();
++export const RunState=z.strictObject({run_id:uuid,conversation_id:uuid,initial_request_id:uuid,
++  status:z.enum(["started","waiting_for_operator","completed","failed","cancelled","expired"]),
++  phase:z.enum(["idle","planning","ready","executing","terminal"]),revision:z.number().int().min(0).max(64),step:z.number().int().min(0).max(3),
++  created_at:z.number().int().nonnegative(),updated_at:z.number().int().nonnegative(),expires_at:z.number().int().nonnegative(),reason:nullableCode,
++  observations:z.array(z.strictObject({call_id:uuid,tool_name:z.enum(["get_integration_profiles","get_imports","inspect_import_job","get_reconciliation_report","search_supplier_knowledge"]),
++    status:z.enum(["ok","denied","unavailable","invalid","timeout","budget_exceeded"]),observed_at:z.iso.datetime({offset:true}),truncated:z.boolean(),error_code:nullableCode,item_count:z.number().int().min(0).max(100)})).max(3),
++  outcome:z.strictObject({kind:z.enum(["final","handoff"]),status:z.enum(["answered","abstained","human_action_required"]),handoff_reason:nullableCode}).nullable(),can_resume:z.boolean(),can_cancel:z.boolean(),
++}).refine(s=>s.can_cancel===["started","waiting_for_operator"].includes(s.status)&&s.can_resume===((s.status==="started"&&["idle","ready"].includes(s.phase))||(s.status==="waiting_for_operator"&&s.reason==="OUTCOME_UNKNOWN")));
++export const RunSnapshot=z.strictObject({state:RunState,collection_ids:z.array(uuid).max(10),pending_intent:ToolIntent.nullable(),lease_id:uuid.nullable(),known_job_ids:z.array(uuid).max(100)});
++export type Snapshot=z.infer<typeof RunSnapshot>;
+-- 
+2.51.0.windows.1
+

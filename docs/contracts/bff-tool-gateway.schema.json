@@ -78,7 +78,8 @@
             "agent_step",
             "documents_ingest",
             "documents_read",
-            "knowledge_search"
+            "knowledge_search",
+            "run_control"
           ]
         },
         "collection_ids": {
@@ -2301,6 +2302,421 @@
           }
         }
       }
+    },
+    "RunCommand": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "start"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "conversation_id": {
+              "type": "string",
+              "maxLength": 36,
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "collection_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 36,
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "maxItems": 10,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "action",
+            "question",
+            "conversation_id",
+            "collection_ids"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "inspect"
+            }
+          },
+          "required": [
+            "action"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "plan"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 64
+            }
+          },
+          "required": [
+            "action",
+            "expected_revision"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "claim"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 64
+            }
+          },
+          "required": [
+            "action",
+            "expected_revision"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "record"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 64
+            },
+            "lease_id": {
+              "type": "string",
+              "maxLength": 36,
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "observation": {
+              "$ref": "#/$defs/ToolResult"
+            }
+          },
+          "required": [
+            "action",
+            "expected_revision",
+            "lease_id",
+            "observation"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "recover"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 64
+            }
+          },
+          "required": [
+            "action",
+            "expected_revision"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "cancel"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 64
+            }
+          },
+          "required": [
+            "action",
+            "expected_revision"
+          ]
+        }
+      ]
+    },
+    "RunState": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "maxLength": 36,
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "conversation_id": {
+          "type": "string",
+          "maxLength": 36,
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "initial_request_id": {
+          "type": "string",
+          "maxLength": 36,
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "status": {
+          "enum": [
+            "started",
+            "waiting_for_operator",
+            "completed",
+            "failed",
+            "cancelled",
+            "expired"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "idle",
+            "planning",
+            "ready",
+            "executing",
+            "terminal"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 64
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "created_at": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "updated_at": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expires_at": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 40,
+          "pattern": "^[A-Z_]+$"
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "call_id": {
+                "type": "string",
+                "maxLength": 36,
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "tool_name": {
+                "enum": [
+                  "get_integration_profiles",
+                  "get_imports",
+                  "inspect_import_job",
+                  "get_reconciliation_report",
+                  "search_supplier_knowledge"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "ok",
+                  "denied",
+                  "unavailable",
+                  "invalid",
+                  "timeout",
+                  "budget_exceeded"
+                ]
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time",
+                "maxLength": 35
+              },
+              "truncated": {
+                "type": "boolean"
+              },
+              "error_code": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 40,
+                "pattern": "^[A-Z_]+$"
+              },
+              "item_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "call_id",
+              "tool_name",
+              "status",
+              "observed_at",
+              "truncated",
+              "error_code",
+              "item_count"
+            ]
+          },
+          "maxItems": 3
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "final",
+                    "handoff"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "answered",
+                    "abstained",
+                    "human_action_required"
+                  ]
+                },
+                "handoff_reason": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "maxLength": 40,
+                  "pattern": "^[A-Z_]+$"
+                }
+              },
+              "required": [
+                "kind",
+                "status",
+                "handoff_reason"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "can_resume": {
+          "type": "boolean"
+        },
+        "can_cancel": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "run_id",
+        "conversation_id",
+        "initial_request_id",
+        "status",
+        "phase",
+        "revision",
+        "step",
+        "created_at",
+        "updated_at",
+        "expires_at",
+        "reason",
+        "observations",
+        "outcome",
+        "can_resume",
+        "can_cancel"
+      ]
+    },
+    "RunSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/RunState"
+        },
+        "collection_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 36,
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "pending_intent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolIntent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lease_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 36,
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "known_job_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 36,
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "state",
+        "collection_ids",
+        "pending_intent",
+        "lease_id",
+        "known_job_ids"
+      ]
     }
   }
 }

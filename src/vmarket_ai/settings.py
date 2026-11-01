@@ -38,6 +38,7 @@ class Settings(BaseSettings):
     qa_enabled: bool = False
     mapping_enabled: bool = False
     agent_enabled: bool = False
+    runs_enabled: bool = False
     gateway_public_keys: dict[str, str] = Field(default_factory=dict, repr=False)
     qa_embedding_mode: Literal["fake", "local"] = "fake"
     qa_model_bundle: Path | None = None
@@ -47,6 +48,14 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def boundaries(self) -> Self:
+        if self.runs_enabled and (
+            self.mode != "integrated"
+            or not self.agent_enabled
+            or make_url(self.database_url.get_secret_value()).drivername != "postgresql+psycopg"
+        ):
+            raise ValueError(
+                "Durable runs require the integrated signed gateway and dedicated AI PostgreSQL"
+            )
         if self.provider_mode == "local" and self.private_container:
             raise ValueError("Local Ollama mode requires host loopback runtime")
         if self.mapping_enabled and self.provider_mode == "live":

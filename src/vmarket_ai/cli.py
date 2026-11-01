@@ -33,8 +33,10 @@ async def fake_check() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Local AI foundation; integrated mode disabled")
-    parser.add_argument("action", choices=["serve", "migrate", "fake-check"])
+    parser = argparse.ArgumentParser(
+        description="Local AI service and isolated storage maintenance"
+    )
+    parser.add_argument("action", choices=["serve", "migrate", "fake-check", "runs-maintain"])
     args = parser.parse_args()
     configure_logging()
     try:
@@ -49,6 +51,27 @@ def main() -> None:
             print('{"event":"migration_complete","scope":"AI-owned database"}')
         elif args.action == "fake-check":
             asyncio.run(fake_check())
+        elif args.action == "runs-maintain":
+            from vmarket_ai.database import create_db_engine
+            from vmarket_ai.runs.store import RunStore
+
+            if settings.migration_database_url is None:
+                raise ConfigurationError(
+                    "Run maintenance requires the explicit AI owner credential"
+                )
+            engine = create_db_engine(settings, migration=True)
+            try:
+                print(
+                    json.dumps(
+                        {
+                            "event": "runs_maintenance",
+                            "scope": "AI-owned database",
+                            **RunStore(engine).maintain(),
+                        }
+                    )
+                )
+            finally:
+                engine.dispose()
         else:
             uvicorn.run(
                 "vmarket_ai.app:create_app",

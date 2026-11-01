@@ -110,6 +110,33 @@ def install(
             raise GatewayError("ACCESS_DENIED", 403)
         return {"collection_ids": list(map(str, DEMO_COLLECTIONS)), "deadline_at": None}
 
+    if config.runs_enabled:
+        from pydantic import ValidationError
+
+        from vmarket_ai.runs.service import RunService
+        from vmarket_ai.runs.spec import RunCommand
+        from vmarket_ai.runs.store import RunStore
+
+        runs = RunService(RunStore(engine), agent)
+
+        @app.post("/ai/runs/control")
+        async def control_run(request: Request) -> dict[str, Any]:
+            claims = await context(request, "run_control")
+            try:
+                command = RunCommand.model_validate(strict_json(await request.body()))
+            except ValidationError:
+                raise GatewayError("INPUT_INVALID", 400) from None
+            deadline = min(
+                time.time() + config.request_deadline_seconds,
+                datetime.fromisoformat(claims["deadline_at"].replace("Z", "+00:00")).timestamp(),
+            )
+            try:
+                return await pending(
+                    request, runs.execute(command, claims, deadline), max(0, deadline - time.time())
+                )
+            except TimeoutError:
+                raise GatewayError("DEADLINE_EXCEEDED", 504) from None
+
     if config.mode == "integrated" and config.mapping_enabled:
         from pydantic import ValidationError
 

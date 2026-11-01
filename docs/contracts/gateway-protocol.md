@@ -1,5 +1,12 @@
 # Internal gateway protocol v1 — design contract
 
+P11 extension: signed `/ai/runs/control` uses `run_control` and the closed
+RunCommand/RunSnapshot schemas. Its browser surface is the separate BFF
+start/inspect/resume/cancel API; [durable semantics](../runs.md) and
+[SQL-controller decision](../adr/0007-durable-read-controller.md) define revision,
+lease, current-auth, unknown-outcome and retention checks. This changes no Java
+business contract and adds no mutation tool to ToolIntent.
+
 Status: P09 implements signed agent-step/knowledge and the request-bound read-only BFF executor. P10 adds signed mapping drafts; see [runtime and limits](../gateway.md) and [mapping transport decision](../adr/0006-signed-mapping-snapshots.md). Other proposed operations remain disabled/design-only. Schemas: [OpenAPI](openapi.yaml), [gateway envelope](bff-tool-gateway.schema.json). JSON Schema checks syntax only; semantic/security enforcement requires runtime tests. Requirement trace: FR03, FR09–FR15, NFR01–NFR06/NFR09; invariants I01–I10.
 
 ## Entry and identity
