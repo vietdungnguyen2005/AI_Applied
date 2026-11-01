@@ -2,7 +2,7 @@
 
 Source of requirements: [saved prompt package](implementation-prompts.md). Date: 2026-10-31. Execution is sequential with evidence and acceptance gates. No phase is complete merely because its documentation exists.
 
-Progress update: 2026-11-02 Asia/Bangkok, through P12 UI/signed-source implementation, browser QA and labelled local-model functional check. Full P12 local integration is pending Docker recovery; P11 actual restart evidence remains historical. P06's test split is now consumed; later phases must distinguish regression reuse from fresh unseen evaluation.
+Progress update: 2026-11-02 Asia/Bangkok, through P12 UI/signed-source implementation and actual local Java/BFF/PG/E5/Ollama browser acceptance after Docker recovery. P06's test split is now consumed; later phases must distinguish regression reuse from fresh unseen evaluation.
 
 Implementation owner: coding agent; acceptance owner: repository owner. Real stakeholder feedback and human labels must be supplied or explicitly labeled simulation/developer review. Fake provider tests prove deterministic plumbing, never real model quality.
 
@@ -20,7 +20,7 @@ Implementation owner: coding agent; acceptance owner: repository owner. Real sta
 | P09 | P02,P03,P07,P08 | Mock tools and feature-OFF real BFF gateway with per-action auth tests | Agent / owner | Technical standalone/integrated local read-only delivery verified with real disposable OPERATOR/auth and unchanged business snapshots; Project2 local commit + reviewable patch, flags OFF, no deploy; quality/human gates pending; see evidence/P09.md |
 | P10 | P08–P09 | Explicit human profile/preview/confirm handoff, DB invariant tests | Agent / owner | Technical implementation verified: signed current-profile draft, explicit edit/create inactive/activate, real CP932/UTF-8 browser journeys, lost202 recovery, completed replay and rejection DB invariants; independent human/UAT/quality gates pending; see evidence/P10b.md |
 | P11 | P09–P10 | Durable bounded state and actual restart/resume tests | Agent | Technical delivery verified: owner-bound SQL checkpoints, revision/lease fencing, explicit uncertain-read recovery, current authorization, TTL/owner retention, real process restarts and no redispatch; see evidence/P11.md. UI remains P12; human/model-quality gates pending |
-| P12 | P07–P11 | Flagged operator panel, browser QA and manual fallback | Agent | Implemented default-OFF: grounded QA/current source dialog, bounded read-only conversation, live tool observations and human handoff; browser and local-model fixture checks passed. Full current Java/PG/E5 integration blocked by Docker startup. See evidence/P12.md; human acceptance pending |
+| P12 | P07–P11 | Flagged operator panel, browser QA and manual fallback | Agent | Technical delivery verified default-OFF: grounded QA/current source dialog, bounded read-only conversation, live tool observations and human handoff; mocked browser faults and actual Java/BFF/PG/E5/Ollama browser checks passed. Revoked-source404 and unchanged 11 business tables verified. See evidence/P12.md; independent human/model-quality acceptance pending |
 | P13 | P04–P12 | Frozen held-out metrics, ablations, raw outputs, failure analysis | Agent / human review | NOT STARTED |
 | P14 | P09–P13 | Security negatives, both repo regressions, dependency remediation | Agent / owner | NOT STARTED; R08 open |
 | P15 | P14 | Reproducible standalone/integrated local modes, budgets, CI/drills | Agent | NOT STARTED |

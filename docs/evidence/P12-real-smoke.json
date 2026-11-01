@@ -1,0 +1,319 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [
+    {
+      "path": "runs",
+      "http": 200,
+      "request_id": "ea3e04af-d781-42ac-8447-0f66ddc8f454",
+      "response": {
+        "run": {
+          "run_id": "326ef80e-da24-4a41-b651-c95a2fa5f82e",
+          "conversation_id": "66efdfc0-09bb-45ed-a074-a953fdd343cf",
+          "initial_request_id": "ea3e04af-d781-42ac-8447-0f66ddc8f454",
+          "status": "started",
+          "phase": "idle",
+          "revision": 0,
+          "step": 0,
+          "created_at": 1793561867,
+          "updated_at": 1793561867,
+          "expires_at": 1793562467,
+          "reason": null,
+          "observations": [],
+          "outcome": null,
+          "can_resume": true,
+          "can_cancel": true
+        },
+        "observations": []
+      }
+    },
+    {
+      "path": "runs",
+      "http": 200,
+      "request_id": "73c76b66-3e48-4d4c-bc57-8f95c2526d02",
+      "response": {
+        "run": {
+          "run_id": "326ef80e-da24-4a41-b651-c95a2fa5f82e",
+          "conversation_id": "66efdfc0-09bb-45ed-a074-a953fdd343cf",
+          "initial_request_id": "ea3e04af-d781-42ac-8447-0f66ddc8f454",
+          "status": "completed",
+          "phase": "terminal",
+          "revision": 6,
+          "step": 1,
+          "created_at": 1793561867,
+          "updated_at": 1793561870,
+          "expires_at": 1793562467,
+          "reason": null,
+          "observations": [
+            {
+              "call_id": "786b3c3c-4bea-4e37-bf7e-9c77c59a970f",
+              "tool_name": "get_imports",
+              "status": "ok",
+              "observed_at": "2026-11-01T19:37:49.524Z",
+              "truncated": false,
+              "error_code": null,
+              "item_count": 0
+            }
+          ],
+          "outcome": {
+            "kind": "final",
+            "status": "answered",
+            "handoff_reason": null
+          },
+          "can_resume": false,
+          "can_cancel": false
+        },
+        "observations": [
+          {
+            "call_id": "786b3c3c-4bea-4e37-bf7e-9c77c59a970f",
+            "tool_name": "get_imports",
+            "observed_at": "2026-11-01T19:37:49.524Z",
+            "truncated": false,
+            "data": {
+              "imports": []
+            },
+            "status": "ok",
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "path": "runs",
+      "http": 200,
+      "request_id": "c8a3de81-0fd5-4554-8131-fce06f25d82b",
+      "response": {
+        "run": {
+          "run_id": "326ef80e-da24-4a41-b651-c95a2fa5f82e",
+          "conversation_id": "66efdfc0-09bb-45ed-a074-a953fdd343cf",
+          "initial_request_id": "ea3e04af-d781-42ac-8447-0f66ddc8f454",
+          "status": "completed",
+          "phase": "terminal",
+          "revision": 6,
+          "step": 1,
+          "created_at": 1793561867,
+          "updated_at": 1793561870,
+          "expires_at": 1793562467,
+          "reason": null,
+          "observations": [
+            {
+              "call_id": "786b3c3c-4bea-4e37-bf7e-9c77c59a970f",
+              "tool_name": "get_imports",
+              "status": "ok",
+              "observed_at": "2026-11-01T19:37:49.524Z",
+              "truncated": false,
+              "error_code": null,
+              "item_count": 0
+            }
+          ],
+          "outcome": {
+            "kind": "final",
+            "status": "answered",
+            "handoff_reason": null
+          },
+          "can_resume": false,
+          "can_cancel": false
+        },
+        "observations": []
+      }
+    },
+    {
+      "path": "ask",
+      "http": 200,
+      "request_id": "b4868c5a-3ffa-4dad-89f7-96d061eb8ad2",
+      "response": {
+        "request_id": "b4868c5a-3ffa-4dad-89f7-96d061eb8ad2",
+        "status": "abstained",
+        "answer": null,
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "confidence": "unknown",
+        "provider_mode": "fake",
+        "citations": []
+      }
+    },
+    {
+      "path": "ask",
+      "http": 200,
+      "request_id": "b167ac1c-7a56-4c9d-baab-012b5256d8da",
+      "response": {
+        "request_id": "b167ac1c-7a56-4c9d-baab-012b5256d8da",
+        "status": "answered",
+        "answer": "Supplier B supplies UTF-8 original bytes.",
+        "reason": null,
+        "confidence": "low",
+        "provider_mode": "local",
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+            "chunk_id": "ea750761-3e06-5537-8847-33abcb221989",
+            "locator": {
+              "kind": "section",
+              "value": "encoding"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "citations/read",
+      "http": 200,
+      "request_id": "283a4ab6-3b9a-421d-9b92-d9613af18f83",
+      "response": {
+        "request_id": "283a4ab6-3b9a-421d-9b92-d9613af18f83",
+        "excerpt": "Supplier B supplies UTF-8 original bytes. Preserve the original file, declared encoding and line endings.",
+        "truncated": false,
+        "citation": {
+          "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+          "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+          "chunk_id": "ea750761-3e06-5537-8847-33abcb221989",
+          "locator": {
+            "kind": "section",
+            "value": "encoding"
+          }
+        }
+      }
+    },
+    {
+      "path": "ask",
+      "http": 400,
+      "request_id": "8eaf1438-b1b6-4a90-91ac-e58e81eebcc1",
+      "response": {
+        "code": "INPUT_INVALID"
+      }
+    },
+    {
+      "path": "citations/read",
+      "http": 404,
+      "request_id": "5a3163be-c6e9-4925-80cb-2fa7683cf71d",
+      "response": {
+        "code": "DOCUMENT_NOT_AVAILABLE"
+      }
+    },
+    {
+      "path": "citations/read",
+      "http": 404,
+      "request_id": "ea717907-8a79-4fa8-8cfb-3b347bf341dd",
+      "response": {
+        "code": "DOCUMENT_NOT_AVAILABLE"
+      }
+    }
+  ],
+  "next_build_id": "bCkKG3JiB8D_tbEB9CgH4",
+  "java_jar_sha256": "ff0e06e80e302ffe82b57384762c05f387566127dea8871e967bbb20ffbac0aa",
+  "no_java_or_signing_secrets_in_python_env": true,
+  "browser": {
+    "scope": "actual authenticated Java/BFF/Python/Ollama UI",
+    "passed": true,
+    "timestamp_utc": "2026-11-01T19:38:12.978862+00:00",
+    "browser": "143.0.7499.4",
+    "model": "qwen3.5:4b-q4_K_M",
+    "screenshots": [
+      "actual-current-source-desktop.png",
+      "actual-local-answer-desktop.png",
+      "actual-local-answer-mobile.png"
+    ]
+  },
+  "status": "PASS",
+  "timestamp_utc": "2026-11-01T19:38:14.421251+00:00",
+  "business_before": {
+    "product": [
+      8,
+      "2ae4aaa922ce9a33df59d24b193bbc69"
+    ],
+    "inventory_stock": [
+      8,
+      "beb416b9176b52b410fc2a8aefb75956"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "5bfd346304ec581bdc2e1134339745af"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_after": {
+    "product": [
+      8,
+      "2ae4aaa922ce9a33df59d24b193bbc69"
+    ],
+    "inventory_stock": [
+      8,
+      "beb416b9176b52b410fc2a8aefb75956"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "5bfd346304ec581bdc2e1134339745af"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_unchanged_11_tables": true,
+  "planner": "fake for durable read trace; local Qwen for grounded QA",
+  "model": "qwen3.5:4b-q4_K_M",
+  "embeddings": "pinned multilingual-e5-small CPU",
+  "scope": "synthetic functional acceptance only, not held-out quality evaluation",
+  "ai_commit": "ccff63c4ce30f8143d9930f61fbe7f943f28490a",
+  "project2_commit": "998c2ebf304aefd28b861cd34c9021cd4ebfb13e",
+  "local_model_digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04"
+}

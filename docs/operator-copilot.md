@@ -52,5 +52,7 @@ pending. Expiry, lost authority and account changes discard privileged UI state.
 
 This remains a shared synthetic OPERATOR demo over two fixed supplier collections.
 No production tenant isolation or general document administration is claimed.
-See [current executed evidence](evidence/P12.md); full local Java/PG/E5 browser
-acceptance is pending Docker recovery, with an opt-in reproducible runner prepared.
+See [current executed evidence](evidence/P12.md): actual local Java/BFF/PG/E5/Ollama
+integration and browser QA passed after Docker recovery. Source revocation returned
+the same 404 as an absent source; 11 business-table snapshots remained unchanged.
+This synthetic functional acceptance does not establish held-out model quality.
