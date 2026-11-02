@@ -61,6 +61,8 @@ def main(project2: Path, output: Path, *, qa=False, checks=None, container_image
     containers, processes, files, networks = [], [], [], []
     proxy = None
     report = {"mode": "disposable_local_integration", "external_provider_calls": 0, "checks": []}
+    report["source_commit"] = command(["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip()
+    report["project2_commit"] = command(["git", "rev-parse", "HEAD"], cwd=project2).decode().strip()
     report["next_build_id"] = (project2 / ".next/BUILD_ID").read_text(encoding="utf-8").strip()
     report["java_jar_sha256"] = hashlib.sha256(
         (project2 / "backend/target/v-market-backend-0.1.0-SNAPSHOT.jar").read_bytes()
