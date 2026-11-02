@@ -31,7 +31,7 @@ async def probe(base: str, count: int, concurrency: int, transport=None) -> dict
     sem = asyncio.Semaphore(concurrency)
     async with httpx.AsyncClient(
         base_url=base.rstrip("/"),
-        timeout=2,
+        timeout=3,
         trust_env=False,
         follow_redirects=False,
         transport=transport,
@@ -67,6 +67,7 @@ async def probe(base: str, count: int, concurrency: int, transport=None) -> dict
         "environment": {"platform": platform.platform(), "python": platform.python_version()},
         "requests": count,
         "concurrency": concurrency,
+        "request_timeout_seconds": 3,
         "duration_seconds": duration,
         "error_rate": sum(r["status"] != 200 for r in observations) / count,
         "correlation_coverage": sum(r["correlation_echo"] for r in observations) / count,

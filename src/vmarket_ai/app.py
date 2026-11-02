@@ -190,10 +190,19 @@ def create_app(
     def health() -> Health:
         return Health()
 
+    readiness_work: asyncio.Task[bool] | None = None
+
     @app.get("/ready", response_model=Readiness, responses={503: {"model": Readiness}})
-    def ready() -> JSONResponse:
+    async def ready() -> JSONResponse:
+        nonlocal readiness_work
+        # A stalled DB/DNS check must neither stall health responses nor spawn
+        # one waiting thread per request. Reuse the single in-flight probe.
+        if readiness_work is None or readiness_work.done():
+            readiness_work = asyncio.create_task(asyncio.to_thread(database_ready, database))
+        work = readiness_work
+        done, _ = await asyncio.wait({work}, timeout=1)
         try:
-            available = database_ready(database)
+            available = work.result() if work in done else False
         except SQLAlchemyError:
             available = False
         response = Readiness(
