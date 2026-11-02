@@ -24,7 +24,7 @@ def digest(content: bytes) -> str:
 
 
 def verify(directory: Path) -> None:
-    inputs, lock = verify_inputs()
+    inputs, lock = verify_inputs(require_original_planner=False)
     labels = scoring_labels(inputs)
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
     expected_files = {
@@ -54,14 +54,29 @@ def verify(directory: Path) -> None:
         )
         if historical != (DATASET / name).read_bytes().replace(b"\r\n", b"\n"):
             raise ValueError("Tool dataset differs from preregistration commit")
-    for name in (
-        "src/vmarket_ai/gateway/agent.py",
-        "src/vmarket_ai/gateway/wire.json",
-        "src/vmarket_ai/evaluation/tool_questions.py",
+    for name, key in (
+        ("src/vmarket_ai/gateway/agent.py", "agent_sha256_lf"),
+        ("src/vmarket_ai/gateway/wire.json", "wire_sha256_lf"),
     ):
         historical = subprocess.check_output(["git", "show", commit + ":" + name], cwd=ROOT)
-        if historical != (ROOT / name).read_bytes().replace(b"\r\n", b"\n"):
-            raise ValueError("Planner or scorer differs from preregistration commit")
+        if digest(historical) != lock[key]:
+            raise ValueError("Historical planner differs from preregistration lock")
+    scorer_name = "src/vmarket_ai/evaluation/tool_questions.py"
+    historical_scorer = subprocess.check_output(
+        ["git", "show", commit + ":" + scorer_name], cwd=ROOT
+    )
+
+    def scoring_nodes(source: bytes) -> list[str]:
+        nodes = ast.parse(source).body
+        return [
+            ast.dump(node, include_attributes=False)
+            for node in nodes
+            if not (isinstance(node, ast.FunctionDef) and node.name == "verify_inputs")
+            and not isinstance(node, ast.If)
+        ]
+
+    if scoring_nodes(historical_scorer) != scoring_nodes((ROOT / scorer_name).read_bytes()):
+        raise ValueError("Scorer differs from preregistration commit")
     source = subprocess.check_output(
         ["git", "show", commit + ":src/vmarket_ai/gateway/agent.py"], cwd=ROOT
     )

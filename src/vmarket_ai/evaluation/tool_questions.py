@@ -27,14 +27,16 @@ def read_rows(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
-def verify_inputs(directory: Path = DATASET) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def verify_inputs(
+    directory: Path = DATASET, *, require_original_planner: bool = True
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     lock = json.loads((directory / "lock.json").read_text(encoding="utf-8"))
     if set(lock["files_sha256"]) != {"inputs.jsonl", "labels.jsonl", "protocol.json"}:
         raise ValueError("Incomplete tool dataset")
     for name, expected in lock["files_sha256"].items():
         if sha(directory / name) != expected:
             raise ValueError("Frozen tool dataset changed")
-    if (
+    if require_original_planner and (
         sha(ROOT / "src/vmarket_ai/gateway/agent.py") != lock["agent_sha256_lf"]
         or sha(ROOT / "src/vmarket_ai/gateway/wire.json") != lock["wire_sha256_lf"]
     ):
@@ -169,7 +171,7 @@ def aggregate(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 if __name__ == "__main__":
-    inputs, _ = verify_inputs()
+    inputs, _ = verify_inputs(require_original_planner=False)
     print(
         json.dumps(
             {

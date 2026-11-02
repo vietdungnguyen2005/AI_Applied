@@ -11,7 +11,7 @@ from vmarket_ai.qa.backend import DEMO_COLLECTIONS
 
 
 def test_tool_questions_have_separate_provisional_labels():
-    inputs, lock = verify_inputs()
+    inputs, lock = verify_inputs(require_original_planner=False)
     assert len(inputs) == len(scoring_labels(inputs)) == lock["count"] == 11
     assert all(set(item) == {"id", "question", "scope", "split"} for item in inputs)
 
@@ -93,6 +93,49 @@ def test_archived_planner_review_template_is_blind_and_pending():
         for row in review
     )
     assert all("expected_kind" not in row and "response" not in row for row in review)
+
+
+def test_archive_survives_new_planner_but_fresh_run_rejects_it(monkeypatch):
+    root = Path(__file__).resolve().parents[1]
+    original_read_bytes = Path.read_bytes
+
+    def changed_planner(path):
+        data = original_read_bytes(path)
+        return data + b"\n# later planner change\n" if path.name == "agent.py" else data
+
+    monkeypatch.setattr(
+        Path,
+        "read_bytes",
+        changed_planner,
+    )
+    with pytest.raises(ValueError, match="Planner implementation"):
+        verify_inputs()
+    spec = importlib.util.spec_from_file_location(
+        "p13_archive_historical_planner", root / "tools/p13_tool_verify.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    module.verify(root / "evals/p13/runs/tool-questions-v1")
+
+
+def test_archive_rejects_modified_historical_planner(monkeypatch):
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location(
+        "p13_archive_tampered_history", root / "tools/p13_tool_verify.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    original = module.subprocess.check_output
+
+    def modified_history(args, **kwargs):
+        result = original(args, **kwargs)
+        return result + b"\n# altered history\n" if args[-1].endswith("/agent.py") else result
+
+    monkeypatch.setattr(module.subprocess, "check_output", modified_history)
+    with pytest.raises(ValueError, match="Historical planner differs"):
+        module.verify(root / "evals/p13/runs/tool-questions-v1")
 
 
 def test_archived_planner_verifier_rejects_missing_case_after_hash_rewrite(tmp_path):

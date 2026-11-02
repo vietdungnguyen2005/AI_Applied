@@ -61,3 +61,10 @@ The [independent review packet](REVIEW.md) is still blank.
 evals/p13/runs/tool-questions-v1` verifies the frozen protocol/source/model digest,
 all 22 journaled case/method identities, scores, summary and artifact hashes
 without running a model or executing a tool.
+Historical verification checks the planner and wire schema from the recorded Git
+commit against the preregistration lock, rather than requiring today's planner to
+remain unchanged. It also compares the scoring module's historical syntax tree
+with the current scorer, excluding only input validation and the command-line
+entry point. A fresh model run still requires the original planner and wire schema;
+a changed planner needs a separately versioned experiment. This preserves the
+meaning of the archived result without blocking later implementation work.
