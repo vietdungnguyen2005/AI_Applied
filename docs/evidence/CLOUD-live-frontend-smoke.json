@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-02T17:40:12.190Z",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "html": true
+    },
+    {
+      "path": "/ops",
+      "status": 200,
+      "html": true
+    },
+    {
+      "path": "/api/catalog/products",
+      "status": 200,
+      "html": false,
+      "productCount": 8
+    },
+    {
+      "path": "/api/auth/session",
+      "status": 200,
+      "html": false,
+      "body": {
+        "username": "",
+        "roles": [],
+        "authenticated": false
+      }
+    },
+    {
+      "path": "/api/ops/ai/ask",
+      "status": 401,
+      "body": {
+        "code": "SESSION_EXPIRED"
+      }
+    },
+    {
+      "path": "/api/ops/ai/agent",
+      "status": 400,
+      "body": {
+        "code": "INPUT_INVALID"
+      }
+    },
+    {
+      "path": "/api/ops/ai/mapping/suggest",
+      "status": 503,
+      "body": {
+        "code": "AI_DISABLED"
+      }
+    },
+    {
+      "path": "/api/ops/ai/runs",
+      "status": 503,
+      "body": {
+        "code": "AI_DISABLED"
+      }
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "date": "2026-11-02T17:39:48.594Z",
+  "origin": "https://vmarket-ai-applied.vmarket-vietdung2005.workers.dev",
+  "checks": [
+    {
+      "path": "/health",
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    {
+      "path": "/ready",
+      "status": 200,
+      "body": {
+        "status": "ready"
+      }
+    },
+    {
+      "path": "unsigned",
+      "status": 401,
+      "body": {
+        "code": "ACCESS_DENIED"
+      }
+    },
+    {
+      "path": "ask",
+      "status": 200,
+      "body": {
+        "request_id": "fcb756af-168c-424d-958f-df4bee448c9f",
+        "status": "answered",
+        "answer": "A draft is not approval. A human uses the existing authenticated OPERATOR workflow. Preview receipts expire after 600 seconds. 提案は承認ではありません。",
+        "reason": null,
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "version_id": "9d3918c2-078d-5f79-90d6-89282bb4430c",
+            "chunk_id": "5af203c0-dd40-50da-843e-3a10e33eaa03",
+            "locator": {
+              "kind": "section",
+              "value": "approval"
+            },
+            "source_url": "/ai/citations/5af203c0-dd40-50da-843e-3a10e33eaa03"
+          }
+        ],
+        "confidence": "low",
+        "provider_mode": "live"
+      }
+    },
+    {
+      "path": "replay",
+      "status": 409,
+      "body": {
+        "code": "STEP_CONFLICT"
+      }
+    },
+    {
+      "path": "citation",
+      "status": 200,
+      "body": {
+        "request_id": "2dd4d1fa-672c-48b6-b9c0-ba3876901ed6",
+        "citation": {
+          "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+          "version_id": "9d3918c2-078d-5f79-90d6-89282bb4430c",
+          "chunk_id": "5af203c0-dd40-50da-843e-3a10e33eaa03",
+          "locator": {
+            "kind": "section",
+            "value": "approval"
+          },
+          "source_url": "/ai/citations/5af203c0-dd40-50da-843e-3a10e33eaa03"
+        },
+        "excerpt": "A draft is not approval. A human uses the existing authenticated OPERATOR workflow. Preview receipts expire after 600 seconds. 提案は承認ではありません。",
+        "truncated": false
+      }
+    },
+    {
+      "path": "regression",
+      "question": "Which encoding does Supplier B provide?",
+      "status": 200,
+      "ms": 798,
+      "body": {
+        "request_id": "5be6a0ab-f85a-4739-bb6e-0903035d52a3",
+        "status": "answered",
+        "answer": "Supplier B supplies UTF-8 original bytes. Preserve the original file, declared encoding and line endings.",
+        "reason": null,
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "version_id": "9d3918c2-078d-5f79-90d6-89282bb4430c",
+            "chunk_id": "1ecefd0c-eda3-5c3b-bb71-d8d968462a2f",
+            "locator": {
+              "kind": "section",
+              "value": "encoding"
+            },
+            "source_url": "/ai/citations/1ecefd0c-eda3-5c3b-bb71-d8d968462a2f"
+          }
+        ],
+        "confidence": "low",
+        "provider_mode": "live"
+      }
+    },
+    {
+      "path": "regression",
+      "question": "When are correction notices due?",
+      "status": 200,
+      "ms": 1249,
+      "body": {
+        "request_id": "5431e55e-a726-4b59-ae45-0b22706d119e",
+        "status": "abstained",
+        "answer": null,
+        "reason": "CONFLICTING_EVIDENCE",
+        "citations": [],
+        "confidence": "unknown",
+        "provider_mode": "live"
+      }
+    },
+    {
+      "path": "regression",
+      "question": "What is the current price of gold?",
+      "status": 200,
+      "ms": 744,
+      "body": {
+        "request_id": "08a8ef91-e9b5-433d-97cf-d0d2ef3ac058",
+        "status": "abstained",
+        "answer": null,
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "citations": [],
+        "confidence": "unknown",
+        "provider_mode": "live"
+      }
+    }
+  ]
+}

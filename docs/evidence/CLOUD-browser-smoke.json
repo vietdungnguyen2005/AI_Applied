@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "page": "storefront",
+      "viewport": "desktop",
+      "status": 200,
+      "title": "V-Market | Next-Gen Multi-Vendor Commerce"
+    },
+    {
+      "page": "operator",
+      "viewport": "desktop",
+      "status": 200,
+      "sign_in_required": true,
+      "login_enabled": true,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "storefront",
+      "viewport": "mobile",
+      "status": 200,
+      "title": "V-Market | Next-Gen Multi-Vendor Commerce"
+    },
+    {
+      "page": "operator",
+      "viewport": "mobile",
+      "status": 200,
+      "sign_in_required": true,
+      "login_enabled": true,
+      "horizontal_overflow": false
+    }
+  ],
+  "page_errors": []
+}
