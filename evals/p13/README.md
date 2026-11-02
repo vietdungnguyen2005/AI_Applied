@@ -177,6 +177,13 @@ passed and none were skipped. Raw JUnit and per-case results are retained in
 `runs/security-workflow-v1`. These are software gate regressions, not independent
 held-out task quality or end-to-end Java authorization measurements.
 
+An [exploratory rerank comparison](../../docs/evidence/P13-rerank.md) reorders all
+60 retained P06 dev/test candidate lists using a fixed character-bigram rule.
+Dense/hybrid dev MRR@5 decreased from 0.9375 to 0.8375; test MRR@5 and full-pool
+Recall@5 were unchanged. All 120 rankings are retained. This post-hoc analysis
+does not replace prospective independently reviewed ablations; production keeps
+`reranker=none`.
+
 To reproduce operationally, start the existing local Ollama 4B model and Docker,
 prepare the Project2 production build/JAR, then run in a clean committed checkout:
 

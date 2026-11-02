@@ -1,0 +1,4846 @@
+{
+  "observations": [
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.2,
+          "ndcg": 0.38685280723454163
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.2,
+          "ndcg": 0.38685280723454163
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-approval-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "104e18ee-0492-5540-980d-7715dc39d5fa"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "104e18ee-0492-5540-980d-7715dc39d5fa"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "104e18ee-0492-5540-980d-7715dc39d5fa"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "104e18ee-0492-5540-980d-7715dc39d5fa"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-a-pending-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714574
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-approval-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "ea750761-3e06-5537-8847-33abcb221989"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "dev",
+      "query_id": "qa-b-pending-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "bde73bd1-cdf3-5968-a794-b2977cd817a4",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-conflict-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-conflict-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-conflict-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-conflict-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-conflict-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-conflict-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-escalation-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-escalation-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-escalation-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-escalation-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-escalation-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-escalation-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-unknown-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-unknown-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-unknown-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "4ba224df-5678-5e8e-bb32-696d20e92666"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-unknown-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "548b5f8d-426f-568f-8b50-2795854a2111"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-unknown-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-unknown-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "90a020bb-7dce-5c23-986d-f98234015918",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "548b5f8d-426f-568f-8b50-2795854a2111"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-denied-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-denied-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-denied-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-denied-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-denied-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-denied-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-freshness-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-freshness-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "3": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        "5": {
+          "hit": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-freshness-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-freshness-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-freshness-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-freshness-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "3fe39332-c5ab-5fda-8cfb-3ff260de632c",
+        "104e18ee-0492-5540-980d-7715dc39d5fa",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fdba81cf-28f3-5d3e-80ba-d8126193a029"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-injection-ja",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-injection-ja",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-injection-ja",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-injection-ja",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-injection-ja",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-a-injection-ja",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "548b5f8d-426f-568f-8b50-2795854a2111",
+        "a5a3a970-3aa3-5c49-9a6c-f4634ecaacd8",
+        "fa3e3ace-93cc-5965-827b-1982aa45af3f",
+        "4ba224df-5678-5e8e-bb32-696d20e92666",
+        "8a134037-6647-5f86-8418-08f1b82ba3bc"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-conflict-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-conflict-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-conflict-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-conflict-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-conflict-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-conflict-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-escalation-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-escalation-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-escalation-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-escalation-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "ea750761-3e06-5537-8847-33abcb221989"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-escalation-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-escalation-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "5e6240ab-e717-599d-aadd-ed1a7d4be32d",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "ea750761-3e06-5537-8847-33abcb221989"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-unknown-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "ea750761-3e06-5537-8847-33abcb221989"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-unknown-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-unknown-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-unknown-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-unknown-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-unknown-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-denied-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-denied-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-denied-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-denied-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-denied-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-denied-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [],
+      "metrics": {
+        "1": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "3": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        },
+        "5": {
+          "hit": null,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-freshness-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-freshness-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-freshness-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "ea750761-3e06-5537-8847-33abcb221989",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-freshness-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "ea750761-3e06-5537-8847-33abcb221989"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-freshness-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "ea750761-3e06-5537-8847-33abcb221989"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-freshness-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c",
+        "decb543a-d690-5cac-ab9e-88a3ad431c25",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "ea750761-3e06-5537-8847-33abcb221989"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-injection-en",
+      "method": "lexical",
+      "reranker": "none",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-injection-en",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-injection-en",
+      "method": "dense",
+      "reranker": "none",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-injection-en",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-injection-en",
+      "method": "hybrid",
+      "reranker": "none",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    },
+    {
+      "partition": "test",
+      "query_id": "qa-b-injection-en",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "ranked": [
+        "cd3d967d-35be-5ed5-aa07-b86663336fcb",
+        "83f70e76-b5ff-532a-add7-73d793a2cf3b",
+        "4f741e14-4625-5293-8b9f-4ef47ca47236",
+        "9807b4ff-6677-5f38-b358-fbaefa0a943b",
+        "4d9babb9-6453-52f3-89fb-59ed9e9a479c"
+      ],
+      "metrics": {
+        "1": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "3": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        "5": {
+          "hit": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      }
+    }
+  ],
+  "summary": [
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.75,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.75,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.75,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.8125,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.8288662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.8375,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.8772228201007499,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 3,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.9375,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.9538662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.9375,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "dense",
+      "reranker": "none",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.9538662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.75,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.75,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.75,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.8125,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.8288662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.8375,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.8772228201007499,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 3,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.9375,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.9538662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.9375,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.9538662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.5,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.5,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.5,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.5625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.5788662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.5625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.5788662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.5,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.5,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.5,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 3,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.5625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.5788662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 5,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.5625,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "dev",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.5788662191964322,
+      "scored_cases": 8,
+      "all_cases": 8
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 1,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 3,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 3,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 5,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "dense",
+      "reranker": "none",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.875,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 1,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 3,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 3,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "metric": "recall",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "metric": "mrr",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 1.0,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.5625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "bigram_jaccard",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 1,
+      "metric": "recall",
+      "value": 0.5625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 1,
+      "metric": "mrr",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 1,
+      "metric": "ndcg",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 3,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 3,
+      "metric": "mrr",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 3,
+      "metric": "ndcg",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 5,
+      "metric": "recall",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 5,
+      "metric": "mrr",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    },
+    {
+      "partition": "test",
+      "method": "lexical",
+      "reranker": "none",
+      "k": 5,
+      "metric": "ndcg",
+      "value": 0.625,
+      "scored_cases": 8,
+      "all_cases": 12
+    }
+  ]
+}

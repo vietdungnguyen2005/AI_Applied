@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 
 
@@ -40,3 +41,21 @@ def test_reranking_changes_mrr_but_not_full_pool_recall():
     observations, _ = module.evaluate([row], gold)
     assert [r["metrics"]["5"]["recall"] for r in observations] == [1.0, 1.0]
     assert [r["metrics"]["5"]["mrr"] for r in observations] == [0.5, 1.0]
+
+
+def test_archived_rerank_recomputes_all_observations():
+    root = Path(__file__).resolve().parents[1]
+
+    def read(path):
+        return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+    predictions = [
+        row
+        for part in ("dev", "test")
+        for row in read(root / f"evals/retrieval/runs/{part}-v1/predictions.jsonl")
+    ]
+    gold = {r["query_id"]: r for r in read(root / "evals/retrieval/gold/v1.jsonl")}
+    observations, summary = reporter().evaluate(predictions, gold)
+    archived = json.loads((root / "evals/p13/runs/rerank-exploratory-v1/report.json").read_text())
+    assert len(predictions) == 60 and len(observations) == 120
+    assert archived == {"observations": observations, "summary": summary}

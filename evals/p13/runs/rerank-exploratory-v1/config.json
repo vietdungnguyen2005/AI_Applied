@@ -1,0 +1,13 @@
+{
+  "source_commit": "3ffed9adf6cf7091dc5fb79b19861a1315fb2b50",
+  "design": "post-hoc exploratory regression; previously inspected P06 data and provisional labels",
+  "algorithm": "NFC casefold alphanumeric character bigram set Jaccard; stable descending; top-five pool only",
+  "model_calls": 0,
+  "new_retrieval_calls": 0,
+  "independent_review": "pending",
+  "input_sha256_lf": {
+    "evals/retrieval/runs/dev-v1/predictions.jsonl": "55936414dcc5ee882ce40c8cc1d7b49f2187fbf81cbaad6cfa50da13d038c249",
+    "evals/retrieval/runs/test-v1/predictions.jsonl": "4a814cf6b5019dac4356387c134fbbf5690b052ba499a47f4d0d1ec2e2f0e51c",
+    "evals/retrieval/gold/v1.jsonl": "455573eff101387ff38e414fdda4ff21188d97376fee98fedc5a0410286def31"
+  }
+}
