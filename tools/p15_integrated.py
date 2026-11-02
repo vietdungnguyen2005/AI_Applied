@@ -1,7 +1,6 @@
 """Docker AI gateway + Docker storage + current host Java/Next, fake provider only."""
 
 import argparse
-import json
 from contextlib import closing
 from pathlib import Path
 from uuid import uuid4
@@ -54,7 +53,9 @@ def exercise(*, operator_login, report, snapshot, sql_connect, stop_ai, restart_
         durable_restart_preserved=True,
         observed_import_count=0,
         external_provider_calls=0,
-        scope="actual local Docker AI/PG plus host Java/BFF; fake planner, no semantic model quality",
+        scope=(
+            "actual local Docker AI/PG plus host Java/BFF; fake planner, no semantic model quality"
+        ),
     )
 
 
