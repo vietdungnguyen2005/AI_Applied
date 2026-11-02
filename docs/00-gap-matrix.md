@@ -1,5 +1,8 @@
 # P00 — Skills and evidence gaps
 
+Historical P00 snapshot. For current delivered capabilities and remaining gaps,
+read [P16 honesty report](delivery/honesty-report.md) and [roadmap](roadmap.md).
+
 Existing Project2 evidence belongs to Project2; it cannot be attributed to the future AI service. All rows below describe remaining work, not delivered capability.
 
 | Skill | Deliverable / phase | Evidence required | Current status |

@@ -1,5 +1,9 @@
 # P01 — Fictional customer discovery and acceptance package
 
+This is the preserved P01 planning snapshot. Current execution/acceptance and
+remaining gaps are in the [P16 delivery pack](../delivery/README.md); planned
+criteria here are not automatically converted into customer approval.
+
 Date: 2026-10-31, Asia/Bangkok. Status: proposed delivery scope, not customer sign-off or implemented AI capability. This is a synthetic portfolio case for one shared Japanese retail store. No real customer, supplier interview, paid engagement or measured productivity gain is represented.
 
 Read in order:

@@ -1,8 +1,19 @@
 # V-Market AI Operations Copilot
 
-Local, offline-first Python service for a fictional Japanese retailer using synthetic suppliers. **Implementation through P12 includes extractive Q&A, signed source reads, operator UI, human mapping/profile/preview/confirm handoff and durable read-only runs.** P12 browser and actual local Java/BFF/PostgreSQL/E5/Ollama integration checks passed, including current-source revocation and an unchanged 11-table business snapshot. Model-quality evaluation and independent human acceptance remain partial. No production deployment or real customer outcome is claimed.
+Local, offline-first AI Operations Copilot for a **fictional Japanese retailer and synthetic suppliers**. Technical implementation and evidence through P16 include extractive QA, signed read-only tools, operator mapping/profile/preview/confirm handoff, durable runs, local Docker/outage drills and an English delivery pack. **Independent quality/customer acceptance remains partial:** the original mapping test achieved AI2/10 exact versus rules0/10. No production deployment, paid client, autonomous import or observed productivity ROI is claimed.
 
-Default service exposes only `/health`, `/ready` and `/openapi.json`. P07 adds [opt-in host-loopback ask/citation routes](docs/qa.md). Future contracts are in [architecture](docs/architecture.md), and are separate from the runtime OpenAPI. Integrated mode fails closed until the authenticated BFF gateway is implemented.
+[Start the reviewer path](docs/delivery/technical-handoff.md#fresh-reviewer-path): fresh clone → fake mode → tests → retained evaluation → integrated local demo. Read the [delivery pack](docs/delivery/README.md), [actual UAT](docs/delivery/uat-and-acceptance.md), [honesty report](docs/delivery/honesty-report.md), [operations](docs/operations.md) and [runbooks](docs/runbooks.md).
+
+```mermaid
+flowchart LR
+  Browser[Operator browser] --> BFF[Signed Next BFF]
+  BFF --> Java[Java authorization / business workflow]
+  BFF --> AI[Python read-only AI]
+  AI --> Store[(Separate AI storage)]
+  AI --> Local[Optional loopback Qwen / CPU E5]
+```
+
+Default service exposes only `/health`, `/ready` and `/openapi.json`. Optional [host-loopback QA](docs/qa.md) and [signed integration](docs/gateway.md) are explicit modes. The fake-only private Docker gateway requires trusted signing keys and exposes no unsigned business routes. Java remains authoritative for all business changes.
 
 ## Quickstart: fake mode, no API key
 
@@ -40,7 +51,7 @@ python -m uv run --frozen pytest -q
 python -m uv run --frozen python tools/validate_contracts.py
 ```
 
-On systems with Make, `make install lint typecheck test contracts` runs the equivalents. Default pytest skips seven explicit PostgreSQL tests; provider tests use HTTPX mocks and block non-loopback sockets. Fake embedding vectors prove deterministic plumbing only, not semantic retrieval quality. A Starlette compatibility deprecation for HTTPX TestClient is currently visible, not hidden. For the recorded clean Windows environment and NumPy setup, see [P05 reproduction](docs/ingestion.md#run-offline).
+On systems with Make, `make install lint typecheck test contracts p13-check` runs the equivalents. Default pytest skips eight opt-in PostgreSQL tests; the recorded final clean run enables them. Provider tests use HTTPX mocks and block non-loopback sockets. Fake embeddings prove plumbing, not semantic quality. A Starlette/HTTPX TestClient deprecation remains visible. See [clean operations proof](docs/evidence/P15-clean-proof.json) and [final qualification](docs/evidence/P16.md).
 
 ## Standalone Docker: own PostgreSQL + pgvector
 
@@ -76,7 +87,10 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 - [P10b signed mapping and human handoff](docs/evidence/P10b.md): current Java profile snapshots, manual edit/create inactive/activate, real browser lost202 recovery and DB rejection/idempotency checks. Completes the P10 technical increment; human acceptance remains pending.
 - [P11 durable read-only runs](docs/runs.md): owner-bound checkpoints, current-auth resume, lease/revision fencing, uncertain-read abstention and TTL/owner retention. [Actual restart evidence](docs/evidence/P11.md).
 - [P12 Operator Copilot](docs/operator-copilot.md): signed policy/source access, bounded investigation conversation, current-auth results and manual fallback. [Executed browser and real integration checks](docs/evidence/P12.md).
-- [P13 evaluation in progress](evals/p13/README.md): reproducible retained-run analysis plus an actual local QA/retrieval run on eight preregistered questions over shared synthetic sources. Labels are provisional; independent holdout and human review remain pending.
+- [P13 technical evaluation](docs/evidence/P13.md): raw local mapping/QA/routing/retrieval comparisons, negative rerank result and failure-driven fix. Labels are provisional; independent holdout/human quality gates remain pending.
+- [P14 scoped security closeout](docs/evidence/P14.md): job-ID provenance fix, final dependency audit0, both-repo regressions and real/mocked browser checks with explicit limits.
+- [P15 local operations](docs/evidence/P15.md): resource-bounded Docker AI, signed integration, actual outage/manual fallback/restart and health load measurements.
+- [P16 delivery/qualification](docs/delivery/README.md): English handoff, actual acceptance matrix, demo/FAQ/CV preparation, screenshot/evidence manifest and honest remaining gates.
 - [P08 mapping drafts](docs/mapping.md): original-byte hash/storage, server-owned three-field policy, bounded local AI or exact header rules, provenance and profile differences. Human acceptance remains required; no profile/import write. [Evidence](docs/evidence/P08.md).
 - [P07 extractive QA](docs/qa.md): English/Japanese live quote/citation smoke passed; full live baseline comparison remains partial. One real request is unsettled, so the provider ledger remains blocked. Fake mode and offline checks remain usable. [Evidence](docs/evidence/P07.md).
 
@@ -88,4 +102,4 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 - [Source-of-truth boundaries](docs/source-of-truth.md), [threat model](docs/threat-model.md), [design review](docs/design-review-checklist.md).
 - [Historical provider connectivity](docs/provider-connectivity-2026-10-31.md): a dated API snapshot, not RAG/product evaluation.
 
-Project2 has additive feature-OFF P09–P12 integration in local commits/reviewable patches; Java/business code is unchanged. Its baseline dependency-audit advisories remain open; passing this Python service's tests does not resolve them. No AI-owned business write, independently validated answer quality, actual customer UAT or public production rollout is claimed.
+Project2 has additive feature-OFF P09–P12 integration and a verified dependency-only P14 patch in local commits/reviewable patches. Its final local npm audit reports0; transitive major overrides require compatibility review on future updates. Original checkout stays unchanged; no Project2 remote push/merge/deploy. No independently validated answer quality or actual customer UAT is claimed.

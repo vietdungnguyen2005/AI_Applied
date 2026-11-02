@@ -1,0 +1,181 @@
+{
+  "status": "PASS",
+  "external_provider_calls": 0,
+  "next_build_id": "WBzQvF7Gq6VdMgT5m5023",
+  "java_jar_sha256": "cdd78c082f9189cd82240a4573fd0e44e86139d05bf917a160fcb9349d4c9039",
+  "pending_stock_unchanged": true,
+  "completed_replay": {
+    "same_job_ids": true,
+    "unchanged_11_tables": true,
+    "before": {
+      "product": [
+        8,
+        "406d920e5cd314704aa7c4c1111483be"
+      ],
+      "inventory_stock": [
+        8,
+        "c875d62c116d7c8602dfa06893a28000"
+      ],
+      "inventory_movement": [
+        2,
+        "e0bb41e1f109a1b5077b12d9c2e14ff2"
+      ],
+      "customer_order": [
+        0,
+        "d41d8cd98f00b204e9800998ecf8427e"
+      ],
+      "migration_job": [
+        2,
+        "0d79f4d5035f23c2e89baf93ab0f6ca1"
+      ],
+      "import_work_item": [
+        2,
+        "96090ab002fcc60d022225beebe51ed2"
+      ],
+      "staged_import_row": [
+        2,
+        "e647672e5b741cefae60ea82f34eb57c"
+      ],
+      "reconciliation_run": [
+        0,
+        "d41d8cd98f00b204e9800998ecf8427e"
+      ],
+      "reconciliation_discrepancy": [
+        0,
+        "d41d8cd98f00b204e9800998ecf8427e"
+      ],
+      "integration_profile": [
+        6,
+        "9fc1c7397e3155fb975978d227388d26"
+      ],
+      "audit_event": [
+        12,
+        "0802a37537e171c8e405ca4ed03d7b14"
+      ]
+    },
+    "after": {
+      "product": [
+        8,
+        "406d920e5cd314704aa7c4c1111483be"
+      ],
+      "inventory_stock": [
+        8,
+        "c875d62c116d7c8602dfa06893a28000"
+      ],
+      "inventory_movement": [
+        2,
+        "e0bb41e1f109a1b5077b12d9c2e14ff2"
+      ],
+      "customer_order": [
+        0,
+        "d41d8cd98f00b204e9800998ecf8427e"
+      ],
+      "migration_job": [
+        2,
+        "0d79f4d5035f23c2e89baf93ab0f6ca1"
+      ],
+      "import_work_item": [
+        2,
+        "96090ab002fcc60d022225beebe51ed2"
+      ],
+      "staged_import_row": [
+        2,
+        "e647672e5b741cefae60ea82f34eb57c"
+      ],
+      "reconciliation_run": [
+        0,
+        "d41d8cd98f00b204e9800998ecf8427e"
+      ],
+      "reconciliation_discrepancy": [
+        0,
+        "d41d8cd98f00b204e9800998ecf8427e"
+      ],
+      "integration_profile": [
+        6,
+        "9fc1c7397e3155fb975978d227388d26"
+      ],
+      "audit_event": [
+        12,
+        "0802a37537e171c8e405ca4ed03d7b14"
+      ]
+    },
+    "observed_stock": [
+      [
+        "VM-001",
+        32
+      ],
+      [
+        "VM-002",
+        60
+      ]
+    ]
+  },
+  "checks": [
+    {
+      "name": "signed_draft_readonly",
+      "http": 200,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "tampered_original",
+      "http": 409,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "stale_csrf",
+      "http": 403,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "missing_csrf",
+      "http": 403,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "guest_confirm",
+      "http": 401,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "controlled_valid_signature_expired_receipt",
+      "http": 409,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "deactivated_after_preview",
+      "http": 409,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "stock_changed_after_preview",
+      "http": 409,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "product_changed_after_preview",
+      "http": 409,
+      "unchanged_11_tables": true
+    },
+    {
+      "name": "wrong_mapping_no_acceptable_rows",
+      "http": 400,
+      "unchanged_11_tables": true
+    }
+  ],
+  "browser": {
+    "status": "PASS",
+    "records": [
+      {
+        "encoding": "utf-8",
+        "lost_202_recovered": true,
+        "terminal_status": "COMPLETED"
+      },
+      {
+        "encoding": "cp932",
+        "lost_202_recovered": false,
+        "terminal_status": "COMPLETED"
+      }
+    ]
+  },
+  "scope": "automated operator browser gestures on real disposable Java/BFF/Python; fake rule draft, not independent human UAT"
+}

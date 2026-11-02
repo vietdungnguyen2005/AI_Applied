@@ -2,6 +2,10 @@
 install:
 	python -m uv sync --locked
 lint:
+	python -m uv run --frozen ruff check tools/delivery_manifest.py
+	python -m uv run --frozen ruff format --check tools/delivery_manifest.py
+	python -m uv run --frozen ruff check tools/roi_scenario.py
+	python -m uv run --frozen ruff format --check tools/roi_scenario.py
 	python -m uv run --frozen ruff check tools/p14_local_acceptance.py tools/p15_integrated.py tools/ops_probe.py tools/ops_report.py
 	python -m uv run --frozen ruff format --check tools/p14_local_acceptance.py tools/p15_integrated.py tools/ops_probe.py tools/ops_report.py
 	python -m uv run --frozen ruff check tools/p13_completion.py
