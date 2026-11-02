@@ -106,6 +106,74 @@ All eight questions are new to this experiment, but their author knew previous
 results, the SOP documents are shared and some topics overlap earlier cases. This
 is **not** an independently blind or human-reviewed new-domain holdout.
 
+### Executed local QA and retrieval run
+
+On 2026-11-02 17:06 Asia/Bangkok (10:06 UTC), the frozen questions were run once
+using actual Java authentication/profile selection, signed BFF QA, separate AI
+PostgreSQL, pinned CPU multilingual E5 and local `qwen3.5:4b-q4_K_M`. The
+preregistration commit is `4cf5b9787c88bd9fbc272bd3409f0a22b29369db`. The
+[immutable run package](runs/new-questions-v1/manifest.json) contains the complete
+[40 raw observations](runs/new-questions-v1/raw.jsonl),
+[per-case scored report](runs/new-questions-v1/report.json),
+[summary CSV](runs/new-questions-v1/summary.csv), model/config/input hashes and a
+blank independent-review template. All eight QA and all 24 retrieval calls are
+represented, as are eight empty-evidence guard outputs. No case was retried or
+removed. `PASS` in the run means collection finished; the numbers below determine
+individual outcomes.
+
+| Measurement | Result | Denominator and limits |
+| --- | --- | --- |
+| Signed dense/local QA decision proxy | 8/8 | Six answerable, one unknown and one conflicting-source case; provisional agent labels |
+| Answer anchor / relevant citation proxies | 6/6 each | Answerable cases only; not human semantic or citation-quality review |
+| Abstention reason proxy | 2/2 | One unknown and one conflicting-source case |
+| Lexical Recall@5 / MRR@5 | 0.857 / 0.786 | Seven cases with at least one provisional relevant document/section |
+| Dense Recall@5 / MRR@5 | 1.000 / 1.000 | Same seven cases and authorized corpus |
+| Hybrid Recall@5 / MRR@5 | 1.000 / 1.000 | Same seven cases and authorized corpus |
+| Empty-evidence guard decision proxy | 2/8 | The guard returns before invoking a model; it is not a matched prompt-only LLM baseline |
+
+The unanswerable case has no relevant section and is excluded from ranking averages,
+not treated as a perfect retrieval. Retrieval is scored at **document + section**
+level after deduplicating sections within the returned top five chunks; the
+conflict case has two relevant sections. Each retrieval method used the same
+eligible-corpus hash for each case. Local retrieval median/p95 wall times in ms
+were lexical 9.52/31.47, dense 20.29/25.19 and hybrid 24.58/32.90, with eight
+sequential requests per method; warmup and process startup are excluded. The
+signed Java/BFF QA median/p95 were 2083/5095 ms. Guard timing is a direct service
+call without HTTP/auth and is **not comparable** to BFF QA timing. E5 recorded
+0/8/8 query embedding calls for lexical/dense/hybrid, respectively. The local
+provider charge was $0 and no external inference was requested; electricity,
+hardware and hosting cost were not measured. These small, ordered single-run
+timings are not an SLA or a basis for a confidence interval.
+
+The lexical retriever returned no hits for Japanese quantity question `q13-05`;
+dense and hybrid both returned the labeled mapping section. Dense was already
+selected using the P06 development rule before this run, and no post-run tuning
+was performed. This is consistent with the known tokenizer limitation on another
+question over the same corpus; it does not prove general Japanese retrieval performance.
+In `q13-01` Qwen included an extra Japanese sentence about approval along with the
+correct receipt lifetime. Both automated anchor/source proxies passed; whether the
+extra sentence is relevant must be decided in independent semantic review. This is
+an observed limitation of the proxy, not grounds to claim 100% factual quality.
+The [blind review instructions](new-questions-v1/REVIEW.md) and blank template
+provide the review step; nobody has completed it yet.
+
+To reproduce operationally, start the existing local Ollama 4B model and Docker,
+prepare the Project2 production build/JAR, then run in a clean committed checkout:
+
+```powershell
+python -m uv run --frozen --offline --extra local-embeddings python tools/p13_new_questions.py --project2 D:/CV/Project2 --output .local/p13-new-repeat.json
+```
+
+This uses fresh disposable databases/Redis and records every response in an ignored
+journal before labels are parsed. A repeat is a **regression**, since these questions
+and results have now been inspected. The output report records the journal filename;
+package it into a fresh directory with `tools/p13_new_pack.py --report <report>
+--journal <journal> --output <fresh-directory>`. Verify the committed run without
+any inference using `python -m uv run --frozen python tools/p13_new_verify.py
+--artifact evals/p13/runs/new-questions-v1`. It recomputes per-case scores and the
+CSV from all 40 journaled observations, verifies the frozen inputs and scoring code
+at the preregistration commit, and validates artifact hashes.
+
 Design and freeze a **new** independent held-out release and separate model input
 from labels; record exact and near-duplicate review and independent human label
 review. The release must cover answer/source/abstention/conflict, retrieval,

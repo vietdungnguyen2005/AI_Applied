@@ -1,5 +1,8 @@
+import hashlib
+import importlib.util
 import json
 import shutil
+from pathlib import Path
 
 import pytest
 
@@ -63,3 +66,36 @@ def test_duplicate_chunks_do_not_inflate_section_recall():
         ],
     }
     assert score_retrieval(prediction, label)["metrics"]["recall"] == 0.5
+
+
+def test_independent_label_review_template_does_not_show_existing_labels_or_predictions():
+    path = (
+        Path(__file__).resolve().parents[1]
+        / "evals/p13/runs/new-questions-v1/review-template.jsonl"
+    )
+    review = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    assert len(review) == 8
+    for row in review:
+        assert row["review_status"] == "PENDING_INDEPENDENT_REVIEW"
+        assert row["reviewer"] is None and row["independent_expected_status"] is None
+        assert "provisional_label" not in row and "observed_response" not in row
+
+
+def test_verifier_rejects_missing_observation_even_if_journal_hash_is_rewritten(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    artifact = root / "evals/p13/runs/new-questions-v1"
+    spec = importlib.util.spec_from_file_location(
+        "p13_new_verify_test", root / "tools/p13_new_verify.py"
+    )
+    assert spec is not None and spec.loader is not None
+    verifier = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(verifier)
+    report = json.loads((artifact / "report.json").read_text(encoding="utf-8"))
+    raw = (artifact / "raw.jsonl").read_bytes().splitlines(keepends=True)[:-1]
+    journal = tmp_path / "raw.jsonl"
+    journal.write_bytes(b"".join(raw))
+    report["journal_sha256"] = hashlib.sha256(journal.read_bytes()).hexdigest()
+    revised_report = tmp_path / "report.json"
+    revised_report.write_text(json.dumps(report), encoding="utf-8")
+    with pytest.raises(ValueError, match="missing, repeated"):
+        verifier.verify(revised_report, journal, artifact / "summary.csv")

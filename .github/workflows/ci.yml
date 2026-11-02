@@ -18,6 +18,7 @@ jobs:
       - run: python -m uv run --frozen python -m vmarket_ai.evaluation.regression --output .local/p13-ci
       - run: python -m uv run --frozen python evals/p13/verify.py --compare .local/p13-ci
       - run: python -m uv run --frozen python -m vmarket_ai.evaluation.new_questions
+      - run: python -m uv run --frozen python tools/p13_new_verify.py --artifact evals/p13/runs/new-questions-v1
       - run: docker compose config --quiet
       - run: docker compose -p ai-ci up -d --wait ai-postgres
       - name: Migrate isolated AI storage

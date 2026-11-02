@@ -1,0 +1,74 @@
+{
+  "source_commit": "4cf5b9787c88bd9fbc272bd3409f0a22b29369db",
+  "dataset": "p13-new-questions-v1",
+  "dataset_lock_sha256": "548f27eb2509f1fc3bba0e4faff308b7bc115d9dc47b4644b01c7c63834dce51",
+  "input_hashes": {
+    "inputs.jsonl": "49d5765e9cf16e03b24fecfc66685c1765d650f6f63bbd5fb490272075d2f045",
+    "labels.jsonl": "ca792aca45b46876f84a5a948fdf71dfeec01522e9a444dc11067f2c7ed065d5",
+    "protocol.json": "85ea02584dd1afad04be37db5ab296d3b0d4f4393dbd60b4f98280142e08ad59"
+  },
+  "model": {
+    "name": "qwen3.5:4b-q4_K_M",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "runtime": {
+      "version": "0.32.1"
+    }
+  },
+  "parameters": {
+    "context": 4096,
+    "temperature": 0.2,
+    "seed": 42,
+    "thinking": false,
+    "max_output_tokens": 512,
+    "qa_system_prompt_sha256": "df47826425852f8e4c1cf3e51717ecbd78a55e1a4a2db883c477a0ed47aed770",
+    "retrieval_top_k": 5,
+    "reranker": "none"
+  },
+  "embedding_profile": {
+    "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1",
+    "dimensions": 384,
+    "mode": "local"
+  },
+  "embedding_pinned_files_sha256": {
+    "onnx/model.onnx": "ca456c06b3a9505ddfd9131408916dd79290368331e7d76bb621f1cba6bc8665",
+    "onnx/tokenizer.json": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+  },
+  "retrieval_config": {
+    "embedding": {
+      "model": "intfloat/multilingual-e5-small@614241f622f53c4eeff9890bdc4f31cfecc418b3:onnx-fp32-mean-l2-v1",
+      "dimensions": 384,
+      "mode": "local"
+    },
+    "chunking": {
+      "size": 320,
+      "overlap": 48
+    },
+    "top_k": 5,
+    "candidate_pool": 20,
+    "lexical_config": "english",
+    "lexical_match": "any",
+    "query_normalization": "nfc",
+    "rrf_constant": 60,
+    "lexical_weight": 1.0,
+    "dense_weight": 1.0,
+    "reranker": "none"
+  },
+  "source_files_sha256_lf": {
+    "src/vmarket_ai/ingestion/spec.py": "f1d1cefe4857a089cecf2628a1ffa037bef16bea1787f7f744e39a73da792e32",
+    "src/vmarket_ai/providers/local_e5.py": "78eff9da46212903604be2d2415d08e4344523cf7feb746c5b0009999db47bf4",
+    "src/vmarket_ai/providers/ollama.py": "945c599e85391048615ed47dbf415fa072ad34b47ffcd0bf510b1a71ed693b39",
+    "src/vmarket_ai/qa/backend.py": "a160b235589c045f15bee24e23660ef0415339ee42f039b8ced9e4d9661cfe16",
+    "src/vmarket_ai/qa/service.py": "3cf49eccdae6684d073f267d66456bd1c556f3df1b2d0f72cb3ec4cef677aa9f",
+    "src/vmarket_ai/retrieval/spec.py": "5abb870f711002f5fd18e93e9e526942346bfe48ff2f870b57801c6534edae4a",
+    "src/vmarket_ai/evaluation/new_score.py": "de642b56b35ae09c46f1aa0725c1f006e83aca24e18933a225f33b4effe39310"
+  },
+  "retrieval_as_of_utc": "2026-11-02",
+  "actual_run_at_utc": "2026-11-02T10:06:03.410079+00:00",
+  "packaged_at_utc": "2026-11-02T10:11:47.483891+00:00",
+  "scope": "new questions on shared known synthetic documents; provisional labels, no independent review",
+  "baseline": "empty-evidence service guard only; no prompt-only LLM call, not matched HTTP latency",
+  "label_review": "pending",
+  "external_provider_calls": 0,
+  "compute_and_energy_cost": "NOT_MEASURED",
+  "token_usage": "NOT_RETURNED_BY_BFF"
+}
