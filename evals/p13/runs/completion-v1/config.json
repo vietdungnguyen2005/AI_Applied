@@ -1,0 +1,176 @@
+{
+  "source_commit": "9480db208a67201ef94dedf9554aa8e4a8deca69",
+  "input_sha256_lf": {
+    "data/v1/inputs.jsonl": "e878877c5274315a02934ba1a7a65e307770aab6f287fbf862c4a0bfab7ab4df",
+    "data/v1/labels/mapping.jsonl": "ea5cb9e9e10ca8404649c337f0613d1bf5e508e916acec5975a2b71538972690",
+    "data/releases/v1.lock.json": "957114fb0a0137f556833296eae3759489367702c8f23b7811c0aa0683511eed",
+    "evals/p13/new-questions-v1/inputs.jsonl": "49d5765e9cf16e03b24fecfc66685c1765d650f6f63bbd5fb490272075d2f045",
+    "evals/p13/new-questions-v1/labels.jsonl": "ca792aca45b46876f84a5a948fdf71dfeec01522e9a444dc11067f2c7ed065d5",
+    "evals/p13/runs/new-questions-v1/raw.jsonl": "ba53c640c30ea0222d366112c96b2d6084f6c444e71767f615e821fde65ef637",
+    "tools/p13_completion.py": "fd37152ab209303c84de31fb673e345d30a46f894396d2371bd8f17e80cd4ed4",
+    "evals/p13/completion-protocol.md": "1714326f3a793d8a732aa3dedf68f94a754fc5c7e3e4e3b76f4714339df35d0f",
+    "evals/retrieval/runs/train-v1/predictions.jsonl": "739b1f4ef78af33371ef64a73121611dcdf1d57d9c2dc8c71f62ffd24f730f0d",
+    "evals/retrieval/runs/dev-v1/predictions.jsonl": "55936414dcc5ee882ce40c8cc1d7b49f2187fbf81cbaad6cfa50da13d038c249",
+    "evals/retrieval/runs/test-v1/predictions.jsonl": "4a814cf6b5019dac4356387c134fbbf5690b052ba499a47f4d0d1ec2e2f0e51c"
+  },
+  "qa_system_sha256": "df47826425852f8e4c1cf3e51717ecbd78a55e1a4a2db883c477a0ed47aed770",
+  "qa_parser_schema": {
+    "$defs": {
+      "Claim": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk_id": {
+            "format": "uuid",
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "quote": {
+            "maxLength": 800,
+            "minLength": 8,
+            "title": "Quote",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "quote"
+        ],
+        "title": "Claim",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "decision": {
+        "enum": [
+          "answer",
+          "insufficient",
+          "conflict",
+          "ambiguous"
+        ],
+        "title": "Decision",
+        "type": "string"
+      },
+      "claims": {
+        "items": {
+          "$ref": "#/$defs/Claim"
+        },
+        "maxItems": 3,
+        "title": "Claims",
+        "type": "array"
+      }
+    },
+    "required": [
+      "decision",
+      "claims"
+    ],
+    "title": "Proposal",
+    "type": "object"
+  },
+  "qa_max_tokens": 512,
+  "context": 4096,
+  "seed": 42,
+  "temperature": 0.2,
+  "thinking": false,
+  "mapping_policy": "standalone synthetic profiles; Java business acceptance not measured",
+  "human_review": "pending",
+  "external_provider_calls": 0,
+  "provider_charge_usd": 0,
+  "energy_hardware_cost": "not measured",
+  "implementation_sha256_lf": {
+    "src/vmarket_ai/__init__.py": "66b43c57e708d0d843ee6f2871994deb8a28caf2a2bea7c0587b10dc89a3f626",
+    "src/vmarket_ai/app.py": "4bf087a58c545e34b28c354e6a8361f3d84033054728c2df218e277f696b0921",
+    "src/vmarket_ai/cli.py": "5ed007b3180772ef12b723da0a0e962bdfdfaed604fe87da14e3d2f197197fea",
+    "src/vmarket_ai/contracts.py": "1453c7039795c1fba4f373fc7911fd6c0f3ecb404a2ac162a212644f0cc15ff6",
+    "src/vmarket_ai/database.py": "1789df5aeb8a1dd3ce3edc8324d3605ab537546a023d7c1c0b53da6dd9ffd25f",
+    "src/vmarket_ai/datasets/__init__.py": "e225aac491667ba4e6e50f4f899a53ed384b5fd592f290ac649c313952d4d574",
+    "src/vmarket_ai/datasets/audit.py": "9c159e335862c54d885de9168d857d08c5b37ee4165b4bdbcda76c952a570272",
+    "src/vmarket_ai/datasets/common.py": "93bf3777cac7fd58196ddcaff8ac531d6241eb6fea358ea5c373c49810b5ae03",
+    "src/vmarket_ai/datasets/generate.py": "664e2d38ae47f1a79cff15fe562450353bf5ea6668d4528fc1c1ceb9aabd96c9",
+    "src/vmarket_ai/datasets/models.py": "7ad76c6450ca06fa42902c2856fcdea533f927ba031f44de6d058abafa78f815",
+    "src/vmarket_ai/datasets/quality.py": "866eb0e819d548e1d1f70012829283cb3a5e99ea156c921335f16844b259ed6b",
+    "src/vmarket_ai/datasets/release.py": "f32eb356d51b8f743f348884e5391b74ec137e497645c2ddb686acc6264fb9a5",
+    "src/vmarket_ai/evaluation/__init__.py": "1d863eade50dae10b3cf8823650e62793c58e3747f3156be8b5fb4e81aa3a5a0",
+    "src/vmarket_ai/evaluation/mapping_review.py": "417377114bc978b182fc42e9dcd0b7d480119ff9f19b2e95707878c813d1bba2",
+    "src/vmarket_ai/evaluation/new_questions.py": "09737f1ea112438ea799e76f208d1e8ca881e1c2945c4d1c8ca2d610017eb447",
+    "src/vmarket_ai/evaluation/new_score.py": "de642b56b35ae09c46f1aa0725c1f006e83aca24e18933a225f33b4effe39310",
+    "src/vmarket_ai/evaluation/regression.py": "743e238fe73a64456a348b079c64270fb5399f50ce41243c4599dd30c6670a58",
+    "src/vmarket_ai/evaluation/tool_questions.py": "d55491e42cddc01fdd98fc86a0bd795ee8349975640defc98f6b394a137d395c",
+    "src/vmarket_ai/gateway/__init__.py": "91e5aaf0fbf05481d0c5ec573a8c029186b33c5baf03ad951e93d86c8d6416db",
+    "src/vmarket_ai/gateway/agent.py": "03f07f7cf0fd1774b5298f0bfe6eea59b40e64580e72ebe8fd62fd3a8537b2fc",
+    "src/vmarket_ai/gateway/mapping.py": "9d95a1b863c9cea5fcced3225e5c887683f75f3dbfe3081a42f06ded429c2ada",
+    "src/vmarket_ai/gateway/mock.py": "8b234e6a3de3abc9322033ad7a902182475e6a9a53bf8d50c7aedebfea443754",
+    "src/vmarket_ai/gateway/routes.py": "5ad881e0b2ccc16d982699cc4e95fe4566ba60cf744c25e0335d2eed6cd4a78e",
+    "src/vmarket_ai/gateway/security.py": "157dd7bee152c37aba046d08882e58570e79d7af0145c8b41b9e0a8230d4d0cc",
+    "src/vmarket_ai/gateway/wire.py": "6cc93118a7206693cb11a9a7ec91c679a6f4aa4dc30c792ad6505e0387069082",
+    "src/vmarket_ai/ingestion/__init__.py": "a0dbb52f66ad2e256c40afb521e44a104472c4fb80d842948b560028057ab240",
+    "src/vmarket_ai/ingestion/demo.py": "1961497ed0f8b1f485ffa26f599752e50b39942ff22f28f083bcdcf7ecf8b780",
+    "src/vmarket_ai/ingestion/limits.py": "0ec5e7621745b2b2e3006901cdeaaf28b576f4031c5ea389abceaa3ecfbe09b1",
+    "src/vmarket_ai/ingestion/model_bundle.py": "80a628818a0ec0bba32e96b2d69b0749a319878280d22ec0dcdd1906dcf58140",
+    "src/vmarket_ai/ingestion/models.py": "760bd2428e611776bacef51f6cf10f89a29b98863eda6b531111af1507e7d0dc",
+    "src/vmarket_ai/ingestion/parsing.py": "1c5a05b10e26eac10e837dcf51500b5d5bb7bbcf127418c76d0444e329adeeba",
+    "src/vmarket_ai/ingestion/service.py": "b502bf72b5684195b2dae95d834c165343b5bb99fda09b7d22d55bd1d9756b6e",
+    "src/vmarket_ai/ingestion/spec.py": "f1d1cefe4857a089cecf2628a1ffa037bef16bea1787f7f744e39a73da792e32",
+    "src/vmarket_ai/ingestion/worker.py": "11f3c350ed22f90a7e8edd338230beba01bf42c52f0c70787c3dc23fd495a5d9",
+    "src/vmarket_ai/local_evaluation.py": "4c4ee5bbab48ecb7026cefdc61a737bf90a6eae9bb1195a37e18a0385165c01f",
+    "src/vmarket_ai/mapping/__init__.py": "150e9c3a110733daee755de8dbe666ccadb09cd5f38279794175d0bf4140b425",
+    "src/vmarket_ai/mapping/csv_input.py": "c2d348c79504ea83c9c025cb5aba3f2b06aa0b8277f006549053a111fae52ff1",
+    "src/vmarket_ai/mapping/evaluate.py": "b01b4e2cb2c039d4c6603eb029cf86bb448122028214ad7a8b0e9378b4c9d571",
+    "src/vmarket_ai/mapping/policy.py": "419a70e1cc4f891f46f86098204e114c444a703418c60f6f09258c0e17ee5853",
+    "src/vmarket_ai/mapping/service.py": "0d73120c99644c7aea7564f7592712cd34eea809070c090e5272f7ea044ec0ce",
+    "src/vmarket_ai/mapping/spec.py": "9ea68fd630f345cc985790b744069ac129e25ecb38df81d3b0823101683132b9",
+    "src/vmarket_ai/mapping/store.py": "2a50b12ffe61e087298f37466e402776202f47376a483670246bb3f70386d4f0",
+    "src/vmarket_ai/observability.py": "183fb80b0ffd4e8dd014c1489d4696b47a51d1893dcae7f5db7da15db8747374",
+    "src/vmarket_ai/providers/__init__.py": "5d23e605fd57e80d71f0046b55721cdc8d8c9e95ecbda77645537cd2e7a8e54d",
+    "src/vmarket_ai/providers/budget.py": "f9ee977f30a4fc139d29a40b9c8d91eb802f1fb2f470b027f017bf8b29153c2c",
+    "src/vmarket_ai/providers/fake.py": "11268550fb8317aca187420b73e555924f0eb7cdf28e57cc4d16ec6f05877250",
+    "src/vmarket_ai/providers/local_e5.py": "78eff9da46212903604be2d2415d08e4344523cf7feb746c5b0009999db47bf4",
+    "src/vmarket_ai/providers/ollama.py": "945c599e85391048615ed47dbf415fa072ad34b47ffcd0bf510b1a71ed693b39",
+    "src/vmarket_ai/providers/openrouter.py": "dccafa5332f0dca973aa63e6abd194bedbd28ab62fb55574381271eacd493112",
+    "src/vmarket_ai/qa/__init__.py": "ff91323865d99d42a654c3a27a080e5aeba0747e6692ecd8a13eae758010d1ff",
+    "src/vmarket_ai/qa/backend.py": "a160b235589c045f15bee24e23660ef0415339ee42f039b8ced9e4d9661cfe16",
+    "src/vmarket_ai/qa/evaluate.py": "b5a91b5c843bd298920b2a65e48f1fa4316ec751b8f84459f975defc69d211b3",
+    "src/vmarket_ai/qa/fake.py": "80df0b039dd458d8376d0595d21156137d6a6ee3ff29c37ad76be2988a448e35",
+    "src/vmarket_ai/qa/service.py": "3cf49eccdae6684d073f267d66456bd1c556f3df1b2d0f72cb3ec4cef677aa9f",
+    "src/vmarket_ai/qa/spec.py": "d07d54793ca92318fc991acf969b843d10d02f9dce3d54bc2d409dfc80dc9bef",
+    "src/vmarket_ai/retrieval/__init__.py": "c0d4259c397400d23cd0908af0873f1640385536fa3a0dc24054b1d9dae4db9d",
+    "src/vmarket_ai/retrieval/evaluate.py": "19e3aa37552594617b5d11e7ac144ab074a63d8bc6a4d0faf4b49b8b46d98766",
+    "src/vmarket_ai/retrieval/metrics.py": "17f72c5bfbba9851cf57e10c90564e6d98373606cb1e94f33d85b8ac36b0fd3e",
+    "src/vmarket_ai/retrieval/service.py": "47795370ce1beeda42888b65502a798309525f46b4375cbba4c516abda54ae5d",
+    "src/vmarket_ai/retrieval/spec.py": "5abb870f711002f5fd18e93e9e526942346bfe48ff2f870b57801c6534edae4a",
+    "src/vmarket_ai/runs/__init__.py": "bae57979c5bf9936b12bdc3df80672ac0c670f1bc4f117cf81137e257f619e9b",
+    "src/vmarket_ai/runs/models.py": "ce6803aaadfeb59842d54a37c60d84317ba8e50087afef4770f5d7c166b5cc04",
+    "src/vmarket_ai/runs/service.py": "dc28a1a11ec6ceaab949aa3587262d6474721b6157dde73a9d53320b89448871",
+    "src/vmarket_ai/runs/spec.py": "85e38e36b675c4dfa8ab595c1a1bf2512d004a5e153d562a3c39cbbe63c397d5",
+    "src/vmarket_ai/runs/store.py": "6a240f9e1feecbf50deb87b5555f587a5c019a045dcdd353ee20dc65c32bf3b2",
+    "src/vmarket_ai/settings.py": "69ebc819a3fb86b3838c059d6c6c04e6e5f78f51a4b6d528e5e5a2050f9c3502"
+  },
+  "model": {
+    "name": "qwen3.5:4b-q4_K_M",
+    "model": "qwen3.5:4b-q4_K_M",
+    "modified_at": "2026-11-01T01:48:36.4598023+07:00",
+    "size": 3324173934,
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "details": {
+      "parent_model": "model.gguf",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "4.2B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 2560
+    },
+    "capabilities": [
+      "completion",
+      "tools",
+      "thinking",
+      "vision"
+    ]
+  },
+  "runtime": {
+    "version": "0.32.1"
+  }
+}

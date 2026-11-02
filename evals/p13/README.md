@@ -1,4 +1,20 @@
-# P13 — evaluation progress: retained-run regression report
+# P13 — technical evaluation delivery and review gates
+
+The [P13 closeout](../../docs/evidence/P13.md) consolidates every measured result,
+failure, remediation and remaining quality gate. Technical local measurement
+delivery is complete; independent human acceptance remains partial. At the
+owner's instruction, P14 security work may proceed with those limits recorded.
+The final [matched QA/mapping run](runs/completion-v1/) adds 40 observations:
+mapping rule 0/10 exact versus local AI 2/10 on 12 previously unconsumed test
+inputs; QA with sources 6/8 valid versus 8/8 without sources, with provisional
+decision scores 6/8 and 2/8 over all cases respectively. Two QA validation
+failures are preserved. A sentence-boundary false rejection has a focused fix
+and replay regression test, without rewriting the original score.
+
+`make p13-check` includes the final offline verifier. No inference is needed to
+check these artifacts. Do not treat successful verification as human approval.
+
+## Historical first increment
 
 This is a **first increment**, not completion of P13 and not a fresh held-out
 quality evaluation. It re-scores 320 previously retained synthetic predictions:
@@ -201,12 +217,12 @@ any inference using `python -m uv run --frozen python tools/p13_new_verify.py
 CSV from all 40 journaled observations, verifies the frozen inputs and scoring code
 at the preregistration commit, and validates artifact hashes.
 
-Design and freeze a **new** independent held-out release and separate model input
+For future quality acceptance, design and freeze a **new** independent held-out release and separate model input
 from labels; record exact and near-duplicate review and independent human label
 review. The release must cover answer/source/abstention/conflict, retrieval,
 mapping and abstention, allowed tools/arguments and prohibited actions, document
 and tool authorization, and handoff/stale-approval/unknown-outcome workflows.
-Then run the preregistered matched ablations, measure tool correctness, denial and
-task success, retain sanitized outputs/latency/cost, and perform failure-driven
-remediation without using held-out answers for tuning. P13 remains open until
-those runs and reviews are actually complete.
+The final technical run consumed the original mapping test split and measured
+the matched generator evidence diagnostic. Independent review and genuine operator
+task success remain pending; future quality acceptance requires those reviews
+and a new independent release. Existing runs must not be relabeled as blind.

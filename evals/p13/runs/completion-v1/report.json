@@ -1,0 +1,2674 @@
+{
+  "predictions": [
+    {
+      "case_id": "map-a-test-reference-01",
+      "domain": "mapping",
+      "latency_ms": 21.217100002104416,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "aef94160a7cd22a53c183cba4cdd580da96e0873497334e66ce705f6adaad92f",
+        "reason": "RULE_BASELINE",
+        "request_id": "19c39ef2-7275-4e0d-acde-79dc31d724bb",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u7ba1\u7406\u756a\u53f7",
+          "\u8868\u793a\u5546\u54c1\u540d",
+          "\u4fdd\u6709\u6570\u91cf"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-reference-01",
+      "domain": "mapping",
+      "latency_ms": 967.9556000046432,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 367,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "aef94160a7cd22a53c183cba4cdd580da96e0873497334e66ce705f6adaad92f",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "85c88c4e-49b2-4e5f-ac6e-dc7021ac7e91",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u7ba1\u7406\u756a\u53f7",
+          "\u8868\u793a\u5546\u54c1\u540d",
+          "\u4fdd\u6709\u6570\u91cf"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-reference-02",
+      "domain": "mapping",
+      "latency_ms": 4.049800001666881,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "2bc8b43aae80065a5fb036d2350853feb50e645501e616573abecafae3853df2",
+        "reason": "RULE_BASELINE",
+        "request_id": "f68858f8-9874-4b82-a9d3-0a52d0b62c54",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u4fdd\u6709\u6570\u91cf",
+          "\u8868\u793a\u5546\u54c1\u540d",
+          "\u7ba1\u7406\u756a\u53f7"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-reference-02",
+      "domain": "mapping",
+      "latency_ms": 788.5891999976593,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 366,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "2bc8b43aae80065a5fb036d2350853feb50e645501e616573abecafae3853df2",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "f4b09aea-5c58-47c7-a2e9-7580863b2445",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u4fdd\u6709\u6570\u91cf",
+          "\u8868\u793a\u5546\u54c1\u540d",
+          "\u7ba1\u7406\u756a\u53f7"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-warehouse-01",
+      "domain": "mapping",
+      "latency_ms": 7.804799999576062,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "9d8cdc4059fd377075862f5ea9d29982cf137e1e80114fd9dc40820810065da9",
+        "reason": "RULE_BASELINE",
+        "request_id": "d7a5dde9-bfe8-4456-b3d4-172f3b08ceb7",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u5009\u5eab\u54c1\u76ee\u756a\u53f7",
+          "\u54c1\u76ee\u540d\u79f0",
+          "\u5009\u5eab\u5728\u5eab\u6570"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-warehouse-01",
+      "domain": "mapping",
+      "latency_ms": 870.8765999981551,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 29,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 371,
+          "provider_mode": "local",
+          "text": "{\"sku\": \"\u5009\u5eab\u54c1\u76ee\u756a\u53f7\", \"name\": \"\u54c1\u76ee\u540d\u79f0\", \"on_hand\": \"\u5009\u5eab\u5728\u5eab\u6570\"}"
+        }
+      ],
+      "response": {
+        "assignments": [
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u5009\u5eab\u54c1\u76ee\u756a\u53f7",
+            "target_field": "sku",
+            "uncertainty": "high"
+          },
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u54c1\u76ee\u540d\u79f0",
+            "target_field": "name",
+            "uncertainty": "high"
+          },
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u5009\u5eab\u5728\u5eab\u6570",
+            "target_field": "on_hand",
+            "uncertainty": "high"
+          }
+        ],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                "\u54c1\u76ee\u540d\u79f0"
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                "\u5009\u5eab\u5728\u5eab\u6570"
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                "\u5009\u5eab\u54c1\u76ee\u756a\u53f7"
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "9d8cdc4059fd377075862f5ea9d29982cf137e1e80114fd9dc40820810065da9",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "afb86d43-94c9-485a-abea-77efa8e0cb12",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "needs_review",
+        "unmapped_headers": [],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED"
+        ]
+      },
+      "status": "needs_review",
+      "score": {
+        "exact_mapping": true,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-warehouse-02",
+      "domain": "mapping",
+      "latency_ms": 4.971300004399382,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "a4f7ec7c448101a94921ec75becbd8e0dcfcceecdbcb091bd823f10a66a04a52",
+        "reason": "RULE_BASELINE",
+        "request_id": "fea27850-7393-4dfd-acc1-a676c8d7221f",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u54c1\u76ee\u540d\u79f0",
+          "\u5009\u5eab\u54c1\u76ee\u756a\u53f7",
+          "\u5009\u5eab\u5728\u5eab\u6570"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-warehouse-02",
+      "domain": "mapping",
+      "latency_ms": 745.0023999990663,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 370,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "a4f7ec7c448101a94921ec75becbd8e0dcfcceecdbcb091bd823f10a66a04a52",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "6613ed32-39c7-499d-a2eb-429743cb811d",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u54c1\u76ee\u540d\u79f0",
+          "\u5009\u5eab\u54c1\u76ee\u756a\u53f7",
+          "\u5009\u5eab\u5728\u5eab\u6570"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-identity-01",
+      "domain": "mapping",
+      "latency_ms": 6.1375999939627945,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "18685d75fc6f8db6610816bbea46ddd8e3cdb193ae175187659849db32a3a897",
+        "reason": "RULE_BASELINE",
+        "request_id": "c00c46e7-9c31-4054-b17a-c3885b93b044",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u5728\u5eab\u7ba1\u7406\u30b3\u30fc\u30c9",
+          "\u516c\u958b\u540d\u79f0",
+          "\u73fe\u7269\u6570\u91cf"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-identity-01",
+      "domain": "mapping",
+      "latency_ms": 900.8048000032431,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 25,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 366,
+          "provider_mode": "local",
+          "text": "{\"sku\": \"\u5728\u5eab\u7ba1\u7406\u30b3\u30fc\u30c9\", \"name\": \"\u516c\u958b\u540d\u79f0\", \"on_hand\": \"\u73fe\u7269\u6570\u91cf\"}"
+        }
+      ],
+      "response": {
+        "assignments": [
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u5728\u5eab\u7ba1\u7406\u30b3\u30fc\u30c9",
+            "target_field": "sku",
+            "uncertainty": "high"
+          },
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u516c\u958b\u540d\u79f0",
+            "target_field": "name",
+            "uncertainty": "high"
+          },
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u73fe\u7269\u6570\u91cf",
+            "target_field": "on_hand",
+            "uncertainty": "high"
+          }
+        ],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                "\u516c\u958b\u540d\u79f0"
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                "\u73fe\u7269\u6570\u91cf"
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                "\u5728\u5eab\u7ba1\u7406\u30b3\u30fc\u30c9"
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "18685d75fc6f8db6610816bbea46ddd8e3cdb193ae175187659849db32a3a897",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "38262d89-7209-4c03-88b3-151dc3e01761",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "needs_review",
+        "unmapped_headers": [],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED"
+        ]
+      },
+      "status": "needs_review",
+      "score": {
+        "exact_mapping": true,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-ambiguous-01",
+      "domain": "mapping",
+      "latency_ms": 3.904299999703653,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                null
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                null
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "d46ab29f6baa6b0c80d4714c3b48c229fdcea08497393772e1cebef198ee6c0f",
+        "reason": "RULE_BASELINE",
+        "request_id": "28793ffc-1367-4292-9488-2fbfae4d76ef",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "abstained",
+        "unmapped_headers": [
+          "\u8b58\u5225\u5b50",
+          "\u8aac\u660e\u6587",
+          "\u5229\u7528\u53ef\u80fd\u6570",
+          "\u5f15\u5f53\u6570"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": null,
+        "status_correct": true,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-a-test-ambiguous-01",
+      "domain": "mapping",
+      "latency_ms": 768.6962000007043,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 19,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 375,
+          "provider_mode": "local",
+          "text": "{\"sku\":\"\u8b58\u5225\u5b50\",\"name\":\"\u8aac\u660e\u6587\",\"on_hand\":\"\u5229\u7528\u53ef\u80fd\u6570\"}"
+        }
+      ],
+      "response": {
+        "assignments": [
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u8b58\u5225\u5b50",
+            "target_field": "sku",
+            "uncertainty": "high"
+          },
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u8aac\u660e\u6587",
+            "target_field": "name",
+            "uncertainty": "high"
+          },
+          {
+            "basis": "model",
+            "citations": [
+              {
+                "chunk_id": "104e18ee-0492-5540-980d-7715dc39d5fa",
+                "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+                "locator": {
+                  "kind": "section",
+                  "value": "mapping"
+                },
+                "source_url": "/ai/citations/104e18ee-0492-5540-980d-7715dc39d5fa",
+                "version_id": "18fd3f69-a693-5498-9aef-8e855aa48391"
+              }
+            ],
+            "reason": "Model inferred header semantics; linked SOP is context, not verified approval.",
+            "source_header": "\u5229\u7528\u53ef\u80fd\u6570",
+            "target_field": "on_hand",
+            "uncertainty": "high"
+          }
+        ],
+        "declared_encoding": "CP932",
+        "missing_required_fields": [],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "\u5546\u54c1\u540d",
+                "\u8aac\u660e\u6587"
+              ],
+              "on_hand": [
+                "\u5728\u5eab\u6570",
+                "\u5229\u7528\u53ef\u80fd\u6570"
+              ],
+              "sku": [
+                "\u5546\u54c1\u30b3\u30fc\u30c9",
+                "\u8b58\u5225\u5b50"
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-a",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "d46ab29f6baa6b0c80d4714c3b48c229fdcea08497393772e1cebef198ee6c0f",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "68188eb8-8b76-48d5-886d-1f0182665dc2",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "NAMI",
+        "status": "needs_review",
+        "unmapped_headers": [
+          "\u5f15\u5f53\u6570"
+        ],
+        "vendor_code": "NAMI",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "needs_review",
+      "score": {
+        "exact_mapping": null,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-reference-01",
+      "domain": "mapping",
+      "latency_ms": 3.078599998843856,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "0d7e577d8a2d62aa18cb0e309f7f950b3bcb95e11061355c11be4874ec4f9150",
+        "reason": "RULE_BASELINE",
+        "request_id": "9ba4b2ea-c8de-4398-a6f1-5a0ac6c65164",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "ProductRef",
+          "ListingTitle",
+          "OnHandUnits"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-reference-01",
+      "domain": "mapping",
+      "latency_ms": 771.0714999993797,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 360,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "0d7e577d8a2d62aa18cb0e309f7f950b3bcb95e11061355c11be4874ec4f9150",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "97a731a7-80d2-458f-9b85-3168cadbc65e",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "ProductRef",
+          "ListingTitle",
+          "OnHandUnits"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-reference-02",
+      "domain": "mapping",
+      "latency_ms": 10.80530000035651,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "bcb96f4efdd5044dc3cbba0ece5fc1b9042508b40f573335d607275546b4f5af",
+        "reason": "RULE_BASELINE",
+        "request_id": "b010bc49-aad1-49d3-96e9-03ad0c0b0050",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "OnHandUnits",
+          "ListingTitle",
+          "ProductRef"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-reference-02",
+      "domain": "mapping",
+      "latency_ms": 757.1165999979712,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 360,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "bcb96f4efdd5044dc3cbba0ece5fc1b9042508b40f573335d607275546b4f5af",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "b8ba3dcc-576e-4ca2-a1c0-128e1e8a2667",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "OnHandUnits",
+          "ListingTitle",
+          "ProductRef"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-warehouse-01",
+      "domain": "mapping",
+      "latency_ms": 3.638600006524939,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "111ef94cc0a435beeb26ff75696a2965b4e8af7458205b44181414e87261fa71",
+        "reason": "RULE_BASELINE",
+        "request_id": "e3d11d13-7fdb-4876-b1c5-33f616a05485",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "WarehouseItemID",
+          "MerchandiseName",
+          "WarehouseBalance"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-warehouse-01",
+      "domain": "mapping",
+      "latency_ms": 755.5704999977024,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 361,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "111ef94cc0a435beeb26ff75696a2965b4e8af7458205b44181414e87261fa71",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "c0441a22-197c-447e-adbb-b9b387b14437",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "WarehouseItemID",
+          "MerchandiseName",
+          "WarehouseBalance"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-warehouse-02",
+      "domain": "mapping",
+      "latency_ms": 9.291700000176206,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "45237a183130e7b5ab2a476dd2728a7acd723c12932356280163718b2b0c4091",
+        "reason": "RULE_BASELINE",
+        "request_id": "62bbe028-7b61-4432-8f6b-301ca4984c6e",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "MerchandiseName",
+          "WarehouseItemID",
+          "WarehouseBalance"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-warehouse-02",
+      "domain": "mapping",
+      "latency_ms": 769.9287999930675,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 364,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "45237a183130e7b5ab2a476dd2728a7acd723c12932356280163718b2b0c4091",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "4edc1b93-c6d5-4643-8149-66a967c6bb4d",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "MerchandiseName",
+          "WarehouseItemID",
+          "WarehouseBalance"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-identity-01",
+      "domain": "mapping",
+      "latency_ms": 3.7962999995215796,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "f633cacd843cf9cf3bf86d4c4e3d9e3d8ae48ec6496df9f66a6ce56220d6143e",
+        "reason": "RULE_BASELINE",
+        "request_id": "80b9599d-b804-4149-b997-20e731edf3c2",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "InventoryReference",
+          "PublishedLabel",
+          "PhysicalUnits"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-identity-01",
+      "domain": "mapping",
+      "latency_ms": 758.8426999936928,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 361,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "f633cacd843cf9cf3bf86d4c4e3d9e3d8ae48ec6496df9f66a6ce56220d6143e",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "c715f135-6ca9-475d-b64f-26c8a37333b5",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "InventoryReference",
+          "PublishedLabel",
+          "PhysicalUnits"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": false,
+        "status_correct": false,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-ambiguous-01",
+      "domain": "mapping",
+      "latency_ms": 3.4706000005826354,
+      "method": "rule",
+      "model_attempts": 0,
+      "model_outputs": [],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "467e1e0789dce2da05b9530e32490bcd32c641abb075a2c277f5b1fa39ee9e48",
+        "reason": "RULE_BASELINE",
+        "request_id": "f032973a-17dc-4bd7-b73e-c73bfa7c9621",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "Reference",
+          "DescriptionText",
+          "Available",
+          "Reserved"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": null,
+        "status_correct": true,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "map-b-test-ambiguous-01",
+      "domain": "mapping",
+      "latency_ms": 777.758600001107,
+      "method": "ai",
+      "model_attempts": 1,
+      "model_outputs": [
+        {
+          "completion_tokens": 17,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 361,
+          "provider_mode": "local",
+          "text": "{\"sku\": null, \"name\": null, \"on_hand\": null}"
+        }
+      ],
+      "response": {
+        "assignments": [],
+        "declared_encoding": "UTF-8",
+        "missing_required_fields": [
+          "sku",
+          "name",
+          "on_hand"
+        ],
+        "profile_differences": [
+          {
+            "active": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ],
+              "sku": [
+                "SKU",
+                null
+              ]
+            },
+            "encoding_matches": true,
+            "profile_id": "supplier-b",
+            "version": 1
+          }
+        ],
+        "provider_mode": "local",
+        "raw_sha256": "467e1e0789dce2da05b9530e32490bcd32c641abb075a2c277f5b1fa39ee9e48",
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "request_id": "3a9bba73-48b0-42c1-b9a8-f94052d8eaf6",
+        "requires_human_acceptance": true,
+        "selected_vendor_code": "RIVERBYTE",
+        "status": "abstained",
+        "unmapped_headers": [
+          "Reference",
+          "DescriptionText",
+          "Available",
+          "Reserved"
+        ],
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "standalone_fixture",
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "UNMAPPED_HEADER"
+        ]
+      },
+      "status": "abstained",
+      "score": {
+        "exact_mapping": null,
+        "status_correct": true,
+        "model_output_rejected": false,
+        "model_unavailable": false
+      }
+    },
+    {
+      "case_id": "q13-01",
+      "domain": "qa",
+      "error": "ValueError",
+      "http_status": 502,
+      "latency_ms": 1196.1040000023786,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 56,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 577,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"answer\",\"claims\":[{\"chunk_id\":\"cd3d967d-35be-5ed5-aa07-b86663336fcb\",\"quote\":\"Preview receipts expire after 600 seconds.\"}]}"
+        }
+      ],
+      "response": null,
+      "score": {
+        "valid": false,
+        "decision_correct": null,
+        "anchor_proxy": null,
+        "citation_proxy": null,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-01",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 597.2072000004118,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 251,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": false,
+        "anchor_proxy": false,
+        "citation_proxy": false,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-02",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 1327.6900999990175,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 71,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 594,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"answer\",\"claims\":[{\"chunk_id\":\"9807b4ff-6677-5f38-b358-fbaefa0a943b\",\"quote\":\"A filename or three-column file cannot prove business freshness. The operator must establish what the quantities mean and when they were observed.\"}]}"
+        }
+      ],
+      "response": {
+        "answer": "A filename or three-column file cannot prove business freshness. The operator must establish what the quantities mean and when they were observed.",
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "locator": {
+              "kind": "section",
+              "value": "freshness"
+            }
+          }
+        ],
+        "reason": null,
+        "status": "answered"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": true,
+        "citation_proxy": true,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-02",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 597.4471000008634,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 253,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": false,
+        "anchor_proxy": false,
+        "citation_proxy": false,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-03",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 1313.5916999963229,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 65,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 602,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"answer\",\"claims\":[{\"chunk_id\":\"83f70e76-b5ff-532a-add7-73d793a2cf3b\",\"quote\":\"The current synthetic procedure is to clarify an unknown header with the supplier contact before saving a mapping.\"}]}"
+        }
+      ],
+      "response": {
+        "answer": "The current synthetic procedure is to clarify an unknown header with the supplier contact before saving a mapping.",
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "locator": {
+              "kind": "section",
+              "value": "escalation"
+            }
+          }
+        ],
+        "reason": null,
+        "status": "answered"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": true,
+        "citation_proxy": true,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-03",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 578.5238000025856,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 257,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": false,
+        "anchor_proxy": false,
+        "citation_proxy": false,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-04",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 1121.0589000038453,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 53,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 593,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"answer\",\"claims\":[{\"chunk_id\":\"5e6240ab-e717-599d-aadd-ed1a7d4be32d\",\"quote\":\"Do not automatically resend after a lost response.\"}]}"
+        }
+      ],
+      "response": {
+        "answer": "Do not automatically resend after a lost response.",
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "locator": {
+              "kind": "section",
+              "value": "pending"
+            }
+          }
+        ],
+        "reason": null,
+        "status": "answered"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": true,
+        "citation_proxy": true,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-04",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 584.8203999994439,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 258,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": false,
+        "anchor_proxy": false,
+        "citation_proxy": false,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-05",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 1394.6190999995451,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 71,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 668,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"answer\", \"claims\":[{\"chunk_id\": \"104e18ee-0492-5540-980d-7715dc39d5fa\", \"quote\": \"\u6570\u91cf\u306f\u6574\u6570 0 \u304b\u3089 1000000 \u307e\u3067\u3067\u3059\u3002\"}]}"
+        }
+      ],
+      "response": {
+        "answer": "\u6570\u91cf\u306f\u6574\u6570 0 \u304b\u3089 1000000 \u307e\u3067\u3067\u3059\u3002",
+        "citations": [
+          {
+            "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+            "locator": {
+              "kind": "section",
+              "value": "mapping"
+            }
+          }
+        ],
+        "reason": null,
+        "status": "answered"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": true,
+        "citation_proxy": true,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-05",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 597.1609000043827,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 251,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": false,
+        "anchor_proxy": false,
+        "citation_proxy": false,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-06",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 1331.0632000066107,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 66,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 651,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"answer\",\"claims\":[{\"chunk_id\":\"548b5f8d-426f-568f-8b50-2795854a2111\",\"quote\":\"\u30d7\u30ec\u30d3\u30e5\u30fc receipt \u306e\u6709\u52b9\u671f\u9593\u306f 600 \u79d2\u3067\u3059\u3002\"}]}"
+        }
+      ],
+      "response": {
+        "answer": "\u30d7\u30ec\u30d3\u30e5\u30fc receipt \u306e\u6709\u52b9\u671f\u9593\u306f 600 \u79d2\u3067\u3059\u3002",
+        "citations": [
+          {
+            "document_id": "335b9b7c-7f66-5542-85f4-169eac6a43dc",
+            "locator": {
+              "kind": "section",
+              "value": "approval"
+            }
+          }
+        ],
+        "reason": null,
+        "status": "answered"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": true,
+        "citation_proxy": true,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-06",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 598.0889999991632,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 251,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": false,
+        "anchor_proxy": false,
+        "citation_proxy": false,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-07",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 665.0708999950439,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 584,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": null,
+        "citation_proxy": null,
+        "abstain_reason_correct": true
+      }
+    },
+    {
+      "case_id": "q13-07",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 597.221999996691,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 252,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": null,
+        "citation_proxy": null,
+        "abstain_reason_correct": true
+      }
+    },
+    {
+      "case_id": "q13-08",
+      "domain": "qa",
+      "error": "ValidationError",
+      "http_status": 502,
+      "latency_ms": 2038.736799993785,
+      "method": "with_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 132,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 570,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"conflict\",\"claims\":[{\"chunk_id\":\"4f741e14-4625-5293-8b9f-4ef47ca47236\",\"quote\":\"Synthetic policy Y allows Supplier B correction notices until the end of the next business day. Precedence is unresolved.\"},{\"chunk_id\":\"4d9babb9-6453-52f3-89fb-59ed9e9a479c\",\"quote\":\"Synthetic policy X requires Supplier B correction notices by the end of the same business day.\"}]}"
+        }
+      ],
+      "response": null,
+      "score": {
+        "valid": false,
+        "decision_correct": null,
+        "anchor_proxy": null,
+        "citation_proxy": null,
+        "abstain_reason_correct": null
+      }
+    },
+    {
+      "case_id": "q13-08",
+      "domain": "qa",
+      "http_status": 200,
+      "latency_ms": 596.5691999954288,
+      "method": "without_sources",
+      "model_outputs": [
+        {
+          "completion_tokens": 10,
+          "cost_usd": "0",
+          "model": "qwen3.5:4b-q4_K_M",
+          "prompt_tokens": 251,
+          "provider_mode": "local",
+          "text": "{\"decision\":\"insufficient\",\"claims\":[]}"
+        }
+      ],
+      "response": {
+        "answer": null,
+        "citations": [],
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "status": "abstained"
+      },
+      "score": {
+        "valid": true,
+        "decision_correct": true,
+        "anchor_proxy": null,
+        "citation_proxy": null,
+        "abstain_reason_correct": false
+      }
+    }
+  ],
+  "summary": [
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "metric": "valid_response_coverage",
+      "value": 0.75,
+      "n": 8
+    },
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "metric": "decision_correct",
+      "value": 1.0,
+      "n": 6
+    },
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "metric": "anchor_proxy",
+      "value": 1.0,
+      "n": 5
+    },
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "metric": "citation_proxy",
+      "value": 1.0,
+      "n": 5
+    },
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "metric": "abstain_reason_correct",
+      "value": 1.0,
+      "n": 1
+    },
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "metric": "median_ms",
+      "value": 1320.6408999976702,
+      "n": 6
+    },
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "metric": "p95_ms",
+      "value": 1378.7301250013115,
+      "n": 6
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "metric": "valid_response_coverage",
+      "value": 1.0,
+      "n": 8
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "metric": "decision_correct",
+      "value": 0.25,
+      "n": 8
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "metric": "anchor_proxy",
+      "value": 0.0,
+      "n": 6
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "metric": "citation_proxy",
+      "value": 0.0,
+      "n": 6
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "metric": "abstain_reason_correct",
+      "value": 0.5,
+      "n": 2
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "metric": "median_ms",
+      "value": 597.1840500023973,
+      "n": 8
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "metric": "p95_ms",
+      "value": 597.8643349997583,
+      "n": 8
+    },
+    {
+      "domain": "mapping",
+      "method": "rule",
+      "metric": "exact_mapping",
+      "value": 0.0,
+      "n": 10
+    },
+    {
+      "domain": "mapping",
+      "method": "rule",
+      "metric": "status_correct",
+      "value": 0.16666666666666666,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "rule",
+      "metric": "model_output_rejected",
+      "value": 0.0,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "rule",
+      "metric": "model_unavailable",
+      "value": 0.0,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "rule",
+      "metric": "median_ms",
+      "value": 4.510550003033131,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "rule",
+      "metric": "p95_ms",
+      "value": 15.490610001143061,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "ai",
+      "metric": "exact_mapping",
+      "value": 0.2,
+      "n": 10
+    },
+    {
+      "domain": "mapping",
+      "method": "ai",
+      "metric": "status_correct",
+      "value": 0.08333333333333333,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "ai",
+      "metric": "model_output_rejected",
+      "value": 0.0,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "ai",
+      "metric": "model_unavailable",
+      "value": 0.0,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "ai",
+      "metric": "median_ms",
+      "value": 770.5001499962236,
+      "n": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "ai",
+      "metric": "p95_ms",
+      "value": 931.0226600038732,
+      "n": 12
+    }
+  ],
+  "business_unchanged_11_tables": true,
+  "business_before": {
+    "product": [
+      8,
+      "2ba79eabcf9be59da6b87a9fb9aaf4dc"
+    ],
+    "inventory_stock": [
+      8,
+      "9d579d048503487aadf8d2bad4ccf44e"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "6c5f5baaf7edd397a72a54d9ba398bb8"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_after": {
+    "product": [
+      8,
+      "2ba79eabcf9be59da6b87a9fb9aaf4dc"
+    ],
+    "inventory_stock": [
+      8,
+      "9d579d048503487aadf8d2bad4ccf44e"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "6c5f5baaf7edd397a72a54d9ba398bb8"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  }
+}

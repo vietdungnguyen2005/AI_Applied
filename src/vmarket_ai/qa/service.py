@@ -44,7 +44,11 @@ No citations outside supplied chunk IDs. No commentary, URLs, tool calls or Mark
 def complete_sentences(text: str) -> tuple[str, ...]:
     # Whole sentence spans preserve negation/qualifiers; no arbitrary substring numeric claims.
     return tuple(
-        p.strip() for p in re.split(r"(?<=[。！？!?])|(?<=\.)\s+(?=[A-Z0-9])|\n", text) if p.strip()
+        p.strip()
+        for p in re.split(
+            r"(?<=[。！？!?])|(?<=\.)\s+(?=[A-Z0-9\u3040-\u30ff\u3400-\u9fff])|\n", text
+        )
+        if p.strip()
     )
 
 

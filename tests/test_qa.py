@@ -463,3 +463,11 @@ async def test_real_pg_api_and_current_citation_exclude_superseded_source():
                 c.execute(delete(Collection).where(Collection.id == collection))
         owner.dispose()
         app.dispose()
+
+
+def test_english_sentence_before_japanese_is_a_complete_extractable_span():
+    text = "Preview receipts expire after 600 seconds. 提案は承認ではありません。"
+    assert complete_sentences(text) == (
+        "Preview receipts expire after 600 seconds.",
+        "提案は承認ではありません。",
+    )
