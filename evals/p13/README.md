@@ -34,10 +34,15 @@ hash and the historical implementation Git blob without rerunning model inferenc
 Passing `--compare <fresh-output>` additionally checks regenerated predictions and
 summary byte-for-byte. Both the regression and comparison run in CI.
 
-The [recorded run](runs/retrospective-v1/manifest.json) was produced from clean
-source commit `b468e3a` before the report was added. Compare summary/prediction
+The [portable recorded run](runs/retrospective-v2/manifest.json) was produced from
+clean source commit `48bdde0` before that report was added. Compare summary/prediction
 bytes for reproducibility; `config.json` and its manifest hash differ for a new
 run because timestamp and source commit are recorded, not silently held constant.
+Git-managed evaluation text and source files use canonical LF for input hashes;
+frozen `data/v1` files retain exact original bytes. The earlier
+[v1 report](runs/retrospective-v1/manifest.json) remains as historical evidence:
+its recorded raw Windows CRLF hashes did not verify on Linux. The v2 predictions
+and summary are byte-identical to v1; only provenance/hash handling changed.
 
 ## Dataset identity and duplicates
 
