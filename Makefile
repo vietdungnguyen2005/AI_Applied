@@ -22,6 +22,9 @@ p13-regression:
 	python -m uv run --frozen python -m vmarket_ai.evaluation.regression
 p13-check:
 	python -m uv run --frozen python evals/p13/verify.py
+	python -m uv run --frozen python -m vmarket_ai.evaluation.new_questions
+	python -m uv run --frozen python tools/p13_new_verify.py --artifact evals/p13/runs/new-questions-v1
+	python -m uv run --frozen python -m vmarket_ai.evaluation.mapping_review verify
 migrate:
 	python -m uv run --frozen vmarket-ai migrate
 run:

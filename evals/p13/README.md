@@ -157,6 +157,12 @@ an observed limitation of the proxy, not grounds to claim 100% factual quality.
 The [blind review instructions](new-questions-v1/REVIEW.md) and blank template
 provide the review step; nobody has completed it yet.
 
+The 12 previously unconsumed P04 mapping test inputs now also have a separate
+[blind, byte-preserving mapping review packet](mapping-review-v1/README.md). It
+contains no provisional mappings or model outputs. Review is pending; preparing
+the packet did not run inference on those inputs. The original test cases remain
+synthetic and agent-authored, not independent customer data.
+
 To reproduce operationally, start the existing local Ollama 4B model and Docker,
 prepare the Project2 production build/JAR, then run in a clean committed checkout:
 
