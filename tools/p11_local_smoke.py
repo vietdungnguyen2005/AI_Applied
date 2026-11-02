@@ -44,7 +44,9 @@ def wait_http(url, process):
     raise RuntimeError("Owned QA service readiness deadline")
 
 
-def main(project2: Path, output: Path, *, qa=False, checks=None):
+def main(project2: Path, output: Path, *, qa=False, checks=None, container_image=None):
+    if container_image and qa:
+        raise ValueError("Signed private-container mode supports fake read-only tools only")
     if output.exists():
         raise ValueError("A fresh evidence filename is required")
     project2 = project2.resolve()
@@ -56,7 +58,7 @@ def main(project2: Path, output: Path, *, qa=False, checks=None):
     temporary.mkdir(parents=True)
     pg = "vmarket-p11-pg-" + uuid4().hex[:8]
     redis = "vmarket-p11-redis-" + uuid4().hex[:8]
-    containers, processes, files = [], [], []
+    containers, processes, files, networks = [], [], [], []
     proxy = None
     report = {"mode": "disposable_local_integration", "external_provider_calls": 0, "checks": []}
     report["next_build_id"] = (project2 / ".next/BUILD_ID").read_text(encoding="utf-8").strip()
@@ -297,12 +299,76 @@ def main(project2: Path, output: Path, *, qa=False, checks=None):
                 env=migration_env,
                 cwd=ROOT,
             )
-        ai = start(
-            "ai",
-            [sys.executable, "-c", "from vmarket_ai.cli import main;main()", "serve"],
-            ai_env,
-            ROOT,
-        )
+        if container_image:
+            network = "vmarket-p15-net-" + uuid4().hex[:8]
+            command(["docker", "network", "create", "--internal", network])
+            networks.append(network)
+            command(["docker", "network", "connect", network, ai_pg])
+            container = "vmarket-p15-ai-" + uuid4().hex[:8]
+            env_values = {
+                "AI_MODE": "integrated",
+                "AI_AGENT_ENABLED": "true",
+                "AI_RUNS_ENABLED": "true",
+                "AI_PROVIDER_MODE": "fake",
+                "AI_LIVE_ENABLED": "false",
+                "AI_PORT": "8094",
+                "AI_PRIVATE_CONTAINER": "true",
+                "AI_SIGNED_CONTAINER": "true",
+                "AI_BIND_HOST": "0.0.0.0",
+                "AI_REQUEST_DEADLINE_SECONDS": "25",
+                "AI_GATEWAY_PUBLIC_KEYS": ai_env["AI_GATEWAY_PUBLIC_KEYS"],
+                "AI_DATABASE_URL": f"postgresql+psycopg://ai_app:local-ai-app-only@{ai_pg}:5432/vmarket_ai_test",
+            }
+            arguments = [
+                "docker",
+                "run",
+                "-d",
+                "--name",
+                container,
+                "--network",
+                network,
+                "--read-only",
+                "--tmpfs",
+                "/tmp:rw,noexec,nosuid,size=64m",
+                "--cap-drop",
+                "ALL",
+                "--security-opt",
+                "no-new-privileges",
+                "--memory",
+                "512m",
+                "--cpus",
+                "1",
+                "-p",
+                "127.0.0.1:8094:8094",
+            ]
+            for name, value in env_values.items():
+                arguments.extend(["-e", name + "=" + value])
+            command([*arguments, container_image])
+            containers.append(container)
+            details = json.loads(command(["docker", "inspect", container]))[0]
+            assert details["HostConfig"]["PortBindings"]["8094/tcp"][0]["HostIp"] == "127.0.0.1"
+            serialized = json.dumps(details["Config"]["Env"])
+            assert all(
+                s not in serialized
+                for s in (private_der, bff_secret, ops_secret, actor_key, password)
+            )
+            report["container"] = {
+                "image": details["Image"],
+                "loopback_published": True,
+                "private_network": True,
+                "read_only": True,
+                "memory_bytes": 536870912,
+                "cpus": 1,
+                "no_java_signing_or_provider_secrets": True,
+            }
+            ai = start("ai", ["docker", "logs", "--follow", container], base_env, ROOT)
+        else:
+            ai = start(
+                "ai",
+                [sys.executable, "-c", "from vmarket_ai.cli import main;main()", "serve"],
+                ai_env,
+                ROOT,
+            )
         wait_http("http://127.0.0.1:8094/ready", ai)
         bff_env = {
             **base_env,
@@ -366,11 +432,22 @@ def main(project2: Path, output: Path, *, qa=False, checks=None):
             ai = restart("ai-" + mode, ai, ai_env, ROOT, ai.args)
             wait_http("http://127.0.0.1:8094/ready", ai)
 
+        def restart_owned_ai():
+            nonlocal ai
+            if container_image:
+                command(["docker", "restart", container])
+                ai = restart("ai-restarted", ai, base_env, ROOT, ai.args)
+                wait_http("http://127.0.0.1:8094/ready", ai)
+                return ai
+            return restart("ai-restarted", ai, ai_env, ROOT, ai.args)
+
         if checks is None:
             from p11_checks import exercise
 
             checks = exercise
         options = {"provider": provider, "project2": project2} if qa else {}
+        if container_image:
+            options["stop_ai"] = lambda: command(["docker", "stop", container])
         checks(
             operator_login=login,
             sql_connect=sql_connect,
@@ -381,7 +458,7 @@ def main(project2: Path, output: Path, *, qa=False, checks=None):
             ai_port=ai_port,
             migration_env=migration_env,
             username=username,
-            restart_ai=lambda: restart("ai-restarted", ai, ai_env, ROOT, ai.args),
+            restart_ai=restart_owned_ai,
             restart_bff=lambda: restart("bff-restarted", bff, bff_env, project2, bff.args),
             **options,
         )
@@ -411,8 +488,13 @@ def main(project2: Path, output: Path, *, qa=False, checks=None):
         for log in files:
             log.close()
         for name in reversed(containers):
-            assert name.startswith(("vmarket-p11-pg-", "vmarket-p11-redis-", "vmarket-p11-aipg-"))
+            assert name.startswith(
+                ("vmarket-p11-pg-", "vmarket-p11-redis-", "vmarket-p11-aipg-", "vmarket-p15-ai-")
+            )
             command(["docker", "rm", "--force", name])
+        for network in reversed(networks):
+            assert network.startswith("vmarket-p15-net-")
+            command(["docker", "network", "rm", network])
         output.parent.mkdir(parents=True, exist_ok=True)
         text = json.dumps(report, indent=2) + "\n"
         assert all(

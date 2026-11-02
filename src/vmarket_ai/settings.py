@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     bind_host: str = "127.0.0.1"
     port: int = Field(default=8090, ge=1024, le=65535)
     private_container: bool = False
+    signed_container: bool = False
     provider_mode: Literal["fake", "live", "local"] = "fake"
     database_url: SecretStr = Field(
         default=SecretStr("sqlite+pysqlite:///.local/ai.db"), repr=False
@@ -48,6 +49,17 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def boundaries(self) -> Self:
+        signed_private = self.signed_container
+        if signed_private and (
+            self.mode != "integrated"
+            or not self.private_container
+            or self.bind_host != "0.0.0.0"
+            or self.provider_mode != "fake"
+            or self.qa_enabled
+            or self.mapping_enabled
+            or self.qa_embedding_mode != "fake"
+        ):
+            raise ValueError("Signed container requires integrated private fake read-only mode")
         if self.runs_enabled and (
             self.mode != "integrated"
             or not self.agent_enabled
@@ -69,8 +81,10 @@ class Settings(BaseSettings):
                 raise ValueError("Local QA embeddings require a pinned bundle")
         if self.agent_enabled and self.provider_mode == "live":
             raise ValueError("P09 agent supports fake/local only")
-        if self.agent_enabled and (
-            self.private_container or self.bind_host not in {"127.0.0.1", "localhost", "::1"}
+        if (
+            self.agent_enabled
+            and (self.private_container or self.bind_host not in {"127.0.0.1", "localhost", "::1"})
+            and not signed_private
         ):
             raise ValueError("P09 agent requires a host loopback listener")
         if (
@@ -83,7 +97,7 @@ class Settings(BaseSettings):
             import base64
             import re
 
-            if not self.agent_enabled or self.private_container:
+            if not self.agent_enabled or (self.private_container and not signed_private):
                 raise ValueError("Integrated mode requires the signed host-loopback gateway")
             if not 1 <= len(self.gateway_public_keys) <= 3 or any(
                 not re.fullmatch(r"[A-Za-z0-9_-]{1,32}", kid)
