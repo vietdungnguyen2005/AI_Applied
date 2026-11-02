@@ -301,7 +301,7 @@ def main(project2: Path, output: Path, *, qa=False, checks=None, container_image
             )
         if container_image:
             network = "vmarket-p15-net-" + uuid4().hex[:8]
-            command(["docker", "network", "create", "--internal", network])
+            command(["docker", "network", "create", network])
             networks.append(network)
             command(["docker", "network", "connect", network, ai_pg])
             container = "vmarket-p15-ai-" + uuid4().hex[:8]
@@ -356,6 +356,7 @@ def main(project2: Path, output: Path, *, qa=False, checks=None, container_image
                 "image": details["Image"],
                 "loopback_published": True,
                 "private_network": True,
+                "network_internal": False,
                 "read_only": True,
                 "memory_bytes": 536870912,
                 "cpus": 1,

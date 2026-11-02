@@ -30,6 +30,14 @@ services:
         condition: service_healthy
   ai-api:
     <<: *ai-image
+    cpus: 1
+    mem_limit: 512m
+    pids_limit: 128
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
     ports:
       - "127.0.0.1:8090:8090"
     environment:
