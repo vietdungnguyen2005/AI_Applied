@@ -1,0 +1,125 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [],
+  "source_commit": "62a8deceb670fd30d7e8886ce962d6ee79af0fb9",
+  "project2_commit": "39fbf11b03c1cbd8a59a803f9d2df05a2b131511",
+  "next_build_id": "WBzQvF7Gq6VdMgT5m5023",
+  "java_jar_sha256": "cdd78c082f9189cd82240a4573fd0e44e86139d05bf917a160fcb9349d4c9039",
+  "no_java_or_signing_secrets_in_python_env": true,
+  "status": "PASS",
+  "profile_reuse": [
+    {
+      "method": "rule",
+      "http": 200,
+      "reason": "SIGNED_PROFILE_BASELINE",
+      "assignment_count": 3,
+      "requires_human_acceptance": true
+    },
+    {
+      "method": "ai",
+      "http": 200,
+      "reason": "SIGNED_PROFILE_BASELINE",
+      "assignment_count": 3,
+      "requires_human_acceptance": true
+    }
+  ],
+  "deactivated_profile_http": 409,
+  "business_before": {
+    "product": [
+      8,
+      "8fb3d7b084a4158509edcff30ca7f05c"
+    ],
+    "inventory_stock": [
+      8,
+      "1c3ea602877866c5e2ae162d58531fdb"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      3,
+      "f037beb60bfad81540844e714ff25aed"
+    ],
+    "audit_event": [
+      2,
+      "028fb25458ef623a84c10d997655d817"
+    ]
+  },
+  "business_after": {
+    "product": [
+      8,
+      "8fb3d7b084a4158509edcff30ca7f05c"
+    ],
+    "inventory_stock": [
+      8,
+      "1c3ea602877866c5e2ae162d58531fdb"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      3,
+      "f037beb60bfad81540844e714ff25aed"
+    ],
+    "audit_event": [
+      2,
+      "028fb25458ef623a84c10d997655d817"
+    ]
+  },
+  "business_unchanged_11_tables": true,
+  "fixture_setup": "explicit operator publish inactive, activate, then deactivate in disposable Java DB",
+  "provider_mode": "fake",
+  "model_calls": 0,
+  "scope": "signed reviewed-profile functionality; not unseen semantic mapping quality"
+}

@@ -82,6 +82,10 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 
 ## Status and evidence
 
+- [Post-delivery signed-profile reuse](docs/evidence/POST-profile-reuse.md): exact
+  current reviewed Java mappings now work beyond the frozen alias list, without
+  model calls or automatic business writes. Original P13 metrics are preserved.
+
 - [P09 read-only gateway](docs/gateway.md): signed context/replay protection, bounded intent loop, feature-OFF Project2 BFF patch and real disposable OPERATOR tests. [Evidence](docs/evidence/P09.md).
 - [P10a human confirmation recovery](docs/evidence/P10a.md): first increment with server receipt expiry, no automatic confirm retry, explicit Import runs inspection and fresh review; production browser checks and an incremental Project2 patch.
 - [P10b signed mapping and human handoff](docs/evidence/P10b.md): current Java profile snapshots, manual edit/create inactive/activate, real browser lost202 recovery and DB rejection/idempotency checks. Completes the P10 technical increment; human acceptance remains pending.
