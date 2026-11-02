@@ -1,0 +1,13 @@
+{
+  "project2_baseline": "998c2ebf304aefd28b861cd34c9021cd4ebfb13e",
+  "project2_result": "39fbf11b03c1cbd8a59a803f9d2df05a2b131511",
+  "tree": "32c2b7bc74871a7300a97c7f2490b0a68c75a20b",
+  "patch_reproduces_tree": true,
+  "remote_push": false,
+  "patch_sha256": "ef6f41683e3ab56d17734368e830ee82f6e91e2d182bc1597e15d15dbaee5dec",
+  "final_npm_audit_exit": 0,
+  "frontend_tests": 124,
+  "next_and_worker_builds": "PASS",
+  "node": "24.12.0",
+  "compatibility_risk": "glob/minimatch overrides cross transitive major ranges; observed clean install, lint, tests, builds and real/mock browser checks pass; no universal compatibility claim"
+}

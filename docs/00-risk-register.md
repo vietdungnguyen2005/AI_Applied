@@ -11,7 +11,7 @@ Owners: implementation agent = code/doc work; repository owner = acceptance, pro
 | R05 | High | 202/timeout misrepresented as success/failure | Render pending/unknown; inspect existing job, no automatic write retries | Agent / planned P10–P12 |
 | R06 | High | Document/tool prompt injection | Treat retrieved text as data; ACL filter before retrieval; deny tool escalation | Agent / planned P05–P09,P14 |
 | R07 | High | Vendor treated as tenant boundary | Shared-store operator model explicitly documented; no fake isolation claim | Agent / open design constraint |
-| R08 | High | Baseline dependency advisories | P14 isolated Project2 patch removes two high entries; 124 frontend/115 backend tests and Next/Worker builds pass. Audit still exits 1 with 15 moderate entries; reachability/remediation review pending | Owner + agent / OPEN; local patch only, not deployed; see evidence/security-review.md |
+| R08 | High | Baseline dependency advisories | Final P14 local patch pins patched glob/minimatch and Wrangler; dated npm audit0, frontend124/backend115 tests and builds pass. Transitive major overrides require future compatibility review | Agent local remediation VERIFIED; owner review/deployed revision unverified; see evidence/P14.md |
 | R09 | High | Live/local revision mismatch | Pin code SHA, distinguish historical live proof; no deploy claim without attestation | Owner / live parity unverified |
 | R10 | High | External API spend / quota exhaustion | Fake default; live opt-in, finite explicit budget, usage tracking, no paid fallback | Agent / planned P03,P15 |
 | R11 | High | Unsupported/scanned documents silently indexed | Reject unsupported extraction; quality metadata; negative parser tests | Agent / planned P05 |

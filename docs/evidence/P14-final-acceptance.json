@@ -1,0 +1,379 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [
+    {
+      "path": "runs",
+      "http": 200,
+      "request_id": "e56b6ba3-d50d-4a7a-bfbf-6d898116608a",
+      "response": {
+        "run": {
+          "run_id": "d6846285-1f44-4144-aa1f-9d0d10c8ffc0",
+          "conversation_id": "9d2aef44-4a7a-48e9-a2be-e039cf1632e4",
+          "initial_request_id": "e56b6ba3-d50d-4a7a-bfbf-6d898116608a",
+          "status": "started",
+          "phase": "idle",
+          "revision": 0,
+          "step": 0,
+          "created_at": 1793623404,
+          "updated_at": 1793623404,
+          "expires_at": 1793624004,
+          "reason": null,
+          "observations": [],
+          "outcome": null,
+          "can_resume": true,
+          "can_cancel": true
+        },
+        "observations": []
+      }
+    },
+    {
+      "path": "runs",
+      "http": 200,
+      "request_id": "4094e686-feba-49b0-8023-dd9a6ddfa0bc",
+      "response": {
+        "run": {
+          "run_id": "d6846285-1f44-4144-aa1f-9d0d10c8ffc0",
+          "conversation_id": "9d2aef44-4a7a-48e9-a2be-e039cf1632e4",
+          "initial_request_id": "e56b6ba3-d50d-4a7a-bfbf-6d898116608a",
+          "status": "completed",
+          "phase": "terminal",
+          "revision": 6,
+          "step": 1,
+          "created_at": 1793623404,
+          "updated_at": 1793623406,
+          "expires_at": 1793624004,
+          "reason": null,
+          "observations": [
+            {
+              "call_id": "853e7f69-3942-4ced-88dd-67fcef29761b",
+              "tool_name": "get_imports",
+              "status": "ok",
+              "observed_at": "2026-11-02T12:43:26.226Z",
+              "truncated": false,
+              "error_code": null,
+              "item_count": 0
+            }
+          ],
+          "outcome": {
+            "kind": "final",
+            "status": "answered",
+            "handoff_reason": null
+          },
+          "can_resume": false,
+          "can_cancel": false
+        },
+        "observations": [
+          {
+            "call_id": "853e7f69-3942-4ced-88dd-67fcef29761b",
+            "tool_name": "get_imports",
+            "observed_at": "2026-11-02T12:43:26.226Z",
+            "truncated": false,
+            "data": {
+              "imports": []
+            },
+            "status": "ok",
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "path": "runs",
+      "http": 200,
+      "request_id": "bf7d2cfd-f4cc-4a11-8b4d-c7b32426aec9",
+      "response": {
+        "run": {
+          "run_id": "d6846285-1f44-4144-aa1f-9d0d10c8ffc0",
+          "conversation_id": "9d2aef44-4a7a-48e9-a2be-e039cf1632e4",
+          "initial_request_id": "e56b6ba3-d50d-4a7a-bfbf-6d898116608a",
+          "status": "completed",
+          "phase": "terminal",
+          "revision": 6,
+          "step": 1,
+          "created_at": 1793623404,
+          "updated_at": 1793623406,
+          "expires_at": 1793624004,
+          "reason": null,
+          "observations": [
+            {
+              "call_id": "853e7f69-3942-4ced-88dd-67fcef29761b",
+              "tool_name": "get_imports",
+              "status": "ok",
+              "observed_at": "2026-11-02T12:43:26.226Z",
+              "truncated": false,
+              "error_code": null,
+              "item_count": 0
+            }
+          ],
+          "outcome": {
+            "kind": "final",
+            "status": "answered",
+            "handoff_reason": null
+          },
+          "can_resume": false,
+          "can_cancel": false
+        },
+        "observations": []
+      }
+    },
+    {
+      "path": "ask",
+      "http": 200,
+      "request_id": "9e9d2cbe-2cd6-44ce-b245-8d8b11fb340d",
+      "response": {
+        "request_id": "9e9d2cbe-2cd6-44ce-b245-8d8b11fb340d",
+        "status": "abstained",
+        "answer": null,
+        "reason": "NO_SUPPORTED_EVIDENCE",
+        "confidence": "unknown",
+        "provider_mode": "fake",
+        "citations": []
+      }
+    },
+    {
+      "path": "ask",
+      "http": 200,
+      "request_id": "b14a4fbb-19b4-4ea1-8a39-f3fae87da47e",
+      "response": {
+        "request_id": "b14a4fbb-19b4-4ea1-8a39-f3fae87da47e",
+        "status": "answered",
+        "answer": "Supplier B supplies UTF-8 original bytes.",
+        "reason": null,
+        "confidence": "low",
+        "provider_mode": "local",
+        "citations": [
+          {
+            "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+            "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+            "chunk_id": "ea750761-3e06-5537-8847-33abcb221989",
+            "locator": {
+              "kind": "section",
+              "value": "encoding"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "citations/read",
+      "http": 200,
+      "request_id": "30e6381c-3ada-4d7b-9e36-1c3c64832e3c",
+      "response": {
+        "request_id": "30e6381c-3ada-4d7b-9e36-1c3c64832e3c",
+        "excerpt": "Supplier B supplies UTF-8 original bytes. Preserve the original file, declared encoding and line endings.",
+        "truncated": false,
+        "citation": {
+          "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+          "version_id": "018755f6-33fc-57db-8042-ec45d3f8befa",
+          "chunk_id": "ea750761-3e06-5537-8847-33abcb221989",
+          "locator": {
+            "kind": "section",
+            "value": "encoding"
+          }
+        }
+      }
+    },
+    {
+      "path": "ask",
+      "http": 400,
+      "request_id": "d405e17b-d7cc-4658-93c0-85a5564ef73f",
+      "response": {
+        "code": "INPUT_INVALID"
+      }
+    },
+    {
+      "path": "citations/read",
+      "http": 404,
+      "request_id": "72a3584c-96e2-4563-9fde-b14e0bcea78c",
+      "response": {
+        "code": "DOCUMENT_NOT_AVAILABLE"
+      }
+    },
+    {
+      "path": "citations/read",
+      "http": 404,
+      "request_id": "ebd29603-c146-499f-b0ce-ff4a8b32457b",
+      "response": {
+        "code": "DOCUMENT_NOT_AVAILABLE"
+      }
+    }
+  ],
+  "next_build_id": "WBzQvF7Gq6VdMgT5m5023",
+  "java_jar_sha256": "cdd78c082f9189cd82240a4573fd0e44e86139d05bf917a160fcb9349d4c9039",
+  "no_java_or_signing_secrets_in_python_env": true,
+  "rejection_samples": [
+    {
+      "case": "missing_csrf",
+      "http_status": 403,
+      "response": {
+        "code": "ACCESS_DENIED"
+      }
+    },
+    {
+      "case": "cross_origin",
+      "http_status": 403,
+      "response": {
+        "code": "ACCESS_DENIED"
+      }
+    },
+    {
+      "case": "injected_url",
+      "http_status": 400,
+      "response": {
+        "code": "INPUT_INVALID"
+      }
+    },
+    {
+      "case": "unknown_scope",
+      "http_status": 403,
+      "response": {
+        "code": "ACCESS_DENIED"
+      }
+    }
+  ],
+  "browser": {
+    "scope": "actual authenticated Java/BFF/Python/Ollama UI",
+    "passed": true,
+    "timestamp_utc": "2026-11-02T12:43:51.597872+00:00",
+    "browser": "143.0.7499.4",
+    "model": "qwen3.5:4b-q4_K_M",
+    "screenshots": [
+      "actual-current-source-desktop.png",
+      "actual-local-answer-desktop.png",
+      "actual-local-answer-mobile.png"
+    ]
+  },
+  "status": "PASS",
+  "timestamp_utc": "2026-11-02T12:43:52.582678+00:00",
+  "business_before": {
+    "product": [
+      8,
+      "f0987edccab863de50a20595ec7d5a6b"
+    ],
+    "inventory_stock": [
+      8,
+      "2099f32dde33b0fae9f80f430200087a"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "5f73f19515f6f0ace9e0a6bd94745f7e"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_after": {
+    "product": [
+      8,
+      "f0987edccab863de50a20595ec7d5a6b"
+    ],
+    "inventory_stock": [
+      8,
+      "2099f32dde33b0fae9f80f430200087a"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "5f73f19515f6f0ace9e0a6bd94745f7e"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_unchanged_11_tables": true,
+  "planner": "fake for durable read trace; local Qwen for grounded QA",
+  "model": "qwen3.5:4b-q4_K_M",
+  "embeddings": "pinned multilingual-e5-small CPU",
+  "scope": "synthetic functional acceptance only, not held-out quality evaluation",
+  "mocked_browser_faults": {
+    "scope": "mocked HTTP browser interaction, not model quality",
+    "passed": true,
+    "timestamp_utc": "2026-11-02T12:43:59.056188+00:00",
+    "browser": "143.0.7499.4",
+    "viewports": [
+      "1440x1100",
+      "390x844"
+    ],
+    "counts": {
+      "start": 3,
+      "resume": 3,
+      "inspect": 2,
+      "cancel": 1
+    },
+    "checks": [
+      "source keyboard and Escape focus restore",
+      "escaped source HTML",
+      "revoked source",
+      "no-answer",
+      "model503/504",
+      "access403",
+      "read results versus historical summaries",
+      "no automatic retry",
+      "stop/inspect/cancel",
+      "human handoff",
+      "mobile overflow",
+      "identity switch clears local results",
+      "expired/unauthorized/Java down"
+    ]
+  },
+  "source_commit": "41d7f0ea56a22fb23eb936103ee94300ea7cc7d4",
+  "project2_commit": "39fbf11b03c1cbd8a59a803f9d2df05a2b131511"
+}

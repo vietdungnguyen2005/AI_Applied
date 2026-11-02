@@ -1,5 +1,10 @@
 # P14 security review — in progress
 
+**Final technical closeout:** [P14.md](P14.md). Later dated results supersede the
+intermediate remaining-gate list below: final npm audit is zero, patched package
+build/browser paths pass, and native agent-control/threat mappings are recorded.
+The opening/first-increment records remain unchanged as historical evidence.
+
 Started 2026-11-02 Asia/Bangkok at AI `e8d4c68`, Project2 local
 `998c2ebf304aefd28b861cd34c9021cd4ebfb13e`. Project2 is clean and remains local
 only. P13 technical measurement closeout is [here](P13.md); independent human
