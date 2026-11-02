@@ -1,4 +1,4 @@
-import { type AiGatewaySpec, type CloudEnv, type GatewayResult, RequestInput, AskInput, fail } from "./spec";
+import { type AiGatewaySpec, type CloudEnv, type GatewayResult, RequestInput, fail } from "./spec";
 import { AuthenticationHandler } from "./authentication";
 import { strictJson } from "./json";
 import { CitationHandler } from "./knowledge";
@@ -14,7 +14,7 @@ export class AiGatewayHandler implements AiGatewaySpec {
         return {success:true,data:{status:200,body:{status:"ok"}}};
       }
       if (input.method === "GET" && new URL(input.url).pathname === "/ready") {
-        if (!this.env.DB || !this.env.PUBLIC_KEYS_JSON) return fail("CONFIGURATION_UNAVAILABLE",503);
+        if (!this.env.DB || !this.env.PUBLIC_KEYS_JSON || !this.env.AI) return fail("CONFIGURATION_UNAVAILABLE",503);
         const row = await this.env.DB.prepare("SELECT version FROM schema_meta WHERE version=1").first<{version:number}>();
         if (!row) return fail("DEPENDENCY_UNAVAILABLE",503);
         return {success:true,data:{status:200,body:{status:"ready"}}};

@@ -4,6 +4,10 @@ import { publicKeys, signed } from "./sign";
 import { TestDatabase } from "./database";
 
 describe("public cloud boundary", () => {
+  it("does not report ready when the inference binding is missing", async()=>{
+    const result=await worker.fetch(new Request("https://ai.example/ready"),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase()});
+    expect(result.status).toBe(503);
+  });
   it("reads a current citation only inside its signed collection", async () => {
     const db = new TestDatabase();
     db.raw.exec(`CREATE TABLE IF NOT EXISTS chunks(chunk_id TEXT PRIMARY KEY,collection_id TEXT,document_id TEXT,
