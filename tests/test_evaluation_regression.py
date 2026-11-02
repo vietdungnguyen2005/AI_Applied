@@ -1,3 +1,7 @@
+import importlib.util
+import shutil
+from pathlib import Path
+
 import pytest
 
 from vmarket_ai.evaluation.regression import mapping_records, ratio, retrieval_records, summarize
@@ -96,3 +100,31 @@ def test_failed_and_skipped_qa_requests_do_not_become_wrong_answers():
     coverage = next(item for item in summary if item["metric"] == "valid_response_coverage")
     assert decision["value"] is None and decision["n"] == 0
     assert coverage["value"] == 0 and coverage["n"] == 2
+
+
+def test_retained_report_verifier_rejects_tampered_summary(tmp_path: Path):
+    script = Path(__file__).resolve().parents[1] / "evals/p13/verify.py"
+    spec = importlib.util.spec_from_file_location("p13_verify", script)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    copied = tmp_path / "run"
+    shutil.copytree(module.RUN, copied)
+    with (copied / "summary.csv").open("a", encoding="utf-8") as output:
+        output.write("tampered\n")
+    with pytest.raises(ValueError, match="Report bytes changed"):
+        module.verify(copied)
+
+
+def test_regenerated_predictions_must_match_recorded_report(tmp_path: Path):
+    script = Path(__file__).resolve().parents[1] / "evals/p13/verify.py"
+    spec = importlib.util.spec_from_file_location("p13_verify_comparison", script)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    copied = tmp_path / "run"
+    shutil.copytree(module.RUN, copied)
+    with (copied / "predictions.jsonl").open("a", encoding="utf-8") as output:
+        output.write("{}\n")
+    with pytest.raises(ValueError, match="Regenerated results differ"):
+        module.verify(module.RUN, copied)

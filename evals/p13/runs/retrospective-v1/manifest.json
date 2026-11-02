@@ -1,0 +1,9 @@
+{
+  "status": "historical_regression_not_unseen_quality",
+  "records": 320,
+  "files_sha256": {
+    "config.json": "c8927ca424fca07add70885fd31b878242af38c7c2e9762dcef08d210b84bcbc",
+    "predictions.jsonl": "ccdb37282ec489201e96309872151e52fc1b484388c660229ce93d692601e673",
+    "summary.csv": "8196cdc1b1b7ebabc0ca0952b984e6cd584b4bb6148be3f9c6c4e98e9cf0d77f"
+  }
+}
