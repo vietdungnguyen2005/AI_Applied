@@ -83,7 +83,9 @@ def exercise(*, operator_login, sql_connect, snapshot, report, **unused):
         business_before=before,
         business_after=after,
         business_unchanged_11_tables=True,
-        fixture_setup="explicit operator publish inactive, activate, then deactivate in disposable Java DB",
+        fixture_setup=(
+            "explicit operator publish inactive, activate, then deactivate in disposable Java DB"
+        ),
         provider_mode="fake",
         model_calls=0,
         external_provider_calls=0,

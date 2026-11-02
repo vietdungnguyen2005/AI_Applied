@@ -2,6 +2,8 @@
 install:
 	python -m uv sync --locked
 lint:
+	python -m uv run --frozen ruff check tools/profile_mapping_smoke.py
+	python -m uv run --frozen ruff format --check tools/profile_mapping_smoke.py
 	python -m uv run --frozen ruff check tools/delivery_manifest.py
 	python -m uv run --frozen ruff format --check tools/delivery_manifest.py
 	python -m uv run --frozen ruff check tools/roi_scenario.py

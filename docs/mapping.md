@@ -12,6 +12,16 @@ CSV bounds: 1–5,000,000 raw bytes, 1–100 columns, 1–1000 data rows, consis
 
 ## Draft behavior
 
+Integrated requests now reuse the exact target-to-header mapping from a single
+current active matching BFF-signed Java profile when all three distinct headers
+exist in the original file. This produces `SIGNED_PROFILE_BASELINE` with rule
+basis and no model call, including an `ai` request. Human acceptance, row checks,
+original-byte binding and BFF post-read profile revalidation still apply. It can
+override conflicting generic aliases because the reviewed profile is explicit.
+Unsigned standalone candidates and incomplete matches do not enable this path.
+This is deterministic profile reuse, not improved unseen model accuracy; the
+original P13 2/10 result and frozen standalone aliases remain unchanged.
+
 - Rule baseline uses exact seed names and TRAIN-only aliases, frozen before evaluation. Missing fields remain missing; multiple recognized headers for one target abstain. It does not transliterate or mutate authoritative headers.
 - `method=ai` sends only headers, at most two rows with cells capped at 160 characters, selected server profile candidates and at most two authorized current mapping SOP chunks. Scope is derived from the selected fixture vendor, never supplied by the model/caller. SOP citations are context, not proof that a proposed alias is correct. Current source/grant state is checked again after inference; revocation returns 409 without saving the draft.
 - Native schema restricts each of the three values to a supplied header or null. Server validation rejects invented headers, duplicate source use, unknown targets/properties, scripts/SQL/vendor/version fields and malformed output. Such output becomes an explicit abstention. Provider failure yields an explicitly marked rule draft when available; no inference retry or cloud fallback.

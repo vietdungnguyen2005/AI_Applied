@@ -61,6 +61,9 @@ class ReadProxy:
 
             do_GET = forward
             do_POST = forward
+            # Explicit operator fixture setup may activate/deactivate a profile.
+            # This test-only relay does not change the AI tool transport allowlist.
+            do_PATCH = forward
 
         self.server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
         self.server.daemon_threads = True
