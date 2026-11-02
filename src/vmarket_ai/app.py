@@ -192,13 +192,23 @@ def create_app(
 
     readiness_work: asyncio.Task[bool] | None = None
 
+    def readiness_probe() -> bool:
+        try:
+            return database_ready(database)
+        except SQLAlchemyError:
+            return False
+
     @app.get("/ready", response_model=Readiness, responses={503: {"model": Readiness}})
     async def ready() -> JSONResponse:
         nonlocal readiness_work
         # A stalled DB/DNS check must neither stall health responses nor spawn
         # one waiting thread per request. Reuse the single in-flight probe.
         if readiness_work is None or readiness_work.done():
-            readiness_work = asyncio.create_task(asyncio.to_thread(database_ready, database))
+            readiness_work = asyncio.create_task(asyncio.to_thread(readiness_probe))
+            # Consume any unexpected late exception even if every caller timed out.
+            readiness_work.add_done_callback(
+                lambda task: task.exception() if not task.cancelled() else None
+            )
         work = readiness_work
         done, _ = await asyncio.wait({work}, timeout=1)
         try:
