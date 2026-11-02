@@ -88,6 +88,11 @@ class MappingService:
             "SOURCE_UNTRUSTED",
         ]
         mapping, ambiguous = rule_choices(parsed.headers)
+        signed_profile = (
+            candidates[0]
+            if self.policy.verification == "bff_profile_snapshot" and len(candidates) == 1
+            else None
+        )
         basis: Literal["rule", "model"] = "rule"
         reason = "RULE_BASELINE"
         sources: tuple[Citation, ...] = ()
@@ -95,6 +100,23 @@ class MappingService:
             mapping = {}
             warnings.append("VENDOR_NOT_VERIFIED")
             reason = "VENDOR_UNVERIFIED"
+        elif (
+            signed_profile is not None
+            and signed_profile.active
+            and signed_profile.version > 0
+            and signed_profile.vendor_code == request.selected_vendor_code
+            and signed_profile.encoding == request.declared_encoding
+            and request.profile_ids == (signed_profile.profile_id,)
+            and set(signed_profile.mapping) == set(TARGETS)
+            and len(set(signed_profile.mapping.values())) == 3
+            and all(h in parsed.headers for h in signed_profile.mapping.values())
+        ):
+            # A current BFF-authenticated profile is stronger evidence than frozen
+            # header aliases. Reuse exact reviewed names; never expand standalone
+            # aliases or infer a new business profile from the file.
+            mapping = dict(signed_profile.mapping)
+            reason = "SIGNED_PROFILE_BASELINE"
+            warnings.append("RULE_BASELINE")
         elif ambiguous:
             mapping = {}
             warnings.append("AMBIGUOUS_HEADER")
@@ -192,6 +214,8 @@ class MappingService:
                 reason=(
                     "Model inferred header semantics; linked SOP is context, not verified approval."
                     if basis == "model"
+                    else "Exact headers from current signed Java profile; human review required."
+                    if reason == "SIGNED_PROFILE_BASELINE"
                     else "Exact match in frozen seed/train-only header rules."
                 ),
                 citations=tuple(wire(s) for s in sources) if basis == "model" else (),

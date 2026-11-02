@@ -44,8 +44,10 @@ def wait_http(url, process):
     raise RuntimeError("Owned QA service readiness deadline")
 
 
-def main(project2: Path, output: Path, *, qa=False, checks=None, container_image=None):
-    if container_image and qa:
+def main(
+    project2: Path, output: Path, *, qa=False, mapping=False, checks=None, container_image=None
+):
+    if container_image and (qa or mapping):
         raise ValueError("Signed private-container mode supports fake read-only tools only")
     if output.exists():
         raise ValueError("A fresh evidence filename is required")
@@ -246,7 +248,7 @@ def main(project2: Path, output: Path, *, qa=False, checks=None, container_image
             "AI_MODE": "integrated",
             "AI_AGENT_ENABLED": "true",
             "AI_QA_ENABLED": "false",
-            "AI_MAPPING_ENABLED": "false",
+            "AI_MAPPING_ENABLED": "true" if mapping else "false",
             "AI_RUNS_ENABLED": "true",
             "AI_PROVIDER_MODE": "fake",
             "AI_LIVE_ENABLED": "false",
@@ -379,7 +381,7 @@ def main(project2: Path, output: Path, *, qa=False, checks=None, container_image
             "BFF_SHARED_SECRET": bff_secret,
             "VMARKET_OPS_SECRET": ops_secret,
             "AI_COPILOT_ENABLED": "true",
-            "AI_MAPPING_DRAFTS_ENABLED": "false",
+            "AI_MAPPING_DRAFTS_ENABLED": "true" if mapping else "false",
             "AI_RUNS_ENABLED": "true",
             "AI_SERVICE_ORIGIN": "http://127.0.0.1:8094",
             "AI_SIGNING_KID": "p11-ephemeral",

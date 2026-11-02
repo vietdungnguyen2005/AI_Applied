@@ -71,6 +71,93 @@ def test_integrated_mapping_requires_signed_current_profile_snapshot(migrated):
         assert client.get("/ai/citations/00000000-0000-0000-0000-000000000000").status_code == 404
 
 
+def test_signed_reviewed_profile_maps_exact_headers_outside_frozen_aliases(migrated):
+    import hashlib
+
+    key, client = client_for(migrated)
+    data = payload()
+    raw = b"PartnerRef,PublicLabel,CountAtDock\nVM-002,Reviewed desk,9\n"
+    mapping = {"sku": "PartnerRef", "name": "PublicLabel", "on_hand": "CountAtDock"}
+    data["input"].update(
+        raw_base64=base64.b64encode(raw).decode(), profile_ids=["reviewed-columns"]
+    )
+    data["profile_candidates"][0].update(profile_id="reviewed-columns", version=3, mapping=mapping)
+    headers, body = signed(
+        key,
+        step(),
+        body=json.dumps(data).encode(),
+        path="/ai/mapping/suggest",
+        operation="mapping_suggest",
+    )
+    with client:
+        response = client.post("/ai/mapping/suggest", content=body, headers=headers)
+    assert response.status_code == 200
+    draft = response.json()["draft"]
+    assert {a["target_field"]: a["source_header"] for a in draft["assignments"]} == mapping
+    assert draft["reason"] == "SIGNED_PROFILE_BASELINE"
+    assert draft["requires_human_acceptance"] is True
+    assert draft["raw_sha256"] == hashlib.sha256(raw).hexdigest()
+    assert draft["profile_differences"][0]["changes"] == {}
+
+
+async def test_exact_signed_profile_avoids_model_even_for_ai_request():
+    from uuid import uuid4
+
+    from test_mapping import Model, Store
+
+    from vmarket_ai.gateway.mapping import SignedMapping, SnapshotPolicy
+    from vmarket_ai.mapping.service import MappingService
+    from vmarket_ai.qa.backend import DEMO_ACTOR
+
+    data = payload()
+    mapping = {"sku": "PartnerRef", "name": "PublicLabel", "on_hand": "CountAtDock"}
+    raw = b"PartnerRef,PublicLabel,CountAtDock,SKU,ItemCode\nVM-002,Desk,9,old,also-old\n"
+    data["input"].update(raw_base64=base64.b64encode(raw).decode(), method="ai")
+    data["profile_candidates"][0]["mapping"] = mapping
+    signed_input = SignedMapping.model_validate(data)
+    model, store = Model(), Store()
+    service = MappingService(SnapshotPolicy(signed_input), store, model, mode="local")
+    response = await service.suggest(DEMO_ACTOR, signed_input.input, uuid4())
+    assert {a.target_field: a.source_header for a in response.assignments} == mapping
+    assert response.status == "suggested" and response.requires_human_acceptance
+    assert not model.requests  # Explicit profile beats conflicting generic aliases too.
+    assert store.records[0][0] == raw
+
+
+@pytest.mark.parametrize("verified", [False, True])
+async def test_profile_headers_are_not_inferred_from_unsigned_or_incomplete_matches(verified):
+    from uuid import uuid4
+
+    from test_mapping import Store
+
+    from vmarket_ai.gateway.mapping import SignedMapping, SnapshotPolicy
+    from vmarket_ai.mapping.policy import StandalonePolicy
+    from vmarket_ai.mapping.service import MappingService
+    from vmarket_ai.qa.backend import DEMO_ACTOR
+
+    data = payload()
+    mapping = {"sku": "PartnerRef", "name": "PublicLabel", "on_hand": "CountAtDock"}
+    raw = (
+        b"PartnerRef,PublicLabel,OtherCount\nVM-002,Desk,9\n"
+        if verified
+        else b"PartnerRef,PublicLabel,CountAtDock\nVM-002,Desk,9\n"
+    )
+    data["input"]["raw_base64"] = base64.b64encode(raw).decode()
+    data["profile_candidates"][0]["mapping"] = mapping
+    signed_input = SignedMapping.model_validate(data)
+
+    class UnsignedPolicy(StandalonePolicy):
+        def profiles(self, vendor, ids):
+            return signed_input.profile_candidates
+
+    policy = SnapshotPolicy(signed_input) if verified else UnsignedPolicy()
+    response = await MappingService(policy, Store()).suggest(
+        DEMO_ACTOR, signed_input.input, uuid4()
+    )
+    assert response.status == "abstained" and not response.assignments
+    assert response.reason != "SIGNED_PROFILE_BASELINE"
+
+
 @pytest.mark.parametrize(
     "change",
     [
