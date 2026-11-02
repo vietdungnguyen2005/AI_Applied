@@ -1,0 +1,31 @@
+-- Public CC0 synthetic corpus; cloud-full-context-v1, not the local E5 index.
+INSERT OR REPLACE INTO chunks VALUES('8500bf68-cea2-51ed-a993-e85248341e44','ed76d914-7c66-5102-9178-676334063938','335b9b7c-7f66-5542-85f4-169eac6a43dc','9e703e92-63c1-5c8d-ade4-fd98d135e0fb','encoding','Supplier A の原本は CP932 です。改行やバイト列を変えず、指定された文字コードを使用します。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('237146d7-d945-5ad8-a29f-6a06e113a72b','ed76d914-7c66-5102-9178-676334063938','335b9b7c-7f66-5542-85f4-169eac6a43dc','9e703e92-63c1-5c8d-ade4-fd98d135e0fb','mapping','商品コードは sku、商品名は name、在庫数は on_hand に対応します。許可される対象はこの三つだけです。数量は整数 0 から 1000000 までです。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('5d3080fa-f262-563d-b626-cc1cfc4d425b','ed76d914-7c66-5102-9178-676334063938','335b9b7c-7f66-5542-85f4-169eac6a43dc','9e703e92-63c1-5c8d-ade4-fd98d135e0fb','approval','提案は承認ではありません。人が既存の OPERATOR ワークフローで確認します。プレビュー receipt の有効期間は 600 秒です。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('28a68f19-8c66-593e-b3d2-3a6cd6fa1336','ed76d914-7c66-5102-9178-676334063938','335b9b7c-7f66-5542-85f4-169eac6a43dc','9e703e92-63c1-5c8d-ade4-fd98d135e0fb','pending','HTTP 202 は受付・ステージングです。完了は inspection の現在の状態で確認します。タイムアウト後に自動再送しません。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('b9641821-9644-5f6e-8b0c-9ecaf25b2fee','ed76d914-7c66-5102-9178-676334063938','335b9b7c-7f66-5542-85f4-169eac6a43dc','9e703e92-63c1-5c8d-ade4-fd98d135e0fb','freshness','ファイル名や三つの列から数量の業務上の鮮度を証明することはできません。原本の意味と時点を人が確認します。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('60de7341-f08c-594c-b96c-25021246dbde','ed76d914-7c66-5102-9178-676334063938','335b9b7c-7f66-5542-85f4-169eac6a43dc','9e703e92-63c1-5c8d-ade4-fd98d135e0fb','escalation','現在の模擬手順では、不明な列の意味は supplier contact に確認してからマッピングを保存します。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('1ecefd0c-eda3-5c3b-bb71-d8d968462a2f','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','466bb335-256b-569d-8000-7e8b4a0266d4','9d3918c2-078d-5f79-90d6-89282bb4430c','encoding','Supplier B supplies UTF-8 original bytes. Preserve the original file, declared encoding and line endings.','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('c7f4e09f-46de-5951-ab68-b5d2e4d49dfe','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','466bb335-256b-569d-8000-7e8b4a0266d4','9d3918c2-078d-5f79-90d6-89282bb4430c','mapping','SKU maps to sku, ProductName to name and AvailableQuantity to on_hand in the seeded synthetic contract. Only these three targets are allowed; quantities are integers from 0 through 1000000.','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('5af203c0-dd40-50da-843e-3a10e33eaa03','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','466bb335-256b-569d-8000-7e8b4a0266d4','9d3918c2-078d-5f79-90d6-89282bb4430c','approval','A draft is not approval. A human uses the existing authenticated OPERATOR workflow. Preview receipts expire after 600 seconds. 提案は承認ではありません。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('9fb7238a-ad83-5042-959c-ca404b34c60c','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','466bb335-256b-569d-8000-7e8b4a0266d4','9d3918c2-078d-5f79-90d6-89282bb4430c','pending','HTTP 202 means accepted/staged, not completed. Inspect the current job state. Do not automatically resend after a lost response.','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('6091bdbc-3242-5b63-bc20-ddf37d346cb5','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','466bb335-256b-569d-8000-7e8b4a0266d4','9d3918c2-078d-5f79-90d6-89282bb4430c','freshness','A filename or three-column file cannot prove business freshness. The operator must establish what the quantities mean and when they were observed.','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('080a12ca-8935-5837-9bfc-96f6374cb83a','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','466bb335-256b-569d-8000-7e8b4a0266d4','9d3918c2-078d-5f79-90d6-89282bb4430c','escalation','The current synthetic procedure is to clarify an unknown header with the supplier contact before saving a mapping.','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('fe10c12c-aeb7-5c89-b090-bbba5a272566','ed76d914-7c66-5102-9178-676334063938','4610a6af-32ce-5acf-8171-81f442b8cd77','713e6e36-b6be-55bf-9537-9c1662982382','intro','SYNTHETIC a-faq source version 1
+
+[section:receipt]
+プレビュー後に原本や profile version が変わった場合、再プレビューして人が確認します。Do not change original bytes to repair approval.
+
+[section:duplicates]
+同じ原本のバイト列を別の profile version で再利用しても、新しい import identity にはなりません。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('5895e8c7-870f-5cd5-891a-da3e12f88983','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','aee825e1-9d5c-5188-a1fc-ab78e2a59737','906d582e-6a82-5ae2-b42e-7d718371b6b9','intro','SYNTHETIC b-faq source version 1
+
+[section:receipt]
+If original bytes or profile version change after preview, obtain a new preview and human review. 原本を変えて承認を修復しません。
+
+[section:duplicates]
+Identical original bytes keep global import identity. A different profile version does not create a new deduplication namespace.','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('cedd26cc-7743-5b77-b9cd-5c34ffa2f773','ed76d914-7c66-5102-9178-676334063938','716676ba-1506-598c-b0bd-ceadfadbcd6f','da9ca50e-85da-55db-b708-13c43b9996b4','correction_window','模擬 policy X: Supplier A の訂正連絡期限は同じ営業日の終了時刻です。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('bae94655-5ac4-5462-b9d9-193e0940b894','ed76d914-7c66-5102-9178-676334063938','49519294-0865-5438-8cbf-ec39e821d213','1b3c0f27-9858-53e2-91d9-beebdd50e2a7','correction_window','模擬 policy Y: Supplier A の訂正連絡期限は翌営業日の終了時刻です。優先順位は未確定です。','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('4c38bbf6-b0b8-5519-ab50-ad79d425daaf','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','72425e2c-b591-5bc8-8d73-678d5756e125','be2d6239-8360-5f6a-a5cf-6f2a00b42e45','correction_window','Synthetic policy X requires Supplier B correction notices by the end of the same business day.','2026-10-01',NULL,1);
+INSERT OR REPLACE INTO chunks VALUES('9a75fe49-08b7-5de3-bb10-c1b1e02c8928','4aa83e9f-0a0a-5558-8f5e-0f87db27c923','4665032f-58bb-5170-9bea-879d02a6ff1f','c224da84-ef5a-5cd7-ba8e-a4e40067cb79','correction_window','Synthetic policy Y allows Supplier B correction notices until the end of the next business day. Precedence is unresolved.','2026-10-01',NULL,1);

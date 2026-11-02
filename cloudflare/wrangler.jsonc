@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vmarket-ai-applied",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-11-02",
+  "workers_dev": true,
+  "keep_vars": true,
+  "ai": {
+    "binding": "AI"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vmarket-ai-applied",
+      "database_id": "e6bcb117-1944-4ea1-8abf-26c9affcabbc"
+    }
+  ],
+  "observability": {
+    "enabled": false
+  },
+  "triggers": {
+    "crons": [
+      "17 * * * *"
+    ]
+  },
+  "vars": {
+    "PUBLIC_KEYS_JSON": "{\"cloud-20261103\":\"Uc/mAVuIqmUKa/eTJNpm81y1UibNtL0AnkqZFiwYR1U=\"}"
+  }
+}
