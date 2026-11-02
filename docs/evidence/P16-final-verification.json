@@ -8,12 +8,13 @@
     "errors": 0,
     "skipped": 0
   },
-  "junit_public_sha256": "9be9eb5be691f383c2a3d527712bf368f0d112ba87de97872fe6312240adce94",
+  "junit_public_sha256": "12989413d04e07ffcac70222f0dc8efbf73054634f3fd01667cf37058c5a2d8a",
   "junit_original_private_sha256": "b54d3a88fb1cb6bfb7b6760bfdc4dbd7d581cbddaf32fc1920fae4eae21a8b4c",
   "sanitization": "hostname attribute removed from public JUnit; no test outcomes changed",
   "postgres": "all eight opt-in cases executed against owned disposable AI database",
   "locked_offline_sync_exit": 0,
   "proposed_mapping_quality_gate": "FAIL: AI 2/10 vs proposed >=90%",
   "independent_human_acceptance": "NOT_RUN",
-  "public_deployment": false
+  "public_deployment": false,
+  "public_hash_normalization": "canonical Git LF bytes; original private raw digest retained separately"
 }
