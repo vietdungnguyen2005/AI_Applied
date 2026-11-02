@@ -18,8 +18,9 @@ not a claim of a production customer or independently validated model accuracy.
 6. **What security defect did evaluation uncover?** History substring matching
    admitted metadata/document UUIDs as jobs. P14 now accepts only explicit user
    UUID tokens or typed observed business job fields; seven cases cover the fix.
-7. **Does known job ID mean authorized?** No. Java/BFF reauthorize every actual
-   read and the server limits supplier scope; provenance is an additional gate.
+7. **Does known job ID mean authorized?** No. Java/BFF reauthorize every read;
+   document scopes are server-derived. Business OPERATOR access is shared-store,
+   not supplier tenancy. Identifier provenance is an additional gate.
 8. **How is source access enforced?** SQL grant/version/expiry filtering occurs
    before ranking/limits; current source access is checked again before release.
 9. **Why exact quotes?** The model selects bounded full source sentences; quote
