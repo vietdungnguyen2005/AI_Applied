@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
@@ -29,3 +30,13 @@ def test_duplicate_gate_identity_rejected():
             b'<testsuites><testsuite><testcase classname="a" name="x"/>'
             b'<testcase classname="a" name="x"/></testsuite></testsuites>'
         )
+
+
+def test_committed_gate_report_matches_observed_junit():
+    root = Path(__file__).resolve().parents[1] / "evals/p13/runs/security-workflow-v1"
+    rows = load_reporter().summarize((root / "raw.xml").read_bytes())
+    report = json.loads((root / "report.json").read_text(encoding="utf-8"))
+    assert report["cases"] == rows
+    assert report["observed_test_cases"] == len(rows) == 33
+    assert report["counts"] == {"passed": 33, "skipped": 0, "failure": 0, "error": 0}
+    assert report["status"] == "PASS" and all(r["status"] == "passed" for r in rows)

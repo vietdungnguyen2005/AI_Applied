@@ -1,0 +1,13 @@
+{
+  "source_commit": "1f7e1f21cdfdaf707c1571a9f192f5de1056ce66",
+  "measurement": "existing deterministic security and workflow regression gates",
+  "model_calls": 0,
+  "independent_human_review": "not performed",
+  "end_to_end_java_business_authorization": "not measured by these Python gates",
+  "files_sha256_lf": {
+    "tests/test_gateway.py": "8deb9b24bac576d23474ba9eb8177007e8db11ae26b12afdd5dc84e37dcb2f61",
+    "tests/test_runs.py": "b548ab6db26c140b7512f40d4ae502058a636535ac0404de6af51ce7939660fb",
+    "tests/test_signed_qa_postgres.py": "c7c766079ee5805a157494f7c9203ee295a42e1b40d7cfc170f24cf6e1b6a6ff",
+    "tools/p13_gate_report.py": "e6d17d70703cba779d6ddda6a3222106d6b9799838972e254b5746e51a363c1b"
+  }
+}

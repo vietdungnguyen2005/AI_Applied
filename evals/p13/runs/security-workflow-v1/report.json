@@ -1,0 +1,177 @@
+{
+  "status": "PASS",
+  "counts": {
+    "passed": 33,
+    "skipped": 0,
+    "failure": 0,
+    "error": 0
+  },
+  "observed_test_cases": 33,
+  "cases": [
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_wire_bundle_matches_contract_and_default_routes_disabled",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_signed_step_roundtrip_and_atomic_replay",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_standalone_mock_gateway_owns_results_and_marks_all_observations_fake",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bad_context_claims_denied_before_agent[change0]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bad_context_claims_denied_before_agent[change1]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bad_context_claims_denied_before_agent[change2]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bad_context_claims_denied_before_agent[change3]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bad_context_claims_denied_before_agent[change4]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bad_context_claims_denied_before_agent[change5]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bad_context_claims_denied_before_agent[change6]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_unsigned_tampered_duplicate_headers_and_wrong_binding_rejected",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_signed_scope_cannot_expand",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_strict_json_rejects_duplicate_and_nonfinite[{\"a\":1,\"a\":2}]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_strict_json_rejects_duplicate_and_nonfinite[{\"a\":NaN}]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_strict_json_rejects_duplicate_and_nonfinite[{\"a\":Infinity}]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_bounded_fake_plan_result_history_and_human_handoff",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_untrusted_model_intent_cannot_choose_write_url_scope_or_invented_job",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_flat_local_plan_is_compiled_to_strict_server_owned_intent",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_disconnected_request_cancels_work_and_joins_monitor",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_java_credentials_are_rejected_by_signed_python_routes[Cookie]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_java_credentials_are_rejected_by_signed_python_routes[Authorization]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_java_credentials_are_rejected_by_signed_python_routes[X-CSRF-TOKEN]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_java_credentials_are_rejected_by_signed_python_routes[X-V-Market-BFF-Secret]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_java_credentials_are_rejected_by_signed_python_routes[X-V-Market-Ops-Secret]",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_gateway",
+      "case": "test_real_pg_nonce_is_atomic_across_concurrent_requests_and_insert_only",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_runs",
+      "case": "test_run_survives_new_store_and_binds_owner_and_revision",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_runs",
+      "case": "test_interrupted_read_becomes_unknown_and_is_not_redispatched",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_runs",
+      "case": "test_cancel_fences_inflight_read_and_prevents_late_result",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_runs",
+      "case": "test_record_is_once_only_and_expiry_erases_payload_then_owner_purges",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_runs",
+      "case": "test_active_run_quota_is_bounded_and_expired_slots_are_reusable",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_runs",
+      "case": "test_pg_claim_cas_has_one_winner_and_protected_metadata",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_runs",
+      "case": "test_knowledge_history_retains_counts_but_never_cached_sop_text",
+      "status": "passed"
+    },
+    {
+      "suite": "tests.test_signed_qa_postgres",
+      "case": "test_signed_pg_source_rejects_wrong_scope_and_deleted_source",
+      "status": "passed"
+    }
+  ]
+}

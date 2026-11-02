@@ -171,6 +171,12 @@ executed. This small known-domain result is not an independently reviewed or
 end-to-end tool-quality claim. All 22 outputs and an empty blind-review template
 are retained with a reproducible offline verifier.
 
+The [security/workflow regression measurement](../../docs/evidence/P13-security-workflow.md)
+also ran 33 existing deterministic Python cases with PostgreSQL enabled: all
+passed and none were skipped. Raw JUnit and per-case results are retained in
+`runs/security-workflow-v1`. These are software gate regressions, not independent
+held-out task quality or end-to-end Java authorization measurements.
+
 To reproduce operationally, start the existing local Ollama 4B model and Docker,
 prepare the Project2 production build/JAR, then run in a clean committed checkout:
 
