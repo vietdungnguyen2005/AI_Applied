@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-02 Asia/Bangkok",
+  "project2_baseline": "998c2ebf304aefd28b861cd34c9021cd4ebfb13e",
+  "project2_result": "c851ef9972757a3953b35e3da498c8889f224302",
+  "project2_result_tree": "9d75d33d9e91276ca629e4752af5420e40c62d43",
+  "patch_reproduces_tree": true,
+  "project2_remote_push": false,
+  "node_version": "24.12.0",
+  "python_audit_tool": "pip-audit 2.10.1",
+  "python_audit": {
+    "audited": 73,
+    "vulnerable": 0,
+    "skipped": [
+      "vmarket-ai 0.1.0 not on PyPI"
+    ]
+  },
+  "frontend": {
+    "tests": 124,
+    "failed": 0,
+    "lint": 0,
+    "typecheck": 0,
+    "next_build": 0,
+    "worker_build": 0,
+    "clean_install": 0
+  },
+  "backend": {
+    "tests": 115,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "maven_verify": 0
+  },
+  "python": {
+    "tests_passed": 352,
+    "postgres_opt_in_skipped": 8,
+    "mypy_source_files": 66
+  },
+  "npm_before": {
+    "moderate": 17,
+    "high": 2,
+    "total": 19
+  },
+  "npm_after": {
+    "moderate": 15,
+    "high": 0,
+    "total": 15,
+    "audit_exit": 1
+  },
+  "patch_sha256": "57b0df344868bccab3c5209994e73ac640455abf3b51b4db5ebea94c0b2822cc"
+}

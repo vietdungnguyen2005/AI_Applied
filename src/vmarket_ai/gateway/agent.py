@@ -180,7 +180,27 @@ class AgentService:
         ).issubset(payload["collection_ids"]):
             raise GatewayError("ACCESS_DENIED", 403)
         if "job_id" in intent["arguments"]:
-            known = payload["question"] + json.dumps(history)
+            # Observation metadata/document text is untrusted and cannot introduce
+            # business identifiers. Only explicit user IDs or typed job fields do.
+            known = {
+                str(UUID(value))
+                for value in re.findall(
+                    r"(?<![0-9a-f-])[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}(?![0-9a-f-])",
+                    payload["question"],
+                    re.I,
+                )
+            }
+            for observed in history:
+                observed_data = observed["data"] or {}
+                name = observed["tool_name"]
+                if name == "get_imports":
+                    known.update(
+                        str(UUID(job["job_id"])) for job in observed_data.get("imports", [])
+                    )
+                elif name == "inspect_import_job" and observed_data.get("job"):
+                    known.add(str(UUID(observed_data["job"]["job_id"])))
+                elif name == "get_reconciliation_report" and observed_data.get("job_id"):
+                    known.add(str(UUID(observed_data["job_id"])))
             if intent["arguments"]["job_id"] not in known:
                 raise GatewayError("OUTPUT_INVALID", 502)
         response = {
