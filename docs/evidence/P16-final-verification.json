@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-02 Asia/Bangkok",
+  "source_commit": "6ca3ae4ad4009ea55b7a4a2244fb807eb20a95f1",
+  "mode": "clean detached checkout with separate locked Python environment and no copied .env",
+  "tests": {
+    "tests": 380,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "junit_public_sha256": "9be9eb5be691f383c2a3d527712bf368f0d112ba87de97872fe6312240adce94",
+  "junit_original_private_sha256": "b54d3a88fb1cb6bfb7b6760bfdc4dbd7d581cbddaf32fc1920fae4eae21a8b4c",
+  "sanitization": "hostname attribute removed from public JUnit; no test outcomes changed",
+  "postgres": "all eight opt-in cases executed against owned disposable AI database",
+  "locked_offline_sync_exit": 0,
+  "proposed_mapping_quality_gate": "FAIL: AI 2/10 vs proposed >=90%",
+  "independent_human_acceptance": "NOT_RUN",
+  "public_deployment": false
+}

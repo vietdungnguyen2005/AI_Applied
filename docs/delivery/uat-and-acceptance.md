@@ -7,6 +7,10 @@ updates the historical P01 specification; it does not silently rewrite it as app
 
 ## Actual execution
 
+- Final delivery checkout `6ca3ae4`: **380/380 pass**, zero skips including PG;
+  [verification](../evidence/P16-final-verification.json) and sanitized JUnit.
+  Earlier378-test counts below retain their original snapshot rather than being rewritten.
+
 - Clean checkout `1c84710`: locked offline install, migrate/fake-check, **378/378
   tests including real PostgreSQL**, no skips; mypy66 and 76 contract checks pass.
 - Project2 local `39fbf11`: frontend124, backend115, lint/types/Next/Worker build
