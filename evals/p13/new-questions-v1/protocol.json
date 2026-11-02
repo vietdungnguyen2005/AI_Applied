@@ -1,0 +1,25 @@
+{
+  "version": "p13-new-questions-v1",
+  "status": "preregistered_before_first_inference",
+  "dataset": "eight newly authored questions over existing public synthetic corpus; developer knew previous results; not independently blind or human reviewed",
+  "train_dev": "none for this release; previous v1 splits remain unchanged",
+  "test": "all eight input IDs; labels kept separate until all predictions are recorded",
+  "duplicate_policy": "exact normalized question check against prior v1 and P07 QA cases; thematic near-duplicates and shared documents are explicitly acknowledged",
+  "qa": "local Qwen 4B Q4_K_M; current signed BFF with one real Java active profile; extractive QA, 512 output tokens, context 4096, temperature 0.2, seed 42, no retries; score after all predictions",
+  "retrieval": "same E5 bundle/corpus/config, top5, lexical/dense/hybrid; document+section relevance; no reranker; current ACL, same scope/as_of",
+  "measurements": "per-case status/answer/source and ranked document/section, Recall@5 and MRR@5 for positive relevance, latency p50/p95; local provider bill zero, compute cost not measured",
+  "not_run": [
+    "human semantic review",
+    "independent customer data",
+    "mapping test inference",
+    "reranker",
+    "no-retrieval matched baseline",
+    "agent tool selection quality",
+    "security/workflow quality metrics"
+  ],
+  "stopping": "persist each result; no automatic retry; unavailable rows recorded; do not alter dataset/parameters after seeing predictions",
+  "external_inference": "forbidden",
+  "qa_baseline": "Empty-evidence service guard invokes no model; HTTP/auth differs; not a matched prompt-only LLM baseline",
+  "retrieval_as_of": "UTC calendar date at evaluation; recorded; cases run sequentially without retries",
+  "scope": "Eight newly authored questions on existing public synthetic sources; author saw prior metrics, same-topic overlap; no independent blind holdout or human labels"
+}

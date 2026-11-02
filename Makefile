@@ -2,8 +2,8 @@
 install:
 	python -m uv sync --locked
 lint:
-	python -m uv run --frozen ruff check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py tools/p10_local_smoke.py tools/p10_checks.py tools/p11_local_smoke.py tools/p11_checks.py tools/p11_proxy.py tools/p12_checks.py tools/p12_local_smoke.py tools/p12_model_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py evals/p13/verify.py
-	python -m uv run --frozen ruff format --check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py tools/p10_local_smoke.py tools/p10_checks.py tools/p11_local_smoke.py tools/p11_checks.py tools/p11_proxy.py tools/p12_checks.py tools/p12_local_smoke.py tools/p12_model_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py evals/p13/verify.py
+	python -m uv run --frozen ruff check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py tools/p10_local_smoke.py tools/p10_checks.py tools/p11_local_smoke.py tools/p11_checks.py tools/p11_proxy.py tools/p12_checks.py tools/p12_local_smoke.py tools/p12_model_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py evals/p13/verify.py tools/p13_new_questions.py
+	python -m uv run --frozen ruff format --check src tests migrations tools/validate_contracts.py tools/p09_local_smoke.py tools/p10_local_smoke.py tools/p10_checks.py tools/p11_local_smoke.py tools/p11_checks.py tools/p11_proxy.py tools/p12_checks.py tools/p12_local_smoke.py tools/p12_model_smoke.py evals/retrieval/analyze.py evals/mapping/analyze.py evals/p13/verify.py tools/p13_new_questions.py
 typecheck:
 	python -m uv run --frozen mypy
 test:

@@ -1,0 +1,8 @@
+{"collection": "b", "id": "q13-01", "language": "en", "question": "How many seconds is a supplier preview receipt valid?", "split": "test"}
+{"collection": "b", "id": "q13-02", "language": "en", "question": "Can the filename alone establish how current the supplier quantities are?", "split": "test"}
+{"collection": "b", "id": "q13-03", "language": "en", "question": "Whom should an operator consult about an unfamiliar supplier column before saving a mapping?", "split": "test"}
+{"collection": "b", "id": "q13-04", "language": "en", "question": "After a timeout, should an accepted HTTP 202 operation be automatically resent?", "split": "test"}
+{"collection": "a", "id": "q13-05", "language": "ja", "question": "数量について許される整数の範囲は何ですか。", "split": "test"}
+{"collection": "a", "id": "q13-06", "language": "ja", "question": "プレビュー receipt の有効期間は何秒ですか。", "split": "test"}
+{"collection": "b", "id": "q13-07", "language": "en", "question": "What hourly overtime wage does Supplier B pay its employees?", "split": "test"}
+{"collection": "b", "id": "q13-08", "language": "en", "question": "By when must Supplier B submit a correction notice?", "split": "test"}

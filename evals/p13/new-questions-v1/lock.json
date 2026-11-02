@@ -1,0 +1,14 @@
+{
+  "version": "p13-new-questions-v1",
+  "case_count": 8,
+  "files_sha256": {
+    "inputs.jsonl": "49d5765e9cf16e03b24fecfc66685c1765d650f6f63bbd5fb490272075d2f045",
+    "labels.jsonl": "ca792aca45b46876f84a5a948fdf71dfeec01522e9a444dc11067f2c7ed065d5",
+    "protocol.json": "85ea02584dd1afad04be37db5ab296d3b0d4f4393dbd60b4f98280142e08ad59"
+  },
+  "corpus_release_lock_sha256": "957114fb0a0137f556833296eae3759489367702c8f23b7811c0aa0683511eed",
+  "prior_qa_cases_sha256": "fd2e4dc90f75cf8e07c2ebf3e51a7437733f790664babbabd45c9db72f7c55c8",
+  "prior_queries_sha256": "1e4a21b7951a14d990ec377aabab19396492c6c72fccc6813de6761e8b185abb",
+  "independent_review": "pending",
+  "inference_has_occurred": false
+}

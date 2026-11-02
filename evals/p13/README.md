@@ -95,6 +95,17 @@ uncertain call and was not touched by this offline analysis.
 
 ## P13 work still required
 
+An [additional question set](new-questions-v1/inputs.jsonl) is preregistered for
+local QA and lexical/dense/hybrid retrieval. Its separately stored provisional
+[labels](new-questions-v1/labels.jsonl), [protocol](new-questions-v1/protocol.json)
+and [lock](new-questions-v1/lock.json) are frozen before the first model run. The
+lock's `inference_has_occurred: false` records the freeze-time state and is not
+updated after execution. `python -m vmarket_ai.evaluation.new_questions` checks
+the release, IDs, source references and exact normalized duplicate questions.
+All eight questions are new to this experiment, but their author knew previous
+results, the SOP documents are shared and some topics overlap earlier cases. This
+is **not** an independently blind or human-reviewed new-domain holdout.
+
 Design and freeze a **new** independent held-out release and separate model input
 from labels; record exact and near-duplicate review and independent human label
 review. The release must cover answer/source/abstention/conflict, retrieval,
