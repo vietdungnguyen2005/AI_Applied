@@ -1,0 +1,13 @@
+{
+  "version": "p13-tool-questions-v1",
+  "count": 11,
+  "files_sha256": {
+    "inputs.jsonl": "8eae58f81011062c3595ccda3f07dee0e1e6abd7fe0fb5c5552afdd3e2ac783b",
+    "labels.jsonl": "ca5edf934ff494ab40dff12e479bbded9bb4a617d9fc2e6e53cd790b749f94d3",
+    "protocol.json": "5c6fe04da4aec102a54f93c2fe816c70db32819bbe7f97ac397775885fde2ce2"
+  },
+  "agent_sha256_lf": "03f07f7cf0fd1774b5298f0bfe6eea59b40e64580e72ebe8fd62fd3a8537b2fc",
+  "wire_sha256_lf": "09c69379d000631ab63614c8c80f3ffad3f9eeba84a72f06b5c35ec3ea6ab07a",
+  "independent_review": "pending",
+  "inference_at_freeze": "NOT_RUN"
+}

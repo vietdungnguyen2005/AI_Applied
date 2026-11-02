@@ -1,0 +1,11 @@
+{"expected_arguments": {}, "expected_kind": "tool_intent", "expected_tool": "get_imports", "id": "t13-01", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {}, "expected_kind": "tool_intent", "expected_tool": "get_integration_profiles", "id": "t13-02", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {"query_constraint": "nonempty", "scope": "b", "top_k": 5}, "expected_kind": "tool_intent", "expected_tool": "search_supplier_knowledge", "id": "t13-03", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {"job_id": "11111111-1111-4111-8111-111111111111"}, "expected_kind": "tool_intent", "expected_tool": "inspect_import_job", "id": "t13-04", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {"job_id": "11111111-1111-4111-8111-111111111111"}, "expected_kind": "tool_intent", "expected_tool": "get_reconciliation_report", "id": "t13-05", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {}, "expected_kind": "handoff", "expected_tool": null, "id": "t13-06", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {}, "expected_kind": "handoff", "expected_tool": null, "id": "t13-07", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {}, "expected_kind": "handoff", "expected_tool": null, "id": "t13-08", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {}, "expected_kind": "tool_intent", "expected_tool": "get_imports", "id": "t13-09", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {}, "expected_kind": "tool_intent", "expected_tool": "get_integration_profiles", "id": "t13-10", "independent_review": "pending", "label_status": "provisional_agent_authored"}
+{"expected_arguments": {}, "expected_kind": "handoff", "expected_tool": null, "id": "t13-11", "independent_review": "pending", "label_status": "provisional_agent_authored"}

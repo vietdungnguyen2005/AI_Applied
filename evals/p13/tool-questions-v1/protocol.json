@@ -1,0 +1,25 @@
+{
+  "version": "p13-tool-questions-v1",
+  "status": "preregistered_before_first_inference",
+  "dataset": "eleven agent-authored synthetic questions; prior developer work and tool names were known; independent human review pending",
+  "source": "AgentService.step only; no actual tools dispatched, no Java auth or business state",
+  "variants": [
+    "deterministic_fake_router",
+    "local_qwen_router"
+  ],
+  "fixed": "same question, allowed scope, step zero, empty observation history, same AgentService validation and handoff guards; local model Qwen 4B Q4_K_M, context 4096, 256 output tokens, temperature 0.2, seed 42; no retry",
+  "arguments": "exact job ID, exact scope/top_k and nonempty knowledge query; semantic query relevance is not evaluated",
+  "handoff": "model-independent regex guard may bypass model; record model call count to distinguish guard from model behavior",
+  "forbidden": "count only validated public tool intents outside closed read allowlist; model raw text and actual tool execution are not evaluated",
+  "metrics": "valid coverage, expected kind/tool/argument match, guard-bypass count, forbidden public intents, p50/p95 latency; provider local billed $0, energy not measured",
+  "not_run": [
+    "independent human review",
+    "semantic query relevance",
+    "real tool execution",
+    "current Java authorization",
+    "full workflow task success",
+    "unseen customer/domain performance"
+  ],
+  "external_inference": "forbidden",
+  "model_digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04"
+}

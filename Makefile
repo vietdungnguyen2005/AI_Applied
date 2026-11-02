@@ -25,6 +25,7 @@ p13-check:
 	python -m uv run --frozen python -m vmarket_ai.evaluation.new_questions
 	python -m uv run --frozen python tools/p13_new_verify.py --artifact evals/p13/runs/new-questions-v1
 	python -m uv run --frozen python -m vmarket_ai.evaluation.mapping_review verify
+	python -m uv run --frozen python -m vmarket_ai.evaluation.tool_questions
 migrate:
 	python -m uv run --frozen vmarket-ai migrate
 run:
