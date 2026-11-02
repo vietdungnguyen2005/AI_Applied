@@ -98,6 +98,7 @@ def mapping_records(
                 "run": run,
                 "method": row["method"],
                 "status": row["status"],
+                "assignments": output,
                 "expected_status": label["expected_suggestion"],
                 "mapping_labeled": expected is not None,
                 "exact_mapping": exact,

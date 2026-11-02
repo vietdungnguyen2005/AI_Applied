@@ -52,6 +52,7 @@ def test_unlabeled_mapping_is_not_counted_as_wrong_accuracy():
         "response": {"assignments": [{"target_field": "sku", "source_header": "SKU"}]},
     }
     parsed = mapping_records([prediction], gold, "fixture")
+    assert parsed[0]["assignments"] == {"sku": "SKU"}
     metrics = summarize([], parsed)
     accuracy = next(row for row in metrics if row["metric"] == "exact_mapping_accuracy")
     assert accuracy["value"] is None and accuracy["n"] == 0
