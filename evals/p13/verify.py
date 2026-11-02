@@ -7,8 +7,10 @@ import re
 import subprocess
 from pathlib import Path
 
+from vmarket_ai.evaluation.regression import input_digest
+
 ROOT = Path(__file__).resolve().parents[2]
-RUN = ROOT / "evals/p13/runs/retrospective-v1"
+RUN = ROOT / "evals/p13/runs/retrospective-v2"
 
 
 def sha(data: bytes) -> str:
@@ -33,7 +35,9 @@ def verify(run: Path, comparison: Path | None = None) -> None:
         raise ValueError("Recorded implementation hash changed")
     for name, expected in config["input_sha256"].items():
         path = (ROOT / name).resolve()
-        if not path.is_relative_to(ROOT) or sha(path.read_bytes()) != expected:
+        if config.get("input_hash_scheme") != "git_text_lf_and_frozen_data_v1_raw_sha256":
+            raise ValueError("Unsupported input hash scheme")
+        if not path.is_relative_to(ROOT) or input_digest(name, path.read_bytes()) != expected:
             raise ValueError("Input missing, outside repository, or changed: " + name)
     predictions = (run / "predictions.jsonl").read_text(encoding="utf-8").splitlines()
     if len(predictions) != manifest["records"]:

@@ -28,6 +28,13 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def input_digest(name: str, content: bytes) -> str:
+    # Git text paths are canonical LF on every platform. Frozen data/v1 bytes stay exact.
+    if name.startswith(("evals/", "data/releases/", "src/")):
+        content = content.replace(b"\r\n", b"\n")
+    return hashlib.sha256(content).hexdigest()
+
+
 def ratio(numerator: float, denominator: int) -> float | None:
     return numerator / denominator if denominator else None
 
@@ -266,8 +273,14 @@ def main() -> None:
         .decode()
         .strip(),
         "generated_at_utc": datetime.now(UTC).isoformat(),
-        "implementation_sha256": sha(Path(__file__)),
-        "input_sha256": {str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in input_paths},
+        "implementation_sha256": input_digest("src/evaluation.py", Path(__file__).read_bytes()),
+        "input_sha256": {
+            str(p.relative_to(ROOT)).replace("\\", "/"): input_digest(
+                str(p.relative_to(ROOT)).replace("\\", "/"), p.read_bytes()
+            )
+            for p in input_paths
+        },
+        "input_hash_scheme": "git_text_lf_and_frozen_data_v1_raw_sha256",
         "label_status": "provisional_agent_authored; independent human review pending",
         "test_status": (
             "retrieval test consumed previously; regression only; mapping test inference not run"

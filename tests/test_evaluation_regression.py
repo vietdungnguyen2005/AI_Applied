@@ -4,7 +4,22 @@ from pathlib import Path
 
 import pytest
 
-from vmarket_ai.evaluation.regression import mapping_records, ratio, retrieval_records, summarize
+from vmarket_ai.evaluation.regression import (
+    input_digest,
+    mapping_records,
+    ratio,
+    retrieval_records,
+    summarize,
+)
+
+
+def test_git_text_hashes_normalize_line_endings_but_frozen_original_data_does_not():
+    assert input_digest("evals/qa/config.json", b"one\r\ntwo\r\n") == input_digest(
+        "evals/qa/config.json", b"one\ntwo\n"
+    )
+    assert input_digest("data/v1/csv/raw.csv", b"one\r\ntwo\r\n") != input_digest(
+        "data/v1/csv/raw.csv", b"one\ntwo\n"
+    )
 
 
 def test_zero_relevance_is_excluded_and_forbidden_result_is_detected():
