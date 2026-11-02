@@ -1,0 +1,49 @@
+{
+  "scope": "local health/readiness only; no model/tool quality or production SLA",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.1"
+  },
+  "requests": 4,
+  "concurrency": 1,
+  "request_timeout_seconds": 3,
+  "duration_seconds": 2.103455699994811,
+  "error_rate": 0.5,
+  "correlation_coverage": 1.0,
+  "latency_all_outcomes": {
+    "median_ms": 545.8281999963219,
+    "p95_ms": 1006.3777549898077
+  },
+  "model_calls": 0,
+  "provider_charge_usd": 0,
+  "observations": [
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "336404b4-e097-4d39-bb11-56c96d1e36fd",
+      "correlation_echo": true,
+      "elapsed_ms": 85.94020000600722
+    },
+    {
+      "endpoint": "/ready",
+      "status": 503,
+      "request_id": "e537d8a8-61ed-4158-9239-ea76f9d58689",
+      "correlation_echo": true,
+      "elapsed_ms": 1006.4944999903673
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "18cb0000-6265-46dd-980b-fc5cd1ff8346",
+      "correlation_echo": true,
+      "elapsed_ms": 4.961899991030805
+    },
+    {
+      "endpoint": "/ready",
+      "status": 503,
+      "request_id": "fdc91dc1-d141-47b6-8097-c1de006cad47",
+      "correlation_echo": true,
+      "elapsed_ms": 1005.7161999866366
+    }
+  ]
+}

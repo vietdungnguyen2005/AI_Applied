@@ -1,0 +1,122 @@
+{
+  "mode": "disposable_local_integration",
+  "external_provider_calls": 0,
+  "checks": [],
+  "source_commit": "1c8471019ebcd9c1215d587748920e6615794cad",
+  "project2_commit": "39fbf11b03c1cbd8a59a803f9d2df05a2b131511",
+  "next_build_id": "WBzQvF7Gq6VdMgT5m5023",
+  "java_jar_sha256": "cdd78c082f9189cd82240a4573fd0e44e86139d05bf917a160fcb9349d4c9039",
+  "no_java_or_signing_secrets_in_python_env": true,
+  "container": {
+    "image": "sha256:ed946c87ed285809d20e990eae3a0eeb333a74789c70a3a2f186844b10d34666",
+    "loopback_published": true,
+    "private_network": true,
+    "network_internal": false,
+    "read_only": true,
+    "memory_bytes": 536870912,
+    "cpus": 1,
+    "no_java_signing_or_provider_secrets": true
+  },
+  "status": "PASS",
+  "business_before": {
+    "product": [
+      8,
+      "ef6115452e45796e2f54ea53ad4e5af0"
+    ],
+    "inventory_stock": [
+      8,
+      "cf5f7741b78849c7d0a5ffcb78fa201b"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "63e355d3a4af1909a3c5a5dc8888f415"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_after": {
+    "product": [
+      8,
+      "ef6115452e45796e2f54ea53ad4e5af0"
+    ],
+    "inventory_stock": [
+      8,
+      "cf5f7741b78849c7d0a5ffcb78fa201b"
+    ],
+    "inventory_movement": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "customer_order": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "migration_job": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "import_work_item": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "staged_import_row": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_run": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "reconciliation_discrepancy": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ],
+    "integration_profile": [
+      2,
+      "63e355d3a4af1909a3c5a5dc8888f415"
+    ],
+    "audit_event": [
+      0,
+      "d41d8cd98f00b204e9800998ecf8427e"
+    ]
+  },
+  "business_unchanged_11_tables": true,
+  "unsigned_step_http": 401,
+  "unsigned_qa_http": 404,
+  "ai_outage_http": 503,
+  "manual_profiles_during_ai_outage_http": 200,
+  "outage_code": "DEPENDENCY_UNAVAILABLE",
+  "durable_restart_preserved": true,
+  "observed_import_count": 0,
+  "scope": "actual local Docker AI/PG plus host Java/BFF; fake planner, no semantic model quality"
+}

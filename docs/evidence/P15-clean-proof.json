@@ -1,0 +1,37 @@
+{
+  "source_commit": "1c8471019ebcd9c1215d587748920e6615794cad",
+  "clean_checkout": "detached worktree, no .env copied",
+  "uv_sync_locked_offline_exit": 0,
+  "migrate_exit": 0,
+  "fake_check_exit": 0,
+  "external_calls_fake_check": 0,
+  "clean_tests": {
+    "tests": 378,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "mypy_files": 66,
+  "contract_checks": 76,
+  "contract_cases": 69,
+  "hardware": {
+    "cpu": "Intel Core i9-14900HX",
+    "physical_cores": 24,
+    "logical_cpus": 32,
+    "host_memory_bytes": 34070192128
+  },
+  "initial_container_attempt": {
+    "status": "FAIL",
+    "failure_type": "RuntimeError",
+    "reason": "Docker internal bridge host port readiness deadline; dedicated bridge repetition passed"
+  },
+  "initial_db_probe": {
+    "client_timeout_seconds": 2,
+    "readiness_status": "client timeout",
+    "health_status": 200
+  },
+  "remediation": "single in-flight DB readiness work; one-second response budget; final outage returns503",
+  "all_app_containers": false,
+  "java_next_runtime": "host; AI and storage in Docker",
+  "production_deployment": false
+}

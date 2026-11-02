@@ -1,0 +1,167 @@
+{
+  "scope": "archived synthetic benchmark observations; proxies not human quality or live service monitoring",
+  "groups": [
+    {
+      "domain": "mapping",
+      "method": "ai",
+      "observations": 12,
+      "request_error_rate": 0.0,
+      "tool_fail_rate": null,
+      "quality_proxies": {
+        "exact_mapping": {
+          "true": 2,
+          "n": 10,
+          "rate": 0.2
+        },
+        "model_output_rejected": {
+          "true": 0,
+          "n": 12,
+          "rate": 0.0
+        },
+        "model_unavailable": {
+          "true": 0,
+          "n": 12,
+          "rate": 0.0
+        },
+        "status_correct": {
+          "true": 1,
+          "n": 12,
+          "rate": 0.08333333333333333
+        }
+      },
+      "latency_all_outcomes": {
+        "median_ms": 770.5001499962236,
+        "p95_ms": 931.0226600038732
+      },
+      "returned_model_results": 12,
+      "returned_prompt_tokens": 4382,
+      "returned_completion_tokens": 226,
+      "provider_cost_from_returned_results_usd": "0",
+      "provider_cost_observations": 12
+    },
+    {
+      "domain": "mapping",
+      "method": "rule",
+      "observations": 12,
+      "request_error_rate": 0.0,
+      "tool_fail_rate": null,
+      "quality_proxies": {
+        "exact_mapping": {
+          "true": 0,
+          "n": 10,
+          "rate": 0.0
+        },
+        "model_output_rejected": {
+          "true": 0,
+          "n": 12,
+          "rate": 0.0
+        },
+        "model_unavailable": {
+          "true": 0,
+          "n": 12,
+          "rate": 0.0
+        },
+        "status_correct": {
+          "true": 2,
+          "n": 12,
+          "rate": 0.16666666666666666
+        }
+      },
+      "latency_all_outcomes": {
+        "median_ms": 4.510550003033131,
+        "p95_ms": 15.490610001143061
+      },
+      "returned_model_results": 0,
+      "returned_prompt_tokens": 0,
+      "returned_completion_tokens": 0,
+      "provider_cost_from_returned_results_usd": null,
+      "provider_cost_observations": 0
+    },
+    {
+      "domain": "qa",
+      "method": "with_sources",
+      "observations": 8,
+      "request_error_rate": 0.25,
+      "tool_fail_rate": null,
+      "quality_proxies": {
+        "abstain_reason_correct": {
+          "true": 1,
+          "n": 1,
+          "rate": 1.0
+        },
+        "anchor_proxy": {
+          "true": 5,
+          "n": 5,
+          "rate": 1.0
+        },
+        "citation_proxy": {
+          "true": 5,
+          "n": 5,
+          "rate": 1.0
+        },
+        "decision_correct": {
+          "true": 6,
+          "n": 6,
+          "rate": 1.0
+        },
+        "valid": {
+          "true": 6,
+          "n": 8,
+          "rate": 0.75
+        }
+      },
+      "latency_all_outcomes": {
+        "median_ms": 1320.6408999976702,
+        "p95_ms": 1813.2956049958007
+      },
+      "returned_model_results": 8,
+      "returned_prompt_tokens": 4839,
+      "returned_completion_tokens": 524,
+      "provider_cost_from_returned_results_usd": "0",
+      "provider_cost_observations": 8
+    },
+    {
+      "domain": "qa",
+      "method": "without_sources",
+      "observations": 8,
+      "request_error_rate": 0.0,
+      "tool_fail_rate": null,
+      "quality_proxies": {
+        "abstain_reason_correct": {
+          "true": 1,
+          "n": 2,
+          "rate": 0.5
+        },
+        "anchor_proxy": {
+          "true": 0,
+          "n": 6,
+          "rate": 0.0
+        },
+        "citation_proxy": {
+          "true": 0,
+          "n": 6,
+          "rate": 0.0
+        },
+        "decision_correct": {
+          "true": 2,
+          "n": 8,
+          "rate": 0.25
+        },
+        "valid": {
+          "true": 8,
+          "n": 8,
+          "rate": 1.0
+        }
+      },
+      "latency_all_outcomes": {
+        "median_ms": 597.1840500023973,
+        "p95_ms": 597.8643349997583
+      },
+      "returned_model_results": 8,
+      "returned_prompt_tokens": 2024,
+      "returned_completion_tokens": 80,
+      "provider_cost_from_returned_results_usd": "0",
+      "provider_cost_observations": 8
+    }
+  ]
+}

@@ -1,0 +1,721 @@
+{
+  "scope": "local health/readiness only; no model/tool quality or production SLA",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.1"
+  },
+  "requests": 100,
+  "concurrency": 4,
+  "request_timeout_seconds": 3,
+  "duration_seconds": 0.2794969999958994,
+  "error_rate": 0.0,
+  "correlation_coverage": 1.0,
+  "latency_all_outcomes": {
+    "median_ms": 8.65640000847634,
+    "p95_ms": 14.330515002802713
+  },
+  "model_calls": 0,
+  "provider_charge_usd": 0,
+  "observations": [
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "470df8cc-4c41-42a5-adcc-eff817c9d5ca",
+      "correlation_echo": true,
+      "elapsed_ms": 43.29420000431128
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "053d5709-4b75-4bbd-95cc-e7641d192c5b",
+      "correlation_echo": true,
+      "elapsed_ms": 17.157400012365542
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "81cf92f2-2c36-493e-b05f-0ea8c39ded23",
+      "correlation_echo": true,
+      "elapsed_ms": 13.63810000475496
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "1b66514d-d0b9-4809-9de3-08798be6a995",
+      "correlation_echo": true,
+      "elapsed_ms": 15.089699998497963
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "a1a098da-2352-43f5-a682-12c78f6799a1",
+      "correlation_echo": true,
+      "elapsed_ms": 9.404700002050959
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "27b50798-ec2d-47f0-bfa5-cf28d80fb0e7",
+      "correlation_echo": true,
+      "elapsed_ms": 8.256799992523156
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "b72def9d-68cf-4f2a-977c-fdb026ea3f57",
+      "correlation_echo": true,
+      "elapsed_ms": 8.959500002674758
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "26caf0d8-8d48-4aa0-b8f1-15b1e000d532",
+      "correlation_echo": true,
+      "elapsed_ms": 11.522599990712479
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "9933c049-d4ec-43e5-a71b-ee5be85d47c4",
+      "correlation_echo": true,
+      "elapsed_ms": 7.796800011419691
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "c45c8260-b6c9-41e3-be4a-49b6f7d49741",
+      "correlation_echo": true,
+      "elapsed_ms": 9.965100005501881
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "52272cb7-e311-47b0-9725-3c243fb63359",
+      "correlation_echo": true,
+      "elapsed_ms": 9.71410000056494
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "fef7fa3f-c9a6-4139-b7e7-fae5331f43f1",
+      "correlation_echo": true,
+      "elapsed_ms": 8.481900003971532
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "0aaa9e32-ee7b-4ff0-abc5-626d576a36bc",
+      "correlation_echo": true,
+      "elapsed_ms": 9.698199995909818
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "453e3f6b-c898-4146-bd81-0b2f5694c712",
+      "correlation_echo": true,
+      "elapsed_ms": 8.323300004121847
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "aacb25a9-4cb3-4acf-8dda-ce41eabf0d2e",
+      "correlation_echo": true,
+      "elapsed_ms": 8.580800000345334
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "aec00a46-94d0-41da-a950-d6ac9fb332d3",
+      "correlation_echo": true,
+      "elapsed_ms": 8.640999993076548
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "9af3a33b-5207-4d1a-ab44-44b28b925c92",
+      "correlation_echo": true,
+      "elapsed_ms": 8.302600006572902
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "e4adfa1d-90f8-4dd2-862e-a407bf6b2ce7",
+      "correlation_echo": true,
+      "elapsed_ms": 8.20219999877736
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "66d0a415-edb2-4156-be68-6a6c6996d706",
+      "correlation_echo": true,
+      "elapsed_ms": 8.367600006749853
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "18b3a860-b9c3-4320-a21f-2491f3884459",
+      "correlation_echo": true,
+      "elapsed_ms": 8.375499994144775
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "b79141c6-843d-4dfe-bc70-44ca13f56860",
+      "correlation_echo": true,
+      "elapsed_ms": 8.108399997581728
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "e1da492a-5b7e-4264-a85b-c28d5d72686b",
+      "correlation_echo": true,
+      "elapsed_ms": 8.826899997075088
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "d3fee495-329f-4c51-833e-1c06d0accdc6",
+      "correlation_echo": true,
+      "elapsed_ms": 8.356500009540468
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "39be3832-c186-42bc-918f-b87a3a847c6d",
+      "correlation_echo": true,
+      "elapsed_ms": 8.188600011635572
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "7bd5ed91-077c-4c10-b90f-366f974abb8e",
+      "correlation_echo": true,
+      "elapsed_ms": 8.728799992240965
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "5edb328a-6eab-49d0-9279-58f35796fbe2",
+      "correlation_echo": true,
+      "elapsed_ms": 7.838800011086278
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "8e57032d-2fdc-4819-b869-d716f4a38e7f",
+      "correlation_echo": true,
+      "elapsed_ms": 8.404399995924905
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "bbcc409d-8341-4a1c-b1be-c9d62b222f9d",
+      "correlation_echo": true,
+      "elapsed_ms": 8.65630000771489
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "48b2d3b8-2969-4b5c-b6c6-741914dfffc9",
+      "correlation_echo": true,
+      "elapsed_ms": 12.684200002695434
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "2ee91ea9-139b-48f3-8e19-8811dbf4d2cf",
+      "correlation_echo": true,
+      "elapsed_ms": 13.40709999203682
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "4a3f0942-3c29-4396-b1f0-6f8240d77987",
+      "correlation_echo": true,
+      "elapsed_ms": 9.897500000079162
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "7ae178ab-48ee-4eda-b605-aa6ab16a8101",
+      "correlation_echo": true,
+      "elapsed_ms": 11.37199999357108
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "c07d0766-6b16-4c86-bcae-03093a55e8c0",
+      "correlation_echo": true,
+      "elapsed_ms": 8.521900002961047
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "673cf33c-f8dc-486f-96dc-fa1f4d309514",
+      "correlation_echo": true,
+      "elapsed_ms": 10.129100002814084
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "867f46b6-e4a8-4073-9d28-1a0920590392",
+      "correlation_echo": true,
+      "elapsed_ms": 8.264200005214661
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "4281d183-78f0-483f-a358-154c014bbf95",
+      "correlation_echo": true,
+      "elapsed_ms": 10.121800005435944
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "14e35511-587b-405d-8eb5-eaa9b44e7041",
+      "correlation_echo": true,
+      "elapsed_ms": 8.36739999067504
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "20f3bf9f-77fb-483d-b0c3-b2959e95d276",
+      "correlation_echo": true,
+      "elapsed_ms": 9.075999987544492
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "2952adba-dcce-4448-bb10-397bd77dc71a",
+      "correlation_echo": true,
+      "elapsed_ms": 11.230599993723445
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "b2e7f242-c684-4868-91ac-76cee94bef37",
+      "correlation_echo": true,
+      "elapsed_ms": 9.86459999694489
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "b73ad1f0-623c-4149-8073-24dd78660b6a",
+      "correlation_echo": true,
+      "elapsed_ms": 11.540000006789342
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "a1c0ba9e-5200-4d5a-988a-cb1e9c8b3897",
+      "correlation_echo": true,
+      "elapsed_ms": 11.974599998211488
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "b2403827-7d37-47d9-8502-bbaf2f5035e9",
+      "correlation_echo": true,
+      "elapsed_ms": 14.49230000434909
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "24fccede-740f-47a6-aa18-d9c12eb91f00",
+      "correlation_echo": true,
+      "elapsed_ms": 8.790599997155368
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "0693867a-ef12-4481-9d92-dc42ac3743b9",
+      "correlation_echo": true,
+      "elapsed_ms": 7.947799997054972
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "6aa0a09c-35a0-4382-b29f-e8fa39553b7b",
+      "correlation_echo": true,
+      "elapsed_ms": 8.656500009237789
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "fd988609-8a1d-4ac9-b643-1955c828b677",
+      "correlation_echo": true,
+      "elapsed_ms": 8.012999998754822
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "02437f87-2698-4b75-87d8-dd22902d6be8",
+      "correlation_echo": true,
+      "elapsed_ms": 8.196299997507595
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "0871186f-af91-4780-bbb7-b4303d6f5e55",
+      "correlation_echo": true,
+      "elapsed_ms": 8.781299999100156
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "2524ad82-b396-4c55-ab52-2ce569d106f7",
+      "correlation_echo": true,
+      "elapsed_ms": 7.92810000712052
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "05e38410-da5d-4ed1-9d78-84f6df3d7430",
+      "correlation_echo": true,
+      "elapsed_ms": 7.839999991119839
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "b31fd65e-d7bf-4d56-8bac-19ef93e4c175",
+      "correlation_echo": true,
+      "elapsed_ms": 8.281000002170913
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "c3329c3c-3040-4499-8d83-ffc62625422d",
+      "correlation_echo": true,
+      "elapsed_ms": 8.356900012586266
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "c72a4d01-ad95-48dd-9140-7a14a496597a",
+      "correlation_echo": true,
+      "elapsed_ms": 8.184800011804327
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "e9cd7bde-a016-4729-a2a1-4a4b8042afeb",
+      "correlation_echo": true,
+      "elapsed_ms": 8.142599996062927
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "5d248bb1-41d0-4904-a1e4-33d9367a2516",
+      "correlation_echo": true,
+      "elapsed_ms": 7.781499996781349
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "6f097c8d-d1f7-4c2d-99cc-b8ce66fec654",
+      "correlation_echo": true,
+      "elapsed_ms": 7.2579999978188425
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "a6c7f5a4-7cac-4522-8a1b-386b453216d4",
+      "correlation_echo": true,
+      "elapsed_ms": 7.859499994083308
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "28ceb281-f435-47b5-8103-d2974917c48f",
+      "correlation_echo": true,
+      "elapsed_ms": 8.930699987104163
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "5f1915db-3fd6-4ec4-9124-76e437b7996d",
+      "correlation_echo": true,
+      "elapsed_ms": 10.198999996646307
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "c47e96ce-e472-411c-afec-422ec02a35a6",
+      "correlation_echo": true,
+      "elapsed_ms": 11.776900006225333
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "666f2e5f-6cf2-4bd2-a8eb-88577b749656",
+      "correlation_echo": true,
+      "elapsed_ms": 13.134499997249804
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "29e859a6-b96b-449c-a7a0-e3b22488ee83",
+      "correlation_echo": true,
+      "elapsed_ms": 14.322000002721325
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "31fd10e5-8af6-4e29-8e5c-71e558dcd23e",
+      "correlation_echo": true,
+      "elapsed_ms": 9.40460000128951
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "390809dc-adb2-41f8-92da-549e6d4faba1",
+      "correlation_echo": true,
+      "elapsed_ms": 10.030599994934164
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "dda6d7ca-37c4-4689-babe-73d7907e2b82",
+      "correlation_echo": true,
+      "elapsed_ms": 8.643000008305535
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "79121146-3e11-4931-9828-91630b025a1b",
+      "correlation_echo": true,
+      "elapsed_ms": 8.348100003786385
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "d2b8287b-f67d-4676-b69b-d064eb5e14bf",
+      "correlation_echo": true,
+      "elapsed_ms": 8.596100000431761
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "d2918caa-d814-4b78-8734-518272b06352",
+      "correlation_echo": true,
+      "elapsed_ms": 7.708300006925128
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "e281c70a-1ccf-4e5d-a8ee-28fb2b9e93bf",
+      "correlation_echo": true,
+      "elapsed_ms": 8.438299992121756
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "57565604-0367-44e0-88df-fb181ae11c57",
+      "correlation_echo": true,
+      "elapsed_ms": 8.29179999709595
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "940fd2ae-be3b-48f8-b8a2-032ef45e522e",
+      "correlation_echo": true,
+      "elapsed_ms": 8.18279999657534
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "7e764981-bf10-4ac0-82c6-b25fa69d4755",
+      "correlation_echo": true,
+      "elapsed_ms": 8.513499997206964
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "76da9e2b-0160-4f4d-a1f1-3859eaaa4e35",
+      "correlation_echo": true,
+      "elapsed_ms": 9.942300006514415
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "56a6be04-bf3a-480d-9601-fa180daa219d",
+      "correlation_echo": true,
+      "elapsed_ms": 8.204699988709763
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "ff9acdb2-0a17-4dee-8835-1fe000443ae1",
+      "correlation_echo": true,
+      "elapsed_ms": 10.061399996629916
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "2bcc5b5d-9fc9-4692-bc38-c808af07a86a",
+      "correlation_echo": true,
+      "elapsed_ms": 10.313199993106537
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "eaa440c4-aae6-446e-bf6c-da726bedb608",
+      "correlation_echo": true,
+      "elapsed_ms": 8.35769998957403
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "10c1c856-7b4b-4019-8dc7-09d77d814eed",
+      "correlation_echo": true,
+      "elapsed_ms": 9.265200002118945
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "1f72aede-6fea-436c-bcea-b49d82369d98",
+      "correlation_echo": true,
+      "elapsed_ms": 8.440000005066395
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "2fe07668-7429-4316-989e-7811b0dbcee7",
+      "correlation_echo": true,
+      "elapsed_ms": 9.166499992716126
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "31c58552-1de2-4b54-a26b-f42805fb425f",
+      "correlation_echo": true,
+      "elapsed_ms": 9.750599987455644
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "1f911643-7545-4ed3-a135-838055054a5e",
+      "correlation_echo": true,
+      "elapsed_ms": 11.742099988623522
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "b7176600-6246-4847-acd7-a081a3d5ef0a",
+      "correlation_echo": true,
+      "elapsed_ms": 16.705000001820736
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "54321752-2b1b-40a4-beac-1a793785a614",
+      "correlation_echo": true,
+      "elapsed_ms": 8.579400004236959
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "e7a0cdfc-43d2-4cc1-9b85-0b194267d614",
+      "correlation_echo": true,
+      "elapsed_ms": 8.082600004854612
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "704323ac-123b-42c2-b607-3c9a3c5ff17e",
+      "correlation_echo": true,
+      "elapsed_ms": 7.617099996423349
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "843659ed-a449-498c-997b-313c5999923d",
+      "correlation_echo": true,
+      "elapsed_ms": 9.425299998838454
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "02b60a9f-c1d5-4066-9b61-62935731c825",
+      "correlation_echo": true,
+      "elapsed_ms": 10.555100001511164
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "6a3ae996-8773-494b-99e3-8116957b2d16",
+      "correlation_echo": true,
+      "elapsed_ms": 9.573800009093247
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "2f6ef811-0cc9-4cc5-9e48-d2f86a6eb30a",
+      "correlation_echo": true,
+      "elapsed_ms": 10.557500005234033
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "2aea7fe2-03e8-472d-ad1c-dc8f836307a3",
+      "correlation_echo": true,
+      "elapsed_ms": 10.04520000424236
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "969cc404-79df-41a5-b7e5-fc9568ab431e",
+      "correlation_echo": true,
+      "elapsed_ms": 7.354899993515573
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "4556bdb5-ca9b-4838-b101-aa50bf3e945d",
+      "correlation_echo": true,
+      "elapsed_ms": 8.89479999023024
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "8dc34d7f-6656-465f-9df2-3149582b4ba0",
+      "correlation_echo": true,
+      "elapsed_ms": 8.717999997315928
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "9ff8ade5-096d-4940-9e32-27c3a404e282",
+      "correlation_echo": true,
+      "elapsed_ms": 8.559499998227693
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "3f52cff1-c644-429c-aa60-8d5b4b6ed5c0",
+      "correlation_echo": true,
+      "elapsed_ms": 9.891499998047948
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "236dcfb5-8652-4c51-884f-6fdbb6832ece",
+      "correlation_echo": true,
+      "elapsed_ms": 7.533099997090176
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "request_id": "a6403e0c-2e82-4ea6-8c08-2158af045c01",
+      "correlation_echo": true,
+      "elapsed_ms": 7.276899996213615
+    },
+    {
+      "endpoint": "/ready",
+      "status": 200,
+      "request_id": "2355f8ec-aab4-47cb-8b25-bc457ae2fda1",
+      "correlation_echo": true,
+      "elapsed_ms": 5.347300000721589
+    }
+  ]
+}
