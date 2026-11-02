@@ -7,6 +7,8 @@ data/releases/** text eol=lf
 data/v1/** -text -whitespace
 data/v1/csv/** -diff
 evals/** text eol=lf
+# Blind-review copies preserve the exact CP932/UTF-8 source bytes and line endings.
+evals/p13/mapping-review-v1/inputs/*.csv -text -diff
 
 # Preserve reviewable cross-repository patch bytes and diff context whitespace.
 docs/integration/*.patch -text -whitespace
