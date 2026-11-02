@@ -163,6 +163,14 @@ contains no provisional mappings or model outputs. Review is pending; preparing
 the packet did not run inference on those inputs. The original test cases remain
 synthetic and agent-authored, not independent customer data.
 
+A separate [first-intent comparison](tool-questions-v1/README.md) has now run a
+deterministic router and actual local Qwen against 11 newly authored provisional
+cases. Both matched 11/11 declared first-intent criteria, but four local-path
+handoffs bypassed Qwen through the static guard; no tool or Java authorization was
+executed. This small known-domain result is not an independently reviewed or
+end-to-end tool-quality claim. All 22 outputs and an empty blind-review template
+are retained with a reproducible offline verifier.
+
 To reproduce operationally, start the existing local Ollama 4B model and Docker,
 prepare the Project2 production build/JAR, then run in a clean committed checkout:
 

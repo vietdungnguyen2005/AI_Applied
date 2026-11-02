@@ -36,3 +36,28 @@ python -m uv run --frozen --offline python tools/p13_tool_run.py --output .local
 
 A repeat after results are inspected is a regression, not another fresh test.
 Electricity and hardware costs are not measured; local provider charge is zero.
+
+## Recorded result
+
+The first run completed on 2026-11-02 using source commit
+`b37d1e237b55046d2c066a3f803eb8b9384a57f3`; [config, all 22 raw predictions,
+per-case scores, summary and hashes](../runs/tool-questions-v1/manifest.json) are
+retained. Both the deterministic router and the local Qwen route matched the
+provisional first-kind/tool/argument criteria **11/11** on these small synthetic
+questions. Four handoffs in **each** variant were produced by the static guard;
+the local model was actually called on only seven cases. Consequently the model's
+own refusal of the four write/injection requests was **not measured**. Both paths
+returned zero forbidden public intents, a consequence observed after the closed
+parser/allowlist; hidden raw model output and actual authorization were not measured.
+
+The local route's seven model-call cases had median/p95 **777/1092 ms**, 2,246
+prompt and 217 completion tokens returned. The all-11 median/p95 was **664/1071
+ms** and includes four fast, model-free guard cases; it is not directly comparable
+to an all-model workload. The deterministic path had no model calls. These are
+single sequential local measurements, not latency SLAs or generalization claims.
+The [independent review packet](REVIEW.md) is still blank.
+
+`python -m uv run --frozen python tools/p13_tool_verify.py --artifact
+evals/p13/runs/tool-questions-v1` verifies the frozen protocol/source/model digest,
+all 22 journaled case/method identities, scores, summary and artifact hashes
+without running a model or executing a tool.

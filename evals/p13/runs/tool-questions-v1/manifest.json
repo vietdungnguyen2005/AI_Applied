@@ -1,0 +1,13 @@
+{
+  "status": "measurement_complete_not_quality_acceptance",
+  "cases": 11,
+  "records": 22,
+  "source_commit": "b37d1e237b55046d2c066a3f803eb8b9384a57f3",
+  "files_sha256": {
+    "config.json": "43cb923cce5bb6c3cd6ec31f19397296099867817302fe51380b3680fdbd3657",
+    "raw.jsonl": "8ee8f8b8f39bd520b0cdf2e3661fd4f6a5543b9b9e95a4f0d6b60d25263c3ab0",
+    "report.json": "7e62f00f371671efdbe847ea3192e686c9d3ded5ca49d57d966645e82d444a23",
+    "summary.csv": "c837e7de67296e8524215ff875694eea878e7bf0a5312e7c52e671955f8bd3d6",
+    "review-template.jsonl": "22d1d38c7915ab8ad81ed2d41e333eee53fb7e6bbe4d3c04d0581f95682795fd"
+  }
+}

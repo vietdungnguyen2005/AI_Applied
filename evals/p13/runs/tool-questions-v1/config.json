@@ -1,0 +1,31 @@
+{
+  "source_commit": "b37d1e237b55046d2c066a3f803eb8b9384a57f3",
+  "dataset_lock_sha256": "97ff326ff97be682a861d748deff29e903e5645790426ca1c3c411696e4554a8",
+  "dataset_file_hashes": {
+    "inputs.jsonl": "8eae58f81011062c3595ccda3f07dee0e1e6abd7fe0fb5c5552afdd3e2ac783b",
+    "labels.jsonl": "ca5edf934ff494ab40dff12e479bbded9bb4a617d9fc2e6e53cd790b749f94d3",
+    "protocol.json": "5c6fe04da4aec102a54f93c2fe816c70db32819bbe7f97ac397775885fde2ce2"
+  },
+  "model": {
+    "name": "qwen3.5:4b-q4_K_M",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "runtime": {
+      "version": "0.32.1"
+    }
+  },
+  "parameters": {
+    "context": 4096,
+    "temperature": 0.2,
+    "seed": 42,
+    "thinking": false,
+    "max_output_tokens": 256,
+    "system_prompt_sha256": "57d82ecf376f9cc123f9db11c4b31fc5596eba2f98001dbe8c5a8b7043034670"
+  },
+  "model_warmup_ms": 2823.7840000001597,
+  "scope": "first intent only; no tools dispatched, no Java auth or business action",
+  "label_review": "provisional_agent_authored; independent review pending",
+  "external_provider_calls": 0,
+  "local_provider_billed_usd": 0,
+  "compute_and_energy_cost": "NOT_MEASURED",
+  "timestamp_utc": "2026-11-02T10:20:22.740476+00:00"
+}

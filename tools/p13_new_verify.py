@@ -116,6 +116,44 @@ def verify_manifest(directory: Path) -> None:
         or manifest["records"] != len(report["predictions"])
     ):
         raise ValueError("Artifact provenance mismatch")
+    inputs, _ = verify_inputs()
+    expected_inputs = {item["id"]: item for item in inputs}
+    review = [
+        json.loads(line)
+        for line in (directory / "review-template.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    fields = {
+        "case_id",
+        "question",
+        "collection",
+        "language",
+        "review_status",
+        "reviewer",
+        "reviewed_at",
+        "independent_expected_status",
+        "independent_relevant_sources",
+        "independent_answer_reference",
+        "notes",
+    }
+    if len(review) != len(expected_inputs) or {r.get("case_id") for r in review} != set(
+        expected_inputs
+    ):
+        raise ValueError("Review template case inventory mismatch")
+    for row in review:
+        source = expected_inputs[row["case_id"]]
+        if (
+            set(row) != fields
+            or row["question"] != source["question"]
+            or row["collection"] != source["collection"]
+            or row["language"] != source["language"]
+            or row["review_status"] != "PENDING_INDEPENDENT_REVIEW"
+            or any(
+                row[name] is not None
+                for name in fields
+                - {"case_id", "question", "collection", "language", "review_status"}
+            )
+        ):
+            raise ValueError("Review template is not blind and pending")
     sources = {
         "src/vmarket_ai/ingestion/spec.py",
         "src/vmarket_ai/providers/local_e5.py",

@@ -99,3 +99,31 @@ def test_verifier_rejects_missing_observation_even_if_journal_hash_is_rewritten(
     revised_report.write_text(json.dumps(report), encoding="utf-8")
     with pytest.raises(ValueError, match="missing, repeated"):
         verifier.verify(revised_report, journal, artifact / "summary.csv")
+
+
+def test_blind_review_template_rejects_altered_question_even_with_updated_hash(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    copied = tmp_path / "run"
+    shutil.copytree(root / "evals/p13/runs/new-questions-v1", copied)
+    template = copied / "review-template.jsonl"
+    records = [json.loads(line) for line in template.read_text(encoding="utf-8").splitlines()]
+    records[0]["question"] = "A different question"
+    template.write_text(
+        "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in records),
+        encoding="utf-8",
+        newline="\n",
+    )
+    manifest_path = copied / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["files_sha256"]["review-template.jsonl"] = hashlib.sha256(
+        template.read_bytes()
+    ).hexdigest()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location(
+        "p13_blind_qa_verify", root / "tools/p13_new_verify.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    with pytest.raises(ValueError, match="not blind and pending"):
+        module.verify_manifest(copied)

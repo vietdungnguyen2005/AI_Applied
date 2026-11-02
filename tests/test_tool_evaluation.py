@@ -1,3 +1,11 @@
+import hashlib
+import importlib.util
+import json
+import shutil
+from pathlib import Path
+
+import pytest
+
 from vmarket_ai.evaluation.tool_questions import aggregate, score, scoring_labels, verify_inputs
 from vmarket_ai.qa.backend import DEMO_COLLECTIONS
 
@@ -71,3 +79,63 @@ def test_guard_handoff_and_provider_failure_have_distinct_denominators():
     assert result["correct_among_valid"]["value"] == 1.0
     assert result["correct_over_all_cases"]["value"] == 0.5
     assert result["handoff_without_model"]["value"] == 1
+
+
+def test_archived_planner_review_template_is_blind_and_pending():
+    artifact = Path(__file__).resolve().parents[1] / "evals/p13/runs/tool-questions-v1"
+    review = [
+        json.loads(line)
+        for line in (artifact / "review-template.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    assert len(review) == 11
+    assert all(
+        row["review_status"] == "PENDING_INDEPENDENT_REVIEW" and row["reviewer"] is None
+        for row in review
+    )
+    assert all("expected_kind" not in row and "response" not in row for row in review)
+
+
+def test_archived_planner_verifier_rejects_missing_case_after_hash_rewrite(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    source = root / "evals/p13/runs/tool-questions-v1"
+    copied = tmp_path / "run"
+    shutil.copytree(source, copied)
+    raw = copied / "raw.jsonl"
+    raw.write_bytes(b"".join(raw.read_bytes().splitlines(keepends=True)[:-1]))
+    manifest = json.loads((copied / "manifest.json").read_text(encoding="utf-8"))
+    manifest["files_sha256"]["raw.jsonl"] = hashlib.sha256(raw.read_bytes()).hexdigest()
+    (copied / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location(
+        "p13_tool_verify_test", root / "tools/p13_tool_verify.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    with pytest.raises(ValueError, match="missing, repeated"):
+        module.verify(copied)
+
+
+def test_planner_blind_review_rejects_prefilled_answer_after_hash_rewrite(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    copied = tmp_path / "run"
+    shutil.copytree(root / "evals/p13/runs/tool-questions-v1", copied)
+    template = copied / "review-template.jsonl"
+    records = [json.loads(line) for line in template.read_text(encoding="utf-8").splitlines()]
+    records[0]["independent_expected_tool"] = "get_imports"
+    template.write_text(
+        "".join(json.dumps(row) + "\n" for row in records), encoding="utf-8", newline="\n"
+    )
+    manifest_path = copied / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["files_sha256"]["review-template.jsonl"] = hashlib.sha256(
+        template.read_bytes()
+    ).hexdigest()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location(
+        "p13_blind_tool_verify", root / "tools/p13_tool_verify.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    with pytest.raises(ValueError, match="not blind and pending"):
+        module.verify(copied)

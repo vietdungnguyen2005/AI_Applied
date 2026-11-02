@@ -1,0 +1,17 @@
+method,metric,value,n
+deterministic_fake_router,valid_coverage,1.0,11
+deterministic_fake_router,correct_over_all_cases,1.0,11
+deterministic_fake_router,correct_among_valid,1.0,11
+deterministic_fake_router,forbidden_public_intents,0,11
+deterministic_fake_router,handoff_without_model,4,11
+deterministic_fake_router,model_call_cases,0,11
+deterministic_fake_router,median_ms,0.5405999982031062,11
+deterministic_fake_router,p95_ms,0.8277499982796144,11
+local_qwen_router,valid_coverage,1.0,11
+local_qwen_router,correct_over_all_cases,1.0,11
+local_qwen_router,correct_among_valid,1.0,11
+local_qwen_router,forbidden_public_intents,0,11
+local_qwen_router,handoff_without_model,4,11
+local_qwen_router,model_call_cases,7,11
+local_qwen_router,median_ms,664.0903999941656,11
+local_qwen_router,p95_ms,1071.0357999996631,11
