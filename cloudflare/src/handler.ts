@@ -1,8 +1,11 @@
 import { type AiGatewaySpec, type CloudEnv, type GatewayResult, RequestInput, fail } from "./spec";
 import { AuthenticationHandler } from "./authentication";
 import { strictJson } from "./json";
-import { CitationHandler } from "./knowledge";
+import { CitationHandler, KnowledgeHandler } from "./knowledge";
 import { AskHandler } from "./qa";
+import { RunHandler } from "./runs";
+import { AgentHandler } from "./agent";
+import { MappingHandler } from "./mapping";
 
 export class AiGatewayHandler implements AiGatewaySpec {
   constructor(private readonly env: CloudEnv) {}
@@ -35,6 +38,10 @@ export class AiGatewayHandler implements AiGatewaySpec {
         "INSERT INTO nonces(kid,nonce,expires_at) VALUES(?,?,?) ON CONFLICT DO NOTHING RETURNING nonce",
       ).bind(kid, nonce, expires_at).first<{nonce: string}>();
       if (!consumed) return fail("STEP_CONFLICT", 409);
+      if(authentication.claims.operation==="mapping_suggest")return new MappingHandler(this.env).execute(body,authentication.claims);
+      if(authentication.claims.operation==="knowledge_search")return new KnowledgeHandler(this.env.DB).execute(body,authentication.claims);
+      if(authentication.claims.operation==="agent_step")return new AgentHandler(this.env).execute(body,authentication.claims);
+      if(authentication.claims.operation==="run_control")return new RunHandler(this.env).execute(body,authentication.claims);
       if (authentication.claims.operation === "documents_read") {
         return new CitationHandler(this.env.DB).execute(body,authentication.claims);
       }

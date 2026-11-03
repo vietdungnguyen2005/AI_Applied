@@ -3,6 +3,9 @@
   "name": "vmarket-ai-applied",
   "main": "src/worker.ts",
   "compatibility_date": "2026-11-02",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "workers_dev": true,
   "keep_vars": true,
   "ai": {

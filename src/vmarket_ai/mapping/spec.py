@@ -104,7 +104,7 @@ class MappingResponse(StrictModel):
     reason: str
     profile_differences: tuple[Difference, ...]
     requires_human_acceptance: Literal[True] = True
-    provider_mode: Literal["fake", "local"]
+    provider_mode: Literal["fake", "local", "live"]
 
     @model_validator(mode="after")
     def invariants(self) -> Self:
