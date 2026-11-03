@@ -49,19 +49,19 @@ it("preserves independently matched profile columns when one source header chang
     missing_required_fields:["on_hand"],assignments:[{target_field:"sku",source_header:"SKU",basis:"rule"},{target_field:"name",source_header:"ProductName",basis:"rule"}]}});
 });
 it("asks the model only for missing columns and keeps signed assignments rule-based",async()=>{
-  const body=mappingBody("SKU,ProductName,PhysicalUnits\nVM-002,Desk,3\n");body.input.method="ai";
+  const body=mappingBody("SKU,ProductName,ReportedUnits\nVM-002,Desk,3\n");body.input.method="ai";
   let calls=0;
   const AI={async run(_model:string,input:Record<string,unknown>){calls++;
     const payload=JSON.parse((input.messages as {content:string}[])[1].content);
     expect(payload.locked_mapping).toEqual({sku:"SKU",name:"ProductName"});
-    return {response:JSON.stringify({sku:"SKU",name:"ProductName",on_hand:"PhysicalUnits"})};}};
+    return {response:JSON.stringify({sku:"SKU",name:"ProductName",on_hand:"ReportedUnits"})};}};
   const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
   expect(result.status).toBe(200);expect(calls).toBe(1);
   expect(await result.json()).toMatchObject({draft:{assignments:[{target_field:"sku",basis:"rule"},{target_field:"name",basis:"rule"},{target_field:"on_hand",basis:"model"}]}});
 });
 it("rejects a model that changes a locked profile assignment despite the decoding schema",async()=>{
-  const body=mappingBody("SKU,ProductName,PhysicalUnits,OtherCode\nVM-002,Desk,3,OTHER\n");body.input.method="ai";
-  const AI={async run(){return {response:JSON.stringify({sku:"OtherCode",name:"ProductName",on_hand:"PhysicalUnits"})};}};
+  const body=mappingBody("SKU,ProductName,ReportedUnits,OtherCode\nVM-002,Desk,3,OTHER\n");body.input.method="ai";
+  const AI={async run(){return {response:JSON.stringify({sku:"OtherCode",name:"ProductName",on_hand:"ReportedUnits"})};}};
   const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
   expect(result.status).toBe(502);
 });
@@ -109,10 +109,10 @@ it("returns the partial profile without calling a model when no unused source co
   expect(await result.json()).toMatchObject({draft:{missing_required_fields:["on_hand"],assignments:[{basis:"rule"},{basis:"rule"}]}});
 });
 it("omits absent historical column bindings from model evidence while retaining current locks",async()=>{
-  const body=mappingBody("SKU,ProductName,PhysicalUnits\nVM-002,Desk,3\n");body.input.method="ai";
+  const body=mappingBody("SKU,ProductName,ReportedUnits\nVM-002,Desk,3\n");body.input.method="ai";
   let captured:Record<string,unknown>={};
   const AI={async run(_model:string,input:Record<string,unknown>){captured=JSON.parse((input.messages as {content:string}[])[1].content);
-    return {response:'{"sku":"SKU","name":"ProductName","on_hand":"PhysicalUnits"}'};}};
+    return {response:'{"sku":"SKU","name":"ProductName","on_hand":"ReportedUnits"}'};}};
   expect((await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI})).status).toBe(200);
   expect(captured.profile_candidate).toBeUndefined();
   expect(captured.supplier_context).toEqual({vendor_code:"RIVERBYTE",profile_id:"supplier-b",version:1});
@@ -123,4 +123,12 @@ it("keeps supported fields when a model confuses supplier identity with product 
   const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
   expect(result.status).toBe(200);
   expect(await result.json()).toMatchObject({draft:{missing_required_fields:["sku"],assignments:[{target_field:"name"},{target_field:"on_hand"}]}});
+});
+it("uses a unique explicit typed field candidate without spending an inference call",async()=>{
+  const body=mappingBody("SKU,ProductName,PhysicalQuantity,ReservedQuantity\nVM-002,Desk,12,2\n");body.input.method="ai";
+  let calls=0;const AI={async run(){calls++;return {};}};
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
+  expect(result.status).toBe(200);expect(calls).toBe(0);
+  expect(await result.json()).toMatchObject({draft:{status:"needs_review",reason:"SEMANTIC_COLUMN_RULE_DRAFT",
+    assignments:[{target_field:"sku",basis:"rule"},{target_field:"name",basis:"rule"},{target_field:"on_hand",source_header:"PhysicalQuantity",basis:"rule",uncertainty:"high"}]}});
 });

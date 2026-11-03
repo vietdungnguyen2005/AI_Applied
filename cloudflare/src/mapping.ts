@@ -8,6 +8,7 @@ import {z} from "zod";
 import {strictJson} from "./json";
 import {profileColumns} from "./column-profile";
 import {PROMPT_VERSION,TARGET_SCHEMA,EXAMPLES,MAPPING_SYSTEM} from "./mapping-context";
+import {semanticCandidates} from "./semantic-candidates";
 type Target="sku"|"name"|"on_hand";
 const targets:Target[]=["sku","name","on_hand"];
 const comparable=(header:string)=>header.normalize("NFKC").toLowerCase().replace(/[\s_.-]/gu,"");
@@ -44,12 +45,15 @@ export class MappingHandler implements MappingSpec {
         if(matches.length>1)ambiguous.add(target);
       }
       if(new Set(Object.values(mapping)).size!==Object.keys(mapping).length)return fail("INPUT_INVALID",400);
-      const locked={...mapping};
+      const profileLocked={...mapping};
+      const columns=profileColumns(headers,rows);
+      const inferred=input.method==="ai"?semanticCandidates(columns,profileLocked):{};
+      for(const target of targets)if(inferred[target]&&!ambiguous.has(target))mapping[target]=inferred[target];
+      const locked={...mapping},hasInferred=targets.some(t=>Boolean(inferred[t])&&!ambiguous.has(t));
       const warnings=["FRESHNESS_UNVERIFIED","ENCODING_DECLARED","BUSINESS_VALIDATION_REQUIRED","SOURCE_UNTRUSTED","RULE_BASELINE"];
       if(ambiguous.size)warnings.push("AMBIGUOUS_HEADER");
       let model=false;
       if(targets.some(t=>!locked[t]&&!ambiguous.has(t))&&headers.some(h=>!Object.values(locked).includes(h))&&input.method==="ai"){
-        const columns=profileColumns(headers,rows);
         if(columns.some(c=>c.examples_truncated)||rows.length>50)warnings.push("SAMPLE_TRUNCATED");
         const choice={anyOf:[{type:"string",enum:headers.filter(h=>!Object.values(locked).includes(h))},{type:"null"}]};
         const result=await new ModelHandler(this.env).execute(MAPPING_SYSTEM,
@@ -72,8 +76,8 @@ export class MappingHandler implements MappingSpec {
         }
         model=true;warnings.splice(warnings.indexOf("RULE_BASELINE"),1);warnings.push("NO_AUTHORIZED_SOP");
       }
-      const assignments=targets.filter(t=>mapping[t]).map(t=>({target_field:t,source_header:mapping[t]!,basis:model&&!locked[t]?"model":"rule",uncertainty:model&&!locked[t]?"high":"medium",
-        reason:model&&!locked[t]?"Model inferred header semantics; human review required.":mapping[t]===profile.mapping[t]?
+      const assignments=targets.filter(t=>mapping[t]).map(t=>({target_field:t,source_header:mapping[t]!,basis:model&&!locked[t]?"model":"rule",uncertainty:!profileLocked[t]?"high":"medium",
+        reason:inferred[t]?"Unique target meaning and sampled type support this column; human review required.":model&&!locked[t]?"Model inferred header semantics; human review required.":mapping[t]===profile.mapping[t]?
           "Exact header from current signed Java profile; human review required.":"Unambiguous formatting match to signed profile; original source header retained; human review required.",citations:[]}));
       const seen=new Set<string>();
       const review=rows.some(row=>{
@@ -86,8 +90,8 @@ export class MappingHandler implements MappingSpec {
       if(headers.some(h=>!Object.values(mapping).includes(h)))warnings.push("UNMAPPED_HEADER");
       const draft={request_id:claims.request_id,raw_sha256:await hash(new Uint8Array(raw)),declared_encoding:input.declared_encoding,
         selected_vendor_code:input.selected_vendor_code,vendor_code:profile.vendor_code,vendor_verification:"bff_profile_snapshot",
-        status:assignments.length?(assignments.length===3&&!review&&!model?"suggested":"needs_review"):"abstained",assignments,unmapped_headers:headers.filter(h=>!Object.values(mapping).includes(h)),
-        missing_required_fields:targets.filter(t=>!mapping[t]),warnings,reason:model?"MODEL_DRAFT_REQUIRES_REVIEW":assignments.length===3?"SIGNED_PROFILE_BASELINE":assignments.length?"PARTIAL_SIGNED_PROFILE_BASELINE":"UNMAPPED_HEADER",
+        status:assignments.length?(assignments.length===3&&!review&&!model&&!hasInferred?"suggested":"needs_review"):"abstained",assignments,unmapped_headers:headers.filter(h=>!Object.values(mapping).includes(h)),
+        missing_required_fields:targets.filter(t=>!mapping[t]),warnings,reason:model?"MODEL_DRAFT_REQUIRES_REVIEW":hasInferred?"SEMANTIC_COLUMN_RULE_DRAFT":assignments.length===3?"SIGNED_PROFILE_BASELINE":assignments.length?"PARTIAL_SIGNED_PROFILE_BASELINE":"UNMAPPED_HEADER",
         profile_differences:[{profile_id:profile.profile_id,version:profile.version,active:true,encoding_matches:true,
           changes:Object.fromEntries(targets.filter(t=>profile.mapping[t]!==mapping[t]).map(t=>[t,[profile.mapping[t],mapping[t]??null]]))}],
         requires_human_acceptance:true,provider_mode:"live"};
