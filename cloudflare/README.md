@@ -82,5 +82,8 @@ identifies the cloud runtime, including rule-only signed-profile reuse.
 
 Checks: `npm ci --ignore-scripts`, `npm test`, `npm run typecheck`,
 `npm run dry-run`. Tests use real SQLite through Node 24's `node:sqlite`.
+The [live operator browser benchmark](../docs/evidence/CLOUD-browser-mapping-time.md)
+exercises actual signed-in mapping, profile review/create/activate and Java
+preview. All raw timing failures are retained; no human time saving is claimed.
 Never copy an application's entire `.env` into this Worker. The configuration
 contains a public verification key and a D1 resource ID, never a signing secret.

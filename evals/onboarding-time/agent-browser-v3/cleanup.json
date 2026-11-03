@@ -1,0 +1,75 @@
+{
+  "changes": [
+    {
+      "profile_id": "bench-20261104-key-manual",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v2-20261104-japanese-assisted",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v2-20261104-japanese-manual",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v2-20261104-key-assisted",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v2-20261104-key-manual",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v2-20261104-stock-assisted",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v2-20261104-stock-manual",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v3-20261104-japanese-assisted",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v3-20261104-japanese-manual",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v3-20261104-key-assisted",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v3-20261104-key-manual",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v3-20261104-stock-assisted",
+      "status": 200,
+      "active": false
+    },
+    {
+      "profile_id": "bench-v3-20261104-stock-manual",
+      "status": 200,
+      "active": false
+    }
+  ],
+  "complete": true,
+  "baseline_supplier_profiles_active": true,
+  "benchmark_profiles_retained_inactive": 13,
+  "operator_account_retained": true,
+  "inventory_confirm_not_invoked": true,
+  "daily_model_reservations_after": 58
+}

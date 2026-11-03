@@ -1,5 +1,10 @@
 # Online AI integration — 2026-11-03
 
+Follow-up 2026-11-04: [real operator browser mapping/preview checks and task
+timings](CLOUD-browser-mapping-time.md) now verify that subset with an
+owner-authorized account. The original pre-account observations below remain
+historical; human UAT and production import confirmation are not established.
+
 This supersedes the initial QA-only scope recorded in `CLOUD-release.md`.
 The existing V-Market now enables policy QA, citation reads, read-only import
 investigations with durable runs, lexical SOP search, and mapping drafts.

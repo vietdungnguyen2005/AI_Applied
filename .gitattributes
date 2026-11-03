@@ -7,6 +7,7 @@ data/releases/** text eol=lf
 data/v1/** -text -whitespace
 data/v1/csv/** -diff
 evals/** text eol=lf
+evals/onboarding-time/**/*.png -text -diff
 # Blind-review copies preserve the exact CP932/UTF-8 source bytes and line endings.
 evals/p13/mapping-review-v1/inputs/*.csv -text -diff
 

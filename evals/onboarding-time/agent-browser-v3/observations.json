@@ -1,0 +1,683 @@
+[
+  {
+    "case": "new-key",
+    "arm": "manual",
+    "profile_id": "bench-v3-20261104-key-manual",
+    "started_at": "2026-11-03T21:38:34.526Z",
+    "started_ms": 1793741914526,
+    "events": [
+      {
+        "label": "fill_csv",
+        "started_ms": 1793741914526,
+        "ended_ms": 1793741914678,
+        "status": "ok"
+      },
+      {
+        "label": "manual_edit_sku",
+        "started_ms": 1793741914679,
+        "ended_ms": 1793741914856,
+        "status": "ok"
+      },
+      {
+        "label": "review_sku",
+        "started_ms": 1793741914857,
+        "ended_ms": 1793741915011,
+        "status": "ok"
+      },
+      {
+        "label": "review_name",
+        "started_ms": 1793741915011,
+        "ended_ms": 1793741915173,
+        "status": "ok"
+      },
+      {
+        "label": "review_on_hand",
+        "started_ms": 1793741915174,
+        "ended_ms": 1793741915339,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793741915342,
+        "ended_ms": 1793741915491,
+        "status": "ok"
+      },
+      {
+        "label": "approve_mapping",
+        "started_ms": 1793741915492,
+        "ended_ms": 1793741916818,
+        "status": "ok"
+      },
+      {
+        "label": "save_inactive",
+        "started_ms": 1793741916819,
+        "ended_ms": 1793741917809,
+        "status": "ok"
+      },
+      {
+        "label": "wait_saved",
+        "started_ms": 1793741917811,
+        "ended_ms": 1793741918198,
+        "status": "ok"
+      },
+      {
+        "label": "activate_profile",
+        "started_ms": 1793741918199,
+        "ended_ms": 1793741918828,
+        "status": "ok"
+      },
+      {
+        "label": "wait_adopted",
+        "started_ms": 1793741918828,
+        "ended_ms": 1793741919924,
+        "status": "ok"
+      },
+      {
+        "label": "preview",
+        "started_ms": 1793741919925,
+        "ended_ms": 1793741920817,
+        "status": "ok"
+      },
+      {
+        "label": "wait_preview",
+        "started_ms": 1793741920818,
+        "ended_ms": 1793741921392,
+        "status": "ok"
+      },
+      {
+        "label": "read_preview",
+        "started_ms": 1793741921392,
+        "ended_ms": 1793741921562,
+        "status": "ok"
+      }
+    ],
+    "status": "completed",
+    "observed_mapping": {
+      "sku": "CatalogPartKey",
+      "name": "ProductName",
+      "on_hand": "AvailableQuantity"
+    },
+    "preview_text": "SUPPLIER CONTRACT / PREVIEW → CONFIRM → RECONCILE\n\nSupplier onboarding\n\nSynthetic suppliers, one shared store. Preview is read-only. Vendor, price and concurrency versions come from the canonical catalog; changed rows are rejected rather than overwriting later stock or metadata.\n\n01 / SUGGEST → REVIEW → SAVE INACTIVE → ACTIVATE\n\nMapping draft / human review\n\nSynthetic suppliers only. Suggestions can be wrong. You own the edits and approval; Java validates the profile and file again. No import runs until a separate preview and confirmation.\n\nSource bench-v3-20261104-key-manual / v1 · vendor RIVERBYTE · declared UTF-8\n\nDraft method\nFrozen header rules\nLocal AI with SOP context\nSuggest mapping\nSource column for sku\nCurrent: CatalogPartKey → edited: CatalogPartKey\nSource column for name\nCurrent: ProductName → edited: ProductName\nSource column for on_hand\nCurrent: AvailableQuantity → edited: AvailableQuantity\nNew profile ID\nNew profile version\nSKU normalization\nTRIM\nTRIM_UPPER\nI reviewed the exact source columns, vendor, encoding and new immutable profile version. Create it inactive.\nCreate inactive profile\nSupplier profile version\nSelect an active profile\nbench-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-japanese-assisted / v1 / UTF-8\nbench-v2-20261104-japanese-manual / v1 / UTF-8\nbench-v2-20261104-key-assisted / v1 / UTF-8\nbench-v2-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-stock-assisted / v1 / UTF-8\nbench-v2-20261104-stock-manual / v1 / UTF-8\nbench-v3-20261104-key-manual / v1 / UTF-8\nsupplier-a / v1 / CP932\nsupplier-b / v1 / UTF-8\n\nVendor RIVERBYTE · SKU TRIM_UPPER · name TRIM · stock integer 0–1,000,000\n\nname\nProductName (required)\nsku\nCatalogPartKey (required)\non_hand\nAvailableQuantity (required)\nSupplier source filename\nSupplier original CSV file\nCP932 requires original bytes. Maximum 5,000,000 bytes and 1,000 data rows. No encoding guessing.\nSupplier CSV payload (UTF-8 only)\nPreview & validate\nMapping preview / bench-v3-20261104-key-manual v1\n\nPreview expires 2026-11-03T21:48:41.000Z · 600s remaining. Java rechecks validity on confirmation.\n\n1 accepted · 0 rejected\n\nFirst 10 accepted rows. Rejected rows are quarantined; validation is not a reservation. Catalog changes require a new preview or are rejected when applied.\n\nRow 2 · VM-002 · Modular desk · stock 9\nValidation errors (0)\nExport sanitized report\nI reviewed this mapping, accepted rows and rejected rows, and approve applying this snapshot to the shared store.\nConfirm & queue",
+    "ended_ms": 1793741921564,
+    "elapsed_ms": 7038
+  },
+  {
+    "case": "new-key",
+    "arm": "assisted",
+    "profile_id": "bench-v3-20261104-key-assisted",
+    "started_at": "2026-11-03T21:38:45.531Z",
+    "started_ms": 1793741925531,
+    "events": [
+      {
+        "label": "fill_csv",
+        "started_ms": 1793741925531,
+        "ended_ms": 1793741925685,
+        "status": "ok"
+      },
+      {
+        "label": "choose_ai",
+        "started_ms": 1793741925687,
+        "ended_ms": 1793741925822,
+        "status": "ok"
+      },
+      {
+        "label": "request_suggestion",
+        "started_ms": 1793741925824,
+        "ended_ms": 1793741926768,
+        "status": "ok"
+      },
+      {
+        "label": "wait_suggestion",
+        "started_ms": 1793741926769,
+        "ended_ms": 1793741928838,
+        "status": "ok"
+      },
+      {
+        "label": "review_sku",
+        "started_ms": 1793741928841,
+        "ended_ms": 1793741929058,
+        "status": "ok"
+      },
+      {
+        "label": "review_name",
+        "started_ms": 1793741929059,
+        "ended_ms": 1793741929224,
+        "status": "ok"
+      },
+      {
+        "label": "review_on_hand",
+        "started_ms": 1793741929225,
+        "ended_ms": 1793741929376,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793741929378,
+        "ended_ms": 1793741929533,
+        "status": "ok"
+      },
+      {
+        "label": "approve_mapping",
+        "started_ms": 1793741929535,
+        "ended_ms": 1793741930757,
+        "status": "ok"
+      },
+      {
+        "label": "save_inactive",
+        "started_ms": 1793741930758,
+        "ended_ms": 1793741931794,
+        "status": "ok"
+      },
+      {
+        "label": "wait_saved",
+        "started_ms": 1793741931795,
+        "ended_ms": 1793741932054,
+        "status": "ok"
+      },
+      {
+        "label": "activate_profile",
+        "started_ms": 1793741932054,
+        "ended_ms": 1793741932762,
+        "status": "ok"
+      },
+      {
+        "label": "wait_adopted",
+        "started_ms": 1793741932763,
+        "ended_ms": 1793741933364,
+        "status": "ok"
+      },
+      {
+        "label": "preview",
+        "started_ms": 1793741933364,
+        "ended_ms": 1793741933891,
+        "status": "ok"
+      },
+      {
+        "label": "wait_preview",
+        "started_ms": 1793741933894,
+        "ended_ms": 1793741934396,
+        "status": "ok"
+      },
+      {
+        "label": "read_preview",
+        "started_ms": 1793741934398,
+        "ended_ms": 1793741934544,
+        "status": "ok"
+      }
+    ],
+    "status": "completed",
+    "observed_mapping": {
+      "sku": "CatalogPartKey",
+      "name": "ProductName",
+      "on_hand": "AvailableQuantity"
+    },
+    "preview_text": "SUPPLIER CONTRACT / PREVIEW → CONFIRM → RECONCILE\n\nSupplier onboarding\n\nSynthetic suppliers, one shared store. Preview is read-only. Vendor, price and concurrency versions come from the canonical catalog; changed rows are rejected rather than overwriting later stock or metadata.\n\n01 / SUGGEST → REVIEW → SAVE INACTIVE → ACTIVATE\n\nMapping draft / human review\n\nSynthetic suppliers only. Suggestions can be wrong. You own the edits and approval; Java validates the profile and file again. No import runs until a separate preview and confirmation.\n\nSource bench-v3-20261104-key-assisted / v1 · vendor RIVERBYTE · declared UTF-8\n\nDraft method\nFrozen header rules\nLocal AI with SOP context\nSuggest mapping\nSource column for sku\nCurrent: CatalogPartKey → edited: CatalogPartKey\nSource column for name\nCurrent: ProductName → edited: ProductName\nSource column for on_hand\nCurrent: AvailableQuantity → edited: AvailableQuantity\nNew profile ID\nNew profile version\nSKU normalization\nTRIM\nTRIM_UPPER\nI reviewed the exact source columns, vendor, encoding and new immutable profile version. Create it inactive.\nCreate inactive profile\nSupplier profile version\nSelect an active profile\nbench-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-japanese-assisted / v1 / UTF-8\nbench-v2-20261104-japanese-manual / v1 / UTF-8\nbench-v2-20261104-key-assisted / v1 / UTF-8\nbench-v2-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-stock-assisted / v1 / UTF-8\nbench-v2-20261104-stock-manual / v1 / UTF-8\nbench-v3-20261104-key-assisted / v1 / UTF-8\nbench-v3-20261104-key-manual / v1 / UTF-8\nsupplier-a / v1 / CP932\nsupplier-b / v1 / UTF-8\n\nVendor RIVERBYTE · SKU TRIM_UPPER · name TRIM · stock integer 0–1,000,000\n\nname\nProductName (required)\nsku\nCatalogPartKey (required)\non_hand\nAvailableQuantity (required)\nSupplier source filename\nSupplier original CSV file\nCP932 requires original bytes. Maximum 5,000,000 bytes and 1,000 data rows. No encoding guessing.\nSupplier CSV payload (UTF-8 only)\nPreview & validate\nMapping preview / bench-v3-20261104-key-assisted v1\n\nPreview expires 2026-11-03T21:48:54.000Z · 600s remaining. Java rechecks validity on confirmation.\n\n1 accepted · 0 rejected\n\nFirst 10 accepted rows. Rejected rows are quarantined; validation is not a reservation. Catalog changes require a new preview or are rejected when applied.\n\nRow 2 · VM-002 · Modular desk · stock 9\nValidation errors (0)\nExport sanitized report\nI reviewed this mapping, accepted rows and rejected rows, and approve applying this snapshot to the shared store.\nConfirm & queue",
+    "ended_ms": 1793741934551,
+    "elapsed_ms": 9020
+  },
+  {
+    "case": "new-stock",
+    "arm": "assisted",
+    "profile_id": "bench-v3-20261104-stock-assisted",
+    "started_at": "2026-11-03T21:38:57.428Z",
+    "started_ms": 1793741937428,
+    "events": [
+      {
+        "label": "fill_csv",
+        "started_ms": 1793741937428,
+        "ended_ms": 1793741937542,
+        "status": "ok"
+      },
+      {
+        "label": "choose_ai",
+        "started_ms": 1793741937543,
+        "ended_ms": 1793741937699,
+        "status": "ok"
+      },
+      {
+        "label": "request_suggestion",
+        "started_ms": 1793741937701,
+        "ended_ms": 1793741938389,
+        "status": "ok"
+      },
+      {
+        "label": "wait_suggestion",
+        "started_ms": 1793741938390,
+        "ended_ms": 1793741941599,
+        "status": "error",
+        "error": "Error"
+      },
+      {
+        "label": "fallback_edit_on_hand",
+        "started_ms": 1793741984868,
+        "ended_ms": 1793741985013,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793741985013,
+        "ended_ms": 1793741985147,
+        "status": "ok"
+      },
+      {
+        "label": "review_sku",
+        "started_ms": 1793741989945,
+        "ended_ms": 1793741989984,
+        "status": "ok"
+      },
+      {
+        "label": "review_name",
+        "started_ms": 1793741989985,
+        "ended_ms": 1793741990015,
+        "status": "ok"
+      },
+      {
+        "label": "review_on_hand",
+        "started_ms": 1793741990016,
+        "ended_ms": 1793741990040,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793741990041,
+        "ended_ms": 1793741990056,
+        "status": "ok"
+      },
+      {
+        "label": "approve_mapping",
+        "started_ms": 1793741990057,
+        "ended_ms": 1793741990464,
+        "status": "ok"
+      },
+      {
+        "label": "save_inactive",
+        "started_ms": 1793741990466,
+        "ended_ms": 1793741991378,
+        "status": "ok"
+      },
+      {
+        "label": "wait_saved",
+        "started_ms": 1793741991380,
+        "ended_ms": 1793741991735,
+        "status": "ok"
+      },
+      {
+        "label": "activate_profile",
+        "started_ms": 1793741991736,
+        "ended_ms": 1793741992379,
+        "status": "ok"
+      },
+      {
+        "label": "wait_adopted",
+        "started_ms": 1793741992379,
+        "ended_ms": 1793741992839,
+        "status": "ok"
+      },
+      {
+        "label": "preview",
+        "started_ms": 1793741992839,
+        "ended_ms": 1793741993377,
+        "status": "ok"
+      },
+      {
+        "label": "wait_preview",
+        "started_ms": 1793741993378,
+        "ended_ms": 1793741993856,
+        "status": "ok"
+      },
+      {
+        "label": "read_preview",
+        "started_ms": 1793741993858,
+        "ended_ms": 1793741993874,
+        "status": "ok"
+      }
+    ],
+    "status": "completed",
+    "recovery": "Suggestion result did not appear; no repeat AI request. Manual fallback within same timed task.",
+    "observed_mapping": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "StockOnPremises"
+    },
+    "preview_text": "SUPPLIER CONTRACT / PREVIEW → CONFIRM → RECONCILE\n\nSupplier onboarding\n\nSynthetic suppliers, one shared store. Preview is read-only. Vendor, price and concurrency versions come from the canonical catalog; changed rows are rejected rather than overwriting later stock or metadata.\n\n01 / SUGGEST → REVIEW → SAVE INACTIVE → ACTIVATE\n\nMapping draft / human review\n\nSynthetic suppliers only. Suggestions can be wrong. You own the edits and approval; Java validates the profile and file again. No import runs until a separate preview and confirmation.\n\nSource bench-v3-20261104-stock-assisted / v1 · vendor RIVERBYTE · declared UTF-8\n\nDraft method\nFrozen header rules\nLocal AI with SOP context\nSuggest mapping\nSource column for sku\nCurrent: SKU → edited: SKU\nSource column for name\nCurrent: ProductName → edited: ProductName\nSource column for on_hand\nCurrent: StockOnPremises → edited: StockOnPremises\nNew profile ID\nNew profile version\nSKU normalization\nTRIM\nTRIM_UPPER\nI reviewed the exact source columns, vendor, encoding and new immutable profile version. Create it inactive.\nCreate inactive profile\nSupplier profile version\nSelect an active profile\nbench-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-japanese-assisted / v1 / UTF-8\nbench-v2-20261104-japanese-manual / v1 / UTF-8\nbench-v2-20261104-key-assisted / v1 / UTF-8\nbench-v2-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-stock-assisted / v1 / UTF-8\nbench-v2-20261104-stock-manual / v1 / UTF-8\nbench-v3-20261104-key-assisted / v1 / UTF-8\nbench-v3-20261104-key-manual / v1 / UTF-8\nbench-v3-20261104-stock-assisted / v1 / UTF-8\nsupplier-a / v1 / CP932\nsupplier-b / v1 / UTF-8\n\nVendor RIVERBYTE · SKU TRIM_UPPER · name TRIM · stock integer 0–1,000,000\n\nname\nProductName (required)\nsku\nSKU (required)\non_hand\nStockOnPremises (required)\nSupplier source filename\nSupplier original CSV file\nCP932 requires original bytes. Maximum 5,000,000 bytes and 1,000 data rows. No encoding guessing.\nSupplier CSV payload (UTF-8 only)\nPreview & validate\nMapping preview / bench-v3-20261104-stock-assisted v1\n\nPreview expires 2026-11-03T21:49:54.000Z · 601s remaining. Java rechecks validity on confirmation.\n\n1 accepted · 0 rejected\n\nFirst 10 accepted rows. Rejected rows are quarantined; validation is not a reservation. Catalog changes require a new preview or are rejected when applied.\n\nRow 2 · VM-002 · Modular desk · stock 9\nValidation errors (0)\nExport sanitized report\nI reviewed this mapping, accepted rows and rejected rows, and approve applying this snapshot to the shared store.\nConfirm & queue",
+    "ended_ms": 1793741993875,
+    "elapsed_ms": 56447
+  },
+  {
+    "case": "new-stock",
+    "arm": "manual",
+    "profile_id": "bench-v3-20261104-stock-manual",
+    "started_at": "2026-11-03T21:39:57.712Z",
+    "started_ms": 1793741997712,
+    "events": [
+      {
+        "label": "fill_csv",
+        "started_ms": 1793741997712,
+        "ended_ms": 1793741997845,
+        "status": "ok"
+      },
+      {
+        "label": "manual_edit_on_hand",
+        "started_ms": 1793741997846,
+        "ended_ms": 1793741997977,
+        "status": "ok"
+      },
+      {
+        "label": "review_sku",
+        "started_ms": 1793741997979,
+        "ended_ms": 1793741998112,
+        "status": "ok"
+      },
+      {
+        "label": "review_name",
+        "started_ms": 1793741998112,
+        "ended_ms": 1793741998243,
+        "status": "ok"
+      },
+      {
+        "label": "review_on_hand",
+        "started_ms": 1793741998244,
+        "ended_ms": 1793741998375,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793741998376,
+        "ended_ms": 1793741998496,
+        "status": "ok"
+      },
+      {
+        "label": "approve_mapping",
+        "started_ms": 1793741998497,
+        "ended_ms": 1793741999719,
+        "status": "error",
+        "error": "Error"
+      },
+      {
+        "label": "recover_approve_click",
+        "started_ms": 1793742031367,
+        "ended_ms": 1793742032358,
+        "status": "ok"
+      },
+      {
+        "label": "save_inactive",
+        "started_ms": 1793742042868,
+        "ended_ms": 1793742043354,
+        "status": "ok"
+      },
+      {
+        "label": "wait_saved",
+        "started_ms": 1793742043355,
+        "ended_ms": 1793742043713,
+        "status": "ok"
+      },
+      {
+        "label": "activate_profile",
+        "started_ms": 1793742043714,
+        "ended_ms": 1793742044257,
+        "status": "ok"
+      },
+      {
+        "label": "wait_adopted",
+        "started_ms": 1793742044259,
+        "ended_ms": 1793742044791,
+        "status": "ok"
+      },
+      {
+        "label": "preview",
+        "started_ms": 1793742044792,
+        "ended_ms": 1793742045335,
+        "status": "ok"
+      },
+      {
+        "label": "wait_preview",
+        "started_ms": 1793742045336,
+        "ended_ms": 1793742045629,
+        "status": "ok"
+      },
+      {
+        "label": "read_preview",
+        "started_ms": 1793742045631,
+        "ended_ms": 1793742045792,
+        "status": "ok"
+      }
+    ],
+    "status": "completed",
+    "observed_mapping": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "StockOnPremises"
+    },
+    "preview_text": "SUPPLIER CONTRACT / PREVIEW → CONFIRM → RECONCILE\n\nSupplier onboarding\n\nSynthetic suppliers, one shared store. Preview is read-only. Vendor, price and concurrency versions come from the canonical catalog; changed rows are rejected rather than overwriting later stock or metadata.\n\n01 / SUGGEST → REVIEW → SAVE INACTIVE → ACTIVATE\n\nMapping draft / human review\n\nSynthetic suppliers only. Suggestions can be wrong. You own the edits and approval; Java validates the profile and file again. No import runs until a separate preview and confirmation.\n\nSource bench-v3-20261104-stock-manual / v1 · vendor RIVERBYTE · declared UTF-8\n\nDraft method\nFrozen header rules\nLocal AI with SOP context\nSuggest mapping\nSource column for sku\nCurrent: SKU → edited: SKU\nSource column for name\nCurrent: ProductName → edited: ProductName\nSource column for on_hand\nCurrent: StockOnPremises → edited: StockOnPremises\nNew profile ID\nNew profile version\nSKU normalization\nTRIM\nTRIM_UPPER\nI reviewed the exact source columns, vendor, encoding and new immutable profile version. Create it inactive.\nCreate inactive profile\nSupplier profile version\nSelect an active profile\nbench-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-japanese-assisted / v1 / UTF-8\nbench-v2-20261104-japanese-manual / v1 / UTF-8\nbench-v2-20261104-key-assisted / v1 / UTF-8\nbench-v2-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-stock-assisted / v1 / UTF-8\nbench-v2-20261104-stock-manual / v1 / UTF-8\nbench-v3-20261104-key-assisted / v1 / UTF-8\nbench-v3-20261104-key-manual / v1 / UTF-8\nbench-v3-20261104-stock-assisted / v1 / UTF-8\nbench-v3-20261104-stock-manual / v1 / UTF-8\nsupplier-a / v1 / CP932\nsupplier-b / v1 / UTF-8\n\nVendor RIVERBYTE · SKU TRIM_UPPER · name TRIM · stock integer 0–1,000,000\n\nname\nProductName (required)\nsku\nSKU (required)\non_hand\nStockOnPremises (required)\nSupplier source filename\nSupplier original CSV file\nCP932 requires original bytes. Maximum 5,000,000 bytes and 1,000 data rows. No encoding guessing.\nSupplier CSV payload (UTF-8 only)\nPreview & validate\nMapping preview / bench-v3-20261104-stock-manual v1\n\nPreview expires 2026-11-03T21:50:45.000Z · 600s remaining. Java rechecks validity on confirmation.\n\n1 accepted · 0 rejected\n\nFirst 10 accepted rows. Rejected rows are quarantined; validation is not a reservation. Catalog changes require a new preview or are rejected when applied.\n\nRow 2 · VM-002 · Modular desk · stock 9\nValidation errors (0)\nExport sanitized report\nI reviewed this mapping, accepted rows and rejected rows, and approve applying this snapshot to the shared store.\nConfirm & queue",
+    "ended_ms": 1793742045793,
+    "elapsed_ms": 48081
+  },
+  {
+    "case": "new-japanese",
+    "arm": "manual",
+    "profile_id": "bench-v3-20261104-japanese-manual",
+    "started_at": "2026-11-03T21:40:49.350Z",
+    "started_ms": 1793742049350,
+    "events": [
+      {
+        "label": "fill_csv",
+        "started_ms": 1793742049350,
+        "ended_ms": 1793742049505,
+        "status": "ok"
+      },
+      {
+        "label": "manual_edit_sku",
+        "started_ms": 1793742049507,
+        "ended_ms": 1793742049646,
+        "status": "ok"
+      },
+      {
+        "label": "manual_edit_name",
+        "started_ms": 1793742049649,
+        "ended_ms": 1793742049801,
+        "status": "ok"
+      },
+      {
+        "label": "manual_edit_on_hand",
+        "started_ms": 1793742049802,
+        "ended_ms": 1793742049949,
+        "status": "ok"
+      },
+      {
+        "label": "review_sku",
+        "started_ms": 1793742049951,
+        "ended_ms": 1793742050104,
+        "status": "ok"
+      },
+      {
+        "label": "review_name",
+        "started_ms": 1793742050106,
+        "ended_ms": 1793742050270,
+        "status": "ok"
+      },
+      {
+        "label": "review_on_hand",
+        "started_ms": 1793742050272,
+        "ended_ms": 1793742050434,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793742050437,
+        "ended_ms": 1793742050577,
+        "status": "ok"
+      },
+      {
+        "label": "approve_mapping",
+        "started_ms": 1793742050578,
+        "ended_ms": 1793742051362,
+        "status": "ok"
+      },
+      {
+        "label": "save_inactive",
+        "started_ms": 1793742051364,
+        "ended_ms": 1793742052295,
+        "status": "ok"
+      },
+      {
+        "label": "wait_saved",
+        "started_ms": 1793742052296,
+        "ended_ms": 1793742052648,
+        "status": "ok"
+      },
+      {
+        "label": "activate_profile",
+        "started_ms": 1793742052649,
+        "ended_ms": 1793742053310,
+        "status": "ok"
+      },
+      {
+        "label": "wait_adopted",
+        "started_ms": 1793742053311,
+        "ended_ms": 1793742053815,
+        "status": "ok"
+      },
+      {
+        "label": "preview",
+        "started_ms": 1793742053817,
+        "ended_ms": 1793742054370,
+        "status": "ok"
+      },
+      {
+        "label": "wait_preview",
+        "started_ms": 1793742054370,
+        "ended_ms": 1793742054748,
+        "status": "ok"
+      },
+      {
+        "label": "read_preview",
+        "started_ms": 1793742054749,
+        "ended_ms": 1793742054949,
+        "status": "ok"
+      }
+    ],
+    "status": "completed",
+    "observed_mapping": {
+      "sku": "管理品番",
+      "name": "販売表示名",
+      "on_hand": "実地棚卸数"
+    },
+    "preview_text": "SUPPLIER CONTRACT / PREVIEW → CONFIRM → RECONCILE\n\nSupplier onboarding\n\nSynthetic suppliers, one shared store. Preview is read-only. Vendor, price and concurrency versions come from the canonical catalog; changed rows are rejected rather than overwriting later stock or metadata.\n\n01 / SUGGEST → REVIEW → SAVE INACTIVE → ACTIVATE\n\nMapping draft / human review\n\nSynthetic suppliers only. Suggestions can be wrong. You own the edits and approval; Java validates the profile and file again. No import runs until a separate preview and confirmation.\n\nSource bench-v3-20261104-japanese-manual / v1 · vendor RIVERBYTE · declared UTF-8\n\nDraft method\nFrozen header rules\nLocal AI with SOP context\nSuggest mapping\nSource column for sku\nCurrent: 管理品番 → edited: 管理品番\nSource column for name\nCurrent: 販売表示名 → edited: 販売表示名\nSource column for on_hand\nCurrent: 実地棚卸数 → edited: 実地棚卸数\nNew profile ID\nNew profile version\nSKU normalization\nTRIM\nTRIM_UPPER\nI reviewed the exact source columns, vendor, encoding and new immutable profile version. Create it inactive.\nCreate inactive profile\nSupplier profile version\nSelect an active profile\nbench-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-japanese-assisted / v1 / UTF-8\nbench-v2-20261104-japanese-manual / v1 / UTF-8\nbench-v2-20261104-key-assisted / v1 / UTF-8\nbench-v2-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-stock-assisted / v1 / UTF-8\nbench-v2-20261104-stock-manual / v1 / UTF-8\nbench-v3-20261104-japanese-manual / v1 / UTF-8\nbench-v3-20261104-key-assisted / v1 / UTF-8\nbench-v3-20261104-key-manual / v1 / UTF-8\nbench-v3-20261104-stock-assisted / v1 / UTF-8\nbench-v3-20261104-stock-manual / v1 / UTF-8\nsupplier-a / v1 / CP932\nsupplier-b / v1 / UTF-8\n\nVendor RIVERBYTE · SKU TRIM_UPPER · name TRIM · stock integer 0–1,000,000\n\nname\n販売表示名 (required)\nsku\n管理品番 (required)\non_hand\n実地棚卸数 (required)\nSupplier source filename\nSupplier original CSV file\nCP932 requires original bytes. Maximum 5,000,000 bytes and 1,000 data rows. No encoding guessing.\nSupplier CSV payload (UTF-8 only)\nPreview & validate\nMapping preview / bench-v3-20261104-japanese-manual v1\n\nPreview expires 2026-11-03T21:50:54.000Z · 600s remaining. Java rechecks validity on confirmation.\n\n1 accepted · 0 rejected\n\nFirst 10 accepted rows. Rejected rows are quarantined; validation is not a reservation. Catalog changes require a new preview or are rejected when applied.\n\nRow 2 · VM-002 · 収納机 · stock 9\nValidation errors (0)\nExport sanitized report\nI reviewed this mapping, accepted rows and rejected rows, and approve applying this snapshot to the shared store.\nConfirm & queue",
+    "ended_ms": 1793742054950,
+    "elapsed_ms": 5600
+  },
+  {
+    "case": "new-japanese",
+    "arm": "assisted",
+    "profile_id": "bench-v3-20261104-japanese-assisted",
+    "started_at": "2026-11-03T21:40:57.953Z",
+    "started_ms": 1793742057953,
+    "events": [
+      {
+        "label": "fill_csv",
+        "started_ms": 1793742057953,
+        "ended_ms": 1793742058107,
+        "status": "ok"
+      },
+      {
+        "label": "choose_ai",
+        "started_ms": 1793742058108,
+        "ended_ms": 1793742058252,
+        "status": "ok"
+      },
+      {
+        "label": "request_suggestion",
+        "started_ms": 1793742058254,
+        "ended_ms": 1793742058819,
+        "status": "ok"
+      },
+      {
+        "label": "wait_suggestion",
+        "started_ms": 1793742058820,
+        "ended_ms": 1793742060923,
+        "status": "ok"
+      },
+      {
+        "label": "review_sku",
+        "started_ms": 1793742060940,
+        "ended_ms": 1793742061115,
+        "status": "ok"
+      },
+      {
+        "label": "review_name",
+        "started_ms": 1793742061117,
+        "ended_ms": 1793742061295,
+        "status": "ok"
+      },
+      {
+        "label": "review_on_hand",
+        "started_ms": 1793742061298,
+        "ended_ms": 1793742061466,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793742061468,
+        "ended_ms": 1793742061624,
+        "status": "ok"
+      },
+      {
+        "label": "approve_mapping",
+        "started_ms": 1793742061626,
+        "ended_ms": 1793742062774,
+        "status": "ok"
+      },
+      {
+        "label": "save_inactive",
+        "started_ms": 1793742062780,
+        "ended_ms": 1793742063770,
+        "status": "ok"
+      },
+      {
+        "label": "wait_saved",
+        "started_ms": 1793742063771,
+        "ended_ms": 1793742064179,
+        "status": "ok"
+      },
+      {
+        "label": "activate_profile",
+        "started_ms": 1793742064190,
+        "ended_ms": 1793742064790,
+        "status": "ok"
+      },
+      {
+        "label": "wait_adopted",
+        "started_ms": 1793742064790,
+        "ended_ms": 1793742065516,
+        "status": "ok"
+      },
+      {
+        "label": "preview",
+        "started_ms": 1793742065518,
+        "ended_ms": 1793742066852,
+        "status": "ok"
+      },
+      {
+        "label": "wait_preview",
+        "started_ms": 1793742066855,
+        "ended_ms": 1793742067272,
+        "status": "ok"
+      },
+      {
+        "label": "read_preview",
+        "started_ms": 1793742067273,
+        "ended_ms": 1793742067431,
+        "status": "ok"
+      }
+    ],
+    "status": "completed",
+    "observed_mapping": {
+      "sku": "管理品番",
+      "name": "販売表示名",
+      "on_hand": "実地棚卸数"
+    },
+    "preview_text": "SUPPLIER CONTRACT / PREVIEW → CONFIRM → RECONCILE\n\nSupplier onboarding\n\nSynthetic suppliers, one shared store. Preview is read-only. Vendor, price and concurrency versions come from the canonical catalog; changed rows are rejected rather than overwriting later stock or metadata.\n\n01 / SUGGEST → REVIEW → SAVE INACTIVE → ACTIVATE\n\nMapping draft / human review\n\nSynthetic suppliers only. Suggestions can be wrong. You own the edits and approval; Java validates the profile and file again. No import runs until a separate preview and confirmation.\n\nSource bench-v3-20261104-japanese-assisted / v1 · vendor RIVERBYTE · declared UTF-8\n\nDraft method\nFrozen header rules\nLocal AI with SOP context\nSuggest mapping\nSource column for sku\nCurrent: 管理品番 → edited: 管理品番\nSource column for name\nCurrent: 販売表示名 → edited: 販売表示名\nSource column for on_hand\nCurrent: 実地棚卸数 → edited: 実地棚卸数\nNew profile ID\nNew profile version\nSKU normalization\nTRIM\nTRIM_UPPER\nI reviewed the exact source columns, vendor, encoding and new immutable profile version. Create it inactive.\nCreate inactive profile\nSupplier profile version\nSelect an active profile\nbench-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-japanese-assisted / v1 / UTF-8\nbench-v2-20261104-japanese-manual / v1 / UTF-8\nbench-v2-20261104-key-assisted / v1 / UTF-8\nbench-v2-20261104-key-manual / v1 / UTF-8\nbench-v2-20261104-stock-assisted / v1 / UTF-8\nbench-v2-20261104-stock-manual / v1 / UTF-8\nbench-v3-20261104-japanese-assisted / v1 / UTF-8\nbench-v3-20261104-japanese-manual / v1 / UTF-8\nbench-v3-20261104-key-assisted / v1 / UTF-8\nbench-v3-20261104-key-manual / v1 / UTF-8\nbench-v3-20261104-stock-assisted / v1 / UTF-8\nbench-v3-20261104-stock-manual / v1 / UTF-8\nsupplier-a / v1 / CP932\nsupplier-b / v1 / UTF-8\n\nVendor RIVERBYTE · SKU TRIM_UPPER · name TRIM · stock integer 0–1,000,000\n\nname\n販売表示名 (required)\nsku\n管理品番 (required)\non_hand\n実地棚卸数 (required)\nSupplier source filename\nSupplier original CSV file\nCP932 requires original bytes. Maximum 5,000,000 bytes and 1,000 data rows. No encoding guessing.\nSupplier CSV payload (UTF-8 only)\nPreview & validate\nMapping preview / bench-v3-20261104-japanese-assisted v1\n\nPreview expires 2026-11-03T21:51:07.000Z · 600s remaining. Java rechecks validity on confirmation.\n\n1 accepted · 0 rejected\n\nFirst 10 accepted rows. Rejected rows are quarantined; validation is not a reservation. Catalog changes require a new preview or are rejected when applied.\n\nRow 2 · VM-002 · 収納机 · stock 9\nValidation errors (0)\nExport sanitized report\nI reviewed this mapping, accepted rows and rejected rows, and approve applying this snapshot to the shared store.\nConfirm & queue",
+    "ended_ms": 1793742067431,
+    "elapsed_ms": 9478
+  }
+]

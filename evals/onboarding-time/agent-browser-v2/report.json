@@ -1,0 +1,83 @@
+{
+  "version": "agent-browser-v2",
+  "scope": "One informed agent, three repeated synthetic files, real online UI/Java/AI; not human UAT",
+  "time_saving_claim_supported": false,
+  "reason": "Instrumentation errors retained; agent timings do not establish human onboarding savings",
+  "summary": {
+    "manual": {
+      "completed_tasks": 3,
+      "median_elapsed_ms": 6740,
+      "manual_column_entries": 5,
+      "tasks_with_instrumentation_errors": 1,
+      "successful_draft_observations": 0
+    },
+    "assisted": {
+      "completed_tasks": 3,
+      "median_elapsed_ms": 6609,
+      "manual_column_entries": 0,
+      "tasks_with_instrumentation_errors": 1,
+      "successful_draft_observations": 3
+    }
+  },
+  "observations": [
+    {
+      "case": "new-key",
+      "arm": "manual",
+      "elapsed_ms": 6740,
+      "instrumentation_errors": [],
+      "manual_column_entries": 1,
+      "successful_draft_observation": false
+    },
+    {
+      "case": "new-key",
+      "arm": "assisted",
+      "elapsed_ms": 57776,
+      "instrumentation_errors": [
+        "choose_ai"
+      ],
+      "manual_column_entries": 0,
+      "successful_draft_observation": true
+    },
+    {
+      "case": "new-stock",
+      "arm": "assisted",
+      "elapsed_ms": 3135,
+      "instrumentation_errors": [],
+      "manual_column_entries": 0,
+      "successful_draft_observation": true
+    },
+    {
+      "case": "new-stock",
+      "arm": "manual",
+      "elapsed_ms": 1954,
+      "instrumentation_errors": [],
+      "manual_column_entries": 1,
+      "successful_draft_observation": false
+    },
+    {
+      "case": "new-japanese",
+      "arm": "manual",
+      "elapsed_ms": 46315,
+      "instrumentation_errors": [
+        "approve_mapping"
+      ],
+      "manual_column_entries": 3,
+      "successful_draft_observation": false
+    },
+    {
+      "case": "new-japanese",
+      "arm": "assisted",
+      "elapsed_ms": 6609,
+      "instrumentation_errors": [],
+      "manual_column_entries": 0,
+      "successful_draft_observation": true
+    }
+  ],
+  "artifacts_sha256": {
+    "assisted-japanese-preview.png": "d0de6ff263b78e0d880a16351e078fc8a577faaca8116b3257b121738f115433",
+    "cases.json": "ac27ad88a5c5520bbbfa16a7a2fd7de1b723a2460776b643ffeef0fc5ca5bc92",
+    "observations.json": "6b7863947ac72eb7d34faf8be53c67e890e8323233aeb5753c00c3a86ac4e1d8",
+    "protocol.json": "3e188fe11c7b669b8fb90999721ec2910116d50877c7187ce734bd03164368f9",
+    "workflow.js": "d2dedd9493b0ef39bd079d3a76458ae7373f6ecd90cffb38c38fb110384f0423"
+  }
+}

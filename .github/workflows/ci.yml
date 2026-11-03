@@ -24,6 +24,7 @@ jobs:
           python ../tools/cloud_mapping_pilot.py --check
           python ../tools/cloud_mapping_pilot.py --directory evals/cloud-mapping/refinement-v1 --check
           python ../tools/cloud_mapping_pilot.py --directory evals/cloud-mapping/transport-verification-v1 --check
+          python ../tools/browser_mapping_timing.py --check
   python:
     runs-on: ubuntu-latest
     steps:

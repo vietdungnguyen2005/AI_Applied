@@ -92,7 +92,9 @@ shared D1 database was retained for the primary service. The actual daily budget
 counter was 53/60 for UTC 2026-11-03 after smoke checks (local date 2026-11-04).
 This is a total reservation counter including other calls, not a mapping-only
 cost measurement. V-Market uses the unchanged AI origin. Real production operator
-login and timed supplier onboarding remain unmeasured, as in the previous release.
+login and task timings were subsequently exercised in the
+[real browser benchmark](CLOUD-browser-mapping-time.md). It does not establish
+human supplier-onboarding time saved.
 
 ## Scope of claims
 
