@@ -1,0 +1,10 @@
+[
+  {
+    "id": "new-key",
+    "arm": "baseline",
+    "status": 0,
+    "ms": 10670,
+    "at": "2026-11-03T20:10:47.592Z",
+    "error": "TypeError"
+  }
+]

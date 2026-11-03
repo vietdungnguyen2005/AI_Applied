@@ -1,0 +1,7 @@
+{
+  "status": "ABORTED_TRANSPORT",
+  "reason": "First baseline request failed to connect; no model response. No automatic retry.",
+  "raw_artifact": "baseline-raw.json",
+  "replacement_collection": "verification-v1",
+  "remaining_inputs_not_collected": 5
+}
