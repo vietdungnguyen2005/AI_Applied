@@ -1,0 +1,7 @@
+{
+  "outcome": "ABORTED_TRANSPORT",
+  "observations": 1,
+  "successful_service_responses": 0,
+  "replacement": "transport-verification-v1",
+  "reason": "Node fetch connection failed before a service response; retained without retry. Curl health returned 200."
+}

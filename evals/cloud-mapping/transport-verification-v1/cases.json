@@ -1,0 +1,141 @@
+[
+  {
+    "id": "new-key",
+    "headers": [
+      "CatalogPartKey",
+      "ProductName",
+      "AvailableQuantity"
+    ],
+    "rows": [
+      [
+        "VM-005",
+        "Basket",
+        "9"
+      ]
+    ],
+    "expected": {
+      "sku": "CatalogPartKey",
+      "name": "ProductName",
+      "on_hand": "AvailableQuantity"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "new-stock",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "StockOnPremises"
+    ],
+    "rows": [
+      [
+        "VM-005",
+        "Basket",
+        "9"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "StockOnPremises"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "new-japanese",
+    "headers": [
+      "管理品番",
+      "販売表示名",
+      "実地棚卸数"
+    ],
+    "rows": [
+      [
+        "VM-005",
+        "収納かご",
+        "9"
+      ]
+    ],
+    "expected": {
+      "sku": "管理品番",
+      "name": "販売表示名",
+      "on_hand": "実地棚卸数"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "new-ambiguous",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "QtyOne",
+      "QtyTwo"
+    ],
+    "rows": [
+      [
+        "VM-005",
+        "Basket",
+        "9",
+        "2"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": null
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "new-money",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "RetailPrice"
+    ],
+    "rows": [
+      [
+        "VM-005",
+        "Basket",
+        "6900"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": null
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "new-vendor",
+    "headers": [
+      "VendorAccount",
+      "ProductName",
+      "CountInStock"
+    ],
+    "rows": [
+      [
+        "RIVERBYTE",
+        "Basket",
+        "9"
+      ],
+      [
+        "RIVERBYTE",
+        "Bag",
+        "4"
+      ]
+    ],
+    "expected": {
+      "sku": null,
+      "name": "ProductName",
+      "on_hand": "CountInStock"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  }
+]
