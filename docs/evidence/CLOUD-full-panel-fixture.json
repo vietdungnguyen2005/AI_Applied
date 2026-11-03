@@ -1,0 +1,19 @@
+{
+  "mode": "browser fixtures only; no production operator login or AI request",
+  "checks": [
+    {
+      "viewport": "desktop",
+      "qa_visible": true,
+      "ask_enabled": true,
+      "investigation_enabled": true,
+      "horizontal_overflow": false
+    },
+    {
+      "viewport": "mobile",
+      "qa_visible": true,
+      "ask_enabled": true,
+      "investigation_enabled": true,
+      "horizontal_overflow": false
+    }
+  ]
+}

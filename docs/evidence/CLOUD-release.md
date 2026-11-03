@@ -1,5 +1,7 @@
 # Independent Cloudflare policy QA — 2026-11-03
 
+Historical initial scope; see [the current online integration](CLOUD-full-release.md).
+
 Initial online capability is supplier policy QA and citation reading. This is
 **not a cloud port of every P00–P16 feature**. Import investigations, durable
 agent runs and mapping suggestions remain disabled online; their local Python

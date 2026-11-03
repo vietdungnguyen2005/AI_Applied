@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-03T15:35:13.403Z",
+  "checks": [
+    {
+      "path": "/api/ops/ai/runs",
+      "status": 401,
+      "body": {
+        "code": "SESSION_EXPIRED"
+      }
+    },
+    {
+      "path": "/api/ops/ai/mapping/suggest",
+      "status": 401,
+      "body": {
+        "code": "SESSION_EXPIRED"
+      }
+    },
+    {
+      "path": "/api/catalog/products",
+      "status": 200,
+      "product_count": 8
+    }
+  ]
+}

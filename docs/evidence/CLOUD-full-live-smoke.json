@@ -1,0 +1,432 @@
+{
+  "date": "2026-11-03T15:29:45.584Z",
+  "origin": "https://vmarket-ai-applied.vmarket-vietdung2005.workers.dev",
+  "checks": [
+    {
+      "action": "start",
+      "status": 200,
+      "ms": 902,
+      "body": {
+        "state": {
+          "conversation_id": "9aa2cd8c-1c5c-4bcd-9061-76524eb82f05",
+          "initial_request_id": "ba6e5ab8-063e-4b87-88ee-195e6f4b9740",
+          "status": "started",
+          "phase": "idle",
+          "revision": 0,
+          "step": 0,
+          "outcome": null,
+          "reason": null,
+          "created_at": 1793719786,
+          "updated_at": 1793719786,
+          "expires_at": 1793720386,
+          "run_id": "728c14e4-7cf4-484a-a3b4-8eafe561faa6",
+          "observations": [],
+          "can_resume": true,
+          "can_cancel": true
+        },
+        "collection_ids": [
+          "4aa83e9f-0a0a-5558-8f5e-0f87db27c923"
+        ],
+        "pending_intent": null,
+        "lease_id": null,
+        "known_job_ids": []
+      }
+    },
+    {
+      "action": "plan",
+      "status": 200,
+      "ms": 1318,
+      "body": {
+        "state": {
+          "conversation_id": "9aa2cd8c-1c5c-4bcd-9061-76524eb82f05",
+          "initial_request_id": "ba6e5ab8-063e-4b87-88ee-195e6f4b9740",
+          "status": "started",
+          "phase": "ready",
+          "revision": 2,
+          "step": 0,
+          "outcome": null,
+          "reason": null,
+          "created_at": 1793719786,
+          "updated_at": 1793719787,
+          "expires_at": 1793720386,
+          "run_id": "728c14e4-7cf4-484a-a3b4-8eafe561faa6",
+          "observations": [],
+          "can_resume": true,
+          "can_cancel": true
+        },
+        "collection_ids": [
+          "4aa83e9f-0a0a-5558-8f5e-0f87db27c923"
+        ],
+        "pending_intent": {
+          "call_id": "ece41085-a5a8-4d6c-ac92-71fbb5158bc3",
+          "tool_name": "get_imports",
+          "arguments": {}
+        },
+        "lease_id": null,
+        "known_job_ids": []
+      }
+    },
+    {
+      "action": "claim",
+      "status": 200,
+      "ms": 300,
+      "body": {
+        "state": {
+          "conversation_id": "9aa2cd8c-1c5c-4bcd-9061-76524eb82f05",
+          "initial_request_id": "ba6e5ab8-063e-4b87-88ee-195e6f4b9740",
+          "status": "started",
+          "phase": "executing",
+          "revision": 3,
+          "step": 0,
+          "outcome": null,
+          "reason": null,
+          "created_at": 1793719786,
+          "updated_at": 1793719788,
+          "expires_at": 1793720386,
+          "run_id": "728c14e4-7cf4-484a-a3b4-8eafe561faa6",
+          "observations": [],
+          "can_resume": false,
+          "can_cancel": true
+        },
+        "collection_ids": [
+          "4aa83e9f-0a0a-5558-8f5e-0f87db27c923"
+        ],
+        "pending_intent": {
+          "call_id": "ece41085-a5a8-4d6c-ac92-71fbb5158bc3",
+          "tool_name": "get_imports",
+          "arguments": {}
+        },
+        "lease_id": "38b77624-effe-4c75-b11b-0e76d123c6f5",
+        "known_job_ids": []
+      }
+    },
+    {
+      "action": "record",
+      "status": 200,
+      "ms": 302,
+      "body": {
+        "state": {
+          "conversation_id": "9aa2cd8c-1c5c-4bcd-9061-76524eb82f05",
+          "initial_request_id": "ba6e5ab8-063e-4b87-88ee-195e6f4b9740",
+          "status": "started",
+          "phase": "idle",
+          "revision": 4,
+          "step": 1,
+          "outcome": null,
+          "reason": null,
+          "created_at": 1793719786,
+          "updated_at": 1793719788,
+          "expires_at": 1793720386,
+          "run_id": "728c14e4-7cf4-484a-a3b4-8eafe561faa6",
+          "observations": [
+            {
+              "call_id": "ece41085-a5a8-4d6c-ac92-71fbb5158bc3",
+              "tool_name": "get_imports",
+              "status": "ok",
+              "observed_at": "2026-11-03T15:29:48.111Z",
+              "truncated": false,
+              "error_code": null,
+              "item_count": 0
+            }
+          ],
+          "can_resume": true,
+          "can_cancel": true
+        },
+        "collection_ids": [
+          "4aa83e9f-0a0a-5558-8f5e-0f87db27c923"
+        ],
+        "pending_intent": null,
+        "lease_id": null,
+        "known_job_ids": []
+      }
+    },
+    {
+      "action": "plan",
+      "status": 200,
+      "ms": 984,
+      "body": {
+        "state": {
+          "conversation_id": "9aa2cd8c-1c5c-4bcd-9061-76524eb82f05",
+          "initial_request_id": "ba6e5ab8-063e-4b87-88ee-195e6f4b9740",
+          "status": "completed",
+          "phase": "terminal",
+          "revision": 6,
+          "step": 1,
+          "outcome": {
+            "kind": "final",
+            "status": "answered",
+            "handoff_reason": null
+          },
+          "reason": null,
+          "created_at": 1793719786,
+          "updated_at": 1793719789,
+          "expires_at": 1793720386,
+          "run_id": "728c14e4-7cf4-484a-a3b4-8eafe561faa6",
+          "observations": [
+            {
+              "call_id": "ece41085-a5a8-4d6c-ac92-71fbb5158bc3",
+              "tool_name": "get_imports",
+              "status": "ok",
+              "observed_at": "2026-11-03T15:29:48.111Z",
+              "truncated": false,
+              "error_code": null,
+              "item_count": 0
+            }
+          ],
+          "can_resume": false,
+          "can_cancel": false
+        },
+        "collection_ids": [
+          "4aa83e9f-0a0a-5558-8f5e-0f87db27c923"
+        ],
+        "pending_intent": null,
+        "lease_id": null,
+        "known_job_ids": []
+      }
+    },
+    {
+      "action": "knowledge",
+      "status": 200,
+      "ms": 200,
+      "body": {
+        "hits": [
+          {
+            "citation": {
+              "document_id": "466bb335-256b-569d-8000-7e8b4a0266d4",
+              "version_id": "9d3918c2-078d-5f79-90d6-89282bb4430c",
+              "chunk_id": "1ecefd0c-eda3-5c3b-bb71-d8d968462a2f",
+              "locator": {
+                "kind": "section",
+                "value": "encoding"
+              },
+              "source_url": "/ai/citations/1ecefd0c-eda3-5c3b-bb71-d8d968462a2f"
+            },
+            "excerpt": "Supplier B supplies UTF-8 original bytes. Preserve the original file, declared encoding and line endings.",
+            "score": 3,
+            "retrieval_mode": "lexical"
+          },
+          {
+            "citation": {
+              "document_id": "aee825e1-9d5c-5188-a1fc-ab78e2a59737",
+              "version_id": "906d582e-6a82-5ae2-b42e-7d718371b6b9",
+              "chunk_id": "5895e8c7-870f-5cd5-891a-da3e12f88983",
+              "locator": {
+                "kind": "section",
+                "value": "intro"
+              },
+              "source_url": "/ai/citations/5895e8c7-870f-5cd5-891a-da3e12f88983"
+            },
+            "excerpt": "SYNTHETIC b-faq source version 1\n\n[section:receipt]\nIf original bytes or profile version change after preview, obtain a new preview and human review. 原本を変えて承認を修復しません。\n\n[section:duplicates]\nIdentical original bytes keep global import identity. A different profile version does not create a new deduplication namespace.",
+            "score": 2,
+            "retrieval_mode": "lexical"
+          }
+        ]
+      }
+    },
+    {
+      "action": "mapping-rule",
+      "status": 200,
+      "ms": 155,
+      "body": {
+        "draft": {
+          "request_id": "fe6fe18f-6e02-409a-9572-ed1ca75b491a",
+          "raw_sha256": "8f57f1d2a519b26bb436c3f1c32ab520d37717051e360ff61c47fd2761e761f3",
+          "declared_encoding": "UTF-8",
+          "selected_vendor_code": "RIVERBYTE",
+          "vendor_code": "RIVERBYTE",
+          "vendor_verification": "bff_profile_snapshot",
+          "status": "suggested",
+          "assignments": [
+            {
+              "target_field": "sku",
+              "source_header": "SKU",
+              "basis": "rule",
+              "uncertainty": "medium",
+              "reason": "Exact headers from current signed Java profile; human review required.",
+              "citations": []
+            },
+            {
+              "target_field": "name",
+              "source_header": "ProductName",
+              "basis": "rule",
+              "uncertainty": "medium",
+              "reason": "Exact headers from current signed Java profile; human review required.",
+              "citations": []
+            },
+            {
+              "target_field": "on_hand",
+              "source_header": "AvailableQuantity",
+              "basis": "rule",
+              "uncertainty": "medium",
+              "reason": "Exact headers from current signed Java profile; human review required.",
+              "citations": []
+            }
+          ],
+          "unmapped_headers": [],
+          "missing_required_fields": [],
+          "warnings": [
+            "FRESHNESS_UNVERIFIED",
+            "ENCODING_DECLARED",
+            "BUSINESS_VALIDATION_REQUIRED",
+            "SOURCE_UNTRUSTED",
+            "RULE_BASELINE"
+          ],
+          "reason": "SIGNED_PROFILE_BASELINE",
+          "profile_differences": [
+            {
+              "profile_id": "supplier-b",
+              "version": 1,
+              "active": true,
+              "encoding_matches": true,
+              "changes": {}
+            }
+          ],
+          "requires_human_acceptance": true,
+          "provider_mode": "live"
+        },
+        "evidence": []
+      }
+    },
+    {
+      "action": "mapping-ai",
+      "status": 200,
+      "ms": 869,
+      "body": {
+        "draft": {
+          "request_id": "0cbb64ac-f689-4c8a-8d3b-6aa97aabc4c5",
+          "raw_sha256": "17a0b6232fd2fe89e8d2cb881eddefc6bd2268a8ff5657e96f8b7598b82d4651",
+          "declared_encoding": "UTF-8",
+          "selected_vendor_code": "RIVERBYTE",
+          "vendor_code": "RIVERBYTE",
+          "vendor_verification": "bff_profile_snapshot",
+          "status": "needs_review",
+          "assignments": [
+            {
+              "target_field": "sku",
+              "source_header": "ItemRef",
+              "basis": "model",
+              "uncertainty": "high",
+              "reason": "Model inferred header semantics; human review required.",
+              "citations": []
+            },
+            {
+              "target_field": "name",
+              "source_header": "DisplayLabel",
+              "basis": "model",
+              "uncertainty": "high",
+              "reason": "Model inferred header semantics; human review required.",
+              "citations": []
+            },
+            {
+              "target_field": "on_hand",
+              "source_header": "PhysicalUnits",
+              "basis": "model",
+              "uncertainty": "high",
+              "reason": "Model inferred header semantics; human review required.",
+              "citations": []
+            }
+          ],
+          "unmapped_headers": [],
+          "missing_required_fields": [],
+          "warnings": [
+            "FRESHNESS_UNVERIFIED",
+            "ENCODING_DECLARED",
+            "BUSINESS_VALIDATION_REQUIRED",
+            "SOURCE_UNTRUSTED",
+            "NO_AUTHORIZED_SOP"
+          ],
+          "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+          "profile_differences": [
+            {
+              "profile_id": "supplier-b",
+              "version": 1,
+              "active": true,
+              "encoding_matches": true,
+              "changes": {
+                "sku": [
+                  "SKU",
+                  "ItemRef"
+                ],
+                "name": [
+                  "ProductName",
+                  "DisplayLabel"
+                ],
+                "on_hand": [
+                  "AvailableQuantity",
+                  "PhysicalUnits"
+                ]
+              }
+            }
+          ],
+          "requires_human_acceptance": true,
+          "provider_mode": "live"
+        },
+        "evidence": []
+      }
+    },
+    {
+      "action": "mapping-cp932",
+      "status": 200,
+      "ms": 118,
+      "body": {
+        "draft": {
+          "request_id": "eb93bc92-591c-41af-976e-ea83df74fba6",
+          "raw_sha256": "aec7885a4125577545dae46be6828d7b403f96393ebe109c5ba6702d25f6d3d1",
+          "declared_encoding": "CP932",
+          "selected_vendor_code": "NAMI",
+          "vendor_code": "NAMI",
+          "vendor_verification": "bff_profile_snapshot",
+          "status": "suggested",
+          "assignments": [
+            {
+              "target_field": "sku",
+              "source_header": "商品コード",
+              "basis": "rule",
+              "uncertainty": "medium",
+              "reason": "Exact headers from current signed Java profile; human review required.",
+              "citations": []
+            },
+            {
+              "target_field": "name",
+              "source_header": "商品名",
+              "basis": "rule",
+              "uncertainty": "medium",
+              "reason": "Exact headers from current signed Java profile; human review required.",
+              "citations": []
+            },
+            {
+              "target_field": "on_hand",
+              "source_header": "在庫数",
+              "basis": "rule",
+              "uncertainty": "medium",
+              "reason": "Exact headers from current signed Java profile; human review required.",
+              "citations": []
+            }
+          ],
+          "unmapped_headers": [],
+          "missing_required_fields": [],
+          "warnings": [
+            "FRESHNESS_UNVERIFIED",
+            "ENCODING_DECLARED",
+            "BUSINESS_VALIDATION_REQUIRED",
+            "SOURCE_UNTRUSTED",
+            "RULE_BASELINE"
+          ],
+          "reason": "SIGNED_PROFILE_BASELINE",
+          "profile_differences": [
+            {
+              "profile_id": "supplier-a",
+              "version": 1,
+              "active": true,
+              "encoding_matches": true,
+              "changes": {}
+            }
+          ],
+          "requires_human_acceptance": true,
+          "provider_mode": "live"
+        },
+        "evidence": []
+      }
+    }
+  ]
+}
