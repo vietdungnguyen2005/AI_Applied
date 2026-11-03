@@ -96,7 +96,7 @@ it("provides explicit target semantics, an immutable prompt version and two exam
     system=messages[0].content;captured=JSON.parse(messages[1].content);
     return {response:JSON.stringify({sku:"ItemKey",name:"DisplayText",on_hand:"PhysicalUnits"})};}};
   expect((await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI})).status).toBe(200);
-  expect(captured.prompt_version).toBe("mapping-context-v2");
+  expect(captured.prompt_version).toBe("mapping-context-v3");
   expect(captured.target_schema).toMatchObject({on_hand:{description:expect.stringContaining("physical")}});
   expect(captured.examples).toHaveLength(2);
   expect(system).toContain("locked_mapping");expect(system).toContain("not probabilities");
@@ -107,4 +107,20 @@ it("returns the partial profile without calling a model when no unused source co
   const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
   expect(result.status).toBe(200);expect(calls).toBe(0);
   expect(await result.json()).toMatchObject({draft:{missing_required_fields:["on_hand"],assignments:[{basis:"rule"},{basis:"rule"}]}});
+});
+it("omits absent historical column bindings from model evidence while retaining current locks",async()=>{
+  const body=mappingBody("SKU,ProductName,PhysicalUnits\nVM-002,Desk,3\n");body.input.method="ai";
+  let captured:Record<string,unknown>={};
+  const AI={async run(_model:string,input:Record<string,unknown>){captured=JSON.parse((input.messages as {content:string}[])[1].content);
+    return {response:'{"sku":"SKU","name":"ProductName","on_hand":"PhysicalUnits"}'};}};
+  expect((await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI})).status).toBe(200);
+  expect(captured.profile_candidate).toBeUndefined();
+  expect(captured.supplier_context).toEqual({vendor_code:"RIVERBYTE",profile_id:"supplier-b",version:1});
+});
+it("keeps supported fields when a model confuses supplier identity with product identity",async()=>{
+  const body=mappingBody("VendorReference,ProductName,PhysicalUnits\nRIVERBYTE,Desk,3\nRIVERBYTE,Bag,4\n");body.input.method="ai";
+  const AI={async run(){return {response:'{"sku":"VendorReference","name":"ProductName","on_hand":"PhysicalUnits"}'};}};
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
+  expect(result.status).toBe(200);
+  expect(await result.json()).toMatchObject({draft:{missing_required_fields:["sku"],assignments:[{target_field:"name"},{target_field:"on_hand"}]}});
 });

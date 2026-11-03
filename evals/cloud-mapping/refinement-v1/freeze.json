@@ -1,0 +1,10 @@
+{
+  "baseline_source": "a9381635c4ae89ba5a86e2cd0dc11e9decec3386",
+  "cases_sha256": "02672d2a7f353ccb0a70bddb1a067381a8b2c3213f0eb60427acd56e1f1b30a9",
+  "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+  "cases": 12,
+  "maximum_inference_attempts": 24,
+  "model_comparison": "same model; old deployed pipeline versus candidate",
+  "independent_review": false,
+  "purpose": "Development reuse of consumed pilot after reviewing errors; not a fresh evaluation"
+}

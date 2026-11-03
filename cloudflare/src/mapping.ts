@@ -54,7 +54,8 @@ export class MappingHandler implements MappingSpec {
         const choice={anyOf:[{type:"string",enum:headers.filter(h=>!Object.values(locked).includes(h))},{type:"null"}]};
         const result=await new ModelHandler(this.env).execute(MAPPING_SYSTEM,
           JSON.stringify({prompt_version:PROMPT_VERSION,target_schema:TARGET_SCHEMA,examples:EXAMPLES,headers,columns,
-            profile_candidate:profile,locked_mapping:locked,blocked_targets:[...ambiguous],requested_targets:targets.filter(t=>!locked[t]&&!ambiguous.has(t))}),{type:"object",additionalProperties:false,
+            supplier_context:{vendor_code:profile.vendor_code,profile_id:profile.profile_id,version:profile.version},
+            locked_mapping:locked,blocked_targets:[...ambiguous],requested_targets:targets.filter(t=>!locked[t]&&!ambiguous.has(t))}),{type:"object",additionalProperties:false,
             properties:Object.fromEntries(targets.map(t=>[t,locked[t]?{type:"string",const:locked[t]}:ambiguous.has(t)?{type:"null"}:choice])),required:targets},claims);
         if(!result.success)return result;
         let proposed;
@@ -64,6 +65,11 @@ export class MappingHandler implements MappingSpec {
         if(targets.some(t=>ambiguous.has(t)&&proposed[t]!==null))return fail("OUTPUT_INVALID",502);
         mapping=Object.fromEntries(targets.filter(t=>proposed[t]!==null).map(t=>[t,proposed[t]!])) as Partial<Record<Target,string>>;
         if(Object.values(mapping).some(h=>!headers.includes(h))||new Set(Object.values(mapping)).size!==Object.keys(mapping).length)return fail("OUTPUT_INVALID",502);
+        // A profile-approved product key wins; an unapproved bare supplier/vendor ID is not a SKU.
+        if(!locked.sku&&mapping.sku&&/supplier|vendor|仕入先|取引先|供給者/iu.test(mapping.sku)&&
+          !/product|item|sku|商品|品目/iu.test(mapping.sku)){
+          delete mapping.sku;warnings.push("MODEL_OUTPUT_INVALID");
+        }
         model=true;warnings.splice(warnings.indexOf("RULE_BASELINE"),1);warnings.push("NO_AUTHORIZED_SOP");
       }
       const assignments=targets.filter(t=>mapping[t]).map(t=>({target_field:t,source_header:mapping[t]!,basis:model&&!locked[t]?"model":"rule",uncertainty:model&&!locked[t]?"high":"medium",

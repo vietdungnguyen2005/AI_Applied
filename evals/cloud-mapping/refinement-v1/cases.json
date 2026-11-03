@@ -1,0 +1,297 @@
+[
+  {
+    "id": "partial-quantity",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "WarehousePhysicalCount"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "WarehousePhysicalCount"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "partial-name",
+    "headers": [
+      "SKU",
+      "DisplayText",
+      "AvailableQuantity"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "DisplayText",
+      "on_hand": "AvailableQuantity"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "partial-key",
+    "headers": [
+      "StockItemIdentifier",
+      "ProductName",
+      "AvailableQuantity"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12"
+      ]
+    ],
+    "expected": {
+      "sku": "StockItemIdentifier",
+      "name": "ProductName",
+      "on_hand": "AvailableQuantity"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "format-only",
+    "headers": [
+      "sku",
+      "Product_Name",
+      "Available Quantity"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12"
+      ]
+    ],
+    "expected": {
+      "sku": "sku",
+      "name": "Product_Name",
+      "on_hand": "Available Quantity"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "all-novel-en",
+    "headers": [
+      "StockItemKey",
+      "MerchandiseCaption",
+      "PhysicalStockUnits"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12"
+      ]
+    ],
+    "expected": {
+      "sku": "StockItemKey",
+      "name": "MerchandiseCaption",
+      "on_hand": "PhysicalStockUnits"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "all-novel-ja",
+    "headers": [
+      "品目ID",
+      "表示品名",
+      "現物在庫数量"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12"
+      ]
+    ],
+    "expected": {
+      "sku": "品目ID",
+      "name": "表示品名",
+      "on_hand": "現物在庫数量"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "late-signal",
+    "headers": [
+      "A",
+      "B",
+      "C"
+    ],
+    "rows": [
+      [
+        "",
+        "",
+        ""
+      ],
+      [
+        "",
+        "",
+        ""
+      ],
+      [
+        "VM-002",
+        "Desk",
+        "12"
+      ],
+      [
+        "VM-005",
+        "Basket",
+        "8"
+      ],
+      [
+        "VM-008",
+        "Bag",
+        "5"
+      ]
+    ],
+    "expected": {
+      "sku": "A",
+      "name": "B",
+      "on_hand": "C"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "explicit-physical",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "PhysicalQuantity",
+      "ReservedQuantity"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12",
+        "2"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "PhysicalQuantity"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "unexplained-quantities",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "QuantityA",
+      "QuantityB"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "12",
+        "2"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": null
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "unexplained-availability",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "AvailableUnits",
+      "ReservedUnits"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "10",
+        "2"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": null
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "no-quantity",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "UnitPrice"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Desk",
+        "1200"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": null
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "no-identity",
+    "headers": [
+      "SupplierCode",
+      "ProductName",
+      "PhysicalStockUnits"
+    ],
+    "rows": [
+      [
+        "RIVERBYTE",
+        "Desk",
+        "12"
+      ],
+      [
+        "RIVERBYTE",
+        "Bag",
+        "4"
+      ]
+    ],
+    "expected": {
+      "sku": null,
+      "name": "ProductName",
+      "on_hand": "PhysicalStockUnits"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  }
+]
