@@ -82,7 +82,7 @@ def summarize(version: str) -> dict:
         "artifacts_sha256": {
             path.name: hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted(directory.iterdir())
-            if path.suffix in {".json", ".js", ".png"} and path.name != "report.json"
+            if path.suffix in {".json", ".js", ".png", ".jpg"} and path.name != "report.json"
         },
     }
 

@@ -93,6 +93,8 @@ Inputs, precommitted protocols, CUA workflow source, event timestamps, raw rende
 preview text, errors, screenshots and recomputed reports are under
 [`evals/onboarding-time`](../../evals/onboarding-time). In-process timestamps use
 `Date.now()`; reports retain failed steps instead of estimating their duration.
+The screenshot API returned JPEG bytes; files use `.jpg` extensions for correct
+rendering. Screenshots are preserved without pixel edits.
 The read-only report verifier requires only Python's standard library:
 
 ```powershell
