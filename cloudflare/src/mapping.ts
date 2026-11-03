@@ -48,7 +48,7 @@ export class MappingHandler implements MappingSpec {
       const warnings=["FRESHNESS_UNVERIFIED","ENCODING_DECLARED","BUSINESS_VALIDATION_REQUIRED","SOURCE_UNTRUSTED","RULE_BASELINE"];
       if(ambiguous.size)warnings.push("AMBIGUOUS_HEADER");
       let model=false;
-      if(targets.some(t=>!locked[t]&&!ambiguous.has(t))&&input.method==="ai"){
+      if(targets.some(t=>!locked[t]&&!ambiguous.has(t))&&headers.some(h=>!Object.values(locked).includes(h))&&input.method==="ai"){
         const columns=profileColumns(headers,rows);
         if(columns.some(c=>c.examples_truncated)||rows.length>50)warnings.push("SAMPLE_TRUNCATED");
         const choice={anyOf:[{type:"string",enum:headers.filter(h=>!Object.values(locked).includes(h))},{type:"null"}]};

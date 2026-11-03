@@ -101,3 +101,10 @@ it("provides explicit target semantics, an immutable prompt version and two exam
   expect(captured.examples).toHaveLength(2);
   expect(system).toContain("locked_mapping");expect(system).toContain("not probabilities");
 });
+it("returns the partial profile without calling a model when no unused source columns remain",async()=>{
+  const body=mappingBody("SKU,ProductName\nVM-002,Desk\n");body.input.method="ai";
+  let calls=0;const AI={async run(){calls++;return {response:'{"sku":"SKU","name":"ProductName","on_hand":null}'};}};
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
+  expect(result.status).toBe(200);expect(calls).toBe(0);
+  expect(await result.json()).toMatchObject({draft:{missing_required_fields:["on_hand"],assignments:[{basis:"rule"},{basis:"rule"}]}});
+});
