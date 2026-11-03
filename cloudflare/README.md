@@ -51,10 +51,32 @@ is derived from observed metadata. Repeated list reads finish from existing data
 
 Mapping accepts at most 45,000 original bytes, 100 columns and 1,000 data rows.
 This is a demo edge limit; larger files stay in the manual/local workflow. UTF-8
-and CP932 decoding is strict. Exact signed profile headers take precedence over
-inference. New AI assignments must be distinct supplied headers, remain high
-uncertainty and require human review; samples are limited to two rows and 160
-characters per cell. Freshness and real ownership still require Java validation.
+and CP932 decoding is strict. Signed profile matches are reused per target,
+including unambiguous comparison-only case/width/separator differences. Source
+names and original bytes are preserved. Comparison collisions stay unresolved;
+they never silently select one header. Known targets are locked in the decoding
+schema and rechecked after inference; the model only resolves remaining targets.
+
+`mapping-context-v3` supplies explicit target semantics and two generic/train-only
+examples. At most 50 evenly spaced rows form column profiles (missingness,
+distinctness, integer/range ratios, length, up to five representative values of
+80 characters each). These ratios describe the sample, not confidence in a
+mapping. Context remains subject to the existing 8,000-character model-input
+limit. No extra model calls or provider are introduced. New AI assignments remain
+high uncertainty and require human review. Freshness and real ownership still
+require Java validation. A comparison-only formatting match is a proposal to use
+the original header; it does not edit or activate the Java profile.
+Absent historical bindings are omitted from model evidence; only current locked
+matches are authoritative. Bare supplier/vendor identifiers are not accepted as
+new product-key suggestions. Approved product-key bindings retain precedence.
+Before inference, a unique explicitly named physical-stock column with valid
+sampled quantities, or a unique display-name column with sampled text, can supply
+a rule proposal. Reserved/available stock, vendor identities and conflicting
+candidates are excluded. These new proposals remain high uncertainty and require
+review; only unresolved targets reach the model. Sampling cannot prove that all
+rows are valid; the existing full-file row checks still run.
+See [paired diagnostics](../evals/cloud-mapping/README.md), including the retained
+V2 result that reduced false suggestions but increased over-refusal.
 Mapping model calls share the global quota with QA and investigations. `live`
 identifies the cloud runtime, including rule-only signed-profile reuse.
 

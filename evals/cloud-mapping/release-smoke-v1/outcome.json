@@ -1,0 +1,32 @@
+{
+  "production_worker_version": "adc14e47-d3ae-47fd-b830-7ca198a93221",
+  "checks": [
+    {
+      "id": "profile-reuse",
+      "status": 200,
+      "reason": "SIGNED_PROFILE_BASELINE",
+      "expected_mapping_matches": true,
+      "rule_only": true
+    },
+    {
+      "id": "typed-physical-proposal",
+      "status": 200,
+      "reason": "SEMANTIC_COLUMN_RULE_DRAFT",
+      "expected_mapping_matches": true,
+      "rule_only": true
+    },
+    {
+      "id": "partial-no-column",
+      "status": 200,
+      "reason": "PARTIAL_SIGNED_PROFILE_BASELINE",
+      "expected_mapping_matches": true,
+      "rule_only": true
+    }
+  ],
+  "health_http": 200,
+  "unauthenticated_mapping_http": 401,
+  "temporary_candidate_deleted": true,
+  "daily_reservations_after_smoke": 53,
+  "budget_day_utc": "2026-11-03",
+  "human_time_saving": "NOT_MEASURED"
+}

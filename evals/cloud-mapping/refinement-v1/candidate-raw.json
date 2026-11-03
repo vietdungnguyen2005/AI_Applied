@@ -1,0 +1,877 @@
+[
+  {
+    "id": "partial-quantity",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 1591,
+    "at": "2026-11-03T20:07:12.878Z",
+    "response": {
+      "draft": {
+        "request_id": "f821c106-15e2-4e97-9380-ed9c25a7ba79",
+        "raw_sha256": "4c353f7ef64f318abf0ca9426e98cf6f85313278f1bae482d15dcd8cfa62203c",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "SKU",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "ProductName",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "WarehousePhysicalCount",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "on_hand": [
+                "AvailableQuantity",
+                "WarehousePhysicalCount"
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "partial-name",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 582,
+    "at": "2026-11-03T20:07:13.463Z",
+    "response": {
+      "draft": {
+        "request_id": "4197c30c-dcd1-45d5-81b3-23db96666566",
+        "raw_sha256": "521a5b43d326274240a674cadf68ae32d5d23f82799b078bb663b4b6b301fa5b",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "SKU",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "AvailableQuantity",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [
+          "DisplayText"
+        ],
+        "missing_required_fields": [
+          "name"
+        ],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP",
+          "UNMAPPED_HEADER"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "name": [
+                "ProductName",
+                null
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "partial-key",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 1196,
+    "at": "2026-11-03T20:07:14.662Z",
+    "response": {
+      "draft": {
+        "request_id": "cea69155-ed9f-46c3-a3e3-657a5828e2b2",
+        "raw_sha256": "a9e9b2e10f22018d55d652dac25193311b68a3e38eccb6a7f5e6b75d8fcd605b",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "StockItemIdentifier",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "ProductName",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "AvailableQuantity",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "sku": [
+                "SKU",
+                "StockItemIdentifier"
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "format-only",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 119,
+    "at": "2026-11-03T20:07:14.782Z",
+    "response": {
+      "draft": {
+        "request_id": "6c81a55a-46ce-46e6-a683-9bdc9c1f397b",
+        "raw_sha256": "92441185541955e6bbce8d68687eba79a2f6d294aa41beb0d538af34852ed7ca",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "suggested",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "sku",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Unambiguous formatting match to signed profile; original source header retained; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "Product_Name",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Unambiguous formatting match to signed profile; original source header retained; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "Available Quantity",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Unambiguous formatting match to signed profile; original source header retained; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "RULE_BASELINE"
+        ],
+        "reason": "SIGNED_PROFILE_BASELINE",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "sku": [
+                "SKU",
+                "sku"
+              ],
+              "name": [
+                "ProductName",
+                "Product_Name"
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                "Available Quantity"
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "all-novel-en",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 788,
+    "at": "2026-11-03T20:08:20.582Z",
+    "response": {
+      "draft": {
+        "request_id": "631e3d5d-1ede-4651-b70a-4ec113e8f0b3",
+        "raw_sha256": "ff86cf855050ec13e47f3199f8fd575cf3b57f70a6506f5ed8d105f69a3b3ca9",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "StockItemKey",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "MerchandiseCaption",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "PhysicalStockUnits",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "sku": [
+                "SKU",
+                "StockItemKey"
+              ],
+              "name": [
+                "ProductName",
+                "MerchandiseCaption"
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                "PhysicalStockUnits"
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "all-novel-ja",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 797,
+    "at": "2026-11-03T20:08:21.380Z",
+    "response": {
+      "draft": {
+        "request_id": "aec49ea2-fad1-4be2-962e-48310e09698a",
+        "raw_sha256": "d0b2380a3cbaa52d1434a7bdf199c8c424b1e2469e7ba249700cb334d3168c7a",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "品目ID",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "表示品名",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "現物在庫数量",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "sku": [
+                "SKU",
+                "品目ID"
+              ],
+              "name": [
+                "ProductName",
+                "表示品名"
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                "現物在庫数量"
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "late-signal",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 1236,
+    "at": "2026-11-03T20:08:22.617Z",
+    "response": {
+      "draft": {
+        "request_id": "8746e993-f50b-4416-957f-c6dd25c898cf",
+        "raw_sha256": "34331cabd041f6bb20f8e475da296f12a250b8dc98675b5922f8dcee453182dc",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "A",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "B",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "C",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [],
+        "missing_required_fields": [],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP",
+          "ROW_REVIEW_REQUIRED"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "sku": [
+                "SKU",
+                "A"
+              ],
+              "name": [
+                "ProductName",
+                "B"
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                "C"
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "explicit-physical",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 552,
+    "at": "2026-11-03T20:08:23.170Z",
+    "response": {
+      "draft": {
+        "request_id": "705fb093-433b-40cf-afce-f1d2a482dac6",
+        "raw_sha256": "9319515b104c0c9cfcb4eae9330c2f83da8d3ef5491641b2654643d376f04e4e",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "SKU",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "ProductName",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [
+          "PhysicalQuantity",
+          "ReservedQuantity"
+        ],
+        "missing_required_fields": [
+          "on_hand"
+        ],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP",
+          "UNMAPPED_HEADER"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "unexplained-quantities",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 1015,
+    "at": "2026-11-03T20:09:29.200Z",
+    "response": {
+      "draft": {
+        "request_id": "c41a4baa-3cb1-48bc-8459-81f7e03c6972",
+        "raw_sha256": "0268d7501323f16675343dbe453115fdae4deecb3d777793603596cdd5ac52c3",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "SKU",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "ProductName",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [
+          "QuantityA",
+          "QuantityB"
+        ],
+        "missing_required_fields": [
+          "on_hand"
+        ],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP",
+          "UNMAPPED_HEADER"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "unexplained-availability",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 492,
+    "at": "2026-11-03T20:09:29.693Z",
+    "response": {
+      "draft": {
+        "request_id": "8d03015b-ce84-4b1d-82bb-753fdcaa00d0",
+        "raw_sha256": "ab985cb139c265e6cd67358eb221256ba9a30320453a0dd9de265a3383ada677",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "SKU",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "ProductName",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [
+          "AvailableUnits",
+          "ReservedUnits"
+        ],
+        "missing_required_fields": [
+          "on_hand"
+        ],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP",
+          "UNMAPPED_HEADER"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "no-quantity",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 490,
+    "at": "2026-11-03T20:09:30.184Z",
+    "response": {
+      "draft": {
+        "request_id": "7a396adf-c505-44d5-92e8-a18388d732ea",
+        "raw_sha256": "9be15ae7e932e683054c4c8208cb9adf3dbaec968a510dfe71c648a580bc0b89",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "sku",
+            "source_header": "SKU",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "name",
+            "source_header": "ProductName",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [
+          "UnitPrice"
+        ],
+        "missing_required_fields": [
+          "on_hand"
+        ],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "NO_AUTHORIZED_SOP",
+          "UNMAPPED_HEADER"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "on_hand": [
+                "AvailableQuantity",
+                null
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  },
+  {
+    "id": "no-identity",
+    "arm": "candidate",
+    "status": 200,
+    "ms": 1723,
+    "at": "2026-11-03T20:09:31.909Z",
+    "response": {
+      "draft": {
+        "request_id": "c1aadc61-c37c-4509-acd5-0f54b0ef54f3",
+        "raw_sha256": "80591c5119c8a52bdd5b102254cfc1490d1ebccc3a568e17512dc7b89d9bbabe",
+        "declared_encoding": "UTF-8",
+        "selected_vendor_code": "RIVERBYTE",
+        "vendor_code": "RIVERBYTE",
+        "vendor_verification": "bff_profile_snapshot",
+        "status": "needs_review",
+        "assignments": [
+          {
+            "target_field": "name",
+            "source_header": "ProductName",
+            "basis": "rule",
+            "uncertainty": "medium",
+            "reason": "Exact header from current signed Java profile; human review required.",
+            "citations": []
+          },
+          {
+            "target_field": "on_hand",
+            "source_header": "PhysicalStockUnits",
+            "basis": "model",
+            "uncertainty": "high",
+            "reason": "Model inferred header semantics; human review required.",
+            "citations": []
+          }
+        ],
+        "unmapped_headers": [
+          "SupplierCode"
+        ],
+        "missing_required_fields": [
+          "sku"
+        ],
+        "warnings": [
+          "FRESHNESS_UNVERIFIED",
+          "ENCODING_DECLARED",
+          "BUSINESS_VALIDATION_REQUIRED",
+          "SOURCE_UNTRUSTED",
+          "MODEL_OUTPUT_INVALID",
+          "NO_AUTHORIZED_SOP",
+          "UNMAPPED_HEADER"
+        ],
+        "reason": "MODEL_DRAFT_REQUIRES_REVIEW",
+        "profile_differences": [
+          {
+            "profile_id": "supplier-b",
+            "version": 1,
+            "active": true,
+            "encoding_matches": true,
+            "changes": {
+              "sku": [
+                "SKU",
+                null
+              ],
+              "on_hand": [
+                "AvailableQuantity",
+                "PhysicalStockUnits"
+              ]
+            }
+          }
+        ],
+        "requires_human_acceptance": true,
+        "provider_mode": "live"
+      },
+      "evidence": []
+    }
+  }
+]

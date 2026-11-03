@@ -19,6 +19,11 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run dry-run
+      - name: Verify retained cloud mapping diagnostic scores offline
+        run: |
+          python ../tools/cloud_mapping_pilot.py --check
+          python ../tools/cloud_mapping_pilot.py --directory evals/cloud-mapping/refinement-v1 --check
+          python ../tools/cloud_mapping_pilot.py --directory evals/cloud-mapping/transport-verification-v1 --check
   python:
     runs-on: ubuntu-latest
     steps:

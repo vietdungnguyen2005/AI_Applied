@@ -84,6 +84,11 @@ See [provider safety and configuration](docs/providers.md). Unknown outcomes ret
 
 ## Status and evidence
 
+- [Online mapping refinement](docs/evidence/CLOUD-mapping-context.md): partial
+  signed-profile reuse, sampled column context and typed proposals using the same
+  cloud model. Paired synthetic diagnostics retain failed revisions; supplier
+  onboarding time and real operator edits have not been measured.
+
 - [Post-delivery signed-profile reuse](docs/evidence/POST-profile-reuse.md): exact
   current reviewed Java mappings now work beyond the frozen alias list, without
   model calls or automatic business writes. Original P13 metrics are preserved.

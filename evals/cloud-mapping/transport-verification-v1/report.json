@@ -1,0 +1,206 @@
+{
+  "scope": "6 synthetic developer-authored paired diagnostic cases; not independent held-out acceptance",
+  "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+  "human_time_saving": "NOT_MEASURED",
+  "pair_changes": "Minimum pair changes relative to provisional labels; not observed human edits",
+  "promotion_gate": true,
+  "summary": {
+    "baseline": {
+      "cases": 6,
+      "http_success": 5,
+      "exact_all_cases": 3,
+      "complete_mapping_cases": 3,
+      "exact_complete_mappings": 3,
+      "partial_or_ambiguous_cases": 3,
+      "exact_partial_or_ambiguous": 0,
+      "proposed_pairs": 15,
+      "correct_pairs": 13,
+      "incorrect_pairs": 2,
+      "required_pair_changes": 4,
+      "missing_supported_pairs": 2,
+      "model_attempt": 5
+    },
+    "candidate": {
+      "cases": 6,
+      "http_success": 6,
+      "exact_all_cases": 6,
+      "complete_mapping_cases": 3,
+      "exact_complete_mappings": 3,
+      "partial_or_ambiguous_cases": 3,
+      "exact_partial_or_ambiguous": 3,
+      "proposed_pairs": 15,
+      "correct_pairs": 15,
+      "incorrect_pairs": 0,
+      "required_pair_changes": 0,
+      "missing_supported_pairs": 0,
+      "model_attempt": 6
+    }
+  },
+  "predictions": {
+    "baseline": [
+      {
+        "id": "new-key",
+        "status": 200,
+        "exact": true,
+        "complete_expected": true,
+        "proposed_pairs": 3,
+        "correct_pairs": 3,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1778
+      },
+      {
+        "id": "new-stock",
+        "status": 200,
+        "exact": true,
+        "complete_expected": true,
+        "proposed_pairs": 3,
+        "correct_pairs": 3,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1088
+      },
+      {
+        "id": "new-japanese",
+        "status": 200,
+        "exact": true,
+        "complete_expected": true,
+        "proposed_pairs": 3,
+        "correct_pairs": 3,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 982
+      },
+      {
+        "id": "new-ambiguous",
+        "status": 200,
+        "exact": false,
+        "complete_expected": false,
+        "proposed_pairs": 3,
+        "correct_pairs": 2,
+        "incorrect_pairs": 1,
+        "required_pair_changes": 1,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1467
+      },
+      {
+        "id": "new-money",
+        "status": 502,
+        "exact": false,
+        "complete_expected": false,
+        "proposed_pairs": 0,
+        "correct_pairs": 0,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 2,
+        "missing_supported_pairs": 2,
+        "model_attempt": false,
+        "ms": 1218
+      },
+      {
+        "id": "new-vendor",
+        "status": 200,
+        "exact": false,
+        "complete_expected": false,
+        "proposed_pairs": 3,
+        "correct_pairs": 2,
+        "incorrect_pairs": 1,
+        "required_pair_changes": 1,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1220
+      }
+    ],
+    "candidate": [
+      {
+        "id": "new-key",
+        "status": 200,
+        "exact": true,
+        "complete_expected": true,
+        "proposed_pairs": 3,
+        "correct_pairs": 3,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1345
+      },
+      {
+        "id": "new-stock",
+        "status": 200,
+        "exact": true,
+        "complete_expected": true,
+        "proposed_pairs": 3,
+        "correct_pairs": 3,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 985
+      },
+      {
+        "id": "new-japanese",
+        "status": 200,
+        "exact": true,
+        "complete_expected": true,
+        "proposed_pairs": 3,
+        "correct_pairs": 3,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1048
+      },
+      {
+        "id": "new-ambiguous",
+        "status": 200,
+        "exact": true,
+        "complete_expected": false,
+        "proposed_pairs": 2,
+        "correct_pairs": 2,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1446
+      },
+      {
+        "id": "new-money",
+        "status": 200,
+        "exact": true,
+        "complete_expected": false,
+        "proposed_pairs": 2,
+        "correct_pairs": 2,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1141
+      },
+      {
+        "id": "new-vendor",
+        "status": 200,
+        "exact": true,
+        "complete_expected": false,
+        "proposed_pairs": 2,
+        "correct_pairs": 2,
+        "incorrect_pairs": 0,
+        "required_pair_changes": 0,
+        "missing_supported_pairs": 0,
+        "model_attempt": true,
+        "ms": 1020
+      }
+    ]
+  },
+  "artifacts_sha256": {
+    "cases.json": "3470a321736a5621b4a1ecb82ca0d7078fbfa8797a7868ddb062ea9f7ec7000a",
+    "baseline-raw.json": "85aedbe88fbf0a028391be8a84b10f2e6d2e8f3c86f3ea5fc9a4173545640e88",
+    "candidate-raw.json": "e3235e70fffc11fe5c43b641c6548650c8f0f7e809f19bdc951013ca5957834e"
+  }
+}
