@@ -1,0 +1,10 @@
+{
+  "baseline_source": "a9381635c4ae89ba5a86e2cd0dc11e9decec3386",
+  "cases_sha256": "ffe8f21f39d6a467c814c1b29435881d1ec7a07a76737505f3f3b814fddc7d31",
+  "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+  "cases": 12,
+  "maximum_inference_attempts": 24,
+  "model_comparison": "same model; old deployed pipeline versus candidate",
+  "independent_review": false,
+  "purpose": "small developer-authored paired diagnostic, not blind independent quality acceptance"
+}
