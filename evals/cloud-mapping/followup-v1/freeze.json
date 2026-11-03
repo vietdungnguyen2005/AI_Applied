@@ -1,0 +1,9 @@
+{
+  "baseline_source": "a9381635c4ae89ba5a86e2cd0dc11e9decec3386",
+  "candidate_source": "b8f2c36",
+  "cases_sha256": "3470a321736a5621b4a1ecb82ca0d7078fbfa8797a7868ddb062ea9f7ec7000a",
+  "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+  "maximum_inference_attempts": 12,
+  "independent_review": false,
+  "purpose": "Frozen after development refinement, before either arm sees these inputs; related synthetic families, not independent supplier holdout"
+}
