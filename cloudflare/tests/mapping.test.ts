@@ -41,3 +41,63 @@ it("preserves Japanese CP932 headers from the original supplier bytes",async()=>
   expect(result.status).toBe(200);
   expect(await result.json()).toMatchObject({draft:{declared_encoding:"CP932",assignments:[{source_header:"商品コード"},{source_header:"商品名"},{source_header:"在庫数"}]}});
 });
+it("preserves independently matched profile columns when one source header changes",async()=>{
+  const body=mappingBody("SKU,ProductName,PhysicalUnits\nVM-002,Desk,3\n");
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase()});
+  expect(result.status).toBe(200);
+  expect(await result.json()).toMatchObject({draft:{status:"needs_review",reason:"PARTIAL_SIGNED_PROFILE_BASELINE",
+    missing_required_fields:["on_hand"],assignments:[{target_field:"sku",source_header:"SKU",basis:"rule"},{target_field:"name",source_header:"ProductName",basis:"rule"}]}});
+});
+it("asks the model only for missing columns and keeps signed assignments rule-based",async()=>{
+  const body=mappingBody("SKU,ProductName,PhysicalUnits\nVM-002,Desk,3\n");body.input.method="ai";
+  let calls=0;
+  const AI={async run(_model:string,input:Record<string,unknown>){calls++;
+    const payload=JSON.parse((input.messages as {content:string}[])[1].content);
+    expect(payload.locked_mapping).toEqual({sku:"SKU",name:"ProductName"});
+    return {response:JSON.stringify({sku:"SKU",name:"ProductName",on_hand:"PhysicalUnits"})};}};
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
+  expect(result.status).toBe(200);expect(calls).toBe(1);
+  expect(await result.json()).toMatchObject({draft:{assignments:[{target_field:"sku",basis:"rule"},{target_field:"name",basis:"rule"},{target_field:"on_hand",basis:"model"}]}});
+});
+it("rejects a model that changes a locked profile assignment despite the decoding schema",async()=>{
+  const body=mappingBody("SKU,ProductName,PhysicalUnits,OtherCode\nVM-002,Desk,3,OTHER\n");body.input.method="ai";
+  const AI={async run(){return {response:JSON.stringify({sku:"OtherCode",name:"ProductName",on_hand:"PhysicalUnits"})};}};
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
+  expect(result.status).toBe(502);
+});
+it("matches harmless profile formatting changes without altering original source headers",async()=>{
+  const body=mappingBody("sku,Product_Name,Available Quantity\nVM-002,Desk,3\n");
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase()});
+  expect(result.status).toBe(200);
+  expect(await result.json()).toMatchObject({draft:{assignments:[{source_header:"sku",basis:"rule"},{source_header:"Product_Name",basis:"rule"},{source_header:"Available Quantity",basis:"rule"}]}});
+});
+it("does not silently lock a normalized match when two source headers collide",async()=>{
+  const body=mappingBody("SKU,ProductName,AvailableQuantity,Available_Quantity\nVM-002,Desk,3,4\n");
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase()});
+  expect(result.status).toBe(200);
+  expect(await result.json()).toMatchObject({draft:{missing_required_fields:["on_hand"],warnings:expect.arrayContaining(["AMBIGUOUS_HEADER"])}});
+});
+it("sends bounded representative column profiles including late rows rather than two initial blanks",async()=>{
+  const rows=Array.from({length:100},(_,i)=>i<2?",,":`VM-${i},Product ${i},${i}`);
+  const body=mappingBody("ItemKey,DisplayText,PhysicalUnits\n"+rows.join("\n")+"\n");body.input.method="ai";
+  let captured:Record<string,unknown>={};
+  const AI={async run(_model:string,input:Record<string,unknown>){captured=JSON.parse((input.messages as {content:string}[])[1].content);
+    return {response:JSON.stringify({sku:"ItemKey",name:"DisplayText",on_hand:"PhysicalUnits"})};}};
+  const result=await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI});
+  expect(result.status).toBe(200);
+  expect(captured.columns).toEqual(expect.arrayContaining([expect.objectContaining({header:"ItemKey",sample_count:50,non_empty_count:49,
+    examples:expect.arrayContaining(["VM-99"])}),expect.objectContaining({header:"PhysicalUnits",integer_ratio:1,quantity_ratio:1})]));
+  expect(captured.sample_rows).toBeUndefined();
+});
+it("provides explicit target semantics, an immutable prompt version and two examples to the model",async()=>{
+  const body=mappingBody("ItemKey,DisplayText,PhysicalUnits\nVM-002,Desk,3\n");body.input.method="ai";
+  let captured:Record<string,unknown>={},system="";
+  const AI={async run(_model:string,input:Record<string,unknown>){const messages=input.messages as {content:string}[];
+    system=messages[0].content;captured=JSON.parse(messages[1].content);
+    return {response:JSON.stringify({sku:"ItemKey",name:"DisplayText",on_hand:"PhysicalUnits"})};}};
+  expect((await worker.fetch(signed("/ai/mapping/suggest",JSON.stringify(body),{operation:"mapping_suggest"}),{PUBLIC_KEYS_JSON:publicKeys,DB:new TestDatabase(),AI})).status).toBe(200);
+  expect(captured.prompt_version).toBe("mapping-context-v2");
+  expect(captured.target_schema).toMatchObject({on_hand:{description:expect.stringContaining("physical")}});
+  expect(captured.examples).toHaveLength(2);
+  expect(system).toContain("locked_mapping");expect(system).toContain("not probabilities");
+});
