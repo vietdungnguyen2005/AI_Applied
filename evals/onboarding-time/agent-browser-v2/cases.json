@@ -1,0 +1,68 @@
+[
+  {
+    "id": "new-key",
+    "headers": [
+      "CatalogPartKey",
+      "ProductName",
+      "AvailableQuantity"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Modular desk",
+        "9"
+      ]
+    ],
+    "expected": {
+      "sku": "CatalogPartKey",
+      "name": "ProductName",
+      "on_hand": "AvailableQuantity"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "new-stock",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "StockOnPremises"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "Modular desk",
+        "9"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "StockOnPremises"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  },
+  {
+    "id": "new-japanese",
+    "headers": [
+      "管理品番",
+      "販売表示名",
+      "実地棚卸数"
+    ],
+    "rows": [
+      [
+        "VM-002",
+        "収納机",
+        "9"
+      ]
+    ],
+    "expected": {
+      "sku": "管理品番",
+      "name": "販売表示名",
+      "on_hand": "実地棚卸数"
+    },
+    "label_status": "provisional_developer_authored",
+    "encoding": "UTF-8"
+  }
+]

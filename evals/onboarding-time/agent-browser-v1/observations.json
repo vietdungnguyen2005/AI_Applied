@@ -1,0 +1,88 @@
+[
+  {
+    "case": "new-key",
+    "arm": "manual",
+    "profile_id": "bench-20261104-key-manual",
+    "started_at": "2026-11-03T21:31:10.268Z",
+    "started_ms": 1793741470269,
+    "events": [
+      {
+        "label": "fill_csv",
+        "started_ms": 1793741470269,
+        "ended_ms": 1793741470290,
+        "status": "ok"
+      },
+      {
+        "label": "manual_edit_sku",
+        "started_ms": 1793741470291,
+        "ended_ms": 1793741470303,
+        "status": "ok"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793741470303,
+        "ended_ms": 1793741470303,
+        "status": "error",
+        "error": "TypeError"
+      },
+      {
+        "label": "instrumentation_binding_error",
+        "at_ms": 1793741486979,
+        "status": "error",
+        "error": "TypeError before profile ID entry; same timed trial continued without reset"
+      },
+      {
+        "label": "enter_profile_id",
+        "started_ms": 1793741498816,
+        "ended_ms": 1793741498851,
+        "status": "ok"
+      },
+      {
+        "label": "approve_mapping",
+        "started_ms": 1793741498852,
+        "ended_ms": 1793741499326,
+        "status": "ok"
+      },
+      {
+        "label": "save_inactive",
+        "started_ms": 1793741499330,
+        "ended_ms": 1793741500326,
+        "status": "ok"
+      },
+      {
+        "label": "wait_saved",
+        "started_ms": 1793741505744,
+        "ended_ms": 1793741505769,
+        "status": "ok"
+      },
+      {
+        "label": "activate_profile",
+        "started_ms": 1793741509922,
+        "ended_ms": 1793741510216,
+        "status": "ok"
+      },
+      {
+        "label": "wait_adopted",
+        "started_ms": 1793741510217,
+        "ended_ms": 1793741510912,
+        "status": "ok"
+      },
+      {
+        "label": "preview",
+        "started_ms": 1793741514990,
+        "ended_ms": 1793741515280,
+        "status": "ok"
+      },
+      {
+        "label": "wait_preview",
+        "started_ms": 1793741519073,
+        "ended_ms": 1793741519099,
+        "status": "ok"
+      }
+    ],
+    "status": "invalid_fixture",
+    "ended_ms": 1793741551192,
+    "elapsed_ms": 80923,
+    "failure": "VENDOR_MISMATCH on VM-005; preview accepted 1 rejected 1; planned endpoint accepted 2 rejected 0 not reached"
+  }
+]

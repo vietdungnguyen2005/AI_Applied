@@ -1,0 +1,54 @@
+{
+  "kind": "single-agent browser task-time benchmark, not human UAT",
+  "origin": "https://v-market.vmarket-vietdung2005.workers.dev/ops",
+  "ai_worker_version": "adc14e47-d3ae-47fd-b830-7ca198a93221",
+  "cases_sha256": "ac27ad88a5c5520bbbfa16a7a2fd7de1b723a2460776b643ffeef0fc5ca5bc92",
+  "cases_reused_from_diagnostic": true,
+  "actor_knows_expected_mappings": true,
+  "timing": "wall-clock milliseconds in cua_repl process; includes tool orchestration and agent reasoning between start/end; no injected human delays",
+  "start": "Immediately before filling supplier CSV payload; baseline supplier-b v1 selected, mapping draft reset",
+  "end": "Preview shows correct mapping with acceptedRows=1 and rejectedRows=0",
+  "steps_both_arms": [
+    "fill CSV",
+    "enter new immutable profile ID",
+    "review mapping",
+    "approve inactive creation",
+    "create inactive profile",
+    "activate profile",
+    "preview original file"
+  ],
+  "manual_arm": "Enter required exact header changes directly, without requesting a suggestion",
+  "assisted_arm": "Select ai method, request suggestion, inspect and correct if needed; retain failures and use manual recovery",
+  "failure_policy": "Stop and record any HTTP/application/browser failure; no discarded timed trials. Explicit recovery counts toward elapsed time.",
+  "order": [
+    {
+      "case": "new-key",
+      "arms": [
+        "manual",
+        "assisted"
+      ]
+    },
+    {
+      "case": "new-stock",
+      "arms": [
+        "assisted",
+        "manual"
+      ]
+    },
+    {
+      "case": "new-japanese",
+      "arms": [
+        "manual",
+        "assisted"
+      ]
+    }
+  ],
+  "max_inference_attempts": 3,
+  "import_confirmation": false,
+  "production_effects": "Create/activate six uniquely named synthetic benchmark integration profiles; no stock confirmation or inventory writes",
+  "claims": "Only observed agent task time; not human onboarding improvement; no independent file holdout",
+  "revision_reason": "V1 first task retained with instrumentation binding error and invalid VM-005 vendor fixture; V2 uses verified VM-002 only, frozen before new timing trials",
+  "automation": "Same common UI steps batched with locator waits in both arms; mapping inspected through rendered DOM; no synthetic thinking/typing delays",
+  "aggregation": "Report all per-case paired times and median wall-clock time per arm. V1 remains invalid-fixture history, not included in V2 sample. No claim about human time.",
+  "profile_prefix": "bench-v2-20261104-"
+}
