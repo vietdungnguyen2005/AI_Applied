@@ -1,0 +1,62 @@
+[
+  {
+    "id": "profile-reuse",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "AvailableQuantity"
+    ],
+    "rows": [
+      [
+        "P-001",
+        "Desk",
+        "3"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "AvailableQuantity"
+    }
+  },
+  {
+    "id": "typed-physical-proposal",
+    "headers": [
+      "SKU",
+      "ProductName",
+      "PhysicalQuantity",
+      "ReservedQuantity"
+    ],
+    "rows": [
+      [
+        "P-002",
+        "Bag",
+        "12",
+        "2"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": "PhysicalQuantity"
+    }
+  },
+  {
+    "id": "partial-no-column",
+    "headers": [
+      "SKU",
+      "ProductName"
+    ],
+    "rows": [
+      [
+        "P-003",
+        "Chair"
+      ]
+    ],
+    "expected": {
+      "sku": "SKU",
+      "name": "ProductName",
+      "on_hand": null
+    }
+  }
+]

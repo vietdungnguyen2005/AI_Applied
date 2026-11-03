@@ -1,0 +1,6 @@
+{
+  "cases_sha256": "f2b4a5b1644088cd96bdab985f6d1191198b81cc513c55a089c9bba225e0fe8f",
+  "candidate_source": "2ef2d20508e269c4dff1db162a8095b145182170",
+  "purpose": "Production signed endpoint smoke only; no paired quality claim",
+  "maximum_inference_attempts": 0
+}
